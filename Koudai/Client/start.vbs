@@ -1,1 +1,1 @@
-CreateObject("WScript.Shell").Run "MainApp.exe 640 960", 1
+CreateObject("WScript.Shell").Run "MainApp.exe 640 960 resource", 1
