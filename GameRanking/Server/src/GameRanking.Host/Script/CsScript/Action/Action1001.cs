@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 
+using System;
 using System.Collections.Generic;
 using GameServer.Model;
 using ZyGames.Framework.Cache.Generic;
@@ -74,8 +75,11 @@ namespace GameServer.CsScript.Action
         {
             var cache = new ShareCacheStruct<UserRanking>();
             rankingList = cache.FindAll(false);
+            int count = rankingList.Count;
             rankingList = MathUtils.QuickSort<UserRanking>(rankingList, compareTo);
             rankingList = rankingList.GetPaging(PageIndex, PageSize, out PageCount);
+            int rcount = rankingList.Count;
+            Console.WriteLine("count:{0}/{1}", rcount, count);
             return true;
         }
 

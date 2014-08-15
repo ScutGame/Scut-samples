@@ -1,21 +1,27 @@
-﻿using System;
-using ZyGames.Framework.Common.Log;
+using System;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Runtime;
+using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Script;
 
 namespace Game.Script
 {
-    public class MainClass : IMainScript
+    public class MainClass : GameHttpHost, IMainScript
     {
-        public void Start(string[] args)
+        public override void Start(string[] args)
         {
-            GameEnvironment.Setting.ActionDispatcher = new CustomActionDispatcher();
-            ActionFactory.SetActionIgnoreAuthorize(1000, 1001);
+           GameEnvironment.Setting.ActionDispatcher = new CustomActionDispatcher();
         }
 
-        public void Stop()
+        public override void Stop()
         {
+
         }
+
+        protected override void OnRequested(ActionGetter actionGetter, BaseGameResponse response)
+        {
+            base.OnRequested(actionGetter, response);
+        }
+
     }
 }

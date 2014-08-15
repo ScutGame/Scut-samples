@@ -5,14 +5,14 @@ using ZyGames.Framework.Script;
 
 namespace Game.Script
 {
-    public class MainClass : IMainScript
+    public class MainClass : GameHttpHost, IMainScript
     {
-        public void Start(string[] args)
+        public override void Start(string[] args)
         {
             ActionFactory.SetActionIgnoreAuthorize(1000, 1001);
         }
 
-        public void Stop()
+        public override void Stop()
         {
         }
     }

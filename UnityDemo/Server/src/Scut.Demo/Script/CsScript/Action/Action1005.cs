@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using GameServer.Script.Model;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
+using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Lang;
@@ -30,8 +31,9 @@ namespace GameServer.Script.CsScript.Action
         }
 
 
-        public override bool TakeAction()
+        protected override bool CreateUserRole(out IUser user)
         {
+            user = null;
             if (UserName.Length < 2 || UserName.Length > 12)
             {
                 ErrorCode = Language.Instance.ErrorCode;
@@ -40,22 +42,23 @@ namespace GameServer.Script.CsScript.Action
             }
             var userCache = new PersonalCacheStruct<GameUser>();
             var roleCache = new PersonalCacheStruct<UserRole>();
-            GameUser user;
-            if (userCache.TryFindKey(Uid, out user) == LoadingStatus.Success)
+            GameUser gameUser;
+            if (userCache.TryFindKey(Uid, out gameUser) == LoadingStatus.Success)
             {
-                if (user == null)
+                if (gameUser == null)
                 {
-                    user = new GameUser
+                    gameUser = new GameUser
                     {
                         UserId = UserId,
                         PassportId = Pid,
                         RetailId = RetailID,
                         NickName = Pid
                     };
-                    userCache.Add(user);
+                    userCache.Add(gameUser);
                 }
+                user = gameUser;
                 UserRole role;
-                if (roleCache.TryFind(user.PersonalId, r => r.RoleName == UserName, out role) == LoadingStatus.Success)
+                if (roleCache.TryFind(gameUser.PersonalId, r => r.RoleName == UserName, out role) == LoadingStatus.Success)
                 {
                     if (role == null)
                     {
@@ -73,9 +76,9 @@ namespace GameServer.Script.CsScript.Action
                         };
                         roleCache.Add(role);
                     }
-                    user.CurrRoleId = role.RoleId;
+                    gameUser.CurrRoleId = role.RoleId;
                     var notifyUsers = new List<GameUser>();
-                    notifyUsers.Add(user);
+                    notifyUsers.Add(gameUser);
                     ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, null);
                     return true;
                 }

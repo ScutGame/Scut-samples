@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GameServer.Script.Model;
 using ZyGames.Framework.Cache.Generic;
+using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Service;
@@ -18,8 +19,9 @@ namespace GameServer.Script.CsScript.Action
         {
         }
 
-        protected override bool DoSuccess(int userId)
+        protected override bool DoSuccess(int userId, out IUser user)
         {
+            user = null;
             var cacheSet = new PersonalCacheStruct<GameUser>();
             var roleCache = new PersonalCacheStruct<UserRole>();
             var roleList = roleCache.FindAll(Uid);
@@ -30,6 +32,7 @@ namespace GameServer.Script.CsScript.Action
                 GuideId = 1005;
                 return true;
             }
+            user = gameUser;
             if (gameUser.CurrRoleId == 0)
             {
                 gameUser.CurrRoleId = roleList[0].RoleId;
