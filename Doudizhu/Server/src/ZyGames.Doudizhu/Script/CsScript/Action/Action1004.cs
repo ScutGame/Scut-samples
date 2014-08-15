@@ -3,6 +3,7 @@ using ZyGames.Doudizhu.Bll;
 using ZyGames.Doudizhu.Model;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Lang;
@@ -23,13 +24,14 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
         {
         }
 
-        protected override bool DoSuccess(int userId)
+        protected override bool DoSuccess(int userId, out IUser user)
         {
+            user = null;
             var cacheSet = new GameDataCacheSet<GameUser>();
             GameUser gameUser = cacheSet.FindKey(Uid);
             if (gameUser == null ||
                 string.IsNullOrEmpty(gameUser.SessionID) ||
-                !gameUser.IsInlining)
+                !gameUser.IsOnlining)
             {
                 gameUser = cacheSet.FindKey(Uid);
             }
@@ -53,24 +55,21 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
                 this.ErrorCode = 1005;
                 return true;
             }
-            else
+            user = gameUser;
+            if (gameUser.UserStatus == UserStatus.FengJin)
             {
-                if (gameUser.UserStatus == UserStatus.FengJin)
-                {
-                    ErrorCode = Language.Instance.TimeoutCode;
-                    ErrorInfo = Language.Instance.AcountIsLocked;
-                    return false;
-                }
-                gameUser.SessionID = Sid;
-                gameUser.OnlineDate = nowTime;
-                gameUser.LoginDate = nowTime;
-                gameUser.Property.GameId = this.GameType;
-                gameUser.Property.ServerId = this.ServerID;
-                gameUser.Property.ChatVesion = 0;
-                //gameUser.OnLine = true;
-                //gameUser.Logoff = true;
+                ErrorCode = Language.Instance.TimeoutCode;
+                ErrorInfo = Language.Instance.AcountIsLocked;
+                return false;
             }
-
+            gameUser.SessionID = Sid;
+            gameUser.OnlineDate = nowTime;
+            gameUser.LoginDate = nowTime;
+            gameUser.Property.GameId = this.GameType;
+            gameUser.Property.ServerId = this.ServerID;
+            gameUser.Property.ChatVesion = 0;
+            //gameUser.OnLine = true;
+            //gameUser.Logoff = true;
 
 
             System.Threading.Tasks.Task.Factory.StartNew(() =>

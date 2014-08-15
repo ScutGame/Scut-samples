@@ -22,8 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
@@ -34,11 +32,6 @@ namespace Game.Script
 {
     public class MainClass : GameSocketHost, IMainScript
     {
-
-        protected override BaseUser GetUser(int userId)
-        {
-            return (BaseUser)CacheFactory.GetPersonalEntity("GameServer.Model.GameUser", userId.ToString(), userId);
-        }
 
         protected override void OnConnectCompleted(object sender, ConnectionEventArgs e)
         {

@@ -217,6 +217,84 @@
             父类对象引用
             </summary>
         </member>
+        <member name="T:ZyGames.Framework.Common.Event.EventNotifier">
+            <summary>
+            Event notifier
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.EventNotifier.Put(ZyGames.Framework.Common.Event.NotifyEventArgs)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.TimerNum">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.WaitEventCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Event.NotifyCallback">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Event.NotifyEventArgs">
+            <summary>
+            Notify event args
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.NotifyEventArgs.Check">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.NotifyEventArgs.OnCallback">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.NotifyEventArgs.Target">
+            <summary>
+            User object
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Event.NotifyEventArgs.Callback">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs">
+            <summary>
+            Time out notify event args
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.#ctor(System.Int32)">
+            <summary>
+            init
+            </summary>
+            <param name="secTimeout"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.#ctor(System.TimeSpan)">
+            <summary>
+            init
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.Check">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.Timeout">
+            <summary>
+            Timeout
+            </summary>
+        </member>
         <member name="T:ZyGames.Framework.Common.HttpUtils">
             <summary>
             Http mothod
@@ -558,6 +636,12 @@
             Sql最小时间范围
             </summary>
         </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ToWeekOfYear(System.DateTime)">
+            <summary>
+            指定时间一年中是第几周
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.DiffDate(System.DateTime)">
             <summary>
             获取与当前时间差异
@@ -571,6 +655,36 @@
             </summary>
             <param name="date1"></param>
             <param name="date2"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.CharToByte(System.Char)">
+            <summary>
+            char转成两个字节
+            </summary>
+            <param name="c"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ByteToChar(System.Byte[],System.Int32)">
+            <summary>
+            使用两个字节转成char
+            </summary>
+            <param name="bytes"></param>
+            <param name="startIndex"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.Join(System.Byte[][])">
+            <summary>
+            合并
+            </summary>
+            <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.IndexOf(System.Byte[],System.Byte[])">
+            <summary>
+            查找数组中包含另一数组的启始索引
+            </summary>
+            <param name="bytes"></param>
+            <param name="pattern"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.ToDefaultValue(System.Type)">
@@ -944,13 +1058,6 @@
             <param name="defValue"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Common.MathUtils.ToLong(System.Object)">
-            <summary>
-            将对象转换成长整型值
-            </summary>
-            <param name="value"></param>
-            <returns></returns>
-        </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.ToCeilingInt(System.Object)">
             <summary>
             向上取整
@@ -961,6 +1068,13 @@
         <member name="M:ZyGames.Framework.Common.MathUtils.ToFloorInt(System.Object)">
             <summary>
             向下取整
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ToLong(System.Object)">
+            <summary>
+            将对象转换成长整型值
             </summary>
             <param name="value"></param>
             <returns></returns>
@@ -993,6 +1107,13 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ToFloat(System.Object)">
+            <summary>
+            将对象转换成单精度浮点值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.ToBool(System.Object)">
             <summary>
             将对象转换成布尔值
@@ -1003,6 +1124,27 @@
         <member name="M:ZyGames.Framework.Common.MathUtils.ToByte(System.Object)">
             <summary>
             将对象转换成字节值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ToUInt64(System.Object)">
+            <summary>
+            将对象转换成64位无符号
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ToUInt32(System.Object)">
+            <summary>
+            将对象转换成32位无符号
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.ToUInt16(System.Object)">
+            <summary>
+            将对象转换成16位无符号
             </summary>
             <param name="value"></param>
             <returns></returns>
@@ -1056,6 +1198,11 @@
         <member name="P:ZyGames.Framework.Common.MathUtils.Now">
             <summary>
             
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.MathUtils.WeekOfYear">
+            <summary>
+            当天时间一年中是第几周
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Common.MathUtils.RuntimeBinPath">
@@ -1231,6 +1378,13 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.ToFloat(System.Object)">
+            <summary>
+            将对象转换成单精度浮点值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Common.ObjectExtend.ToBool(System.Object)">
             <summary>
             将对象转换成布尔值
@@ -1241,6 +1395,27 @@
         <member name="M:ZyGames.Framework.Common.ObjectExtend.ToByte(System.Object)">
             <summary>
             将对象转换成字节值
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.ToUInt64(System.Object)">
+            <summary>
+            将对象转换成64位无符号
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.ToUInt32(System.Object)">
+            <summary>
+            将对象转换成32位无符号
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.ToUInt16(System.Object)">
+            <summary>
+            将对象转换成16位无符号
             </summary>
             <param name="value"></param>
             <returns></returns>
@@ -1953,6 +2128,52 @@
             <param name="pos"></param>
             <returns></returns>
         </member>
+        <member name="T:ZyGames.Framework.Common.Serialization.ICacheSerializer">
+            <summary>
+            ICacheSerializer
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.ICacheSerializer.Serialize(System.Object)">
+            <summary>
+            Serialize object to byte[]
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.ICacheSerializer.Deserialize(System.Byte[],System.Type)">
+            <summary>
+            Deserialize
+            </summary>
+            <param name="data"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Serialization.JsonCacheSerializer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.JsonCacheSerializer.#ctor(System.Text.Encoding)">
+            <summary>
+            
+            </summary>
+            <param name="encoding"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.JsonCacheSerializer.Serialize(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.JsonCacheSerializer.Deserialize(System.Byte[],System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
         <member name="T:ZyGames.Framework.Common.Serialization.JsonUtils">
             <summary>
             Json序列化反序列化器
@@ -2015,6 +2236,26 @@
             <param name="entity">待反序列化的对象</param>
             <param name="type">对象类型</param>
             <param name="converters">自定转换的处理</param>
+            <returns></returns>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Serialization.ProtobufCacheSerializer">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.ProtobufCacheSerializer.Serialize(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Serialization.ProtobufCacheSerializer.Deserialize(System.Byte[],System.Type)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+            <param name="type"></param>
             <returns></returns>
         </member>
         <member name="T:ZyGames.Framework.Common.Serialization.ProtoBufUtils">
@@ -2478,6 +2719,11 @@
             </summary>
         </member>
         <member name="M:ZyGames.Framework.Common.Timing.TaskDispatch.Finalize">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.TaskDispatch.Running">
             <summary>
             
             </summary>

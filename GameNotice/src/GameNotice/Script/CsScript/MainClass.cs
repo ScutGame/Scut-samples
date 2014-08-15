@@ -34,11 +34,6 @@ namespace Game.Script
 {
     public class MainClass : GameSocketHost, IMainScript
     {
-        protected override BaseUser GetUser(int userId)
-        {
-            return null;
-        }
-
         protected override void OnConnectCompleted(object sender, ConnectionEventArgs e)
         {
             Console.WriteLine("客户端IP:[{0}]已与服务器连接成功", e.Socket.RemoteEndPoint);

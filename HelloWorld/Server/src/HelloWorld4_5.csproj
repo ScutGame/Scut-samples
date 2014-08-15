@@ -61,9 +61,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\protobuf-net.dll</HintPath>
     </Reference>
-    <Reference Include="ServiceStack">
-      <HintPath>.\ServiceStack.dll</HintPath>
-    </Reference>
     <Reference Include="ServiceStack.Interfaces, Version=3.7.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\ServiceStack.Interfaces.dll</HintPath>

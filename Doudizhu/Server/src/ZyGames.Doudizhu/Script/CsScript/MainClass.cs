@@ -47,10 +47,6 @@ namespace Game.Script
         public MainClass()
         {
         }
-        protected override BaseUser GetUser(int userId)
-        {
-            return (BaseUser)CacheFactory.GetPersonalEntity("ZyGames.Doudizhu.Model.GameUser", userId.ToString(), userId);
-        }
 
         protected override void OnConnectCompleted(object sender, ConnectionEventArgs e)
         {

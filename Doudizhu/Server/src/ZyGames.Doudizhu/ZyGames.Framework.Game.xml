@@ -862,7 +862,7 @@
             <param name="y"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.TradeGoods(ZyGames.Framework.Game.Context.BaseUser,ZyGames.Framework.Game.Com.Model.GoodsData,System.Int32,ZyGames.Framework.Game.Com.Mall.TradeErrorCode@)">
+        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.TradeGoods(ZyGames.Framework.Game.Context.IUser,ZyGames.Framework.Game.Com.Model.GoodsData,System.Int32,ZyGames.Framework.Game.Com.Mall.TradeErrorCode@)">
             <summary>
             Trades the goods.
             </summary>
@@ -872,7 +872,7 @@
             <param name="goodsNum">Goods number.</param>
             <param name="errorCode">Error code.</param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.TradeSuccess(ZyGames.Framework.Game.Context.BaseUser,ZyGames.Framework.Game.Com.Model.GoodsData,System.Int32,System.Double,System.Object)">
+        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.TradeSuccess(ZyGames.Framework.Game.Context.IUser,ZyGames.Framework.Game.Com.Model.GoodsData,System.Int32,System.Double,System.Object)">
             <summary>
             交易成功
             </summary>
@@ -890,7 +890,7 @@
             <param name="goodsNum"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.HasTraded(ZyGames.Framework.Game.Context.BaseUser,ZyGames.Framework.Game.Com.Model.GoodsData,System.Int32,System.Double@,ZyGames.Framework.Game.Com.Mall.TradeErrorCode@)">
+        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.HasTraded(ZyGames.Framework.Game.Context.IUser,ZyGames.Framework.Game.Com.Model.GoodsData,System.Int32,System.Double@,ZyGames.Framework.Game.Com.Mall.TradeErrorCode@)">
             <summary>
             检查是否可交易
             </summary>
@@ -901,7 +901,7 @@
             <param name="errorCode"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.PayAmount(ZyGames.Framework.Game.Context.BaseUser,System.Int32,System.Double)">
+        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.PayAmount(ZyGames.Framework.Game.Context.IUser,System.Int32,System.Double)">
             <summary>
             支付代币
             </summary>
@@ -910,7 +910,7 @@
             <param name="payAmount"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.SendGoods(ZyGames.Framework.Game.Context.BaseUser,System.Object)">
+        <member name="M:ZyGames.Framework.Game.Com.Mall.MallController.SendGoods(ZyGames.Framework.Game.Context.IUser,System.Object)">
             <summary>
             派送商品
             </summary>
@@ -1478,7 +1478,7 @@
             付款通知
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Game.Com.Generic.PaymentNotify.Notify(ZyGames.Framework.Game.Context.BaseUser)">
+        <member name="M:ZyGames.Framework.Game.Com.Generic.PaymentNotify.Notify(ZyGames.Framework.Game.Context.IUser)">
             <summary>
             
             </summary>
@@ -1985,6 +1985,43 @@
             游戏角色
             </summary>
         </member>
+        <member name="T:ZyGames.Framework.Game.Context.IUser">
+            <summary>
+            IUser
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Context.IUser.GetUserId">
+            <summary>
+            get userid
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Context.IUser.GetPassportId">
+            <summary>
+            get passport
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Context.IUser.RefleshOnlineDate">
+            <summary>
+            reflesh date
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Context.IUser.Token">
+            <summary>
+            user's token
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Context.IUser.IsLock">
+            <summary>
+            is lock status
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Context.IUser.IsOnlining">
+            <summary>
+            is online
+            </summary>
+        </member>
         <member name="M:ZyGames.Framework.Game.Context.BaseUser.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:ZyGames.Framework.Game.Context.BaseUser"/> class.
@@ -1996,9 +2033,9 @@
             </summary>
             <param name="access">Access.</param>
         </member>
-        <member name="F:ZyGames.Framework.Game.Context.BaseUser.OnlineHourInterval">
+        <member name="F:ZyGames.Framework.Game.Context.BaseUser.OnlineInterval">
             <summary>
-            在线间隔小时数
+            在线间隔
             </summary>
         </member>
         <member name="M:ZyGames.Framework.Game.Context.BaseUser.GetSessionId">
@@ -2042,7 +2079,7 @@
             </summary>
             <value>The user data.</value>
         </member>
-        <member name="P:ZyGames.Framework.Game.Context.BaseUser.IsFengJinStatus">
+        <member name="P:ZyGames.Framework.Game.Context.BaseUser.IsLock">
             <summary>
             Gets a value indicating whether this instance is feng jin status.
             </summary>
@@ -2054,7 +2091,7 @@
             </summary>
             <value>The online date.</value>
         </member>
-        <member name="P:ZyGames.Framework.Game.Context.BaseUser.IsInlining">
+        <member name="P:ZyGames.Framework.Game.Context.BaseUser.IsOnlining">
             <summary>
             Gets a value indicating whether this instance is inlining.
             </summary>
@@ -2065,9 +2102,9 @@
             
             </summary>
         </member>
-        <member name="P:ZyGames.Framework.Game.Context.BaseUser.Token360">
+        <member name="P:ZyGames.Framework.Game.Context.BaseUser.Token">
             <summary>
-            360渠道Token
+            渠道Token
             </summary>
         </member>
         <member name="T:ZyGames.Framework.Game.Context.EncryptionManager">
@@ -2158,90 +2195,6 @@
             <param name="strDESIV">向量</param>
             <returns>明文</returns>
         </member>
-        <member name="T:ZyGames.Framework.Game.Context.GameContext">
-            <summary>
-            请求的上下文对象
-            </summary>
-        </member>
-        <member name="F:ZyGames.Framework.Game.Context.GameContext.TimeOut">
-            <summary>
-            超时1s
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Context.GameContext.GetInstance(System.String,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            获得当前请求上下文
-            </summary>
-            <param name="sessionId"></param>
-            <param name="actionId"></param>
-            <param name="userId"></param>
-            <param name="timeOut"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Context.GameContext.Refresh">
-            <summary>
-            刷新清空
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Context.GameContext.Refresh(System.String,System.Int32,System.Int32)">
-            <summary>
-            刷新
-            </summary>
-            <param name="ssid"></param>
-            <param name="actionId"></param>
-            <param name="userId"></param>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Context.GameContext.#ctor(System.String,System.Int32,System.Int32,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="ssid"></param>
-            <param name="actionId"></param>
-            <param name="userId"></param>
-            <param name="timeOut">超时时间(毫秒)</param>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Context.GameContext.GetUser``1">
-            <summary>
-            当前玩家对象
-            </summary>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.LockTimeOut">
-            <summary>
-            锁超时时间
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.IsRequesting">
-            <summary>
-            是否正在请求中，避免多次
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.MonitorLock">
-            <summary>
-            获得锁策略
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.SessionId">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.UserId">
-            <summary>
-            当前玩家Id
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.ActionId">
-            <summary>
-            请求的ActionId
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Context.GameContext.User">
-            <summary>
-            当前玩家对象
-            </summary>
-        </member>
         <member name="T:ZyGames.Framework.Game.Context.HttpRequestManager">
             <summary>
             Http request manager.
@@ -2297,51 +2250,45 @@
             </summary>
             <param name="actionIds"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request">
             <summary>
             请求处理
             </summary>
-            <param name="userFactory"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(System.String,System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(System.String)">
             <summary>
             请求处理
             </summary>
             <param name="typeName"></param>
-            <param name="userFactory"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse,System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
             <summary>
             请求处理
             </summary>
             <param name="actionGetter"></param>
             <param name="response"></param>
-            <param name="userFactory"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(System.String,ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse,System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Request(System.String,ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
             <summary>
             请求处理
             </summary>
             <param name="typeName"></param>
             <param name="response"></param>
-            <param name="userFactory"></param>
             <param name="actionGetter"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.RequestScript(System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.RequestScript">
             <summary>
             请求脚本处理
             </summary>
-            <param name="userFactory">创建user对象工厂</param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.RequestScript(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse,System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.RequestScript(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
             <summary>
             请求脚本处理
             </summary>
             <param name="actionGetter">请求参数对象</param>
             <param name="response">字节输出处理</param>
-            <param name="userFactory">创建user对象工厂,可为Null</param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.GetActionResponse(ZyGames.Framework.Game.Contract.IActionDispatcher,System.Int32,ZyGames.Framework.Game.Context.BaseUser,System.String,ZyGames.Framework.Game.Service.ActionGetter@)">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.GetActionResponse(ZyGames.Framework.Game.Contract.IActionDispatcher,System.Int32,ZyGames.Framework.Game.Context.IUser,System.String,ZyGames.Framework.Game.Service.ActionGetter@)">
             <summary>
             获取Action处理的输出字节流
             </summary>
@@ -2352,20 +2299,19 @@
             <param name="actionGetter"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.GetActionResponse(ZyGames.Framework.Game.Contract.IActionDispatcher,System.Int32,ZyGames.Framework.Game.Context.BaseUser,ZyGames.Framework.Game.Service.ActionGetter)">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.GetActionResponse(ZyGames.Framework.Game.Contract.IActionDispatcher,System.Int32,ZyGames.Framework.Game.Context.IUser,ZyGames.Framework.Game.Service.ActionGetter)">
             <summary>
             获取Action处理的输出字节流
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Process(ZyGames.Framework.Game.Service.BaseStruct,ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse,System.Func{System.Int32,ZyGames.Framework.Game.Context.BaseUser})">
+        <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.Process(ZyGames.Framework.Game.Service.BaseStruct,ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
             <summary>
             
             </summary>
             <param name="baseStruct"></param>
             <param name="actionGetter"></param>
             <param name="response"></param>
-            <param name="userFactory"></param>
         </member>
         <member name="M:ZyGames.Framework.Game.Contract.ActionFactory.BroadcastAction``1(System.Int32,System.Collections.Generic.List{``0},ZyGames.Framework.Net.Parameters,System.Action{``0})">
             <summary>
@@ -2457,6 +2403,11 @@
             是否是主动推送
             </summary>
         </member>
+        <member name="F:ZyGames.Framework.Game.Service.GameStruct.IsNotRespond">
+            <summary>
+            是否影响输出, True：不响应
+            </summary>
+        </member>
         <member name="F:ZyGames.Framework.Game.Service.GameStruct.MsgId">
             <summary>
             请求上来的消息编号，主动下发编号为0
@@ -2479,6 +2430,28 @@
             </summary>
             <param name="aActionId"></param>
         </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.UInt64)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.UInt32)">
+            <summary>
+            int类型
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.UInt16)">
+            <summary>
+            short类型
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Int64)">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Int32)">
             <summary>
             int类型
@@ -2488,6 +2461,12 @@
         <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Int16)">
             <summary>
             short类型
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Boolean)">
+            <summary>
+            bool类型
             </summary>
             <param name="obj"></param>
         </member>
@@ -2502,6 +2481,29 @@
             string类型
             </summary>
             <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Double)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Single)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(System.Object,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+            <param name="useGzip"></param>
         </member>
         <member name="M:ZyGames.Framework.Game.Service.GameStruct.PushIntoStack(ZyGames.Framework.Game.Service.DataStruct)">
             <summary>
@@ -2760,14 +2762,9 @@
             
             </summary>
         </member>
-        <member name="P:ZyGames.Framework.Game.Service.BaseStruct.UserFactory">
-            <summary>
-            User创建工厂
-            </summary>
-        </member>
         <member name="P:ZyGames.Framework.Game.Service.BaseStruct.Current">
             <summary>
-            当前游戏上下文对象
+            当前游戏会话
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Service.BaseStruct.httpGet">
@@ -2798,16 +2795,14 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.Action.AuthorizeAction.CheckUser(System.String,System.Int32,ZyGames.Framework.Game.Context.BaseUser@)">
+        <member name="M:ZyGames.Framework.Game.Contract.Action.AuthorizeAction.CheckUser(ZyGames.Framework.Game.Context.IUser@)">
             <summary>
             Checks the user.
             </summary>
             <returns>The user.</returns>
-            <param name="sessionId">Session I.</param>
-            <param name="userId">User identifier.</param>
             <param name="gameUser">Game user.</param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.Action.AuthorizeAction.DoRefresh(System.Int32,ZyGames.Framework.Game.Context.BaseUser)">
+        <member name="M:ZyGames.Framework.Game.Contract.Action.AuthorizeAction.DoRefresh(System.Int32,ZyGames.Framework.Game.Context.IUser)">
             <summary>
             Dos the refresh.
             </summary>
@@ -2883,6 +2878,161 @@
             </summary>
             <value><c>true</c> if ignore action identifier; otherwise, <c>false</c>.</value>
         </member>
+        <member name="T:ZyGames.Framework.Game.Contract.GameBaseHost">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameBaseHost.Start(System.String[])">
+            <summary>
+            
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameBaseHost.Stop">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameBaseHost.DoAction(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
+            <summary>
+            
+            </summary>
+            <param name="actionGetter"></param>
+            <param name="response"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameBaseHost.OnRequested(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
+            <summary>
+            Raises the requested event.
+            </summary>
+            <param name="actionGetter">Http get.</param>
+            <param name="response">Response.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameBaseHost.OnCallRemote(System.String,ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.RPC.IO.MessageStructure)">
+            <summary>
+            Call remote method
+            </summary>
+            <param name="routePath"></param>
+            <param name="actionGetter"></param>
+            <param name="response"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameBaseHost.CheckRemote(System.String,ZyGames.Framework.Game.Service.ActionGetter)">
+            <summary>
+            Checks the remote.
+            </summary>
+            <returns><c>true</c>, if remote was checked, <c>false</c> otherwise.</returns>
+            <param name="route">Route.</param>
+            <param name="actionGetter">Http get.</param>
+        </member>
+        <member name="T:ZyGames.Framework.Game.Contract.GameHttpHost">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameHttpHost.Request(System.Web.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:ZyGames.Framework.Game.Contract.RemotePackage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RemotePackage.#ctor">
+            <summary>
+            init
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RemotePackage.MsgId">
+            <summary>
+            message id of client request
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RemotePackage.RouteName">
+            <summary>
+            服务器间内部通讯通道
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RemotePackage.Message">
+            <summary>
+            Message of custom
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RemotePackage.SendTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RemotePackage.IsPushed">
+            <summary>
+            is pushed package
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Game.Contract.RemotePackage.Callback">
+            <summary>
+            callback
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Game.Contract.RemoteService">
+            <summary>
+            Remote service.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RemoteService.CreateHttpProxy(System.String,System.String)">
+            <summary>
+            Create http proxy
+            </summary>
+            <param name="proxyId"></param>
+            <param name="url"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RemoteService.CreateHttpProxy(System.String,System.String,System.Text.Encoding,System.Nullable{System.Int32})">
+            <summary>
+            Create tcp proxy
+            </summary>
+            <param name="proxyId"></param>
+            <param name="url"></param>
+            <param name="encoding"></param>
+            <param name="timeout"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RemoteService.CreateTcpProxy(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Create tcp proxy
+            </summary>
+            <param name="proxyId"></param>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="heartInterval"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RemoteService.#ctor(System.String,ZyGames.Framework.RPC.Service.RemoteClient)">
+            <summary>
+            init
+            </summary>
+            <param name="proxyId">local name</param>
+            <param name="client"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RemoteService.Call(System.String,ZyGames.Framework.RPC.IO.RequestParam,System.Action{ZyGames.Framework.Game.Contract.RemotePackage})">
+            <summary>
+            
+            </summary>
+            <param name="routePath">Call method path, ex:className.method</param>
+            <param name="param"></param>
+            <param name="callback"></param>
+        </member>
+        <member name="E:ZyGames.Framework.Game.Contract.RemoteService.PushedHandle">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RemoteService.PackageCount">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ZyGames.Framework.Game.Service.ActionGetter">
             <summary>
             action Parameter
@@ -2913,6 +3063,12 @@
             <summary>
             ActoinId
             </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.ActionGetter.GetRouteName">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Game.Service.ActionGetter.GetUserId">
             <summary>
@@ -3386,6 +3542,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Game.Contract.Action.LoginAction.CreateLogin">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Game.Contract.Action.LoginAction.TakeAction">
             <summary>
             子类实现Action处理
@@ -3404,12 +3566,13 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.Action.LoginAction.DoSuccess(System.Int32)">
+        <member name="M:ZyGames.Framework.Game.Contract.Action.LoginAction.DoSuccess(System.Int32,ZyGames.Framework.Game.Context.IUser@)">
             <summary>
             Dos the success.
             </summary>
             <returns><c>true</c>, if success was done, <c>false</c> otherwise.</returns>
             <param name="userId">User identifier.</param>
+            <param name="user"></param>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.Action.LoginAction.GuideId">
             <summary>
@@ -3683,6 +3846,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Game.Contract.Action.RegisterAction.TakeAction">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Game.Contract.Action.RegisterAction.TakeActionAffter(System.Boolean)">
             <summary>
             处理结束执行
@@ -3694,6 +3863,12 @@
             Gets the action parameter.
             </summary>
             <returns><c>true</c>, if action parameter was gotten, <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.Action.RegisterAction.CreateUserRole(ZyGames.Framework.Game.Context.IUser@)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.Action.RegisterAction.GuideId">
             <summary>
@@ -3832,14 +4007,33 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameSession.GetRemote(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="proxyId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameSession.GetRemoteAll">
+            <summary>
+            Get remote all
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Game.Contract.GameSession.#ctor">
             <summary>
             init proto deserialize use
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.GameSession.BindIdentity(System.Int32)">
+        <member name="M:ZyGames.Framework.Game.Contract.GameSession.Bind(ZyGames.Framework.Game.Context.IUser)">
             <summary>
-            bind Identity userid
+            
+            </summary>
+            <param name="user"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.GameSession.UnBind">
+            <summary>
+            
             </summary>
         </member>
         <member name="M:ZyGames.Framework.Game.Contract.GameSession.Close">
@@ -3882,9 +4076,24 @@
             session timeout(sec).
             </summary>
         </member>
+        <member name="P:ZyGames.Framework.Game.Contract.GameSession.MonitorLock">
+            <summary>
+            获得锁策略
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.GameSession.IsAuthorized">
+            <summary>
+            Is authorized.
+            </summary>
+        </member>
         <member name="P:ZyGames.Framework.Game.Contract.GameSession.IsProxyServer">
             <summary>
             Is proxy server session
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.GameSession.IsRemote">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.GameSession.EndAddress">
@@ -3912,14 +4121,24 @@
             login UserId
             </summary>
         </member>
+        <member name="P:ZyGames.Framework.Game.Contract.GameSession.User">
+            <summary>
+            User
+            </summary>
+        </member>
         <member name="P:ZyGames.Framework.Game.Contract.GameSession.ProxySid">
             <summary>
-            Gets or sets ssid identifier by the server proxy.
+            远程代理客户端的会话ID
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.GameSession.LastActivityTime">
             <summary>
             最后活动时间
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.GameSession.ProxyId">
+            <summary>
+            远程代理客户端的标识ID
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.GameSession.IsClosed">
@@ -3945,26 +4164,6 @@
         <member name="F:ZyGames.Framework.Game.Contract.GameSocketHost.EnableHttp">
             <summary>
             The enable http.
-            </summary>
-        </member>
-        <member name="F:ZyGames.Framework.Game.Contract.GameSocketHost.receiveNum">
-            <summary>
-            The receive number.
-            </summary>
-        </member>
-        <member name="F:ZyGames.Framework.Game.Contract.GameSocketHost.timeoutDropNum">
-            <summary>
-            The timeout drop number.
-            </summary>
-        </member>
-        <member name="F:ZyGames.Framework.Game.Contract.GameSocketHost.runningNum">
-            <summary>
-            The running number.
-            </summary>
-        </member>
-        <member name="F:ZyGames.Framework.Game.Contract.GameSocketHost._runningQueue">
-            <summary>
-            is running process queue.
             </summary>
         </member>
         <member name="M:ZyGames.Framework.Game.Contract.GameSocketHost.#ctor">
@@ -4007,28 +4206,6 @@
             
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.GameSocketHost.CheckRemote(System.String,ZyGames.Framework.Game.Service.ActionGetter)">
-            <summary>
-            Checks the remote.
-            </summary>
-            <returns><c>true</c>, if remote was checked, <c>false</c> otherwise.</returns>
-            <param name="route">Route.</param>
-            <param name="actionGetter">Http get.</param>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Contract.GameSocketHost.OnRequested(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.Game.Service.BaseGameResponse)">
-            <summary>
-            Raises the requested event.
-            </summary>
-            <param name="actionGetter">Http get.</param>
-            <param name="response">Response.</param>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Contract.GameSocketHost.GetUser(System.Int32)">
-            <summary>
-            Get user object by userid
-            </summary>
-            <param name="userId"></param>
-            <returns></returns>
-        </member>
         <member name="M:ZyGames.Framework.Game.Contract.GameSocketHost.OnStartAffer">
             <summary>
             Raises the start affer event.
@@ -4038,12 +4215,6 @@
             <summary>
             Raises the service stop event.
             </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Contract.GameSocketHost.blockingNum">
-            <summary>
-            Gets the blocking number.
-            </summary>
-            <value>The blocking number.</value>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.GameSocketHost.ActionDispatcher">
             <summary>
@@ -4057,9 +4228,25 @@
         </member>
         <member name="M:ZyGames.Framework.Game.Contract.IActionDispatcher.TryDecodePackage(ZyGames.Framework.RPC.Sockets.ConnectionEventArgs,ZyGames.Framework.Game.Contract.RequestPackage@)">
             <summary>
-            
+            decode package for socket
             </summary>
             <param name="e"></param>
+            <param name="package"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.IActionDispatcher.TryDecodePackage(System.Net.HttpListenerContext,ZyGames.Framework.Game.Contract.RequestPackage@)">
+            <summary>
+            decode package for http
+            </summary>
+            <param name="context"></param>
+            <param name="package"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.IActionDispatcher.TryDecodePackage(System.Web.HttpContext,ZyGames.Framework.Game.Contract.RequestPackage@)">
+            <summary>
+            decode package for http
+            </summary>
+            <param name="context"></param>
             <param name="package"></param>
             <returns></returns>
         </member>
@@ -4079,18 +4266,50 @@
             <param name="errorCode"></param>
             <param name="errorInfo"></param>
         </member>
-        <member name="T:ZyGames.Framework.Game.Contract.ActionDispatcher">
+        <member name="T:ZyGames.Framework.Game.Contract.ScutActionDispatcher">
             <summary>
             Action分发器
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Game.Contract.ActionDispatcher.TryDecodePackage(ZyGames.Framework.RPC.Sockets.ConnectionEventArgs,ZyGames.Framework.Game.Contract.RequestPackage@)">
+        <member name="M:ZyGames.Framework.Game.Contract.ScutActionDispatcher.TryDecodePackage(ZyGames.Framework.RPC.Sockets.ConnectionEventArgs,ZyGames.Framework.Game.Contract.RequestPackage@)">
             <summary>
             Decode request package
             </summary>
             <param name="e"></param>
             <param name="package"></param>
             <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.ScutActionDispatcher.TryDecodePackage(System.Net.HttpListenerContext,ZyGames.Framework.Game.Contract.RequestPackage@)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="package"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.ScutActionDispatcher.TryDecodePackage(System.Web.HttpContext,ZyGames.Framework.Game.Contract.RequestPackage@)">
+            <summary>
+            
+            </summary>
+            <param name="context"></param>
+            <param name="package"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.ScutActionDispatcher.GetActionGetter(ZyGames.Framework.Game.Contract.RequestPackage)">
+            <summary>
+            
+            </summary>
+            <param name="package"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Contract.ScutActionDispatcher.ResponseError(ZyGames.Framework.Game.Service.BaseGameResponse,ZyGames.Framework.Game.Service.ActionGetter,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="response"></param>
+            <param name="actionGetter"></param>
+            <param name="errorCode"></param>
+            <param name="errorInfo"></param>
         </member>
         <member name="T:ZyGames.Framework.Game.Contract.Page.RankingPage">
             <summary>
@@ -4146,6 +4365,12 @@
             init
             </summary>
         </member>
+        <member name="M:ZyGames.Framework.Game.Contract.RequestPackage.Bind(ZyGames.Framework.Game.Contract.GameSession)">
+            <summary>
+            
+            </summary>
+            <param name="session"></param>
+        </member>
         <member name="P:ZyGames.Framework.Game.Contract.RequestPackage.MsgId">
             <summary>
             message id of client request
@@ -4189,6 +4414,11 @@
         <member name="P:ZyGames.Framework.Game.Contract.RequestPackage.UrlParam">
             <summary>
             param for url request
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Contract.RequestPackage.ProxyId">
+            <summary>
+            远程代理客户端的标识ID
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Contract.RequestPackage.Message">
@@ -5989,6 +6219,11 @@
             CSharp script type name.
             </summary>
         </member>
+        <member name="P:ZyGames.Framework.Game.Runtime.EnvironmentSetting.RemoteTypeName">
+            <summary>
+            Remote type name.
+            </summary>
+        </member>
         <member name="P:ZyGames.Framework.Game.Runtime.EnvironmentSetting.GameIpAddress">
             <summary>
             local ip
@@ -5997,6 +6232,11 @@
         <member name="P:ZyGames.Framework.Game.Runtime.EnvironmentSetting.GamePort">
             <summary>
             socket port
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Runtime.EnvironmentSetting.ActionDispatcher">
+            <summary>
+            Action repeater
             </summary>
         </member>
         <member name="T:ZyGames.Framework.Game.Service.HttpGameResponse">
@@ -6092,6 +6332,75 @@
             登录成功
             </summary>
         </member>
+        <member name="T:ZyGames.Framework.Game.Service.RemoteStruct">
+            <summary>
+            Remote struct
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Game.Service.RemoteStruct.paramGetter">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Game.Service.RemoteStruct.response">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.#ctor(ZyGames.Framework.Game.Service.ActionGetter,ZyGames.Framework.RPC.IO.MessageStructure)">
+            <summary>
+            init
+            </summary>
+            <param name="paramGetter"></param>
+            <param name="response"></param>
+        </member>
+        <member name="F:ZyGames.Framework.Game.Service.RemoteStruct.IsNotRespond">
+            <summary>
+            是否影响输出, True：不响应
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.DoRemote">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.WriteResponse">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.WriteError">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.Check">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.TakeRemote">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.RemoteStruct.BuildPacket">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Service.RemoteStruct.ErrorCode">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Service.RemoteStruct.ErrorInfo">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ZyGames.Framework.Game.Service.SocketGameResponse">
             <summary>
             
@@ -6150,6 +6459,11 @@
         <member name="P:ZyGames.Framework.Game.Sns.ILogin.UserID">
             <summary>
             
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Sns.ILogin.UserType">
+            <summary>
+            用户类型
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Sns.ILogin.Password">
@@ -6224,6 +6538,11 @@
             
             </summary>
             <value>The session I.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Sns.AbstractLogin.UserType">
+            <summary>
+            
+            </summary>
         </member>
         <member name="P:ZyGames.Framework.Game.Sns.AbstractLogin.DeviceID">
             <summary>
@@ -7042,7 +7361,7 @@
             The python script task cache key.
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Game.Runtime.GameEnvironment.InitializeCache">
+        <member name="M:ZyGames.Framework.Game.Runtime.GameEnvironment.InitializeCache(ZyGames.Framework.Common.Serialization.ICacheSerializer)">
             <summary>
             Initialize entity cache.
             </summary>
@@ -7195,7 +7514,7 @@
         </member>
         <member name="M:ZyGames.Framework.Game.Service.DataStruct.PushShortIntoStack(System.Int32)">
             <summary>
-            输出Short类型
+            输出Short类型,Lua脚本只有int类型
             </summary>
             <param name="obj"></param>
         </member>
@@ -7238,6 +7557,30 @@
         <member name="M:ZyGames.Framework.Game.Service.DataStruct.PushIntoStack(System.String)">
             <summary>
             string类型
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.PushIntoStack(System.DateTime)">
+            <summary>
+            DateTime类型
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.PushIntoStack(System.UInt16)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.PushIntoStack(System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="obj"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.PushIntoStack(System.UInt64)">
+            <summary>
+            
             </summary>
             <param name="obj"></param>
         </member>
@@ -7340,13 +7683,6 @@
             <param name="response"></param>
             <param name="aValue"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteLong(ZyGames.Framework.Game.Service.BaseGameResponse,System.Int64)">
-            <summary>
-            
-            </summary>
-            <param name="response"></param>
-            <param name="aValue"></param>
-        </member>
         <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteBool(ZyGames.Framework.Game.Service.BaseGameResponse,System.Boolean)">
             <summary>
             
@@ -7354,26 +7690,61 @@
             <param name="response"></param>
             <param name="aValue"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteDWord(ZyGames.Framework.Game.Service.BaseGameResponse,System.Int32)">
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteLong(ZyGames.Framework.Game.Service.BaseGameResponse,System.Int64)">
+            <summary>
+            
+            </summary>
+            <param name="response"></param>
+            <param name="aValue"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteInt(ZyGames.Framework.Game.Service.BaseGameResponse,System.Int32)">
             <summary>
             写入字节流
             </summary>
             <param name="aValue"></param>
             <param name="response"></param>
         </member>
-        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteWord(ZyGames.Framework.Game.Service.BaseGameResponse,System.Int16)">
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteShort(ZyGames.Framework.Game.Service.BaseGameResponse,System.Int16)">
             <summary>
             写入字节流
             </summary>
             <param name="aValue"></param>
             <param name="response"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteULong(ZyGames.Framework.Game.Service.BaseGameResponse,System.UInt64)">
+            <summary>
+            
+            </summary>
+            <param name="response"></param>
+            <param name="aValue"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteUInt(ZyGames.Framework.Game.Service.BaseGameResponse,System.UInt32)">
+            <summary>
+            写入字节流
+            </summary>
+            <param name="aValue"></param>
+            <param name="response"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteUShort(ZyGames.Framework.Game.Service.BaseGameResponse,System.UInt16)">
+            <summary>
+            写入字节流
+            </summary>
+            <param name="aValue"></param>
+            <param name="response"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteDateTime(ZyGames.Framework.Game.Service.BaseGameResponse,System.DateTime)">
+            <summary>
+            
+            </summary>
+            <param name="response"></param>
+            <param name="value"></param>
         </member>
         <member name="M:ZyGames.Framework.Game.Service.DataStruct.WriteByte(ZyGames.Framework.Game.Service.BaseGameResponse,System.Byte)">
             <summary>
             写入字节流
             </summary>
             <param name="aByte"></param>
-            <param name="m_Response"></param>
+            <param name="response"></param>
         </member>
         <member name="M:ZyGames.Framework.Game.Service.DataStruct.GetStringLen(System.String)">
             <summary>
@@ -7399,13 +7770,13 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Service.DataStruct.GetDWordLen">
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.GetIntLen">
             <summary>
             计算int型数据下发时，占用的字节长度
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Game.Service.DataStruct.GetWordLen">
+        <member name="M:ZyGames.Framework.Game.Service.DataStruct.GetShortLen">
             <summary>
             计算short型数据下发时，占用的字节长度
             </summary>
@@ -7422,6 +7793,11 @@
             计算Bool型数据下发时，占用的字节长度
             </summary>
             <returns></returns>
+        </member>
+        <member name="P:ZyGames.Framework.Game.Service.DataStruct.IsDebug">
+            <summary>
+            是否启用调试跟踪流
+            </summary>
         </member>
         <member name="T:ZyGames.Framework.Game.Contract.HttpGet">
             <summary>

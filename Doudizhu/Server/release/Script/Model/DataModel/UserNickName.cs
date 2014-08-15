@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
-using ZyGames.Framework.Common;
 using ZyGames.Framework.Model;
 
 namespace ZyGames.Doudizhu.Model
@@ -12,7 +8,7 @@ namespace ZyGames.Doudizhu.Model
     /// 玩家昵称缓存
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(CacheType.Entity, DbConfig.Data, IsStoreInDb = false, IsPersistence = false)]
+    [EntityTable(CacheType.Entity, DbConfig.Data, IsStoreInDb = false, IsExpired = false)]
     public class UserNickName : ShareEntity
     {
         public UserNickName()

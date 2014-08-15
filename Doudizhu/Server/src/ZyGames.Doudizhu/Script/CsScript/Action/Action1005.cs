@@ -4,6 +4,7 @@ using ZyGames.Doudizhu.Bll.Com.Share;
 using ZyGames.Doudizhu.Model;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Lang;
@@ -30,11 +31,11 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
             return true;
         }
 
-        public override bool TakeAction()
+        protected override bool CreateUserRole(out IUser user)
         {
-
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(Uid);
-            if (user == null)
+            user = null;
+            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(Uid);
+            if (gameUser == null)
             {
                 var roleFunc = new RoleFunc();
                 string msg;
@@ -47,10 +48,10 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
                     ErrorInfo = msg;
                     return false;
                 }
-                user = CreateRole();
-                roleFunc.OnCreateAfter(user);
+                gameUser = CreateRole();
+                roleFunc.OnCreateAfter(gameUser);
             }
-            Current.User = user;
+            user = gameUser;
             UserLoginLog userLoginLog = new UserLoginLog();
             userLoginLog.UserId = Uid;
             userLoginLog.SessionID = Sid;
@@ -62,8 +63,8 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
             userLoginLog.State = (short)LoginStatus.Logined;
             userLoginLog.DeviceID = DeviceID;
             userLoginLog.Ip = GetRealIP();
-            userLoginLog.Pid = user.Pid;
-            userLoginLog.UserLv = user.UserLv;
+            userLoginLog.Pid = gameUser.Pid;
+            userLoginLog.UserLv = gameUser.UserLv;
             var sender = DataSyncManager.GetDataSender();
             sender.Send(userLoginLog);
 

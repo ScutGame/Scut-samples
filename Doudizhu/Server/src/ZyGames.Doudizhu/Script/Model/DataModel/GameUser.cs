@@ -273,7 +273,7 @@ namespace ZyGames.Doudizhu.Model
             return RetailId;
         }
 
-        public override bool IsFengJinStatus
+        public override bool IsLock
         {
             get { return UserStatus == UserStatus.FengJin; }
         }
