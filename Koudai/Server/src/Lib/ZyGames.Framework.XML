@@ -9255,9 +9255,9 @@
             <param name="key"></param>
             <returns></returns>
         </member>
-        <member name="T:ZyGames.Framework.RPC.Service.SocketRemoteClient">
+        <member name="T:ZyGames.Framework.RPC.Service.HttpRemoteClient">
             <summary>
-            Remote client for socket
+            Remote client for http
             </summary>
         </member>
         <member name="T:ZyGames.Framework.RPC.Service.RemoteClient">
@@ -9304,56 +9304,6 @@
         <member name="P:ZyGames.Framework.RPC.Service.RemoteClient.IsSocket">
             <summary>
             Is socket client
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.#ctor(System.String,System.Int32,System.Int32)">
-            <summary>
-            init
-            </summary>
-            <param name="host"></param>
-            <param name="port"></param>
-            <param name="heartInterval">ms</param>
-        </member>
-        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Connect">
-            <summary>
-            Connect
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Close">
-            <summary>
-            Close
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Send(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="data"></param>
-        </member>
-        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Send(System.Byte[])">
-            <summary>
-            
-            </summary>
-            <param name="data"></param>
-        </member>
-        <member name="P:ZyGames.Framework.RPC.Service.SocketRemoteClient.Encoding">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.RPC.Service.SocketRemoteClient.HeartPacket">
-            <summary>
-            Heartbeat packet data.
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.RPC.Service.SocketRemoteClient.Connected">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ZyGames.Framework.RPC.Service.HttpRemoteClient">
-            <summary>
-            Remote client for http
             </summary>
         </member>
         <member name="M:ZyGames.Framework.RPC.Service.HttpRemoteClient.#ctor(System.String)">
@@ -9434,6 +9384,56 @@
             RemoteCallback delegate
             </summary>
             <param name="e"></param>
+        </member>
+        <member name="T:ZyGames.Framework.RPC.Service.SocketRemoteClient">
+            <summary>
+            Remote client for socket
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>
+            init
+            </summary>
+            <param name="host"></param>
+            <param name="port"></param>
+            <param name="heartInterval">ms</param>
+        </member>
+        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Connect">
+            <summary>
+            Connect
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Close">
+            <summary>
+            Close
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Send(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="M:ZyGames.Framework.RPC.Service.SocketRemoteClient.Send(System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="data"></param>
+        </member>
+        <member name="P:ZyGames.Framework.RPC.Service.SocketRemoteClient.Encoding">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.RPC.Service.SocketRemoteClient.HeartPacket">
+            <summary>
+            Heartbeat packet data.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.RPC.Service.SocketRemoteClient.Connected">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:ZyGames.Framework.RPC.Sockets.SocketEventArgs">
             <summary>

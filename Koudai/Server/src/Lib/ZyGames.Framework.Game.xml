@@ -6574,96 +6574,6 @@
             
             </summary>
         </member>
-        <member name="T:ZyGames.Framework.Game.Sns.LoginAnySdk">
-            <summary>
-            AnySDK
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Sns.LoginAnySdk.#ctor(System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:ZyGames.Framework.Game.Sns.LoginTencent"/> class.
-            </summary>
-        </member>
-        <member name="T:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResult">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResult.status">
-            <summary>
-            用于表达验证请求成功与否
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResult.data">
-            <summary>
-            保存渠道平台返回的验证信息
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResult.common">
-            <summary>
-            包含渠道编号、用户SDK标识，渠道用户uid
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResult.ext">
-            <summary>
-            为空，开发商服务器可以在ext域中存放用户信息（比如开发商服务器内部设定用户标识）下发给客户端
-            </summary>
-        </member>
-        <member name="T:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.error_no">
-            <summary>
-            错误编号
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.error">
-            <summary>
-            错误信息
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.id">
-            <summary>
-            编号
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.name">
-            <summary>
-            名称
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.avatar">
-            <summary>
-            avatar
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.sex">
-            <summary>
-            sex
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.area">
-            <summary>
-            area
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.nick">
-            <summary>
-            nick
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.access_token">
-            <summary>
-            access_token
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Game.Sns.LoginAnySdk.AnySDKResultdata.refresh_token">
-            <summary>
-            refresh_token
-            </summary>
-        </member>
         <member name="T:ZyGames.Framework.Game.Sns.LoginDanLeV2">
             <summary>
             当乐0037
@@ -6743,27 +6653,6 @@
             <summary>
             The error_msg.
             </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Sns.LoginFeiliu.#ctor(System.String,System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:ZyGames.Framework.Game.Sns.LoginTencent"/> class.
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Sns.LoginFeiliu.Decrypt(System.String)">
-            <summary>
-            解密数据
-            </summary>
-            <param name="base64code">传入加密数据</param>
-            <returns>返回解密数据</returns>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Sns.LoginFeiliu.RSADeCrtypto(System.Byte[],System.Security.Cryptography.RSAParameters,System.Boolean)">
-            <summary>
-            解密数据
-            </summary>
-            <param name="DataToDeCrypto">要解密的数据</param>
-            <param name="RSAKeyInfo"></param>
-            <param name="DoOAEPPadding"></param>
-            <returns></returns>
         </member>
         <member name="T:ZyGames.Framework.Game.Sns.LoginGFan">
             <summary>
@@ -6968,16 +6857,6 @@
             Gets or sets the error message.
             </summary>
             <value>The error message.</value>
-        </member>
-        <member name="T:ZyGames.Framework.Game.Sns.LoginTencent">
-            <summary>
-            腾讯0018
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Game.Sns.LoginTencent.#ctor(System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:ZyGames.Framework.Game.Sns.LoginTencent"/> class.
-            </summary>
         </member>
         <member name="T:ZyGames.Framework.Game.Task.TaskStatus">
             <summary>

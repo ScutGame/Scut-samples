@@ -217,9 +217,29 @@
             父类对象引用
             </summary>
         </member>
-        <member name="T:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs">
+        <member name="T:ZyGames.Framework.Common.Event.EventNotifier">
             <summary>
-            Time out notify event args
+            Event notifier
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Event.EventNotifier.Put(ZyGames.Framework.Common.Event.NotifyEventArgs)">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.TimerNum">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.WaitEventCount">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Event.NotifyCallback">
+            <summary>
+            
             </summary>
         </member>
         <member name="T:ZyGames.Framework.Common.Event.NotifyEventArgs">
@@ -248,6 +268,11 @@
             
             </summary>
         </member>
+        <member name="T:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs">
+            <summary>
+            Time out notify event args
+            </summary>
+        </member>
         <member name="M:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.#ctor(System.Int32)">
             <summary>
             init
@@ -268,31 +293,6 @@
         <member name="P:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.Timeout">
             <summary>
             Timeout
-            </summary>
-        </member>
-        <member name="T:ZyGames.Framework.Common.Event.NotifyCallback">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="T:ZyGames.Framework.Common.Event.EventNotifier">
-            <summary>
-            Event notifier
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Event.EventNotifier.Put(ZyGames.Framework.Common.Event.NotifyEventArgs)">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.TimerNum">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.WaitEventCount">
-            <summary>
-            
             </summary>
         </member>
         <member name="T:ZyGames.Framework.Common.HttpUtils">
