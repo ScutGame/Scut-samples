@@ -22,9 +22,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Com.Model;
@@ -132,7 +129,7 @@ namespace ZyGames.Tianjiexing.Model.DataModel
         /// <summary>
         /// </summary>        
         [ProtoMember(5)]
-        [EntityField("GuideProgress", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public override CacheList<GuideProgressItem> GuideProgress
         {
             get

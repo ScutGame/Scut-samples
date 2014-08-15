@@ -30,14 +30,10 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using ProtoBuf;
-using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
-using ZyGames.Framework.Event;
 using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model
@@ -84,7 +80,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(2)]
-        [EntityField("GuildLog", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<MemberLog> GuildLog
         {
             get

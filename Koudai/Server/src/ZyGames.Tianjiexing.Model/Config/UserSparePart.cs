@@ -23,11 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Cache;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Event;
 

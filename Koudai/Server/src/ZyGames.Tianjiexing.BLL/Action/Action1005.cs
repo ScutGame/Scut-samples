@@ -25,6 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
@@ -63,13 +64,16 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             return false;
         }
+
+
         //protected override bool ValidateElement()
         //{
         //    return UserHelper.GetKeyWordSubstitution(UserName);
 
         //}
-        public override bool TakeAction()
+        protected override bool CreateUserRole(out IUser user)
         {
+            user = null;
             int MaxLength = ConfigEnvSet.GetInt("User.MaxLength");
             int length = System.Text.Encoding.Default.GetByteCount(UserName);
 
@@ -130,7 +134,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (new GameDataCacheSet<GameUser>().FindKey(Uid) == null)
             {
                 userEntity = CreateGameUser(userSex);
-                Current.User = userEntity;
+                user = userEntity;
                 NoviceHelper.RetailLoginDaysReceive(userEntity); //渠道登录奖励
                 CreateGeneral(careerInfo);
                 CreateMagic(userEntity);

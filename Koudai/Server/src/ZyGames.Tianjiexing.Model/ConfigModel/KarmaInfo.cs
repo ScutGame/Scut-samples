@@ -31,10 +31,8 @@ THE SOFTWARE.
 using System;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 
 namespace ZyGames.Tianjiexing.Model
 {
@@ -75,7 +73,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <Karma>
         /// </summary>        
         [ProtoMember(2)]
-        [EntityField("KarmaList",IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<Karma> KarmaList
         {
             get

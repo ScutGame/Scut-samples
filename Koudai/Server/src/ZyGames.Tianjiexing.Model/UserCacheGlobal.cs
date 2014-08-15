@@ -1,11 +1,6 @@
-﻿using System;
-using ZyGames.Framework.Common;
+﻿using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
-using ZyGames.Framework.Game.Runtime;
-using ZyGames.Framework.Model;
-using ZyGames.Framework.Net;
-using ZyGames.Tianjiexing.Model.DataModel;
 
 namespace ZyGames.Tianjiexing.Model
 {

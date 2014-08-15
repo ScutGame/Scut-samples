@@ -29,11 +29,8 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
-using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Cache.Generic;
@@ -241,7 +238,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(11)]
-        [EntityField("GuildBossInfo", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public GuildBossInfo GuildBossInfo
         {
             get
@@ -292,7 +289,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(14)]
-        [EntityField("AbilityInfo", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<GuildAbility> AbilityInfo
         {
             get
@@ -309,7 +306,7 @@ namespace ZyGames.Tianjiexing.Model
         /// ���᳿����Ϣ
         /// </summary>
         [ProtoMember(15)]
-        [EntityField("GuildExercise", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public GuildExercise GuildExercise
         {
             get

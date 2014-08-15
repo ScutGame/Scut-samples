@@ -32,7 +32,6 @@ using System;
 using ProtoBuf;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Event;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Model;
@@ -620,7 +619,7 @@ namespace ZyGames.Tianjiexing.Model
         /// Ӷ������
         /// </summary>
         [ProtoMember(33)]
-        [EntityField("Attribute", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<GeneralProperty> Attribute
         {
             get

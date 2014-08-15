@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -55,14 +55,23 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Lib\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="NLog">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\NLog.dll</HintPath>
+      <HintPath>..\Lib\NLog.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\protobuf-net.dll</HintPath>
+      <HintPath>..\Lib\protobuf-net.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -79,19 +88,16 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
     <Reference Include="ZyGames.Framework">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\ZyGames.Framework.dll</HintPath>
+      <HintPath>..\Lib\ZyGames.Framework.dll</HintPath>
     </Reference>
     <Reference Include="ZyGames.Framework.Common">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\ZyGames.Framework.Common.dll</HintPath>
+      <HintPath>..\Lib\ZyGames.Framework.Common.dll</HintPath>
     </Reference>
     <Reference Include="ZyGames.Framework.Game">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\ZyGames.Framework.Game.dll</HintPath>
+      <HintPath>..\Lib\ZyGames.Framework.Game.dll</HintPath>
     </Reference>
-    <Reference Include="IronPython">
-      <HintPath>..\..\..\..\..\Release\6.5.8.5\Lib\IronPython.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Solution Items\GlobalAssemblyInfo.cs">

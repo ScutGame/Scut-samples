@@ -220,7 +220,6 @@ namespace ZyGames.Tianjiexing.BLL.Base
             try
             {
                 bool isDeduct = false;
-                int crystalNum = 0;
                 CrystalInfo crystal = new CrystalInfo();
                 content = LanguageManager.GetLang().St_SummerThreeGameCoinNotice.Substring(0, 5);
                 foreach (PrizeInfo prize in prizeList)

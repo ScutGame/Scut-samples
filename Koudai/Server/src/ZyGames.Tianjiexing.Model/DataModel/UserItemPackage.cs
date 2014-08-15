@@ -29,12 +29,10 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Cache.Generic;
@@ -100,7 +98,7 @@ namespace ZyGames.Tianjiexing.Model
         /// </summary>
 
         [ProtoMember(2)]
-        [EntityField("ItemPackage", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<UserItemInfo> ItemPackage
         {
             get

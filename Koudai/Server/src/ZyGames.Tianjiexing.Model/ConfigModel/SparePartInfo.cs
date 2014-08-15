@@ -29,11 +29,9 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 
@@ -155,7 +153,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// ������Է�Χ
         /// </summary>
-        [EntityField("PropertyRange", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public SparePartProperty[] PropertyRange
         {
             get
@@ -171,7 +169,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("ResetProperty", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public SparePartReset[] ResetProperty
         {
             get

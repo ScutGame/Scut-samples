@@ -31,12 +31,10 @@ THE SOFTWARE.
 using System;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 
 namespace ZyGames.Tianjiexing.Model
@@ -111,7 +109,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// </summary>        
         [ProtoMember(2)]
-        [EntityField("PlotPackage", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<UserPlotInfo> PlotPackage
         {
             get

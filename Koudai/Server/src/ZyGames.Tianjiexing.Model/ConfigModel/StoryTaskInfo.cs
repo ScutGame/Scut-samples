@@ -33,7 +33,6 @@ using System.Collections.Generic;
 using System.Linq;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -99,7 +98,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("PreTaskID", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public int[] PreTaskID
         {
             get
@@ -179,7 +178,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("ReleaseDialogue", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<DialogueInfo> ReleaseDialogue
         {
             get
@@ -195,7 +194,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("TakedDialogue", IsJsonSerialize = true)]
+         [EntityField(true, ColumnDbType.LongText)]
         public CacheList<DialogueInfo> TakedDialogue
         {
             get
@@ -227,7 +226,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("DeliveryDialogue", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<DialogueInfo> DeliveryDialogue
         {
             get
@@ -471,7 +470,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// Ӷ��ID
         /// </summary>
-        [EntityField("Reward", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<PrizeInfo> Reward
         {
             get

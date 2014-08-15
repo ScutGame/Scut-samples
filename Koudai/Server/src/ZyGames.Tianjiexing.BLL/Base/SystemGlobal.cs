@@ -102,7 +102,6 @@ namespace ZyGames.Tianjiexing.BLL.Base
             //RankingFactory.Add(new ShengJiTaRanking(intervalTimes));
             
             RankingFactory.Start(timeOut);
-            var a = 1;
         }
         
         private static void LoadUser()

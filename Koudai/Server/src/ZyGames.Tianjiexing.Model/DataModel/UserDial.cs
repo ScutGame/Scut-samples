@@ -22,11 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
-using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Cache.Generic;
@@ -84,7 +81,7 @@ namespace ZyGames.Tianjiexing.Model.DataModel
         /// 
         /// </summary>
         [ProtoMember(2)]
-        [EntityField("PrizeInfo", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public TreasureInfo PrizeInfo
         {
             get
@@ -181,7 +178,7 @@ namespace ZyGames.Tianjiexing.Model.DataModel
         /// 
         /// </summary>
         [ProtoMember(7)]
-        [EntityField("Treasure", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<TreasureInfo> Treasure
         {
             get

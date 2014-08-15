@@ -31,10 +31,8 @@ THE SOFTWARE.
 using System;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 
 namespace ZyGames.Tianjiexing.Model
@@ -91,7 +89,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 集邮列表[CacheList<Album>]
         /// </summary>        
         [ProtoMember(2)]
-        [EntityField("AlbumList", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<Album> AlbumList
         {
             get

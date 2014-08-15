@@ -30,10 +30,8 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.Enum;
 using ZyGames.Framework.Cache.Generic;
@@ -221,7 +219,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 技能 json
         /// </summary>        
         [ProtoMember(9)]
-        [EntityField("SkillInfo", IsJsonSerialize = true,DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<SkillInfo> SkillInfo
         {
             get
@@ -239,7 +237,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 随机属性 json
         /// </summary>        
         [ProtoMember(10)]
-        [EntityField("PropertyInfo", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<GeneralProperty> PropertyInfo
         {
             get

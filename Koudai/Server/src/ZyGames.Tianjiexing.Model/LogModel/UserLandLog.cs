@@ -31,7 +31,6 @@ THE SOFTWARE.
 using System;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 
 namespace ZyGames.Tianjiexing.Model

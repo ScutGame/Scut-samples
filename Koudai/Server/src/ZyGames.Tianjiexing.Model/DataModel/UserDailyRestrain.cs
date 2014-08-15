@@ -29,10 +29,8 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Cache.Generic;
@@ -253,7 +251,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(12)]
-        [EntityField("FunPlot", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<FunPlot> FunPlot
         {
             get
@@ -372,7 +370,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(19)]
-        [EntityField("UserExtend", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public DailyUserExtend UserExtend
         {
             get
@@ -389,7 +387,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(20)]
-        [EntityField("PlainPlotList", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<FunPlot> PlainPlotList
         {
             get

@@ -29,13 +29,10 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 
 namespace ZyGames.Tianjiexing.Model
@@ -265,7 +262,7 @@ namespace ZyGames.Tianjiexing.Model
         /// [CacheList<RewardStatus>]
         /// </summary>        
         [ProtoMember(12)]
-        [EntityField("RewardStatusList", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<RewardStatus> RewardStatusList
         {
             get
@@ -386,7 +383,7 @@ namespace ZyGames.Tianjiexing.Model
         /// [CacheList<FiveTierRewardList>]
         /// </summary>        
         [ProtoMember(19)]
-        [EntityField("FiveTierRewardList", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
 
         public CacheList<FiveTierReward> FiveTierRewardList
         {

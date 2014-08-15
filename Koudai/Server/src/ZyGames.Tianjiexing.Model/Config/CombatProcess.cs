@@ -24,7 +24,6 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ProtoBuf;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Framework.Cache.Generic;
 

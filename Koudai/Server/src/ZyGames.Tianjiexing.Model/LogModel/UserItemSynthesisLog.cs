@@ -31,7 +31,6 @@ THE SOFTWARE.
 using System;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Cache.Generic;
@@ -141,7 +140,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("DemandMaterial", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<SynthesisInfo> DemandMaterial
         {
             private get
@@ -157,7 +156,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("SurplusMaterial",IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public SynthesisInfo SurplusMaterial
         {
             private get

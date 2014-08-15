@@ -23,7 +23,6 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using ProtoBuf;
 
 namespace ZyGames.Tianjiexing.Model.Config

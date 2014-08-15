@@ -22,15 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
-using ZyGames.Tianjiexing.Model.Enum;
 
 namespace ZyGames.Tianjiexing.Model.ConfigModel
 {
@@ -70,7 +66,7 @@ namespace ZyGames.Tianjiexing.Model.ConfigModel
         /// <summary>
         ///参照GeneralQuality枚举
         /// </summary>
-        [EntityField("GeneralQuality", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<RecruitInfo> GeneralQuality
         {
             get

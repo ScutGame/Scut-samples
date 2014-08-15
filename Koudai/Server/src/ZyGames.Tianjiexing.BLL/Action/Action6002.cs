@@ -107,11 +107,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 tempArray = new ShareCacheStruct<GuildMember>().FindAll(m => m.GuildID == ContextUser.MercenariesID);
             }
             //todo
-            if (tempArray.Count == 0)
-            {
-                int membercount = new ShareCacheStruct<GuildMember>().Count;
-                TraceLog.ReleaseWriteFatal("6002 公会成员数量{0}，自己公会{1}，查看其他玩家的公会{2}", membercount, ContextUser.MercenariesID, guildID);
-            }
+            //if (tempArray.Count == 0)
+            //{
+            //    int membercount = new ShareCacheStruct<GuildMember>().Count;
+            //    TraceLog.ReleaseWriteFatal("6002 公会成员数量{0}，自己公会{1}，查看其他玩家的公会{2}", membercount, ContextUser.MercenariesID, guildID);
+            //}
             //排序
             tempArray.QuickSort((a, b) => a.CompareTo(b));
             memberArray = tempArray.GetPaging(pageIndex, pageSize, out pageCount);

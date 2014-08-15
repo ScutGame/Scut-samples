@@ -22,14 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 using Newtonsoft.Json;
 namespace ZyGames.Tianjiexing.Model
@@ -94,7 +89,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 战斗详情
         /// </summary>
         [ProtoMember(5)]
-        [EntityField("CombatProcessContainer", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CombatProcessContainer CombatProcessContainer
         {
             get { return _CombatProcessContainer; }

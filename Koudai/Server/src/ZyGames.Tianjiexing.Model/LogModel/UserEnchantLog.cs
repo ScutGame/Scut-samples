@@ -22,11 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -191,7 +187,7 @@ namespace ZyGames.Tianjiexing.Model.LogModel
         /// <summary>
         /// 0:掉落，1增加，2使用,3出售，4出售删除 5合成 6购回 7传入仓库或取出物品后合并物品   8丢弃  9合成删除物品
         /// </summary>
-        [EntityField("SynthesisEnchant", IsJsonSerialize = true)]
+         [EntityField(true, ColumnDbType.LongText)]
         public CacheList<SynthesisInfo> SynthesisEnchant
         {
             private get

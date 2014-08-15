@@ -23,14 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Message;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
-using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
-using ZyGames.Tianjiexing.Model.Enum;
 
 
 namespace ZyGames.Tianjiexing.Model

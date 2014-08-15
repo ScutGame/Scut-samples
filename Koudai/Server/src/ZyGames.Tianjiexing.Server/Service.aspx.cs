@@ -22,15 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Diagnostics;
 using System.Web;
-using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Contract;
-using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
-using ZyGames.Tianjiexing.Model;
 
 namespace ZyGames.Tianjiexing.Service
 {
@@ -40,16 +34,10 @@ namespace ZyGames.Tianjiexing.Service
         {
             try
             {
-                System.Web.HttpResponse response = System.Web.HttpContext.Current.Response;//new HttpResponse(sw);
+                HttpResponse response = HttpContext.Current.Response;
                 response.Charset = "unicode";// "unicode";
-                //Stopwatch a = new Stopwatch();
-                //a.Start();
-                HttpGet httpGet = new HttpGet(HttpContext.Current.Request);
-                int ActionID = httpGet.ActionId;
-                ActionFactory.Request("ZyGames.Tianjiexing.BLL.Action.Action{0},ZyGames.Tianjiexing.BLL", userId => new GameDataCacheSet<GameUser>().FindKey(userId.ToNotNullString()));
+                ActionFactory.Request("ZyGames.Tianjiexing.BLL.Action.Action{0},ZyGames.Tianjiexing.BLL");
 
-                //a.Stop();
-                //TraceLog.WriteError("接口访问{0},{1}", ActionID, a.Elapsed.TotalMilliseconds);
             }
             catch (Exception ex)
             {

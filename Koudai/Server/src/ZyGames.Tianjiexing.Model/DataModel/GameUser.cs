@@ -31,20 +31,13 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SqlClient;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Data;
-using ZyGames.Framework.Data.Sql;
 using ZyGames.Framework.Game.Cache;
-using ZyGames.Framework.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Context;
-using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Model;
-using ZyGames.Framework.Net;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Cache.Generic;
@@ -840,7 +833,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(37)]
-        [EntityField("SweepPool", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public SweepPoolInfo SweepPool
         {
             get
@@ -908,7 +901,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(41)]
-        [EntityField("UserExtend", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public GameUserExtend UserExtend
         {
             get
@@ -1444,7 +1437,7 @@ namespace ZyGames.Tianjiexing.Model
             get;
             set;
         }
-
+        
         /// <summary>
         /// �������ʱ��,�ų���ˢ�½ӿ�
         /// </summary>
@@ -1862,7 +1855,7 @@ namespace ZyGames.Tianjiexing.Model
             return UserID.ToInt();
         }
 
-        public override bool IsFengJinStatus
+        public override bool IsLock
         {
             get { return UserStatus == UserStatus.FengJin; }
         }

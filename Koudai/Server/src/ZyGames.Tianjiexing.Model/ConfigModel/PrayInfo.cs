@@ -31,10 +31,8 @@ THE SOFTWARE.
 using System;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 
 namespace ZyGames.Tianjiexing.Model
@@ -103,7 +101,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 祈祷奖励配置
         /// </summary>        
         [ProtoMember(3)]
-        [EntityField("PrayReward", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<PrizeInfo> PrayReward
         {
             get

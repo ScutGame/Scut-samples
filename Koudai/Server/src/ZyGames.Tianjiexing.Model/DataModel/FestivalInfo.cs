@@ -29,15 +29,12 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.Enum;
 using ZyGames.Framework.Cache.Generic;
-using System.Collections;
 
 namespace ZyGames.Tianjiexing.Model
 {
@@ -159,7 +156,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(6)]
-        [EntityField("Reward", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<PrizeInfo> Reward
         {
             get
@@ -210,7 +207,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(9)]
-        [EntityField("TimePriod", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public TimePriod TimePriod
         {
             get
@@ -227,7 +224,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(10)]
-        [EntityField("TaskConfig", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<TaskConfigInfo> TaskConfig
         {
             get
@@ -244,7 +241,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(11)]
-        [EntityField("FestivalExtend", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public FestivalExtend FestivalExtend
         {
             get

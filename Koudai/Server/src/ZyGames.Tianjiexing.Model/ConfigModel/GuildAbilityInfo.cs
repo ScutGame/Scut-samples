@@ -30,10 +30,8 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Enum;
 

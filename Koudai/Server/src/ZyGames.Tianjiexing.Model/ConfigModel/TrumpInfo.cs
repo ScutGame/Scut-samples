@@ -30,10 +30,8 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Cache.Generic;
 
@@ -214,7 +212,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 加成属性 Json格式 [{"AbilityType":1," AbilityValue ":1}]
         /// </summary>        
         [ProtoMember(9)]
-        [EntityField("Property", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<GeneralProperty> Property
         {
             get

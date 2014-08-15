@@ -23,17 +23,10 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
-using ZyGames.Tianjiexing.Model.Config;
-using ZyGames.Tianjiexing.Model.Enum;
-using ZyGames.Framework.Game.Cache;
 
 namespace ZyGames.Tianjiexing.Model
 {

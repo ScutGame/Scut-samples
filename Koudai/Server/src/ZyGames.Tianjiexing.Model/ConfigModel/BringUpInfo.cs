@@ -30,10 +30,8 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 
 namespace ZyGames.Tianjiexing.Model
 {
@@ -120,7 +118,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 佣兵培养力量,魂力,智力属性概率JSON格式
         /// </summary>        
         [ProtoMember(4)]
-        [EntityField("AttributeChance",IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public AttributeChance AttributeChance
         {
             get
@@ -138,7 +136,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 佣兵培养属性值概率JSON格式
         /// </summary>        
         [ProtoMember(5)]
-        [EntityField("AttributeValueChance", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public AttributeValueChance AttributeValueChance
         {
             get

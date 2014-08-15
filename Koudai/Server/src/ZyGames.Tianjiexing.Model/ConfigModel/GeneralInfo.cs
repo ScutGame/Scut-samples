@@ -30,7 +30,6 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using ProtoBuf;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -270,7 +269,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("ShowFilter", IsJsonSerialize = true)]
+         [EntityField(true, ColumnDbType.LongText)]
         public CacheList<ShowFilterInfo> ShowFilter
         {
             get
@@ -286,7 +285,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// 
         /// </summary>
-        [EntityField("RecruitFilter", IsJsonSerialize = true)]
+         [EntityField(true, ColumnDbType.LongText)]
         public CacheList<RecruitFilter> RecruitFilter
         {
             get
@@ -336,7 +335,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// Ӷ���滻����
         /// </summary>
-        [EntityField("ReplaceSkills", IsJsonSerialize = true)]
+        [EntityField(true, ColumnDbType.LongText)]
         public SkillInfo ReplaceSkills
         {
             get
@@ -408,7 +407,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <summary>
         /// �����ɳ�ֵ
         /// </summary>
-        [EntityField("Mature", IsJsonSerialize = true)]
+         [EntityField(true, ColumnDbType.LongText)]
         public CacheList<GeneralProperty> Mature
         {
             get

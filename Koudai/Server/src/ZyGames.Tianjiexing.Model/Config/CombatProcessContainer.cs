@@ -22,11 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
 using ProtoBuf;
-using ZyGames.Framework.Collection;
-using ZyGames.Framework.Event;
 using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model.Config

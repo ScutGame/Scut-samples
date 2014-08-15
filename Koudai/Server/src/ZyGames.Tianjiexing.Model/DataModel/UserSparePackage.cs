@@ -29,13 +29,10 @@ THE SOFTWARE.
 // </auto-generated>
 //------------------------------------------------------------------------------
 using System;
-using System.Runtime.Serialization;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Model.Config;
-using ZyGames.Framework.Event;
 using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model
@@ -81,7 +78,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 
         /// </summary>
         [ProtoMember(2)]
-        [EntityField("SparePackage", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<UserSparePart> SparePackage
         {
             get

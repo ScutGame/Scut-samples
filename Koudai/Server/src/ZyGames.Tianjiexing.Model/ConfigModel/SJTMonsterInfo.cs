@@ -30,10 +30,8 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Model;
 using ProtoBuf;
-using System.Runtime.Serialization;
 
 namespace ZyGames.Tianjiexing.Model
 {

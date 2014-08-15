@@ -30,7 +30,6 @@ THE SOFTWARE.
 //------------------------------------------------------------------------------
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Model;
@@ -106,7 +105,7 @@ namespace ZyGames.Tianjiexing.Model
         /// 附魔符
         /// </summary>        
         [ProtoMember(2)]
-        [EntityField("EnchantPackage", IsJsonSerialize = true, DbType = ColumnDbType.Text)]
+        [EntityField(true, ColumnDbType.LongText)]
         public CacheList<UserEnchantInfo> EnchantPackage
         {
             get

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ZyGames.Framework.Game.Cache;
-using ZyGames.Tianjiexing.Model.ConfigModel;
-using ZyGames.Framework.Model;
-
-namespace ZyGames.Tianjiexing.Model
+﻿namespace ZyGames.Tianjiexing.Model
 {
     public static class ConfigCacheGlobal
     {

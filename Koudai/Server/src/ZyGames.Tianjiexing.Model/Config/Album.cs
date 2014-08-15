@@ -22,11 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ProtoBuf;
-using ZyGames.Framework.Event;
 using ZyGames.Tianjiexing.Model.Enum;
 
 namespace ZyGames.Tianjiexing.Model.Config

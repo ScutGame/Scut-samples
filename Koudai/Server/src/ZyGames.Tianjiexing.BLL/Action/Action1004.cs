@@ -25,6 +25,7 @@ using System;
 using System.Web;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
@@ -55,8 +56,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
         }
 
-        protected override bool DoSuccess(int userId)
+        protected override bool DoSuccess(int userId, out IUser user)
         {
+            user = null;
             //原因：重登录时，数据会回档问题
             var cacheSet = new GameDataCacheSet<GameUser>();
             GameUser userInfo = cacheSet.FindKey(Uid);
@@ -87,6 +89,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1004_IDDisable;
                     return false;
                 }
+                user = userInfo;
                 //todo
                 //NoticeHelper.RankNotice(userInfo); //公告
                 CombatHelper.LoadProperty(userInfo);
