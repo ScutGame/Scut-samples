@@ -3,6 +3,8 @@
 ## Scut-samples
 
 Contains different samples that show how to use scut.
+If the Chinese downloaded using [oschina Git](https://git.oschina.net/scutgame/Scut-samples),
+else using [Github](https://github.com/ScutGame/Scut-samples)
 
 ### HelloWorld
 
