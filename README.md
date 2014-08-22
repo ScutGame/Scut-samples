@@ -8,25 +8,25 @@ Contains different samples that show how to use scut.
 
 Use c#,python,lua script (Scut + Cocos2d-x)
 
-![Hello](http://scutgame.com/images/sample/Hello.png)
+![Hello](/sample/Hello.png)
 
 
 ### GameNotice
 
 Use python,lua script (Scut + tool)
 
-![Game Notice](http://scutgame.com/images/sample/GameNotice.png)
+![Game Notice](/sample/GameNotice.png)
 
 
 ### GameRanking
 
 Use C#,python script (Scut + Cocos2d-x) http & socket
 
-![Game Ranking](http://scutgame.com/images/sample/Ranking.png)
+![Game Ranking](/sample/Ranking.png)
 
 Use C# script (Scut + Untiy3d) http & socket
 
-![Game Ranking u3d](http://scutgame.com/images/sample/Ranking-u3d.png)
+![Game Ranking u3d](/sample/Ranking-u3d.png)
 
 Unity3d client on "Scut\SDK\Unity3d" dir.
 
@@ -35,24 +35,24 @@ Unity3d client on "Scut\SDK\Unity3d" dir.
 
 Use C#,python script (Scut + Cocos2d-x)
 
-![Doudizhu](http://scutgame.com/images/sample/ddz.png)
+![Doudizhu](/sample/ddz.png)
 
 
 ### Koudai
 
 CCG mobile game (Scut + Cocos2d-x)
 
-![Koudai](http://scutgame.com/images/sample/koudai.png)
+![Koudai](/sample/koudai.png)
 
-![Koudai](http://scutgame.com/images/sample/koudai2.png)
+![Koudai](/sample/koudai2.png)
 
 
 ### Unity3d Demo
 
 Use C# script (Scut + Untiy3d)
 
-![Unity3d](http://scutgame.com/images/sample/u3d-login.png)
+![Unity3d](/sample/u3d-login.png)
 
-![Unity3d](http://scutgame.com/images/sample/u3d-role.png)
+![Unity3d](/sample/u3d-role.png)
 
-![Unity3d](http://scutgame.com/images/sample/u3d-main.png)
+![Unity3d](/sample/u3d-main.png)
