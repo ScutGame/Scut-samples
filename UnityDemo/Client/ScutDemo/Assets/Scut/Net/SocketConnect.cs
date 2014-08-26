@@ -142,7 +142,6 @@ public class SocketConnect
                         reader.pushNetStream(data, NetworkType.Socket);
                         SocketPackage findPackage = null;
 
-                        //todo socket trace
                         Debug.Log("Socket receive ok, revLen:" + recnum
                             + ", actionId:" + reader.ActionId
                             + ", msgId:" + reader.RmId
@@ -317,10 +316,18 @@ public class SocketConnect
             _socket.Shutdown(SocketShutdown.Both);
             _socket.Close();
             _socket = null;
+
+            _heartbeatThread.Dispose();
+            _heartbeatThread = null;
+
+            _thread.Abort();
+            _thread = null;
         }
         catch (Exception)
         {
             _socket = null;
+            _heartbeatThread = null;
+            _thread = null;
         }
     }
 
