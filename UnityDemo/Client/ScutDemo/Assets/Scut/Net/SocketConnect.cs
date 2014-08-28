@@ -33,27 +33,12 @@ public class SocketConnect
     private bool _isDisposed;
     private readonly List<SocketPackage> _sendList;
     private readonly Queue<SocketPackage> _receiveQueue;
+    private readonly Queue<SocketPackage> _pushQueue;
     private const int TimeOut = 30;//30秒的超时时间
     private Thread _thread = null;
     private const int HearInterval = 10000;
     private Timer _heartbeatThread = null;
 
-    /// <summary>
-    /// 注册网络Push回调方法
-    /// </summary>
-    public event NetPushCallback PushCallback;
-
-    protected virtual void OnPushCallback(SocketPackage package)
-    {
-        try
-        {
-            NetPushCallback handler = PushCallback;
-            if (handler != null) handler.BeginInvoke(package, null, null);
-        }
-        catch (Exception)
-        {
-        }
-    }
 
     public SocketConnect(string host, int port, IHeadFormater formater)
     {
@@ -62,6 +47,7 @@ public class SocketConnect
         _formater = formater;
         _sendList = new List<SocketPackage>();
         _receiveQueue = new Queue<SocketPackage>();
+        _pushQueue = new Queue<SocketPackage>();
     }
 
     static public void PushActionPool(int actionId, GameAction action)
@@ -99,6 +85,21 @@ public class SocketConnect
             else
             {
                 return _receiveQueue.Dequeue();
+            }
+        }
+    }
+
+    public SocketPackage DequeuePush()
+    {
+        lock (_pushQueue)
+        {
+            if (_pushQueue.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return _pushQueue.Dequeue();
             }
         }
     }
@@ -201,7 +202,11 @@ public class SocketConnect
                             package.ErrorCode = reader.StatusCode;
                             package.ErrorMsg = reader.Description;
                             package.Reader = reader;
-                            OnPushCallback(package);
+
+                            lock (_pushQueue)
+                            {
+                                _pushQueue.Enqueue(package);
+                            }
                         }
 
                     }
@@ -313,21 +318,23 @@ public class SocketConnect
         if (_socket == null) return;
         try
         {
-            _socket.Shutdown(SocketShutdown.Both);
-            _socket.Close();
-            _socket = null;
+            lock (this)
+            {
+                _socket.Shutdown(SocketShutdown.Both);
+                _socket.Close();
+                _socket = null;
 
-            _heartbeatThread.Dispose();
-            _heartbeatThread = null;
+                _heartbeatThread.Dispose();
+                _heartbeatThread = null;
 
-            _thread.Abort();
-            _thread = null;
+                _thread.Abort();
+                _thread = null;
+            }
+
         }
         catch (Exception)
         {
             _socket = null;
-            _heartbeatThread = null;
-            _thread = null;
         }
     }
 
