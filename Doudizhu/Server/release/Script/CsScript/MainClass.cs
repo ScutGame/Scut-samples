@@ -83,39 +83,10 @@ namespace Game.Script
         private void LoadUnlineUser()
         {
             TraceLog.ReleaseWrite("正在加载玩家数据...");
-            List<string> userList = new List<string>();
-            try
-            {
-                int loadUnlineDay = ConfigUtils.GetSetting("LoadUnlineDay", "1").ToInt();
-                int maxCount = ConfigUtils.GetSetting("MaxLoadCount", "100").ToInt();
-                var dbProvider = DbConnectionProvider.CreateDbProvider(DbConfig.Data);
-                var command = dbProvider.CreateCommandStruct("GameUser", CommandMode.Inquiry);
-                command.Columns = dbProvider.FormatQueryColumn(",", new string[] { "UserID" });
-                command.ToIndex = maxCount;
-                command.OrderBy = "LoginDate desc";
-                command.Filter = dbProvider.CreateCommandFilter();
-                command.Filter.Condition = dbProvider.FormatFilterParam("LoginDate", ">");
-                var param = dbProvider.CreateParameter("LoginDate", DateTime.Now.Date.AddDays(-loadUnlineDay));
-                command.Filter.AddParam(param);
-                command.Parser();
-
-                using (IDataReader reader = dbProvider.ExecuteReader(CommandType.Text, command.Sql, command.Parameters))
-                {
-                    while (reader.Read())
-                    {
-                        userList.Add(reader["UserID"].ToString());
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                TraceLog.WriteError("LoadUnlineUser:{0}", ex);
-            }
+            int loadUnlineDay = ConfigUtils.GetSetting("LoadUnlineDay", "3").ToInt();
+            var ts = new TimeSpan(loadUnlineDay, 0, 0, 0);
             var cacheSet = new GameDataCacheSet<GameUser>();
-            foreach (string userId in userList)
-            {
-                cacheSet.FindKey(userId);
-            }
+            cacheSet.LoadFrom(t => MathUtils.DiffDate(t.LoginDate) < ts);
             TraceLog.ReleaseWrite("正在加载玩家结束");
         }
 
