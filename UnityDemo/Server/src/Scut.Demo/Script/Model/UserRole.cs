@@ -20,7 +20,7 @@ namespace GameServer.Script.Model
         public int RoleId { get; set; }
 
         [ProtoMember(2)]
-        [EntityField]
+        [EntityField(true)]
         public int UserId { get; set; }
 
         [ProtoMember(3)]

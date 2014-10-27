@@ -32,19 +32,29 @@ namespace Game.Script
             return true;
         }
 
-        public bool TryDecodePackage(HttpListenerContext context, out RequestPackage package)
+        public bool TryDecodePackage(HttpListenerRequest request, out RequestPackage package, out int statusCode)
         {
+            statusCode = 200;
             package = null;
-            HttpListenerRequest request = context.Request;
             byte[] content;
             var bytes = GetRequestStream(request.InputStream);
-            MessagePack  head = ReadMessageHead(bytes, out content);
+            MessagePack head = ReadMessageHead(bytes, out content);
             if (head == null)
             {
                 return false;
             }
             package = new RequestPackage(head.MsgId, head.SessionId, head.ActionId, head.UserId) { Message = content };
             return true;
+        }
+
+        public bool TryDecodePackage(HttpListenerContext context, out RequestPackage package)
+        {
+            int statuscode;
+            if (TryDecodePackage(context.Request, out package, out statuscode))
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool TryDecodePackage(HttpContext context, out RequestPackage package)
@@ -106,10 +116,10 @@ namespace Game.Script
             return headPack;
         }
 
-        public ActionGetter GetActionGetter(RequestPackage package)
+        public ActionGetter GetActionGetter(RequestPackage package, GameSession session)
         {
             // 可以实现自定的ActionGetter子类
-            return new ActionGetter(package);
+            return new ActionGetter(package, session);
         }
 
         public void ResponseError(BaseGameResponse response, ActionGetter actionGetter, int errorCode, string errorInfo)

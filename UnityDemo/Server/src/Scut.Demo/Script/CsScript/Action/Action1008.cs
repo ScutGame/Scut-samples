@@ -3,6 +3,7 @@ using GameServer.Script.Model;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Contract.Action;
+using ZyGames.Framework.Game.Lang;
 using ZyGames.Framework.Game.Service;
 
 namespace GameServer.Script.CsScript.Action
@@ -41,9 +42,10 @@ namespace GameServer.Script.CsScript.Action
             if (user == null) return false;
 
             var roleCache = new PersonalCacheStruct<UserRole>();
-            _role = roleCache.FindKey(user.PersonalId, user.CurrRoleId);
+            _role = roleCache.FindKey(user.PersonalId, user.CurrRoleId, user.UserId);
             if (_role == null)
             {
+                ErrorCode = Language.Instance.ErrorCode;
                 return false;
             }
             return true;

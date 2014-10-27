@@ -6,20 +6,20 @@ using ZyGames.Framework.Script;
 
 namespace Game.Script
 {
-    public class MainClass : GameHttpHost, IMainScript
+    public class MainClass : GameHttpHost
     {
-        public override void Start(string[] args)
+        public MainClass()
         {
-           GameEnvironment.Setting.ActionDispatcher = new CustomActionDispatcher();
+            GameEnvironment.Setting.ActionDispatcher = new CustomActionDispatcher();
         }
 
-        public override void Stop()
+        protected override void OnStartAffer()
         {
-
         }
 
         protected override void OnRequested(ActionGetter actionGetter, BaseGameResponse response)
         {
+            Console.WriteLine("parma action:{0}", actionGetter.GetActionId());
             base.OnRequested(actionGetter, response);
         }
 

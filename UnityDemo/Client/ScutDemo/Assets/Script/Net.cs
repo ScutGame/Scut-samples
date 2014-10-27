@@ -68,7 +68,9 @@ public class Net : MonoBehaviour, IHttpCallback
         try
         {
             if(package == null) return;
-
+			//do Heartbeat package
+			if(package.ActionId == 1) return;
+			
             GameAction gameAction = ActionFactory.Create(package.ActionId);
             if (gameAction == null)
             {

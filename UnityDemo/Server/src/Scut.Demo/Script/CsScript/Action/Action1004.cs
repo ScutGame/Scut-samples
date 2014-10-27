@@ -38,10 +38,15 @@ namespace GameServer.Script.CsScript.Action
                 gameUser.CurrRoleId = roleList[0].RoleId;
             }
 
-            var notifyUsers = new List<GameUser>();
-            notifyUsers.Add(gameUser);
-            ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, null);
             return true;
+        }
+
+        public override void TakeActionAffter(bool state)
+        {
+            var notifyUsers = new List<GameUser>();
+            notifyUsers.Add(Current.User as GameUser);
+            ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, t => { });
+            base.TakeActionAffter(state);
         }
     }
 }

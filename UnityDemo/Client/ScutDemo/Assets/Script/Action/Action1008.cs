@@ -18,6 +18,11 @@ public class Action1008 : BaseAction
 
     protected override void DecodePackage(NetReader reader)
     {
+        if (!reader.Success)
+        {
+            Debug.LogError(string.Format("Action {0} error {1}-{2}", reader.ActionId, reader.StatusCode, reader.Description));
+            return;
+        }
         actionResult = new ActionResult();
         //默认Scut流格式解包
         actionResult["RoleID"] = reader.getInt();

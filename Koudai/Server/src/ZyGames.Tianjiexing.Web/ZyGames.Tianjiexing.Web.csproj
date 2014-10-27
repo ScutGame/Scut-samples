@@ -1,0 +1,1011 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B29DEE4D-0FBD-419C-BE16-1F5F476BF72E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ZyGames.Tianjiexing.Web</RootNamespace>
+    <AssemblyName>ZyGames.Tianjiexing.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>.\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="KopiLua">
+      <HintPath>.\KopiLua.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>.\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=6.7.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog">
+      <HintPath>.\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLua">
+      <HintPath>.\NLua.dll</HintPath>
+    </Reference>
+    <Reference Include="protobuf-net">
+      <HintPath>.\protobuf-net.dll</HintPath>
+    </Reference>
+    <Reference Include="ScutSecurity">
+      <HintPath>.\ScutSecurity.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Common">
+      <HintPath>.\ServiceStack.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Interfaces">
+      <HintPath>.\ServiceStack.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Redis">
+      <HintPath>.\ServiceStack.Redis.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceStack.Text">
+      <HintPath>.\ServiceStack.Text.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZyGames.Framework">
+      <HintPath>.\ZyGames.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="ZyGames.Framework.Common">
+      <HintPath>.\ZyGames.Framework.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="ZyGames.Framework.Game">
+      <HintPath>.\ZyGames.Framework.Game.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Script\CsScript\Action\Action1000.cs" />
+    <Compile Include="Script\CsScript\Action\Action10000.cs" />
+    <Compile Include="Script\CsScript\Action\Action10001.cs" />
+    <Compile Include="Script\CsScript\Action\Action10002.cs" />
+    <Compile Include="Script\CsScript\Action\Action10003.cs" />
+    <Compile Include="Script\CsScript\Action\Action10004.cs" />
+    <Compile Include="Script\CsScript\Action\Action10005.cs" />
+    <Compile Include="Script\CsScript\Action\Action10006.cs" />
+    <Compile Include="Script\CsScript\Action\Action10007.cs" />
+    <Compile Include="Script\CsScript\Action\Action10008.cs" />
+    <Compile Include="Script\CsScript\Action\Action10009.cs" />
+    <Compile Include="Script\CsScript\Action\Action10010.cs" />
+    <Compile Include="Script\CsScript\Action\Action10011.cs" />
+    <Compile Include="Script\CsScript\Action\Action1002.cs" />
+    <Compile Include="Script\CsScript\Action\Action1004.cs" />
+    <Compile Include="Script\CsScript\Action\Action1005.cs" />
+    <Compile Include="Script\CsScript\Action\Action1006.cs" />
+    <Compile Include="Script\CsScript\Action\Action1007.cs" />
+    <Compile Include="Script\CsScript\Action\Action1008.cs" />
+    <Compile Include="Script\CsScript\Action\Action1009.cs" />
+    <Compile Include="Script\CsScript\Action\Action1010.cs" />
+    <Compile Include="Script\CsScript\Action\Action1011.cs" />
+    <Compile Include="Script\CsScript\Action\Action1012.cs" />
+    <Compile Include="Script\CsScript\Action\Action1013.cs" />
+    <Compile Include="Script\CsScript\Action\Action1014.cs" />
+    <Compile Include="Script\CsScript\Action\Action1015.cs" />
+    <Compile Include="Script\CsScript\Action\Action1016.cs" />
+    <Compile Include="Script\CsScript\Action\Action1017.cs" />
+    <Compile Include="Script\CsScript\Action\Action1018.cs" />
+    <Compile Include="Script\CsScript\Action\Action1019.cs" />
+    <Compile Include="Script\CsScript\Action\Action1020.cs" />
+    <Compile Include="Script\CsScript\Action\Action1021.cs" />
+    <Compile Include="Script\CsScript\Action\Action1022.cs" />
+    <Compile Include="Script\CsScript\Action\Action1023.cs" />
+    <Compile Include="Script\CsScript\Action\Action1024.cs" />
+    <Compile Include="Script\CsScript\Action\Action1025.cs" />
+    <Compile Include="Script\CsScript\Action\Action1026.cs" />
+    <Compile Include="Script\CsScript\Action\Action1065.cs" />
+    <Compile Include="Script\CsScript\Action\Action1066.cs" />
+    <Compile Include="Script\CsScript\Action\Action1069.cs" />
+    <Compile Include="Script\CsScript\Action\Action1080.cs" />
+    <Compile Include="Script\CsScript\Action\Action1081.cs" />
+    <Compile Include="Script\CsScript\Action\Action1090.cs" />
+    <Compile Include="Script\CsScript\Action\Action11001.cs" />
+    <Compile Include="Script\CsScript\Action\Action11002.cs" />
+    <Compile Include="Script\CsScript\Action\Action11003.cs" />
+    <Compile Include="Script\CsScript\Action\Action1101.cs" />
+    <Compile Include="Script\CsScript\Action\Action1102.cs" />
+    <Compile Include="Script\CsScript\Action\Action1104.cs" />
+    <Compile Include="Script\CsScript\Action\Action1105.cs" />
+    <Compile Include="Script\CsScript\Action\Action1106.cs" />
+    <Compile Include="Script\CsScript\Action\Action1107.cs" />
+    <Compile Include="Script\CsScript\Action\Action1108.cs" />
+    <Compile Include="Script\CsScript\Action\Action1109.cs" />
+    <Compile Include="Script\CsScript\Action\Action12001.cs" />
+    <Compile Include="Script\CsScript\Action\Action12002.cs" />
+    <Compile Include="Script\CsScript\Action\Action12003.cs" />
+    <Compile Include="Script\CsScript\Action\Action12004.cs" />
+    <Compile Include="Script\CsScript\Action\Action1201.cs" />
+    <Compile Include="Script\CsScript\Action\Action1202.cs" />
+    <Compile Include="Script\CsScript\Action\Action1203.cs" />
+    <Compile Include="Script\CsScript\Action\Action1204.cs" />
+    <Compile Include="Script\CsScript\Action\Action1205.cs" />
+    <Compile Include="Script\CsScript\Action\Action1208.cs" />
+    <Compile Include="Script\CsScript\Action\Action1209.cs" />
+    <Compile Include="Script\CsScript\Action\Action1210.cs" />
+    <Compile Include="Script\CsScript\Action\Action1211.cs" />
+    <Compile Include="Script\CsScript\Action\Action1212.cs" />
+    <Compile Include="Script\CsScript\Action\Action1213.cs" />
+    <Compile Include="Script\CsScript\Action\Action1214.cs" />
+    <Compile Include="Script\CsScript\Action\Action1215.cs" />
+    <Compile Include="Script\CsScript\Action\Action1216.cs" />
+    <Compile Include="Script\CsScript\Action\Action1217.cs" />
+    <Compile Include="Script\CsScript\Action\Action1251.cs" />
+    <Compile Include="Script\CsScript\Action\Action1252.cs" />
+    <Compile Include="Script\CsScript\Action\Action1253.cs" />
+    <Compile Include="Script\CsScript\Action\Action1254.cs" />
+    <Compile Include="Script\CsScript\Action\Action1255.cs" />
+    <Compile Include="Script\CsScript\Action\Action1256.cs" />
+    <Compile Include="Script\CsScript\Action\Action1257.cs" />
+    <Compile Include="Script\CsScript\Action\Action1258.cs" />
+    <Compile Include="Script\CsScript\Action\Action1259.cs" />
+    <Compile Include="Script\CsScript\Action\Action1260.cs" />
+    <Compile Include="Script\CsScript\Action\Action1261.cs" />
+    <Compile Include="Script\CsScript\Action\Action1262.cs" />
+    <Compile Include="Script\CsScript\Action\Action13001.cs" />
+    <Compile Include="Script\CsScript\Action\Action13002.cs" />
+    <Compile Include="Script\CsScript\Action\Action1301.cs" />
+    <Compile Include="Script\CsScript\Action\Action1302.cs" />
+    <Compile Include="Script\CsScript\Action\Action1303.cs" />
+    <Compile Include="Script\CsScript\Action\Action1304.cs" />
+    <Compile Include="Script\CsScript\Action\Action1305.cs" />
+    <Compile Include="Script\CsScript\Action\Action1306.cs" />
+    <Compile Include="Script\CsScript\Action\Action1307.cs" />
+    <Compile Include="Script\CsScript\Action\Action1308.cs" />
+    <Compile Include="Script\CsScript\Action\Action1309.cs" />
+    <Compile Include="Script\CsScript\Action\Action1310.cs" />
+    <Compile Include="Script\CsScript\Action\Action1311.cs" />
+    <Compile Include="Script\CsScript\Action\Action1312.cs" />
+    <Compile Include="Script\CsScript\Action\Action1401.cs" />
+    <Compile Include="Script\CsScript\Action\Action1402.cs" />
+    <Compile Include="Script\CsScript\Action\Action1403.cs" />
+    <Compile Include="Script\CsScript\Action\Action1404.cs" />
+    <Compile Include="Script\CsScript\Action\Action1405.cs" />
+    <Compile Include="Script\CsScript\Action\Action1406.cs" />
+    <Compile Include="Script\CsScript\Action\Action1407.cs" />
+    <Compile Include="Script\CsScript\Action\Action1408.cs" />
+    <Compile Include="Script\CsScript\Action\Action1409.cs" />
+    <Compile Include="Script\CsScript\Action\Action1410.cs" />
+    <Compile Include="Script\CsScript\Action\Action1411.cs" />
+    <Compile Include="Script\CsScript\Action\Action1412.cs" />
+    <Compile Include="Script\CsScript\Action\Action1413.cs" />
+    <Compile Include="Script\CsScript\Action\Action1414.cs" />
+    <Compile Include="Script\CsScript\Action\Action1415.cs" />
+    <Compile Include="Script\CsScript\Action\Action1416.cs" />
+    <Compile Include="Script\CsScript\Action\Action1417.cs" />
+    <Compile Include="Script\CsScript\Action\Action1418.cs" />
+    <Compile Include="Script\CsScript\Action\Action1419.cs" />
+    <Compile Include="Script\CsScript\Action\Action1420.cs" />
+    <Compile Include="Script\CsScript\Action\Action1421.cs" />
+    <Compile Include="Script\CsScript\Action\Action1422.cs" />
+    <Compile Include="Script\CsScript\Action\Action1423.cs" />
+    <Compile Include="Script\CsScript\Action\Action1431.cs" />
+    <Compile Include="Script\CsScript\Action\Action1432.cs" />
+    <Compile Include="Script\CsScript\Action\Action1433.cs" />
+    <Compile Include="Script\CsScript\Action\Action1434.cs" />
+    <Compile Include="Script\CsScript\Action\Action1441.cs" />
+    <Compile Include="Script\CsScript\Action\Action1442.cs" />
+    <Compile Include="Script\CsScript\Action\Action1444.cs" />
+    <Compile Include="Script\CsScript\Action\Action1445.cs" />
+    <Compile Include="Script\CsScript\Action\Action1451.cs" />
+    <Compile Include="Script\CsScript\Action\Action1452.cs" />
+    <Compile Include="Script\CsScript\Action\Action1453.cs" />
+    <Compile Include="Script\CsScript\Action\Action1454.cs" />
+    <Compile Include="Script\CsScript\Action\Action1455.cs" />
+    <Compile Include="Script\CsScript\Action\Action1456.cs" />
+    <Compile Include="Script\CsScript\Action\Action1457.cs" />
+    <Compile Include="Script\CsScript\Action\Action1458.cs" />
+    <Compile Include="Script\CsScript\Action\Action1459.cs" />
+    <Compile Include="Script\CsScript\Action\Action1460.cs" />
+    <Compile Include="Script\CsScript\Action\Action1461.cs" />
+    <Compile Include="Script\CsScript\Action\Action1462.cs" />
+    <Compile Include="Script\CsScript\Action\Action1463.cs" />
+    <Compile Include="Script\CsScript\Action\Action1464.cs" />
+    <Compile Include="Script\CsScript\Action\Action1465.cs" />
+    <Compile Include="Script\CsScript\Action\Action1466.cs" />
+    <Compile Include="Script\CsScript\Action\Action1467.cs" />
+    <Compile Include="Script\CsScript\Action\Action1468.cs" />
+    <Compile Include="Script\CsScript\Action\Action1469.cs" />
+    <Compile Include="Script\CsScript\Action\Action1470.cs" />
+    <Compile Include="Script\CsScript\Action\Action1471.cs" />
+    <Compile Include="Script\CsScript\Action\Action1501.cs" />
+    <Compile Include="Script\CsScript\Action\Action1502.cs" />
+    <Compile Include="Script\CsScript\Action\Action1503.cs" />
+    <Compile Include="Script\CsScript\Action\Action1504.cs" />
+    <Compile Include="Script\CsScript\Action\Action1505.cs" />
+    <Compile Include="Script\CsScript\Action\Action1601.cs" />
+    <Compile Include="Script\CsScript\Action\Action1602.cs" />
+    <Compile Include="Script\CsScript\Action\Action1603.cs" />
+    <Compile Include="Script\CsScript\Action\Action1604.cs" />
+    <Compile Include="Script\CsScript\Action\Action1605.cs" />
+    <Compile Include="Script\CsScript\Action\Action1606.cs" />
+    <Compile Include="Script\CsScript\Action\Action1607.cs" />
+    <Compile Include="Script\CsScript\Action\Action1608.cs" />
+    <Compile Include="Script\CsScript\Action\Action1609.cs" />
+    <Compile Include="Script\CsScript\Action\Action1701.cs" />
+    <Compile Include="Script\CsScript\Action\Action1702.cs" />
+    <Compile Include="Script\CsScript\Action\Action1703.cs" />
+    <Compile Include="Script\CsScript\Action\Action1901.cs" />
+    <Compile Include="Script\CsScript\Action\Action1902.cs" />
+    <Compile Include="Script\CsScript\Action\Action1903.cs" />
+    <Compile Include="Script\CsScript\Action\Action2001.cs" />
+    <Compile Include="Script\CsScript\Action\Action2002.cs" />
+    <Compile Include="Script\CsScript\Action\Action2003.cs" />
+    <Compile Include="Script\CsScript\Action\Action2004.cs" />
+    <Compile Include="Script\CsScript\Action\Action2005.cs" />
+    <Compile Include="Script\CsScript\Action\Action3001.cs" />
+    <Compile Include="Script\CsScript\Action\Action3002.cs" />
+    <Compile Include="Script\CsScript\Action\Action3003.cs" />
+    <Compile Include="Script\CsScript\Action\Action3004.cs" />
+    <Compile Include="Script\CsScript\Action\Action3005.cs" />
+    <Compile Include="Script\CsScript\Action\Action3006.cs" />
+    <Compile Include="Script\CsScript\Action\Action3007.cs" />
+    <Compile Include="Script\CsScript\Action\Action3008.cs" />
+    <Compile Include="Script\CsScript\Action\Action3009.cs" />
+    <Compile Include="Script\CsScript\Action\Action3010.cs" />
+    <Compile Include="Script\CsScript\Action\Action3011.cs" />
+    <Compile Include="Script\CsScript\Action\Action3201.cs" />
+    <Compile Include="Script\CsScript\Action\Action3202.cs" />
+    <Compile Include="Script\CsScript\Action\Action3203.cs" />
+    <Compile Include="Script\CsScript\Action\Action3204.cs" />
+    <Compile Include="Script\CsScript\Action\Action3205.cs" />
+    <Compile Include="Script\CsScript\Action\Action3206.cs" />
+    <Compile Include="Script\CsScript\Action\Action360.cs" />
+    <Compile Include="Script\CsScript\Action\Action4001.cs" />
+    <Compile Include="Script\CsScript\Action\Action4002.cs" />
+    <Compile Include="Script\CsScript\Action\Action4003.cs" />
+    <Compile Include="Script\CsScript\Action\Action4004.cs" />
+    <Compile Include="Script\CsScript\Action\Action4005.cs" />
+    <Compile Include="Script\CsScript\Action\Action4006.cs" />
+    <Compile Include="Script\CsScript\Action\Action4007.cs" />
+    <Compile Include="Script\CsScript\Action\Action4008.cs" />
+    <Compile Include="Script\CsScript\Action\Action4009.cs" />
+    <Compile Include="Script\CsScript\Action\Action4010.cs" />
+    <Compile Include="Script\CsScript\Action\Action4011.cs" />
+    <Compile Include="Script\CsScript\Action\Action4012.cs" />
+    <Compile Include="Script\CsScript\Action\Action4013.cs" />
+    <Compile Include="Script\CsScript\Action\Action4014.cs" />
+    <Compile Include="Script\CsScript\Action\Action404.cs" />
+    <Compile Include="Script\CsScript\Action\Action4202.cs" />
+    <Compile Include="Script\CsScript\Action\Action4203.cs" />
+    <Compile Include="Script\CsScript\Action\Action4204.cs" />
+    <Compile Include="Script\CsScript\Action\Action4205.cs" />
+    <Compile Include="Script\CsScript\Action\Action4206.cs" />
+    <Compile Include="Script\CsScript\Action\Action4207.cs" />
+    <Compile Include="Script\CsScript\Action\Action4208.cs" />
+    <Compile Include="Script\CsScript\Action\Action4209.cs" />
+    <Compile Include="Script\CsScript\Action\Action4210.cs" />
+    <Compile Include="Script\CsScript\Action\Action4211.cs" />
+    <Compile Include="Script\CsScript\Action\Action4301.cs" />
+    <Compile Include="Script\CsScript\Action\Action4302.cs" />
+    <Compile Include="Script\CsScript\Action\Action4303.cs" />
+    <Compile Include="Script\CsScript\Action\Action5101.cs" />
+    <Compile Include="Script\CsScript\Action\Action5102.cs" />
+    <Compile Include="Script\CsScript\Action\Action5104.cs" />
+    <Compile Include="Script\CsScript\Action\Action5105.cs" />
+    <Compile Include="Script\CsScript\Action\Action5106.cs" />
+    <Compile Include="Script\CsScript\Action\Action5107.cs" />
+    <Compile Include="Script\CsScript\Action\Action5201.cs" />
+    <Compile Include="Script\CsScript\Action\Action5202.cs" />
+    <Compile Include="Script\CsScript\Action\Action5203.cs" />
+    <Compile Include="Script\CsScript\Action\Action5204.cs" />
+    <Compile Include="Script\CsScript\Action\Action5205.cs" />
+    <Compile Include="Script\CsScript\Action\Action5301.cs" />
+    <Compile Include="Script\CsScript\Action\Action5302.cs" />
+    <Compile Include="Script\CsScript\Action\Action5303.cs" />
+    <Compile Include="Script\CsScript\Action\Action5304.cs" />
+    <Compile Include="Script\CsScript\Action\Action5305.cs" />
+    <Compile Include="Script\CsScript\Action\Action5306.cs" />
+    <Compile Include="Script\CsScript\Action\Action5401.cs" />
+    <Compile Include="Script\CsScript\Action\Action5402.cs" />
+    <Compile Include="Script\CsScript\Action\Action5403.cs" />
+    <Compile Include="Script\CsScript\Action\Action5404.cs" />
+    <Compile Include="Script\CsScript\Action\Action5405.cs" />
+    <Compile Include="Script\CsScript\Action\Action5406.cs" />
+    <Compile Include="Script\CsScript\Action\Action5407.cs" />
+    <Compile Include="Script\CsScript\Action\Action6001.cs" />
+    <Compile Include="Script\CsScript\Action\Action6002.cs" />
+    <Compile Include="Script\CsScript\Action\Action6003.cs" />
+    <Compile Include="Script\CsScript\Action\Action6004.cs" />
+    <Compile Include="Script\CsScript\Action\Action6005.cs" />
+    <Compile Include="Script\CsScript\Action\Action6006.cs" />
+    <Compile Include="Script\CsScript\Action\Action6007.cs" />
+    <Compile Include="Script\CsScript\Action\Action6008.cs" />
+    <Compile Include="Script\CsScript\Action\Action6009.cs" />
+    <Compile Include="Script\CsScript\Action\Action6010.cs" />
+    <Compile Include="Script\CsScript\Action\Action6011.cs" />
+    <Compile Include="Script\CsScript\Action\Action6012.cs" />
+    <Compile Include="Script\CsScript\Action\Action6013.cs" />
+    <Compile Include="Script\CsScript\Action\Action6014.cs" />
+    <Compile Include="Script\CsScript\Action\Action6015.cs" />
+    <Compile Include="Script\CsScript\Action\Action6016.cs" />
+    <Compile Include="Script\CsScript\Action\Action6017.cs" />
+    <Compile Include="Script\CsScript\Action\Action6018.cs" />
+    <Compile Include="Script\CsScript\Action\Action6019.cs" />
+    <Compile Include="Script\CsScript\Action\Action6020.cs" />
+    <Compile Include="Script\CsScript\Action\Action6021.cs" />
+    <Compile Include="Script\CsScript\Action\Action6022.cs" />
+    <Compile Include="Script\CsScript\Action\Action6023.cs" />
+    <Compile Include="Script\CsScript\Action\Action6024.cs" />
+    <Compile Include="Script\CsScript\Action\Action6101.cs" />
+    <Compile Include="Script\CsScript\Action\Action6102.cs" />
+    <Compile Include="Script\CsScript\Action\Action6103.cs" />
+    <Compile Include="Script\CsScript\Action\Action6104.cs" />
+    <Compile Include="Script\CsScript\Action\Action6105.cs" />
+    <Compile Include="Script\CsScript\Action\Action6106.cs" />
+    <Compile Include="Script\CsScript\Action\Action6107.cs" />
+    <Compile Include="Script\CsScript\Action\Action6108.cs" />
+    <Compile Include="Script\CsScript\Action\Action6109.cs" />
+    <Compile Include="Script\CsScript\Action\Action6201.cs" />
+    <Compile Include="Script\CsScript\Action\Action6202.cs" />
+    <Compile Include="Script\CsScript\Action\Action6203.cs" />
+    <Compile Include="Script\CsScript\Action\Action6204.cs" />
+    <Compile Include="Script\CsScript\Action\Action6205.cs" />
+    <Compile Include="Script\CsScript\Action\Action6206.cs" />
+    <Compile Include="Script\CsScript\Action\Action6301.cs" />
+    <Compile Include="Script\CsScript\Action\Action6302.cs" />
+    <Compile Include="Script\CsScript\Action\Action6303.cs" />
+    <Compile Include="Script\CsScript\Action\Action6304.cs" />
+    <Compile Include="Script\CsScript\Action\Action6305.cs" />
+    <Compile Include="Script\CsScript\Action\Action6401.cs" />
+    <Compile Include="Script\CsScript\Action\Action6403.cs" />
+    <Compile Include="Script\CsScript\Action\Action6404.cs" />
+    <Compile Include="Script\CsScript\Action\Action6405.cs" />
+    <Compile Include="Script\CsScript\Action\Action6406.cs" />
+    <Compile Include="Script\CsScript\Action\Action6407.cs" />
+    <Compile Include="Script\CsScript\Action\Action6408.cs" />
+    <Compile Include="Script\CsScript\Action\Action6409.cs" />
+    <Compile Include="Script\CsScript\Action\Action6411.cs" />
+    <Compile Include="Script\CsScript\Action\Action6412.cs" />
+    <Compile Include="Script\CsScript\Action\Action7001.cs" />
+    <Compile Include="Script\CsScript\Action\Action7002.cs" />
+    <Compile Include="Script\CsScript\Action\Action7003.cs" />
+    <Compile Include="Script\CsScript\Action\Action7004.cs" />
+    <Compile Include="Script\CsScript\Action\Action7005.cs" />
+    <Compile Include="Script\CsScript\Action\Action7006.cs" />
+    <Compile Include="Script\CsScript\Action\Action7007.cs" />
+    <Compile Include="Script\CsScript\Action\Action7008.cs" />
+    <Compile Include="Script\CsScript\Action\Action7009.cs" />
+    <Compile Include="Script\CsScript\Action\Action7010.cs" />
+    <Compile Include="Script\CsScript\Action\Action9003.cs" />
+    <Compile Include="Script\CsScript\Action\Action9004.cs" />
+    <Compile Include="Script\CsScript\Action\Action9005.cs" />
+    <Compile Include="Script\CsScript\Action\Action9101.cs" />
+    <Compile Include="Script\CsScript\Action\Action9102.cs" />
+    <Compile Include="Script\CsScript\Action\Action9103.cs" />
+    <Compile Include="Script\CsScript\Action\Action9104.cs" />
+    <Compile Include="Script\CsScript\Action\Action9105.cs" />
+    <Compile Include="Script\CsScript\Action\Action9201.cs" />
+    <Compile Include="Script\CsScript\Action\Action9202.cs" />
+    <Compile Include="Script\CsScript\Action\Action9203.cs" />
+    <Compile Include="Script\CsScript\Action\Action9204.cs" />
+    <Compile Include="Script\CsScript\Action\Action9205.cs" />
+    <Compile Include="Script\CsScript\Action\ActionIDDefine.cs" />
+    <Compile Include="Script\CsScript\Action\BaseAction.cs" />
+    <Compile Include="Script\CsScript\Base\ActivitiesAward.cs" />
+    <Compile Include="Script\CsScript\Base\AppstoreClientManager.cs" />
+    <Compile Include="Script\CsScript\Base\AppStoreHelper.cs" />
+    <Compile Include="Script\CsScript\Base\AssistantHelper.cs" />
+    <Compile Include="Script\CsScript\Base\BackPackHelper.cs" />
+    <Compile Include="Script\CsScript\Base\BaseHelper.cs" />
+    <Compile Include="Script\CsScript\Base\BaseLog.cs" />
+    <Compile Include="Script\CsScript\Base\ConfigSetConvert.cs" />
+    <Compile Include="Script\CsScript\Base\CrystalHelper.cs" />
+    <Compile Include="Script\CsScript\Base\DelayDataManager.cs" />
+    <Compile Include="Script\CsScript\Base\DialHelper.cs" />
+    <Compile Include="Script\CsScript\Base\EmbattleHelper.cs" />
+    <Compile Include="Script\CsScript\Base\EnchantHelper.cs" />
+    <Compile Include="Script\CsScript\Base\FestivalHelper.cs" />
+    <Compile Include="Script\CsScript\Base\GeneralEscalateHelper.cs" />
+    <Compile Include="Script\CsScript\Base\GeneralHelper.cs" />
+    <Compile Include="Script\CsScript\Base\GeneralSortHelper.cs" />
+    <Compile Include="Script\CsScript\Base\GetEnumCountHelper.cs" />
+    <Compile Include="Script\CsScript\Base\GiftHelper.cs" />
+    <Compile Include="Script\CsScript\Base\GuildExerciseHelper.cs" />
+    <Compile Include="Script\CsScript\Base\ItemCheck.cs" />
+    <Compile Include="Script\CsScript\Base\ItemUseHelper.cs" />
+    <Compile Include="Script\CsScript\Base\LairTreasuerHelp.cs" />
+    <Compile Include="Script\CsScript\Base\LuaFormater.cs" />
+    <Compile Include="Script\CsScript\Base\ManagerTimer.cs" />
+    <Compile Include="Script\CsScript\Base\MysteryHelper.cs" />
+    <Compile Include="Script\CsScript\Base\NoticeHelper.cs" />
+    <Compile Include="Script\CsScript\Base\NoviceHelper.cs" />
+    <Compile Include="Script\CsScript\Base\PaymentService.cs" />
+    <Compile Include="Script\CsScript\Base\PlotHelper.cs" />
+    <Compile Include="Script\CsScript\Base\PrizeHelper.cs" />
+    <Compile Include="Script\CsScript\Base\RankingHelper.cs" />
+    <Compile Include="Script\CsScript\Base\SystemGlobal.cs" />
+    <Compile Include="Script\CsScript\Base\TaskHelper.cs" />
+    <Compile Include="Script\CsScript\Base\TrumpHelper.cs" />
+    <Compile Include="Script\CsScript\Base\UserAbilityHelper.cs" />
+    <Compile Include="Script\CsScript\Base\UserArchaeologyHelper.cs" />
+    <Compile Include="Script\CsScript\Base\UserHelper.cs" />
+    <Compile Include="Script\CsScript\Base\UserLogHelper.cs" />
+    <Compile Include="Script\CsScript\Base\UserPackHelper.cs" />
+    <Compile Include="Script\CsScript\Base\UserPrayHelper.cs" />
+    <Compile Include="Script\CsScript\Base\ViewHelper.cs" />
+    <Compile Include="Script\CsScript\Base\VipHelper.cs" />
+    <Compile Include="Script\CsScript\Combat\AbilityDispose.cs" />
+    <Compile Include="Script\CsScript\Combat\BossCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\CombatAbilityAttack.cs" />
+    <Compile Include="Script\CsScript\Combat\CombatBaseAttack.cs" />
+    <Compile Include="Script\CsScript\Combat\CombatCenter.cs" />
+    <Compile Include="Script\CsScript\Combat\CombatFactory.cs" />
+    <Compile Include="Script\CsScript\Combat\CombatHelper.cs" />
+    <Compile Include="Script\CsScript\Combat\CombatPhysicalAttack.cs" />
+    <Compile Include="Script\CsScript\Combat\CountryCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\CountryQueue.cs" />
+    <Compile Include="Script\CsScript\Combat\FightCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\GameActiveCenter.cs" />
+    <Compile Include="Script\CsScript\Combat\GeneralReplaceAttack.cs" />
+    <Compile Include="Script\CsScript\Combat\GuildBossCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\GuildFightCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\GuildGameActiveCenter.cs" />
+    <Compile Include="Script\CsScript\Combat\MonsterQueue.cs" />
+    <Compile Include="Script\CsScript\Combat\PlotCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\PlotTeamCombat.cs" />
+    <Compile Include="Script\CsScript\Combat\PriorityHelper.cs" />
+    <Compile Include="Script\CsScript\Combat\SJTMonsterQueue.cs" />
+    <Compile Include="Script\CsScript\Combat\TjxCombatController.cs" />
+    <Compile Include="Script\CsScript\Combat\TrumpAbilityAttack.cs" />
+    <Compile Include="Script\CsScript\Combat\UserEmbattleQueue.cs" />
+    <Compile Include="Script\CsScript\Component\Chat\TjxBroadcastService.cs" />
+    <Compile Include="Script\CsScript\Component\Chat\TjxChatService.cs" />
+    <Compile Include="Script\CsScript\Component\Chat\TjxMailService.cs" />
+    <Compile Include="Script\CsScript\Component\Chat\TjxNoviceGuideService.cs" />
+    <Compile Include="Script\CsScript\Component\GameConfigSet.cs" />
+    <Compile Include="Script\CsScript\Component\Rank\CombatNumRanking.cs" />
+    <Compile Include="Script\CsScript\Component\Rank\CombatRanking.cs" />
+    <Compile Include="Script\CsScript\Component\Rank\GameCoinRanking.cs" />
+    <Compile Include="Script\CsScript\Component\Rank\ObtainRanking.cs" />
+    <Compile Include="Script\CsScript\Component\Rank\ShengJiTaRanking.cs" />
+    <Compile Include="Script\CsScript\Component\Rank\UserLvRanking.cs" />
+    <Compile Include="Script\CsScript\Component\UserAlbumHelper.cs" />
+    <Compile Include="Script\CsScript\Component\UserItemHelper.cs" />
+    <Compile Include="Script\CsScript\Component\UserPlotHelper.cs" />
+    <Compile Include="Script\CsScript\Component\UserShengJiTaHelper.cs" />
+    <Compile Include="Script\CsScript\GM\AbilityCommand.cs" />
+    <Compile Include="Script\CsScript\GM\CacheCommand.cs" />
+    <Compile Include="Script\CsScript\GM\CompletePlotCommand.cs" />
+    <Compile Include="Script\CsScript\GM\EnablePlotCommand.cs" />
+    <Compile Include="Script\CsScript\GM\EnableTaskCommand.cs" />
+    <Compile Include="Script\CsScript\GM\EnableTiandejieCommand.cs" />
+    <Compile Include="Script\CsScript\GM\EnchantCommand.cs" />
+    <Compile Include="Script\CsScript\GM\EnergyCommand.cs" />
+    <Compile Include="Script\CsScript\GM\ExperienceCommand.cs" />
+    <Compile Include="Script\CsScript\GM\ExpNumCommand.cs" />
+    <Compile Include="Script\CsScript\GM\FunctionCommand.cs" />
+    <Compile Include="Script\CsScript\GM\GeneralCommand.cs" />
+    <Compile Include="Script\CsScript\GM\GeneralLvCommand.cs" />
+    <Compile Include="Script\CsScript\GM\GoinCommand.cs" />
+    <Compile Include="Script\CsScript\GM\GoldCommand.cs" />
+    <Compile Include="Script\CsScript\GM\HonourCommand.cs" />
+    <Compile Include="Script\CsScript\GM\ItemCommand.cs" />
+    <Compile Include="Script\CsScript\GM\MagicCommand.cs" />
+    <Compile Include="Script\CsScript\GM\ObtionCommand.cs" />
+    <Compile Include="Script\CsScript\GM\PotentialCommand.cs" />
+    <Compile Include="Script\CsScript\GM\SparePartCommand.cs" />
+    <Compile Include="Script\CsScript\GM\TjBaseCommand.cs" />
+    <Compile Include="Script\CsScript\Lang\GameBIG5Language.cs" />
+    <Compile Include="Script\CsScript\Lang\GameZHLanguage.cs" />
+    <Compile Include="Script\CsScript\Lang\IGameLanguage.cs" />
+    <Compile Include="Script\CsScript\Lang\LanguageManager.cs" />
+    <Compile Include="Script\CsScript\Lang\SimplifiedLanguage.cs" />
+    <Compile Include="Script\CsScript\Locale\SimplifiedLanguage.cs" />
+    <Compile Include="Script\CsScript\MainClass.cs" />
+    <Compile Include="Script\CsScript\Message\MessageGetter.cs" />
+    <Compile Include="Script\CsScript\Message\MessageSender.cs" />
+    <Compile Include="Script\CsScript\Task\FightCombatTask.cs" />
+    <Compile Include="Script\CsScript\Task\GiffPackTask.cs" />
+    <Compile Include="Script\CsScript\WebService\BaseDataGetter.cs" />
+    <Compile Include="Script\CsScript\WebService\BaseDataProcesser.cs" />
+    <Compile Include="Script\CsScript\WebService\GameService.asmx.cs">
+      <DependentUpon>GameService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Script\CsScript\WebService\JsonGrid.cs" />
+    <Compile Include="Script\CsScript\WebService\JsonParameter.cs" />
+    <Compile Include="Script\CsScript\WebService\LetterKeyWordProcesser.cs" />
+    <Compile Include="Script\CsScript\WebService\OAService.asmx.cs">
+      <DependentUpon>OAService.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Script\CsScript\WebService\OATianjiexingService.cs" />
+    <Compile Include="Script\CsScript\WebService\PythonScriptGetter.cs" />
+    <Compile Include="Script\CsScript\WebService\UserCacheProcesser.cs" />
+    <Compile Include="Script\CsScript\WebService\UserPrizeGetter.cs" />
+    <Compile Include="Script\CsScript\WebService\UserPrizeProcesser.cs" />
+    <Compile Include="Script\CsScript\WebService\UserProcesser.cs" />
+    <Compile Include="Script\Model\ConfigModel\AbilityInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\AbilityLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\BackpackConfigInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\BringUpInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\CareerAdditionInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\CareerInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ChatKeyWord.cs" />
+    <Compile Include="Script\Model\ConfigModel\CityInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\CityNpcInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ConfigEnvSet.cs" />
+    <Compile Include="Script\Model\ConfigModel\ConfigVersion.cs" />
+    <Compile Include="Script\Model\ConfigModel\ContinuousLoginInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\CrystalInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\CrystalLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\DailyTaskInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\DialInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\EnchantInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\EnchantLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ExpeditionInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\FeelLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GeneralEscalateInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GeneralInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GeneralPracticeInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildAbilityInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildAbilityLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildExercisePrize.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildFightInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildIdolInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\GuildQuestion.cs" />
+    <Compile Include="Script\Model\ConfigModel\HelpInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\IdolLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ItemBaseInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ItemEquAttrInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ItemSynthesisInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\KarmaInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MagicInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MagicLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MailInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MallItemsInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MonsterInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MosaicInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\MysteryInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\NoviceActivities.cs" />
+    <Compile Include="Script\Model\ConfigModel\NoviceTaskInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PeoplePlotInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PetInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PlantInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PlotEmbattleInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PlotInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PlotNPCInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PrayInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\PriorityInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\ProbabilityInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\QualityProbabilityInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\RechargePacks.cs" />
+    <Compile Include="Script\Model\ConfigModel\RecruitRule.cs" />
+    <Compile Include="Script\Model\ConfigModel\ServerCombatPrize.cs" />
+    <Compile Include="Script\Model\ConfigModel\SJTMonsterInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SJTPlotEmbattleInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SJTPlotInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SJTRankRewarInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SJTRewarInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SkillLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SparePartInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SportsRankPrizeInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SportsRewardInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\SportsTitleInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\StoryTaskInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\TrumpInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\TrumpPropertyInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\VipLvInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\WashConsumeInfo.cs" />
+    <Compile Include="Script\Model\ConfigModel\WorshipInfo.cs" />
+    <Compile Include="Script\Model\Config\Ability.cs" />
+    <Compile Include="Script\Model\Config\AbilityEffectStatus.cs" />
+    <Compile Include="Script\Model\Config\ActivitiesReward.cs" />
+    <Compile Include="Script\Model\Config\ActivityShow.cs" />
+    <Compile Include="Script\Model\Config\AgainstData.cs" />
+    <Compile Include="Script\Model\Config\Album.cs" />
+    <Compile Include="Script\Model\Config\ApplyData.cs" />
+    <Compile Include="Script\Model\Config\AttributeChance.cs" />
+    <Compile Include="Script\Model\Config\AttributeValueChance.cs" />
+    <Compile Include="Script\Model\Config\BaseProperty.cs" />
+    <Compile Include="Script\Model\Config\BattleReport.cs" />
+    <Compile Include="Script\Model\Config\BlessingInfo.cs" />
+    <Compile Include="Script\Model\Config\BossActivePrize.cs" />
+    <Compile Include="Script\Model\Config\BossCombatProcess.cs" />
+    <Compile Include="Script\Model\Config\BossDate.cs" />
+    <Compile Include="Script\Model\Config\BossUser.cs" />
+    <Compile Include="Script\Model\Config\ChatData.cs" />
+    <Compile Include="Script\Model\Config\CombatEmbattle.cs" />
+    <Compile Include="Script\Model\Config\CombatGains.cs" />
+    <Compile Include="Script\Model\Config\CombatGeneral.cs" />
+    <Compile Include="Script\Model\Config\CombatProcess.cs" />
+    <Compile Include="Script\Model\Config\CombatProcessContainer.cs" />
+    <Compile Include="Script\Model\Config\CombatProperty.cs" />
+    <Compile Include="Script\Model\Config\CombatStakeData.cs" />
+    <Compile Include="Script\Model\Config\CountryCombatProcess.cs" />
+    <Compile Include="Script\Model\Config\CountryUser.cs" />
+    <Compile Include="Script\Model\Config\Crystal.cs" />
+    <Compile Include="Script\Model\Config\DailyRefresh.cs" />
+    <Compile Include="Script\Model\Config\DailyRestrain.cs" />
+    <Compile Include="Script\Model\Config\DailyUserExtend.cs" />
+    <Compile Include="Script\Model\Config\DialogueInfo.cs" />
+    <Compile Include="Script\Model\Config\Difficulty.cs" />
+    <Compile Include="Script\Model\Config\EnchantCulTure.cs" />
+    <Compile Include="Script\Model\Config\EquStreng.cs" />
+    <Compile Include="Script\Model\Config\FestivalExtend.cs" />
+    <Compile Include="Script\Model\Config\FestivalReward.cs" />
+    <Compile Include="Script\Model\Config\FightAgainst.cs" />
+    <Compile Include="Script\Model\Config\FightCombatProcess.cs" />
+    <Compile Include="Script\Model\Config\FightDate.cs" />
+    <Compile Include="Script\Model\Config\FightUser.cs" />
+    <Compile Include="Script\Model\Config\FiveTierReward.cs" />
+    <Compile Include="Script\Model\Config\FunPlot.cs" />
+    <Compile Include="Script\Model\Config\GameUserExtend.cs" />
+    <Compile Include="Script\Model\Config\GeneralHeritage.cs" />
+    <Compile Include="Script\Model\Config\GeneralProperty.cs" />
+    <Compile Include="Script\Model\Config\GrayCrystal.cs" />
+    <Compile Include="Script\Model\Config\GuildAbility.cs" />
+    <Compile Include="Script\Model\Config\GuildBossInfo.cs" />
+    <Compile Include="Script\Model\Config\GuildExercise.cs" />
+    <Compile Include="Script\Model\Config\HelperInfo.cs" />
+    <Compile Include="Script\Model\Config\HeroPlot.cs" />
+    <Compile Include="Script\Model\Config\ItemRandom.cs" />
+    <Compile Include="Script\Model\Config\JsonEntity.cs" />
+    <Compile Include="Script\Model\Config\Karma.cs" />
+    <Compile Include="Script\Model\Config\KeyValue.cs" />
+    <Compile Include="Script\Model\Config\LairTreasure.cs" />
+    <Compile Include="Script\Model\Config\Letter.cs" />
+    <Compile Include="Script\Model\Config\MaterialInfo.cs" />
+    <Compile Include="Script\Model\Config\MemberLog.cs" />
+    <Compile Include="Script\Model\Config\MorePlot.cs" />
+    <Compile Include="Script\Model\Config\MorePlotTeam.cs" />
+    <Compile Include="Script\Model\Config\MysteryShops.cs" />
+    <Compile Include="Script\Model\Config\NoviceInfo.cs" />
+    <Compile Include="Script\Model\Config\NoviceReward.cs" />
+    <Compile Include="Script\Model\Config\OpsInfo.cs" />
+    <Compile Include="Script\Model\Config\PackageReward.cs" />
+    <Compile Include="Script\Model\Config\PackType.cs" />
+    <Compile Include="Script\Model\Config\PlotBarriers.cs" />
+    <Compile Include="Script\Model\Config\PrizeInfo.cs" />
+    <Compile Include="Script\Model\Config\PrizeItemInfo.cs" />
+    <Compile Include="Script\Model\Config\RecruitFestival.cs" />
+    <Compile Include="Script\Model\Config\RecruitFilter.cs" />
+    <Compile Include="Script\Model\Config\RecruitInfo.cs" />
+    <Compile Include="Script\Model\Config\RestrainExtend.cs" />
+    <Compile Include="Script\Model\Config\RewardShow.cs" />
+    <Compile Include="Script\Model\Config\RewardStatus.cs" />
+    <Compile Include="Script\Model\Config\SelfAbilityEffect.cs" />
+    <Compile Include="Script\Model\Config\ServerRank.cs" />
+    <Compile Include="Script\Model\Config\ShowFilterInfo.cs" />
+    <Compile Include="Script\Model\Config\SJTRewar.cs" />
+    <Compile Include="Script\Model\Config\SkillInfo.cs" />
+    <Compile Include="Script\Model\Config\SparePartProperty.cs" />
+    <Compile Include="Script\Model\Config\SparePartReset.cs" />
+    <Compile Include="Script\Model\Config\SportsCombat.cs" />
+    <Compile Include="Script\Model\Config\SweepPoolInfo.cs" />
+    <Compile Include="Script\Model\Config\SynthesisInfo.cs" />
+    <Compile Include="Script\Model\Config\TargetProcess.cs" />
+    <Compile Include="Script\Model\Config\TaskConfigInfo.cs" />
+    <Compile Include="Script\Model\Config\TeamCombatProcess.cs" />
+    <Compile Include="Script\Model\Config\TeamCombatResult.cs" />
+    <Compile Include="Script\Model\Config\TimePriod.cs" />
+    <Compile Include="Script\Model\Config\TrainingInfo.cs" />
+    <Compile Include="Script\Model\Config\TreasureInfo.cs" />
+    <Compile Include="Script\Model\Config\UniversalInfo.cs" />
+    <Compile Include="Script\Model\Config\UserCrystalInfo.cs" />
+    <Compile Include="Script\Model\Config\UserEnchantInfo.cs" />
+    <Compile Include="Script\Model\Config\UserItemInfo.cs" />
+    <Compile Include="Script\Model\Config\UserPlotArcheology.cs" />
+    <Compile Include="Script\Model\Config\UserPlotInfo.cs" />
+    <Compile Include="Script\Model\Config\UserRank.cs" />
+    <Compile Include="Script\Model\Config\UserSocial.cs" />
+    <Compile Include="Script\Model\Config\UserSparePart.cs" />
+    <Compile Include="Script\Model\DataModel\ActiveListInfo.cs" />
+    <Compile Include="Script\Model\DataModel\DailyRestrainSet.cs" />
+    <Compile Include="Script\Model\DataModel\FestivalInfo.cs" />
+    <Compile Include="Script\Model\DataModel\FestivalRestrain.cs" />
+    <Compile Include="Script\Model\DataModel\GameActive.cs" />
+    <Compile Include="Script\Model\DataModel\GameNotice.cs" />
+    <Compile Include="Script\Model\DataModel\GameUser.cs" />
+    <Compile Include="Script\Model\DataModel\GeneralMedicine.cs" />
+    <Compile Include="Script\Model\DataModel\GuildIdol.cs" />
+    <Compile Include="Script\Model\DataModel\GuildMember.cs" />
+    <Compile Include="Script\Model\DataModel\GuildMemberLog.cs" />
+    <Compile Include="Script\Model\DataModel\LairReward.cs" />
+    <Compile Include="Script\Model\DataModel\LairTreasure.cs" />
+    <Compile Include="Script\Model\DataModel\MemberGroup.cs" />
+    <Compile Include="Script\Model\DataModel\NoviceRestrain.cs" />
+    <Compile Include="Script\Model\DataModel\NoviceUser.cs" />
+    <Compile Include="Script\Model\DataModel\PackageReceive.cs" />
+    <Compile Include="Script\Model\DataModel\PetRunPool.cs" />
+    <Compile Include="Script\Model\DataModel\ServerCombatDetail.cs" />
+    <Compile Include="Script\Model\DataModel\ServerCombatInfo.cs" />
+    <Compile Include="Script\Model\DataModel\ServerEnvSet.cs" />
+    <Compile Include="Script\Model\DataModel\ServerFight.cs" />
+    <Compile Include="Script\Model\DataModel\ServerFightGroup.cs" />
+    <Compile Include="Script\Model\DataModel\UserAbility.cs" />
+    <Compile Include="Script\Model\DataModel\UserAlbum.cs" />
+    <Compile Include="Script\Model\DataModel\UserApply.cs" />
+    <Compile Include="Script\Model\DataModel\UserCardReward.cs" />
+    <Compile Include="Script\Model\DataModel\UserChallengeNum.cs" />
+    <Compile Include="Script\Model\DataModel\UserConsume.cs" />
+    <Compile Include="Script\Model\DataModel\UserCrystalPackage.cs" />
+    <Compile Include="Script\Model\DataModel\UserDailyRestrain.cs" />
+    <Compile Include="Script\Model\DataModel\UserDial.cs" />
+    <Compile Include="Script\Model\DataModel\UserEmbattle.cs" />
+    <Compile Include="Script\Model\DataModel\UserEnchant.cs" />
+    <Compile Include="Script\Model\DataModel\UserExpedition.cs" />
+    <Compile Include="Script\Model\DataModel\UserFriends.cs" />
+    <Compile Include="Script\Model\DataModel\UserFunction.cs" />
+    <Compile Include="Script\Model\DataModel\UserGeneral.cs" />
+    <Compile Include="Script\Model\DataModel\UserGuild.cs" />
+    <Compile Include="Script\Model\DataModel\UserItemPackage.cs" />
+    <Compile Include="Script\Model\DataModel\UserLand.cs" />
+    <Compile Include="Script\Model\DataModel\UserLight.cs" />
+    <Compile Include="Script\Model\DataModel\UserMagic.cs" />
+    <Compile Include="Script\Model\DataModel\UserMail.cs" />
+    <Compile Include="Script\Model\DataModel\UserPack.cs" />
+    <Compile Include="Script\Model\DataModel\UserPlant.cs" />
+    <Compile Include="Script\Model\DataModel\UserPlantQuality.cs" />
+    <Compile Include="Script\Model\DataModel\UserPlot.cs" />
+    <Compile Include="Script\Model\DataModel\UserPlotCombat.cs" />
+    <Compile Include="Script\Model\DataModel\UserPlotPackage.cs" />
+    <Compile Include="Script\Model\DataModel\UserPlotTeam.cs" />
+    <Compile Include="Script\Model\DataModel\UserPray.cs" />
+    <Compile Include="Script\Model\DataModel\UserProps.cs" />
+    <Compile Include="Script\Model\DataModel\UserQueue.cs" />
+    <Compile Include="Script\Model\DataModel\UserRecharge.cs" />
+    <Compile Include="Script\Model\DataModel\UserRegistration.cs" />
+    <Compile Include="Script\Model\DataModel\UserRestrain.cs" />
+    <Compile Include="Script\Model\DataModel\UserServerCombatAgainst.cs" />
+    <Compile Include="Script\Model\DataModel\UserServerCombatApply.cs" />
+    <Compile Include="Script\Model\DataModel\UserServerCombatStake.cs" />
+    <Compile Include="Script\Model\DataModel\UserShengJiTa.cs" />
+    <Compile Include="Script\Model\DataModel\UserShops.cs" />
+    <Compile Include="Script\Model\DataModel\UserSparePackage.cs" />
+    <Compile Include="Script\Model\DataModel\UserSweepPool.cs" />
+    <Compile Include="Script\Model\DataModel\UserTakePrize.cs" />
+    <Compile Include="Script\Model\DataModel\UserTask.cs" />
+    <Compile Include="Script\Model\DataModel\UserTrump.cs" />
+    <Compile Include="Script\Model\DbConfig.cs" />
+    <Compile Include="Script\Model\Enum\AbilityProperty.cs" />
+    <Compile Include="Script\Model\Enum\AbilityType.cs" />
+    <Compile Include="Script\Model\Enum\ActiveType.cs" />
+    <Compile Include="Script\Model\Enum\ActivityType.cs" />
+    <Compile Include="Script\Model\Enum\AlbumType.cs" />
+    <Compile Include="Script\Model\Enum\AttackTaget.cs" />
+    <Compile Include="Script\Model\Enum\AttackType.cs" />
+    <Compile Include="Script\Model\Enum\AttackUnit.cs" />
+    <Compile Include="Script\Model\Enum\BackpackType.cs" />
+    <Compile Include="Script\Model\Enum\BattleStatus.cs" />
+    <Compile Include="Script\Model\Enum\BlessingType.cs" />
+    <Compile Include="Script\Model\Enum\BossDateType.cs" />
+    <Compile Include="Script\Model\Enum\BringUpType.cs" />
+    <Compile Include="Script\Model\Enum\CareerType.cs" />
+    <Compile Include="Script\Model\Enum\ChatType.cs" />
+    <Compile Include="Script\Model\Enum\ColorType.cs" />
+    <Compile Include="Script\Model\Enum\CombatStatus.cs" />
+    <Compile Include="Script\Model\Enum\CombatType.cs" />
+    <Compile Include="Script\Model\Enum\CountryType.cs" />
+    <Compile Include="Script\Model\Enum\CrystalQualityType.cs" />
+    <Compile Include="Script\Model\Enum\CultureType.cs" />
+    <Compile Include="Script\Model\Enum\DifficultyType.cs" />
+    <Compile Include="Script\Model\Enum\EnchantCultureType.cs" />
+    <Compile Include="Script\Model\Enum\EquParts.cs" />
+    <Compile Include="Script\Model\Enum\ExpandType.cs" />
+    <Compile Include="Script\Model\Enum\FestivalType.cs" />
+    <Compile Include="Script\Model\Enum\FightStage.cs" />
+    <Compile Include="Script\Model\Enum\FriendType.cs" />
+    <Compile Include="Script\Model\Enum\FunctionEnum.cs" />
+    <Compile Include="Script\Model\Enum\GeneralQuality.cs" />
+    <Compile Include="Script\Model\Enum\GeneralStatus.cs" />
+    <Compile Include="Script\Model\Enum\GeneralType.cs" />
+    <Compile Include="Script\Model\Enum\GiftType.cs" />
+    <Compile Include="Script\Model\Enum\GuildAbilityType.cs" />
+    <Compile Include="Script\Model\Enum\HeritageType.cs" />
+    <Compile Include="Script\Model\Enum\ItemStatus.cs" />
+    <Compile Include="Script\Model\Enum\ItemType.cs" />
+    <Compile Include="Script\Model\Enum\KarmaAttType.cs" />
+    <Compile Include="Script\Model\Enum\KarmaType.cs" />
+    <Compile Include="Script\Model\Enum\LairQualityType.cs" />
+    <Compile Include="Script\Model\Enum\LairRewardType.cs" />
+    <Compile Include="Script\Model\Enum\LairTreasureType.cs" />
+    <Compile Include="Script\Model\Enum\MailType.cs" />
+    <Compile Include="Script\Model\Enum\MatureType.cs" />
+    <Compile Include="Script\Model\Enum\MessageType.cs" />
+    <Compile Include="Script\Model\Enum\MonsterType.cs" />
+    <Compile Include="Script\Model\Enum\MultipleType.cs" />
+    <Compile Include="Script\Model\Enum\MysteryType.cs" />
+    <Compile Include="Script\Model\Enum\NoticesType.cs" />
+    <Compile Include="Script\Model\Enum\PlantQualityType.cs" />
+    <Compile Include="Script\Model\Enum\PlantType.cs" />
+    <Compile Include="Script\Model\Enum\PlotFailureType.cs" />
+    <Compile Include="Script\Model\Enum\PlotStatus.cs" />
+    <Compile Include="Script\Model\Enum\PlotSuccessType.cs" />
+    <Compile Include="Script\Model\Enum\PlotTermsType.cs" />
+    <Compile Include="Script\Model\Enum\PlotType.cs" />
+    <Compile Include="Script\Model\Enum\PostType.cs" />
+    <Compile Include="Script\Model\Enum\PrayType.cs" />
+    <Compile Include="Script\Model\Enum\PriorityQuality.cs" />
+    <Compile Include="Script\Model\Enum\PriorityType.cs" />
+    <Compile Include="Script\Model\Enum\PropertyType.cs" />
+    <Compile Include="Script\Model\Enum\PropType.cs" />
+    <Compile Include="Script\Model\Enum\QishiType.cs" />
+    <Compile Include="Script\Model\Enum\QualityType.cs" />
+    <Compile Include="Script\Model\Enum\QueueType.cs" />
+    <Compile Include="Script\Model\Enum\RankType.cs" />
+    <Compile Include="Script\Model\Enum\RecruitType.cs" />
+    <Compile Include="Script\Model\Enum\RestrainType.cs" />
+    <Compile Include="Script\Model\Enum\RewardType.cs" />
+    <Compile Include="Script\Model\Enum\ServerCombatStage.cs" />
+    <Compile Include="Script\Model\Enum\ServerEnvKey.cs" />
+    <Compile Include="Script\Model\Enum\ShopType.cs" />
+    <Compile Include="Script\Model\Enum\SJTRankType.cs" />
+    <Compile Include="Script\Model\Enum\SJTRewarType.cs" />
+    <Compile Include="Script\Model\Enum\SparePartQuality.cs" />
+    <Compile Include="Script\Model\Enum\TaskStar.cs" />
+    <Compile Include="Script\Model\Enum\TaskState.cs" />
+    <Compile Include="Script\Model\Enum\TaskType.cs" />
+    <Compile Include="Script\Model\Enum\TeamType.cs" />
+    <Compile Include="Script\Model\Enum\TrainingType.cs" />
+    <Compile Include="Script\Model\Enum\UserStatus.cs" />
+    <Compile Include="Script\Model\Enum\VersionType.cs" />
+    <Compile Include="Script\Model\Enum\ZodiacType.cs" />
+    <Compile Include="Script\Model\LogModel\ConsumptionLog.cs" />
+    <Compile Include="Script\Model\LogModel\LogActionVisitor.cs" />
+    <Compile Include="Script\Model\LogModel\MallItemLog.cs" />
+    <Compile Include="Script\Model\LogModel\OAOperationLog.cs" />
+    <Compile Include="Script\Model\LogModel\PackageReceiveLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserChatLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserCombatLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserCrystalLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserDataChangeLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserEnchantLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserItemLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserItemSynthesisLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserLandLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserLoginLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserOperationLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserPlotPrizeLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserPracticeLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserRaidsLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserRechargeLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserSparePartLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserStrongLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserSweepPoolLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserTaskLog.cs" />
+    <Compile Include="Script\Model\LogModel\UserUseGoldLog.cs" />
+    <Compile Include="Script\Model\UserCacheGlobal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="GameServer.exe.config" />
+    <None Include="NLog.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Script\CsScript\WebService\GameService.asmx" />
+    <Content Include="Script\CsScript\WebService\OAService.asmx" />
+    <Content Include="Script\PyScript\Action\action1008.py" />
+    <Content Include="Script\PyScript\Action\action1023.py" />
+    <Content Include="Script\PyScript\Action\action1025.py" />
+    <Content Include="Script\PyScript\Action\action1026.py" />
+    <Content Include="Script\PyScript\Action\action1091.py" />
+    <Content Include="Script\PyScript\Action\action1092.py" />
+    <Content Include="Script\PyScript\Action\action1093.py" />
+    <Content Include="Script\PyScript\Action\action1094.py" />
+    <Content Include="Script\PyScript\Action\action1095.py" />
+    <Content Include="Script\PyScript\Action\action1110.py" />
+    <Content Include="Script\PyScript\Action\action1113.py" />
+    <Content Include="Script\PyScript\Action\action1114.py" />
+    <Content Include="Script\PyScript\Action\action12051.py" />
+    <Content Include="Script\PyScript\Action\action12052.py" />
+    <Content Include="Script\PyScript\Action\action12053.py" />
+    <Content Include="Script\PyScript\Action\action12055.py" />
+    <Content Include="Script\PyScript\Action\action12056.py" />
+    <Content Include="Script\PyScript\Action\action12057.py" />
+    <Content Include="Script\PyScript\Action\action12101.py" />
+    <Content Include="Script\PyScript\Action\action12102.py" />
+    <Content Include="Script\PyScript\Action\action12103.py" />
+    <Content Include="Script\PyScript\Action\action1402.py" />
+    <Content Include="Script\PyScript\Action\action1404.py" />
+    <Content Include="Script\PyScript\Action\action1425.py" />
+    <Content Include="Script\PyScript\Action\action1441.py" />
+    <Content Include="Script\PyScript\Action\action1442.py" />
+    <Content Include="Script\PyScript\Action\action1443.py" />
+    <Content Include="Script\PyScript\Action\action1444.py" />
+    <Content Include="Script\PyScript\Action\action1445.py" />
+    <Content Include="Script\PyScript\Action\action1446.py" />
+    <Content Include="Script\PyScript\Action\action1447.py" />
+    <Content Include="Script\PyScript\Action\action1448.py" />
+    <Content Include="Script\PyScript\Action\action1449.py" />
+    <Content Include="Script\PyScript\Action\action1481.py" />
+    <Content Include="Script\PyScript\Action\action1482.py" />
+    <Content Include="Script\PyScript\Action\action1483.py" />
+    <Content Include="Script\PyScript\Action\action1484.py" />
+    <Content Include="Script\PyScript\Action\action1485.py" />
+    <Content Include="Script\PyScript\Action\action1610.py" />
+    <Content Include="Script\PyScript\Action\action1611.py" />
+    <Content Include="Script\PyScript\Action\action3012.py" />
+    <Content Include="Script\PyScript\Action\action3013.py" />
+    <Content Include="Script\PyScript\Action\action3014.py" />
+    <Content Include="Script\PyScript\Action\action3301.py" />
+    <Content Include="Script\PyScript\Action\action3302.py" />
+    <Content Include="Script\PyScript\Action\action360.py" />
+    <Content Include="Script\PyScript\Action\action4401.py" />
+    <Content Include="Script\PyScript\Action\action4402.py" />
+    <Content Include="Script\PyScript\Action\action4403.py" />
+    <Content Include="Script\PyScript\Action\action4404.py" />
+    <Content Include="Script\PyScript\Action\action4405.py" />
+    <Content Include="Script\PyScript\Action\action4406.py" />
+    <Content Include="Script\PyScript\Action\action4407.py" />
+    <Content Include="Script\PyScript\Action\action4408.py" />
+    <Content Include="Script\PyScript\Action\action4409.py" />
+    <Content Include="Script\PyScript\Action\action4410.py" />
+    <Content Include="Script\PyScript\Action\action4411.py" />
+    <Content Include="Script\PyScript\Action\action4412.py" />
+    <Content Include="Script\PyScript\Action\action5108.py" />
+    <Content Include="Script\PyScript\Action\action7011.py" />
+    <Content Include="Script\PyScript\Action\action7012.py" />
+    <Content Include="Script\PyScript\Action\action9006.py" />
+    <Content Include="Script\PyScript\Action\action9301.py" />
+    <Content Include="Script\PyScript\Action\action9302.py" />
+    <Content Include="Script\PyScript\Bll\festivalBll.py" />
+    <Content Include="Script\PyScript\Lib\action.py" />
+    <Content Include="Script\PyScript\Lib\lang.py" />
+    <Content Include="Script\PyScript\Lib\mathUtils.py" />
+    <Content Include="Script\PyScript\Lib\randomUtils.py" />
+    <Content Include="Script\PyScript\Lib\ReferenceLib.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

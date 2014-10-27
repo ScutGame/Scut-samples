@@ -75,11 +75,8 @@ namespace GameServer.Script.CsScript.Action
                             LifeMaxNum = 100
                         };
                         roleCache.Add(role);
+                        gameUser.CurrRoleId = role.RoleId;
                     }
-                    gameUser.CurrRoleId = role.RoleId;
-                    var notifyUsers = new List<GameUser>();
-                    notifyUsers.Add(gameUser);
-                    ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, null);
                     return true;
                 }
             }
@@ -91,5 +88,12 @@ namespace GameServer.Script.CsScript.Action
 
         }
 
+        public override void TakeActionAffter(bool state)
+        {
+            var notifyUsers = new List<GameUser>();
+            notifyUsers.Add(Current.User as GameUser);
+            ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, t => { });
+            base.TakeActionAffter(state);
+        }
     }
 }

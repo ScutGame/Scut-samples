@@ -258,7 +258,7 @@ function init()
     bgSprite:setAnchorPoint(CCPoint(0.5,0.5))
     bgSprite:setPosition(CCPoint(pWinSize.width/2,pWinSize.height/2));
     mScene:addChild(bgSprite);
-    ScutDataLogic.CNetWriter:setUrl("http://localhost:63461/Service.aspx")
+    ScutDataLogic.CNetWriter:setUrl("http://ph.scutgame.com/service.aspx")
  
     local button = ZyButton:new(P("icon_1011.png"));
     button:addto(mScene,0);

@@ -25,6 +25,7 @@ THE SOFTWARE.
 using GameServer.Model;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Contract;
+using ZyGames.Framework.Game.Lang;
 using ZyGames.Framework.Game.Service;
 
 namespace GameServer.CsScript.Action
@@ -67,7 +68,12 @@ namespace GameServer.CsScript.Action
                 ranking.UserID = user.UserId;
                 ranking.UserName = UserName;
                 ranking.Score = Score;
-                cache.Add(ranking);
+                if (!cache.Add(ranking))
+                {
+                    ErrorCode = Language.Instance.ErrorCode;
+                    ErrorInfo = string.Format("add fail, UserID {0} is exist.", ranking.UserID);
+                    return false;
+                }
             }
             else
             {

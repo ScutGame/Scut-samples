@@ -76,9 +76,6 @@
      <Compile Include="Assets\Scut\Security\MD5Utils.cs" />
      <Compile Include="Assets\Scut\Serialization\ProtoBufUtils.cs" />
      <Compile Include="Assets\Scut\Serialization\ProtoObject.cs" />
- <Reference Include="Assembly-UnityScript-firstpass">
- <HintPath>Library\ScriptAssemblies\Assembly-UnityScript-firstpass.dll</HintPath>
- </Reference>
  <Reference Include="ICSharpCode.SharpZipLib">
  <HintPath>Assets\Lib\ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>

@@ -32,10 +32,10 @@ namespace Game.Script
             return true;
         }
 
-        public bool TryDecodePackage(HttpListenerContext context, out RequestPackage package)
+        public bool TryDecodePackage(HttpListenerRequest request, out RequestPackage package, out int statusCode)
         {
+            statusCode = 200;
             package = null;
-            HttpListenerRequest request = context.Request;
             byte[] content;
             var bytes = GetRequestStream(request.InputStream);
             MessagePack head = ReadMessageHead(bytes, out content);
@@ -45,6 +45,16 @@ namespace Game.Script
             }
             package = new RequestPackage(head.MsgId, head.SessionId, head.ActionId, head.UserId) { Message = content };
             return true;
+        }
+
+        public bool TryDecodePackage(HttpListenerContext context, out RequestPackage package)
+        {
+            int statuscode;
+            if (TryDecodePackage(context.Request, out package, out statuscode))
+            {
+                return true;
+            }
+            return false;
         }
 
         public bool TryDecodePackage(HttpContext context, out RequestPackage package)
@@ -60,6 +70,11 @@ namespace Game.Script
             }
             package = new RequestPackage(head.MsgId, head.SessionId, head.ActionId, head.UserId) { Message = content };
             return true;
+        }
+
+        public ActionGetter GetActionGetter(RequestPackage package, GameSession session)
+        {
+            return new ActionGetter(package, session);
         }
 
         /// <summary>
@@ -104,12 +119,6 @@ namespace Game.Script
                 //不支持的数据格式
             }
             return headPack;
-        }
-
-        public ActionGetter GetActionGetter(RequestPackage package)
-        {
-            // 可以实现自定的ActionGetter子类
-            return new ActionGetter(package);
         }
 
         public void ResponseError(BaseGameResponse response, ActionGetter actionGetter, int errorCode, string errorInfo)
