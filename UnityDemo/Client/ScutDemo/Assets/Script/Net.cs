@@ -167,7 +167,14 @@ public class Net : MonoBehaviour, IHttpCallback
             return s_instance;
         }
     }
-
+	
+	public void ReBuildHearbeat()
+	{
+		if(mSocket != null)
+		{
+			mSocket.ReBuildHearbeat();
+		}
+	}
 
     /// <summary>
     /// Send

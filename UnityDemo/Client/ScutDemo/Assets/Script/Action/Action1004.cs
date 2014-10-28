@@ -43,7 +43,7 @@ public class Action1004 : BaseAction//GameAction
         actionResult["Scope"] = reader.readString();
         NetWriter.setUserID(ulong.Parse(actionResult["UserID"].ToString()));
         NetWriter.setSessionID(actionResult.Get<string>("SessionID"));
-
+		Net.Instance.ReBuildHearbeat();
     }
 
     public override ActionResult GetResponseData()

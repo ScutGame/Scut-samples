@@ -1,4 +1,4 @@
-﻿/****************************************************************************
+/****************************************************************************
 Copyright (c) 2013-2015 scutgame.com
 
 http://www.scutgame.com
@@ -55,6 +55,12 @@ namespace Game.Script
         {
             Console.WriteLine("客户端UserId:[{0}]已与服务器断开", session.EndAddress);
             base.OnDisconnected(session);
+        }
+
+        protected override void OnHeartbeat(GameSession session)
+        {
+            Console.WriteLine("{0}>>Hearbeat package: {1} userid {2} session count {3}", DateTime.Now.ToString("HH:mm:ss"), session.RemoteAddress, session.UserId, GameSession.Count);
+            base.OnHeartbeat(session);
         }
 
         protected override void OnRequested(ActionGetter actionGetter, BaseGameResponse response)
