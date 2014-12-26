@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameServer.Script.Model;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Context;
@@ -43,9 +44,13 @@ namespace GameServer.Script.CsScript.Action
 
         public override void TakeActionAffter(bool state)
         {
+            Console.WriteLine("1004>发送World通知...");
             var notifyUsers = new List<GameUser>();
             notifyUsers.Add(Current.User as GameUser);
-            ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, t => { });
+            ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, t =>
+            {
+                Console.WriteLine("1004>发送World通知结果:{0}", t.Result.ToString());
+            });
             base.TakeActionAffter(state);
         }
     }

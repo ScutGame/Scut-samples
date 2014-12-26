@@ -102,5 +102,16 @@ namespace GameServer.CsScript.Locale
         /// 获取受权失败
         /// </summary>
         public new string GetAccessFailure = "获取受权失败";
+
+        public string St1002_GetRegisterPassportIDError = "获取注册通行证ID失败!";
+
+        public string St1005_NickNameOutRange = "您的昵称输入有误，请重新输入!";
+        public string St1005_NickNameExistKeyword = "您输入的昵称存在非法字符，请重新输入!";
+        public string St1005_NickNameExist = "您输入的昵称已存在，请重新输入!";
+
+        public string St1006_PasswordTooLong = "输入错误，请输入4-12位数字或字母!";
+        public string St1006_ChangePasswordError = "修改密码失败!";
+        public string St1006_PasswordError = "密码格式错误!";
+        public string St1066_PayError = "充值失败"; 
     }
 }
