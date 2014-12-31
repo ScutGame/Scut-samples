@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZyGames.Doudizhu", "ZyGames.Doudizhu\ZyGames.Doudizhu.csproj", "{FB98FD3B-8019-4BF8-8DE2-55FF2172394D}"
+EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "ZyGames.Doudizhu.Azure", "ZyGames.Doudizhu.Azure\ZyGames.Doudizhu.Azure.ccproj", "{72CB5542-D88A-47CA-8A65-1DCDE4BE6BF5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DoudizhuServiceRole", "DoudizhuServiceRole\DoudizhuServiceRole.csproj", "{AE5668F2-0F38-4BD0-8B19-B66F59B4422A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Azure Cloud", "Azure Cloud", "{30D18E31-125F-4ABA-81CE-58DB5186207D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +21,20 @@ Global
 		{FB98FD3B-8019-4BF8-8DE2-55FF2172394D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB98FD3B-8019-4BF8-8DE2-55FF2172394D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB98FD3B-8019-4BF8-8DE2-55FF2172394D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72CB5542-D88A-47CA-8A65-1DCDE4BE6BF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72CB5542-D88A-47CA-8A65-1DCDE4BE6BF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72CB5542-D88A-47CA-8A65-1DCDE4BE6BF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72CB5542-D88A-47CA-8A65-1DCDE4BE6BF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE5668F2-0F38-4BD0-8B19-B66F59B4422A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE5668F2-0F38-4BD0-8B19-B66F59B4422A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE5668F2-0F38-4BD0-8B19-B66F59B4422A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE5668F2-0F38-4BD0-8B19-B66F59B4422A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{72CB5542-D88A-47CA-8A65-1DCDE4BE6BF5} = {30D18E31-125F-4ABA-81CE-58DB5186207D}
+		{AE5668F2-0F38-4BD0-8B19-B66F59B4422A} = {30D18E31-125F-4ABA-81CE-58DB5186207D}
 	EndGlobalSection
 EndGlobal

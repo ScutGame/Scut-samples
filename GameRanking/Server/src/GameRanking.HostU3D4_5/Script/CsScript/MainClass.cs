@@ -44,8 +44,14 @@ namespace Game.Script
 
         protected override void OnDisconnected(GameSession session)
         {
-            Console.WriteLine("客户端UserId:[{0}]已与服务器断开", session.EndAddress);
+            Console.WriteLine("客户端UserId:[{0}]已与服务器断开", session.RemoteAddress);
             base.OnDisconnected(session);
+        }
+
+        protected override void OnHeartbeat(GameSession session)
+        {
+            Console.WriteLine("{0}>>Hearbeat package: {1} session count {2}", DateTime.Now.ToString("HH:mm:ss"), session.RemoteAddress, GameSession.Count);
+            base.OnHeartbeat(session);
         }
 
         protected override void OnStartAffer()

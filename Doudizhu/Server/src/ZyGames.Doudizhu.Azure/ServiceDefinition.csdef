@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="ZyGames.Doudizhu.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
+  <WorkerRole name="DoudizhuServiceRole" vmsize="Small">
+    <Imports>
+      <Import moduleName="Diagnostics" />
+    </Imports>
+    <Endpoints>
+      <InputEndpoint name="DdzEndpoint" protocol="tcp" port="9700" localPort="9700" />
+    </Endpoints>
+  </WorkerRole>
+</ServiceDefinition>
