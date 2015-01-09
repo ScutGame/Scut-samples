@@ -33,6 +33,13 @@ Use C# script (Scut + Untiy3d) http & socket
 Unity3d client on "Scut\SDK\Unity3d" dir.
 
 
+### Chat
+
+Use C# script (Scut + Cocos2d-JS) WebSocket
+
+![Game Chat](/sample/CocosJSChat.png)
+
+
 ### Doudizhu
 
 Use C#,python script (Scut + Cocos2d-x)
