@@ -25,7 +25,7 @@ namespace GameServer.Script.CsScript.Action
             set { _resultData.Data = value; }
         }
 
-        protected override string BuildResponsePack()
+        protected override string BuildJsonPack()
         {
             return MathUtils.ToJson(_resultData);
         }

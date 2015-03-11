@@ -103,7 +103,7 @@ namespace GameServer.Script.CsScript.Action
             return false;
         }
 
-        protected override string BuildResponsePack()
+        protected override string BuildJsonPack()
         {
             ResultData resultData = new ResultData()
             {
@@ -118,6 +118,5 @@ namespace GameServer.Script.CsScript.Action
             };
             return MathUtils.ToJson(resultData);
         }
-
     }
 }

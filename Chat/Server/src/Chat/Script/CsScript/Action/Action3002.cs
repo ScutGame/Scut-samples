@@ -43,7 +43,7 @@ namespace GameServer.Script.CsScript.Action
         }
 
 
-        protected override string BuildResponsePack()
+        protected override string BuildJsonPack()
         {
             var result = new ChatData[chatList.Count];
             for (int i = 0; i < chatList.Count; i++)
@@ -59,7 +59,7 @@ namespace GameServer.Script.CsScript.Action
                 };
             }
             Body = result;
-            return base.BuildResponsePack();
+            return base.BuildJsonPack();
         }
 
         private string GetUserName(int userId)

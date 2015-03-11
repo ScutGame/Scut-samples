@@ -96,7 +96,14 @@
     </None>
     <None Include="NLog.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Script\PyScript\Action\action3001.py" />
+    <Content Include="Script\PyScript\Action\action404.py" />
+    <Content Include="Script\PyScript\Lib\action.py" />
+    <Content Include="Script\PyScript\Lib\lang.py" />
+    <Content Include="Script\PyScript\Lib\mathUtils.py" />
+    <Content Include="Script\PyScript\Lib\randomUtils.py" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

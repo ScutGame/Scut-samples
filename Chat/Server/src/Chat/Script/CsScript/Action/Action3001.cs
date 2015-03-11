@@ -44,16 +44,16 @@ namespace GameServer.Script.CsScript.Action
             return true;
         }
 
-        protected override string BuildResponsePack()
+        protected override string BuildJsonPack()
         {
             Body = true;
-            return base.BuildResponsePack();
+            return base.BuildJsonPack();
         }
 
 
         public override void TakeActionAffter(bool state)
         {
-            ActionFactory.SendAsyncAction(GameSession.GetOnlineAll(), 3002, null, (s, r) => { }, OpCode.Text, 0).Wait();
+            ActionFactory.SendAction(GameSession.GetOnlineAll(), 3002, null, (s, r) => { }, OpCode.Text, 0);
             base.TakeActionAffter(state);
         }
     }
