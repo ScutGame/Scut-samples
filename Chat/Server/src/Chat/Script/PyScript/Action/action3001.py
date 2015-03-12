@@ -1,6 +1,13 @@
 ﻿"""Send chat"""
 import clr, sys
+import ReferenceLib
 from action import *
+from ZyGames.Framework.Common import *
+from ZyGames.Framework.Game.Contract import *
+from ZyGames.Framework.Game.Service import *
+from ZyGames.Framework.RPC.Sockets import *
+from GameServer.Script.CsScript.Com import *
+from GameServer.Script.Model import *
 #引用示例
 #clr.AddReference('ZyGames.Framework.Common');
 #from ZyGames.Framework.Common.Log import *
@@ -17,6 +24,8 @@ class ActionResult(DataResult):
 
 def getUrlElement(httpGet, parent):
     urlParam = UrlParam()
+    urlParam.MsgId = httpGet.GetMsgId()
+    urlParam.ActionId = httpGet.GetActionId()
     if httpGet.Contains("message"):
         urlParam._message = httpGet.GetStringValue("message")
     else:
@@ -27,8 +36,18 @@ def getUrlElement(httpGet, parent):
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
     user = parent.Current.User
+    chatservice = MyChatService(user)
+    chatservice.Send(urlParam._message)
     return actionResult
 
 def buildPacket(urlParam, actionResult):
+	
+    ActionFactory.SendAction(GameSession.GetOnlineAll(), 3002, None, sendCallback, OpCode.Text, 0);
+	
+    result = JsonDataResult(urlParam)
+    result.setBody(True)
+    return MathUtils.ToJson(result)
 
-    return ""
+def sendCallback(session, asyncResult):
+    # send to client result.
+    return
