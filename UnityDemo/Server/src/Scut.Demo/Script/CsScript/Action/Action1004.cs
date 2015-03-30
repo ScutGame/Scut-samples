@@ -33,7 +33,7 @@ namespace GameServer.Script.CsScript.Action
                 GuideId = 1005;
                 return true;
             }
-            user = gameUser;
+            user = new SessionUser(gameUser);
             if (gameUser.CurrRoleId == 0)
             {
                 gameUser.CurrRoleId = roleList[0].RoleId;
@@ -45,8 +45,8 @@ namespace GameServer.Script.CsScript.Action
         public override void TakeActionAffter(bool state)
         {
             Console.WriteLine("1004>发送World通知...");
-            var notifyUsers = new List<GameUser>();
-            notifyUsers.Add(Current.User as GameUser);
+            var notifyUsers = new List<IUser>();
+            notifyUsers.Add(Current.User);
             ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, t =>
             {
                 Console.WriteLine("1004>发送World通知结果:{0}", t.Result.ToString());
