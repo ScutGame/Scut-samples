@@ -89,6 +89,11 @@
             过滤文件类型
             </summary>
         </member>
+        <member name="P:ZyGames.Framework.Common.Build.WeavingEntityTask.IsDebug">
+            <summary>
+            assembly is support debug.
+            </summary>
+        </member>
         <member name="T:ZyGames.Framework.Common.Configuration.ConfigChangedEventArgs">
             <summary>
             
@@ -108,6 +113,15 @@
             <summary>
             Config manage
             </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.ConfigManager.Intialize(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="sectionName"></param>
+            <exception cref="T:System.ArgumentException"></exception>
+            <exception cref="T:System.Exception"></exception>
+            <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.Configuration.ConfigManager.GetConfigger``1">
             <summary>
@@ -139,6 +153,16 @@
             </summary>
             <exception cref="T:System.NullReferenceException"></exception>
         </member>
+        <member name="T:ZyGames.Framework.Common.Configuration.DefaultDataConfigger">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Configuration.DataConfigger">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:ZyGames.Framework.Common.Configuration.IConfigger">
             <summary>
             
@@ -153,6 +177,28 @@
             <summary>
             
             </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.IConfigger.GetFirstConfig``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.IConfigger.GetFirstOrAddConfig``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.IConfigger.GetFirstOrAddConfig``1(System.Lazy{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="createFactory"></param>
+            <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.Configuration.IConfigger.GetConfig``1">
             <summary>
@@ -175,7 +221,111 @@
             <param name="name"></param>
             <returns></returns>
         </member>
-        <member name="T:ZyGames.Framework.Common.Configuration.ConnetionSection">
+        <member name="F:ZyGames.Framework.Common.Configuration.DataConfigger.IsDependenced">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Configuration.DataConfigger._dueChangeTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Install">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.InitDependenceFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Reload">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.DoClearData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetFirstConfig``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetFirstOrAddConfig``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetFirstOrAddConfig``1(System.Lazy{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="createFactory"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetConfig``1">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetAllConfig">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetConnetion``1(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.AddNodeData(ZyGames.Framework.Common.Configuration.ConfigSection)">
+            <summary>
+            
+            </summary>
+            <param name="nodeData"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.LoadConfigData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Dispose(System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="disposing"></param>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Configuration.DataConfigger.ConfigFile">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Configuration.DefaultDataConfigger.LoadConfigData">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Configuration.ConnectionSection">
             <summary>
             Sql connection config
             </summary>
@@ -299,32 +449,32 @@
             
             </summary>
         </member>
-        <member name="P:ZyGames.Framework.Common.Configuration.ConfigSection.Count">
+        <member name="P:ZyGames.Framework.Common.Configuration.ConfigSection.NodeCount">
             <summary>
             
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.ConnetionSection.#ctor(System.String,System.String,System.String)">
+        <member name="M:ZyGames.Framework.Common.Configuration.ConnectionSection.#ctor(System.String,System.String,System.String)">
             <summary>
             
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.ConnetionSection.Load(System.String,System.String,System.String)">
+        <member name="M:ZyGames.Framework.Common.Configuration.ConnectionSection.Load(System.String,System.String,System.String)">
             <summary>
             
             </summary>
         </member>
-        <member name="P:ZyGames.Framework.Common.Configuration.ConnetionSection.Name">
+        <member name="P:ZyGames.Framework.Common.Configuration.ConnectionSection.Name">
             <summary>
             
             </summary>
         </member>
-        <member name="P:ZyGames.Framework.Common.Configuration.ConnetionSection.ProviderName">
+        <member name="P:ZyGames.Framework.Common.Configuration.ConnectionSection.ProviderName">
             <summary>
             
             </summary>
         </member>
-        <member name="P:ZyGames.Framework.Common.Configuration.ConnetionSection.ConnectionString">
+        <member name="P:ZyGames.Framework.Common.Configuration.ConnectionSection.ConnectionString">
             <summary>
             
             </summary>
@@ -418,78 +568,6 @@
             
             </summary>
         </member>
-        <member name="T:ZyGames.Framework.Common.Configuration.DataConfigger">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Install">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.InitDependenceFile">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Reload">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.DoClearData">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetConfig``1">
-            <summary>
-            
-            </summary>
-            <typeparam name="T"></typeparam>
-            <returns></returns>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetAllConfig">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.GetConnetion``1(System.String)">
-            <summary>
-            
-            </summary>
-            <param name="name"></param>
-            <returns></returns>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.AddNodeData(ZyGames.Framework.Common.Configuration.ConfigSection)">
-            <summary>
-            
-            </summary>
-            <param name="nodeData"></param>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.LoadConfigData">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Dispose">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Configuration.DataConfigger.Dispose(System.Boolean)">
-            <summary>
-            
-            </summary>
-            <param name="disposing"></param>
-        </member>
-        <member name="P:ZyGames.Framework.Common.Configuration.DataConfigger.ConfigFile">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="T:ZyGames.Framework.Common.Event.CustomEventHandle`1">
             <summary>
             自定义事件处理委托
@@ -566,7 +644,7 @@
         </member>
         <member name="M:ZyGames.Framework.Common.Event.NotifyEventArgs.Check">
             <summary>
-            
+            Check where
             </summary>
             <returns></returns>
         </member>
@@ -583,6 +661,11 @@
         <member name="P:ZyGames.Framework.Common.Event.NotifyEventArgs.Target">
             <summary>
             User object
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.NotifyEventArgs.ExpiredTime">
+            <summary>
+            
             </summary>
         </member>
         <member name="E:ZyGames.Framework.Common.Event.NotifyEventArgs.Callback">
@@ -607,11 +690,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="P:ZyGames.Framework.Common.Event.TimeoutNotifyEventArgs.Timeout">
-            <summary>
-            Timeout
-            </summary>
-        </member>
         <member name="T:ZyGames.Framework.Common.Event.NotifyCallback">
             <summary>
             
@@ -622,6 +700,11 @@
             Event notifier
             </summary>
         </member>
+        <member name="M:ZyGames.Framework.Common.Event.EventNotifier.Dispose">
+            <summary>
+            Dispose
+            </summary>
+        </member>
         <member name="M:ZyGames.Framework.Common.Event.EventNotifier.Put(ZyGames.Framework.Common.Event.NotifyEventArgs)">
             <summary>
             
@@ -629,10 +712,15 @@
         </member>
         <member name="P:ZyGames.Framework.Common.Event.EventNotifier.TimerNum">
             <summary>
-            
+            process time
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Common.Event.EventNotifier.WaitEventCount">
+            <summary>
+            Not process time
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Event.EventNotifier.ActiveThreadCount">
             <summary>
             
             </summary>
@@ -701,14 +789,11 @@
             <param name="contentType"></param>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Common.HttpUtils.Post(System.String,System.Collections.Generic.IDictionary{System.String,System.String},System.Text.Encoding,System.String)">
+        <member name="M:ZyGames.Framework.Common.HttpUtils.BuildPostParams(System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             Post request
             </summary>
-            <param name="url"></param>
             <param name="parameters"></param>
-            <param name="encoding"></param>
-            <param name="contentType"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.HttpUtils.Post(System.String,System.String,System.Text.Encoding,System.String)">
@@ -734,6 +819,18 @@
             <param name="cookies"></param>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Common.HttpUtils.PostAsync(System.String,System.Byte[],System.Nullable{System.Int32},System.String,System.String,System.Net.CookieCollection)">
+            <summary>
+            
+            </summary>
+            <param name="url"></param>
+            <param name="inputBytes"></param>
+            <param name="timeout"></param>
+            <param name="userAgent"></param>
+            <param name="contentType"></param>
+            <param name="cookies"></param>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Common.HttpUtils.Post(System.String,System.String,System.Nullable{System.Int32},System.String,System.Text.Encoding,System.String,System.Net.CookieCollection)">
             <summary>  
             Post request 
@@ -746,6 +843,18 @@
             <param name="contentType"></param>
             <param name="cookies">随同HTTP请求发送的Cookie信息，如果不需要身份验证可以为空</param>  
             <returns></returns>  
+        </member>
+        <member name="M:ZyGames.Framework.Common.HttpUtils.Post(System.String,System.Byte[],System.Nullable{System.Int32},System.String,System.String,System.Net.CookieCollection)">
+            <summary>
+            
+            </summary>
+            <param name="url"></param>
+            <param name="inputBytes"></param>
+            <param name="timeout"></param>
+            <param name="userAgent"></param>
+            <param name="contentType"></param>
+            <param name="cookies"></param>
+            <returns></returns>
         </member>
         <member name="T:ZyGames.Framework.Common.Locking.LockCallback">
             <summary>
@@ -1080,6 +1189,11 @@
             Sql最小时间范围
             </summary>
         </member>
+        <member name="F:ZyGames.Framework.Common.MathUtils.UnixEpochDateTime">
+            <summary>
+            Unix timestamp, val:1970-01-01 00:00:00 UTC
+            </summary>
+        </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.ToWeekOfYear(System.DateTime)">
             <summary>
             指定时间一年中是第几周
@@ -1125,10 +1239,38 @@
         </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.IndexOf(System.Byte[],System.Byte[])">
             <summary>
-            查找数组中包含另一数组的启始索引
+            
             </summary>
             <param name="bytes"></param>
             <param name="pattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.IndexOf(System.Byte[],System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            查找数组中包含另一数组的启始索引
+            </summary>
+            <param name="bytes"></param>
+            <param name="length"></param>
+            <param name="pattern"></param>
+            <param name="offset"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.IsEquals(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.StartsWith(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.ToDefaultValue(System.Type)">
@@ -1204,6 +1346,42 @@
             指定的值是否匹配变量命名
             </summary>
             <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.TryAdd(System.UInt32,System.UInt32,System.Action{System.UInt32})">
+            <summary>
+            尝试相加,防止溢出
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="success"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.TryAdd(System.UInt16,System.UInt16,System.Action{System.UInt16})">
+            <summary>
+            尝试相加,防止溢出
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="success"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.TrySub(System.UInt32,System.UInt32,System.Action{System.UInt32})">
+            <summary>
+            尝试相减,防止溢出
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="success"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.TrySub(System.UInt16,System.UInt16,System.Action{System.UInt32})">
+            <summary>
+            尝试相减,防止溢出
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="success"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.Addition(System.Int64,System.Int64)">
@@ -1659,6 +1837,74 @@
             Get runtime path.
             </summary>
         </member>
+        <member name="T:ZyGames.Framework.Common.CloneableTag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.CloneableTag.Include">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.CloneableTag.Exclude">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.CloneableAttribute">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.CloneableAttribute.#ctor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.CloneableAttribute.#ctor(ZyGames.Framework.Common.CloneableTag)">
+            <summary>
+            
+            </summary>
+            <param name="tag"></param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.CloneableAttribute.#ctor(ZyGames.Framework.Common.CloneableTag,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="tag"></param>
+            <param name="flavor"></param>
+        </member>
+        <member name="P:ZyGames.Framework.Common.CloneableAttribute.Tag">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.CloneableAttribute.Flavor">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.ObjectCloner">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectCloner.Clone(System.Object)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectCloner.Clone(System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="model"></param>
+            <param name="flavor"></param>
+            <returns></returns>
+        </member>
         <member name="T:ZyGames.Framework.Common.ObjectExtend">
             <summary>
             对象扩展方法
@@ -1679,6 +1925,24 @@
             </summary>
             <param name="type"></param>
             <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.IsEquals(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.StartsWith(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.ObjectExtend.IsEmpty(System.String)">
@@ -1753,6 +2017,40 @@
         <member name="M:ZyGames.Framework.Common.ObjectExtend.ToJson``1(System.Collections.Generic.List{``0})">
             <summary>
             将对象序列化成string
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="list"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.IndexOf(System.Byte[],System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="bytes"></param>
+            <param name="pattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.IndexOf(System.Byte[],System.Int32,System.Int32,System.Byte[])">
+            <summary>
+            
+            </summary>
+            <param name="bytes"></param>
+            <param name="offset"></param>
+            <param name="length"></param>
+            <param name="pattern"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.RandomSort``1(``0[])">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="array"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.RandomSort``1(System.Collections.Generic.List{``0})">
+            <summary>
+            
             </summary>
             <typeparam name="T"></typeparam>
             <param name="list"></param>
@@ -1998,6 +2296,16 @@
             </summary>
             <param name="item"></param>
         </member>
+        <member name="M:ZyGames.Framework.Common.ObjectPoolWithExpire`1.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.ObjectPoolWithExpire`1.MinPoolSize">
+            <summary>
+            pool min size
+            </summary>
+        </member>
         <member name="P:ZyGames.Framework.Common.ObjectPoolWithExpire`1.PoolCount">
             <summary>
             Pool count
@@ -2042,6 +2350,23 @@
             <param name="value"></param>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Common.RandomUtils.IsHitNew(System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="increase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.RandomUtils.IsHitNew(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+            <param name="increase"></param>
+            <param name="radix"></param>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Common.RandomUtils.IsHit(System.Int32)">
             <summary>
             是否命中
@@ -2068,6 +2393,13 @@
             是否命中
             </summary>
             <param name="percent">含百分比形式值</param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.RandomUtils.HitIndex(System.Double[])">
+            <summary>
+            
+            </summary>
+            <param name="percents"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.RandomUtils.GetHitIndex(System.Int32[])">
@@ -2145,6 +2477,20 @@
             <param name="randomMin">数组单项最小值</param>
             <param name="randomMax">数组单项最大值</param>
             <param name="total">总和</param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.RandomUtils.RandomSort``1(``0[])">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.RandomUtils.RandomSort``1(System.Collections.Generic.List{``0})">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
             <returns></returns>
         </member>
         <member name="T:ZyGames.Framework.Common.Reflect.FastActivator">
@@ -2873,6 +3219,2814 @@
             
             </summary>
         </member>
+        <member name="T:ZyGames.Framework.Common.Threading.CallerThreadContext">
+            <summary>
+            This class stores the caller call context in order to restore
+            it when the work item is executed in the thread pool environment. 
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.CallerThreadContext.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.CallerThreadContext.Capture(System.Boolean,System.Boolean)">
+            <summary>
+            Captures the current thread context
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.CallerThreadContext.Apply(ZyGames.Framework.Common.Threading.CallerThreadContext)">
+            <summary>
+            Applies the thread context stored earlier
+            </summary>
+            <param name="callerThreadContext"></param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.EventWaitHandleFactory">
+            <summary>
+            EventWaitHandleFactory class.
+            This is a static class that creates AutoResetEvent and ManualResetEvent objects.
+            In WindowCE the WaitForMultipleObjects API fails to use the Handle property 
+            of XxxResetEvent. It can use only handles that were created by the CreateEvent API.
+            Consequently this class creates the needed XxxResetEvent and replaces the handle if
+            it's a WindowsCE OS.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.EventWaitHandleFactory.CreateAutoResetEvent">
+            <summary>
+            Create a new AutoResetEvent object
+            </summary>
+            <returns>Return a new AutoResetEvent object</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.EventWaitHandleFactory.CreateManualResetEvent(System.Boolean)">
+            <summary>
+            Create a new ManualResetEvent object
+            </summary>
+            <returns>Return a new ManualResetEvent object</returns>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemCancelException">
+            <summary>
+            Represents an exception in case IWorkItemResult.GetResult has been canceled
+            </summary>
+            <summary>
+            Represents an exception in case IWorkItemResult.GetResult has been canceled
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemCancelException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemCancelException"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemCancelException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemCancelException"/> class.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemCancelException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemCancelException"/> class.
+            </summary>
+            <param name="message">Message.</param>
+            <param name="e">E.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemCancelException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemCancelException"/> class.
+            </summary>
+            <param name="si">Si.</param>
+            <param name="sc">Sc.</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemTimeoutException">
+            <summary>
+            Represents an exception in case IWorkItemResult.GetResult has been timed out
+            </summary>
+            <summary>
+            Represents an exception in case IWorkItemResult.GetResult has been timed out
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemTimeoutException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemTimeoutException"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemTimeoutException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemTimeoutException"/> class.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemTimeoutException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemTimeoutException"/> class.
+            </summary>
+            <param name="message">Message.</param>
+            <param name="e">E.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemTimeoutException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemTimeoutException"/> class.
+            </summary>
+            <param name="si">Si.</param>
+            <param name="sc">Sc.</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemResultException">
+            <summary>
+            Represents an exception in case IWorkItemResult.GetResult has been timed out
+            </summary>
+            <summary>
+            Represents an exception in case IWorkItemResult.GetResult has been timed out
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemResultException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemResultException"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemResultException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemResultException"/> class.
+            </summary>
+            <param name="message">Message.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemResultException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemResultException"/> class.
+            </summary>
+            <param name="message">Message.</param>
+            <param name="e">E.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemResultException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemResultException"/> class.
+            </summary>
+            <param name="si">Si.</param>
+            <param name="sc">Sc.</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemCallback">
+            <summary>
+            A delegate that represents the method to run as the work item
+            </summary>
+            <param name="state">A state object for the method to run</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback">
+            <summary>
+            A delegate to call after the WorkItemCallback completed
+            </summary>
+            <param name="wir">The work item result object</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback`1">
+            <summary>
+            A delegate to call after the WorkItemCallback completed
+            </summary>
+            <param name="wir">The work item result object</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemsGroupIdleHandler">
+            <summary>
+            A delegate to call when a WorkItemsGroup becomes idle
+            </summary>
+            <param name="workItemsGroup">A reference to the WorkItemsGroup that became idle</param>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.ThreadInitializationHandler">
+            <summary>
+            A delegate to call after a thread is created, but before 
+            it's first use.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.ThreadTerminationHandler">
+            <summary>
+            A delegate to call when a thread is about to exit, after 
+            it is no longer belong to the pool.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemPriority">
+            <summary>
+            Defines the availeable priorities of a work item.
+            The higher the priority a work item has, the sooner
+            it will be executed.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemPriority.Lowest">
+            <summary>
+            The lowest.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemPriority.BelowNormal">
+            <summary>
+            The below normal.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemPriority.Normal">
+            <summary>
+            The normal.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemPriority.AboveNormal">
+            <summary>
+            The above normal.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemPriority.Highest">
+            <summary>
+            The highest.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.IWorkItemsGroup">
+            <summary>
+            IWorkItemsGroup interface
+            Created by SmartThreadPool.CreateWorkItemsGroup()
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.GetStates">
+            <summary>
+            Get an array with all the state objects of the currently running items.
+            The array represents a snap shot and impact performance.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.Start">
+            <summary>
+            Starts to execute work items
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.Cancel">
+            <summary>
+            Cancel all the work items.
+            Same as Cancel(false)
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.Cancel(System.Boolean)">
+            <summary>
+            Cancel all work items using thread abortion
+            </summary>
+            <param name="abortExecution">True to stop work items by raising ThreadAbortException</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.WaitForIdle">
+            <summary>
+            Wait for all work item to complete.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.WaitForIdle(System.TimeSpan)">
+            <summary>
+            Wait for all work item to complete, until timeout expired
+            </summary>
+            <param name="timeout">How long to wait for the work items to complete</param>
+            <returns>Returns true if work items completed within the timeout, otherwise false.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.WaitForIdle(System.Int32)">
+            <summary>
+            Wait for all work item to complete, until timeout expired
+            </summary>
+            <param name="millisecondsTimeout">How long to wait for the work items to complete in milliseconds</param>
+            <returns>Returns true if work items completed within the timeout, otherwise false.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <returns>Returns a work item result</returns>        
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="workItemPriority">The priority of the work item</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.CallToPostExecute)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="callToPostExecute">Indicates on which cases to call to the post execute callback</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.CallToPostExecute,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="callToPostExecute">Indicates on which cases to call to the post execute callback</param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="workItemInfo">Work item info</param>
+            <param name="callback">A callback to execute</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="workItemInfo">Work item information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.Action)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem(ZyGames.Framework.Common.Threading.Action,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``1(System.Action{``0},``0,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``1(System.Action{``0},``0)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``2(ZyGames.Framework.Common.Threading.Action{``0,``1},``0,``1)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``2(ZyGames.Framework.Common.Threading.Action{``0,``1},``0,``1,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``3(ZyGames.Framework.Common.Threading.Action{``0,``1,``2},``0,``1,``2)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``3(ZyGames.Framework.Common.Threading.Action{``0,``1,``2},``0,``1,``2,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``4(ZyGames.Framework.Common.Threading.Action{``0,``1,``2,``3},``0,``1,``2,``3)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``4(ZyGames.Framework.Common.Threading.Action{``0,``1,``2,``3},``0,``1,``2,``3,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``1(ZyGames.Framework.Common.Threading.Func{``0})">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
+            its GetResult() returns a TResult object</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``2(ZyGames.Framework.Common.Threading.Func{``0,``1},``0)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
+            its GetResult() returns a TResult object</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``3(ZyGames.Framework.Common.Threading.Func{``0,``1,``2},``0,``1)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
+            its GetResult() returns a TResult object</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``4(ZyGames.Framework.Common.Threading.Func{``0,``1,``2,``3},``0,``1,``2)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
+            its GetResult() returns a TResult object</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemsGroup.QueueWorkItem``5(ZyGames.Framework.Common.Threading.Func{``0,``1,``2,``3,``4},``0,``1,``2,``3)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult&lt;TResult&gt; object. 
+            its GetResult() returns a TResult object</returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemsGroup.Name">
+            <summary>
+            Get/Set the name of the WorkItemsGroup
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemsGroup.Concurrency">
+            <summary>
+            Get/Set the maximum number of workitem that execute cocurrency on the thread pool
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemsGroup.WaitingCallbacks">
+            <summary>
+            Get the number of work items waiting in the queue.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemsGroup.WIGStartInfo">
+            <summary>
+            Get the WorkItemsGroup start information
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemsGroup.IsIdle">
+            <summary>
+            IsIdle is true when there are no work items running or queued.
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.IWorkItemsGroup.OnIdle">
+            <summary>
+            This event is fired when all work items are completed.
+            (When IsIdle changes to true)
+            This event only work on WorkItemsGroup. On SmartThreadPool
+            it throws the NotImplementedException.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.CallToPostExecute">
+            <summary>
+            Call to post execute.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.CallToPostExecute.Never">
+            <summary>
+            Never call to the PostExecute call back
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.CallToPostExecute.WhenWorkItemCanceled">
+            <summary>
+            Call to the PostExecute only when the work item is cancelled
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.CallToPostExecute.WhenWorkItemNotCanceled">
+            <summary>
+            Call to the PostExecute only when the work item is not cancelled
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.CallToPostExecute.Always">
+            <summary>
+            Always call to the PostExecute
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.IWaitableResult">
+            <summary>
+            The common interface of IWorkItemResult and IWorkItemResult&lt;T&gt;
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWaitableResult.GetWorkItemResult">
+            <summary>
+            This method intent is for internal use.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWaitableResult.GetWorkItemResultT``1">
+            <summary>
+            This method intent is for internal use.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.IWorkItemResult">
+            <summary>
+            IWorkItemResult interface.
+            Created when a WorkItemCallback work item is queued.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.IWorkItemResult`1">
+            <summary>
+            IWorkItemResult&lt;TResult&gt; interface.
+            Created when a Func&lt;TResult&gt; work item is queued.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits.
+            </summary>
+            <returns>The result of the work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.Int32,System.Boolean)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout.
+            </summary>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.TimeSpan,System.Boolean)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout.
+            </summary>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.Int32,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout or until the cancelWaitHandle is signaled.
+            </summary>
+            <param name="millisecondsTimeout">Timeout in milliseconds, or -1 for infinite</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the blocking if needed</param>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+            On cancel throws WorkItemCancelException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.TimeSpan,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout or until the cancelWaitHandle is signaled.
+            </summary>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+            On cancel throws WorkItemCancelException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.Exception@)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits.
+            </summary>
+            <param name="e">Filled with the exception if one was thrown</param>
+            <returns>The result of the work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.Int32,System.Boolean,System.Exception@)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout.
+            </summary>
+            <param name="millisecondsTimeout"></param>
+            <param name="exitContext"></param>
+            <param name="e">Filled with the exception if one was thrown</param>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.TimeSpan,System.Boolean,System.Exception@)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout.
+            </summary>
+            <param name="exitContext"></param>
+            <param name="e">Filled with the exception if one was thrown</param>
+            <param name="timeout"></param>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.Int32,System.Boolean,System.Threading.WaitHandle,System.Exception@)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout or until the cancelWaitHandle is signaled.
+            </summary>
+            <param name="millisecondsTimeout">Timeout in milliseconds, or -1 for infinite</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the blocking if needed</param>
+            <param name="e">Filled with the exception if one was thrown</param>
+            <returns>The result of the work item</returns>
+            On timeout throws WorkItemTimeoutException
+            On cancel throws WorkItemCancelException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.GetResult(System.TimeSpan,System.Boolean,System.Threading.WaitHandle,System.Exception@)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits until timeout or until the cancelWaitHandle is signaled.
+            </summary>
+            <returns>The result of the work item</returns>
+            <param name="cancelWaitHandle"></param>
+            <param name="e">Filled with the exception if one was thrown</param>
+            <param name="timeout"></param>
+            <param name="exitContext"></param>
+            On timeout throws WorkItemTimeoutException
+            On cancel throws WorkItemCancelException
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.Cancel">
+            <summary>
+            Same as Cancel(false).
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IWorkItemResult`1.Cancel(System.Boolean)">
+            <summary>
+            Cancel the work item execution.
+            If the work item is in the queue then it won't execute
+            If the work item is completed, it will remain completed
+            If the work item is in progress then the user can check the SmartThreadPool.IsWorkItemCanceled
+              property to check if the work item has been cancelled. If the abortExecution is set to true then
+              the Smart Thread Pool will send an AbortException to the running thread to stop the execution 
+              of the work item. When an in progress work item is canceled its GetResult will throw WorkItemCancelException.
+            If the work item is already cancelled it will remain cancelled
+            </summary>
+            <param name="abortExecution">When true send an AbortException to the executing thread.</param>
+            <returns>Returns true if the work item was not completed, otherwise false.</returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemResult`1.IsCompleted">
+            <summary>
+            Gets an indication whether the asynchronous operation has completed.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemResult`1.IsCanceled">
+            <summary>
+            Gets an indication whether the asynchronous operation has been canceled.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemResult`1.State">
+            <summary>
+            Gets the user-defined object that contains context data 
+            for the work item method.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemResult`1.WorkItemPriority">
+            <summary>
+            Get the work item's priority
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemResult`1.Result">
+            <summary>
+            Return the result, same as GetResult()
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IWorkItemResult`1.Exception">
+            <summary>
+            Returns the exception if occured otherwise returns null.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Action">
+            <summary>
+            Action.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Action`2">
+            <summary>
+            Action.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Action`3">
+            <summary>
+            Action.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Action`4">
+            <summary>
+            Action.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Func`1">
+            <summary>
+            Func.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Func`2">
+            <summary>
+            Func.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Func`3">
+            <summary>
+            Func.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Func`4">
+            <summary>
+            Func.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Func`5">
+            <summary>
+            Func.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemStateCallback">
+            <summary>
+            An internal delegate to call when the WorkItem starts or completes
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.IInternalWaitableResult.GetWorkItemResult">
+            <summary>
+            This method is intent for internal use.
+            </summary>   
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.IHasWorkItemPriority">
+            <summary>
+            I has work item priority.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.IHasWorkItemPriority.WorkItemPriority">
+            <summary>
+            Gets the work item priority.
+            </summary>
+            <value>The work item priority.</value>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.PriorityQueue">
+            <summary>
+            PriorityQueue class
+            This class is not thread safe because we use external lock
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.PriorityQueue._queuesCount">
+            <summary>
+            The number of queues, there is one for each type of priority
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.PriorityQueue._queues">
+            <summary>
+            Work items queues. There is one for each type of priority
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.PriorityQueue._workItemsCount">
+            <summary>
+            The total number of work items within the queues 
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.PriorityQueue._version">
+            <summary>
+            Use with IEnumerable interface
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.PriorityQueue.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.PriorityQueue"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.PriorityQueue.Enqueue(ZyGames.Framework.Common.Threading.IHasWorkItemPriority)">
+            <summary>
+            Enqueue a work item.
+            </summary>
+            <param name="workItem">A work item</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.PriorityQueue.Dequeue">
+            <summary>
+            Dequeque a work item.
+            </summary>
+            <returns>Returns the next work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.PriorityQueue.GetNextNonEmptyQueue(System.Int32)">
+            <summary>
+            Find the next non empty queue starting at queue queueIndex+1
+            </summary>
+            <param name="queueIndex">The index-1 to start from</param>
+            <returns>
+            The index of the next non empty queue or -1 if all the queues are empty
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.PriorityQueue.Clear">
+            <summary>
+            Clear all the work items 
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.PriorityQueue.GetEnumerator">
+            <summary>
+            Returns an enumerator to iterate over the work items
+            </summary>
+            <returns>Returns an enumerator</returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.PriorityQueue.Count">
+            <summary>
+            The number of work items 
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.PriorityQueue.PriorityQueueEnumerator">
+            <summary>
+            The class the implements the enumerator
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.SmartThreadPool">
+            <summary>
+            Smart thread pool class.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemsGroupBase">
+            <summary>
+            Work items group base.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroupBase._name">
+            <summary>
+            Contains the name of this instance of SmartThreadPool.
+            Can be changed by the user.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsGroupBase"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.GetStates">
+            <summary>
+            Get an array with all the state objects of the currently running items.
+            The array represents a snap shot and impact performance.
+            </summary>
+            <returns>The states.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.Start">
+            <summary>
+            Starts to execute work items
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.Cancel(System.Boolean)">
+            <summary>
+            Cancel all work items using thread abortion
+            </summary>
+            <param name="abortExecution">True to stop work items by raising ThreadAbortException</param>
+            <returns><c>true</c> if this instance cancel abortExecution; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.WaitForIdle(System.Int32)">
+            <summary>
+            Wait for all work item to complete, until timeout expired
+            </summary>
+            <param name="millisecondsTimeout">How long to wait for the work items to complete</param>
+            <returns>Returns true if work items completed within the timeout, otherwise false.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.Cancel">
+            <summary>
+            Cancel all the work items.
+            Same as Cancel(false)
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.WaitForIdle">
+            <summary>
+            Wait for the SmartThreadPool/WorkItemsGroup to be idle
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.WaitForIdle(System.TimeSpan)">
+            <summary>
+            Wait for the SmartThreadPool/WorkItemsGroup to be idle
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="workItemPriority">The priority of the work item</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="workItemInfo">Work item info</param>
+            <param name="callback">A callback to execute</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="workItemInfo">Work item information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.CallToPostExecute)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="callToPostExecute">Indicates on which cases to call to the post execute callback</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.CallToPostExecute,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="callToPostExecute">Indicates on which cases to call to the post execute callback</param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.Action)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">A callback to execute</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem(ZyGames.Framework.Common.Threading.Action,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">A callback to execute</param>
+            <param name="priority">The priority of the work item</param>
+            <returns>Returns a work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``1(System.Action{``0},``0)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg">Argument.</param>
+            <typeparam name="T">The 1st type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``1(System.Action{``0},``0,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg">Argument.</param>
+            <param name="priority">Priority.</param>
+            <typeparam name="T">The 1st type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``2(ZyGames.Framework.Common.Threading.Action{``0,``1},``0,``1)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``2(ZyGames.Framework.Common.Threading.Action{``0,``1},``0,``1,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="priority">Priority.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``3(ZyGames.Framework.Common.Threading.Action{``0,``1,``2},``0,``1,``2)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="arg3">Arg3.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="T3">The 3rd type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``3(ZyGames.Framework.Common.Threading.Action{``0,``1,``2},``0,``1,``2,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="arg3">Arg3.</param>
+            <param name="priority">Priority.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="T3">The 3rd type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``4(ZyGames.Framework.Common.Threading.Action{``0,``1,``2,``3},``0,``1,``2,``3)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="action">Action.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="arg3">Arg3.</param>
+            <param name="arg4">Arg4.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="T3">The 3rd type parameter.</typeparam>
+            <typeparam name="T4">The 4th type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``4(ZyGames.Framework.Common.Threading.Action{``0,``1,``2,``3},``0,``1,``2,``3,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Queue a work item.
+            </summary>
+            <returns>Returns a IWorkItemResult object, but its GetResult() will always return null</returns>
+            <param name="action">Action.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="arg3">Arg3.</param>
+            <param name="arg4">Arg4.</param>
+            <param name="priority">Priority.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="T3">The 3rd type parameter.</typeparam>
+            <typeparam name="T4">The 4th type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``1(ZyGames.Framework.Common.Threading.Func{``0})">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="func">Func.</param>
+            <typeparam name="TResult">The 1st type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``2(ZyGames.Framework.Common.Threading.Func{``0,``1},``0)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="func">Func.</param>
+            <param name="arg">Argument.</param>
+            <typeparam name="T">The 1st type parameter.</typeparam>
+            <typeparam name="TResult">The 2nd type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``3(ZyGames.Framework.Common.Threading.Func{``0,``1,``2},``0,``1)">
+            <summary>
+            Queue a work item
+            </summary>
+            <param name="func">Func.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="TResult">The 3rd type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``4(ZyGames.Framework.Common.Threading.Func{``0,``1,``2,``3},``0,``1,``2)">
+            <summary>
+            Queue a work item
+            </summary>
+            <returns>Returns a work item result</returns>
+            <param name="func">Func.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="arg3">Arg3.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="T3">The 3rd type parameter.</typeparam>
+            <typeparam name="TResult">The 4th type parameter.</typeparam>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.QueueWorkItem``5(ZyGames.Framework.Common.Threading.Func{``0,``1,``2,``3,``4},``0,``1,``2,``3)">
+            <summary>
+            Queue a work item
+            </summary>
+            <returns>Returns a work item result</returns>
+            <param name="func">Func.</param>
+            <param name="arg1">Arg1.</param>
+            <param name="arg2">Arg2.</param>
+            <param name="arg3">Arg3.</param>
+            <param name="arg4">Arg4.</param>
+            <typeparam name="T1">The 1st type parameter.</typeparam>
+            <typeparam name="T2">The 2nd type parameter.</typeparam>
+            <typeparam name="T3">The 3rd type parameter.</typeparam>
+            <typeparam name="T4">The 4th type parameter.</typeparam>
+            <typeparam name="TResult">The 5th type parameter.</typeparam>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.Name">
+            <summary>
+            Get/Set the name of the SmartThreadPool/WorkItemsGroup instance
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.Concurrency">
+            <summary>
+            Get/Set the maximum number of workitem that execute cocurrency on the thread pool
+            </summary>
+            <value>The concurrency.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.WaitingCallbacks">
+            <summary>
+            Get the number of work items waiting in the queue.
+            </summary>
+            <value>The waiting callbacks.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.WIGStartInfo">
+            <summary>
+            Get the WorkItemsGroup start information
+            </summary>
+            <value>The WIG start info.</value>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.OnIdle">
+            <summary>
+            This event is fired when all work items are completed.
+            (When IsIdle changes to true)
+            This event only work on WorkItemsGroup. On SmartThreadPool
+            it throws the NotImplementedException.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroupBase.IsIdle">
+            <summary>
+            IsIdle is true when there are no work items running or queued.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultMinWorkerThreads">
+            <summary>
+            Default minimum number of threads the thread pool contains. (0)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultMaxWorkerThreads">
+            <summary>
+            Default maximum number of threads the thread pool contains. (25)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultIdleTimeout">
+            <summary>
+            Default idle timeout in milliseconds. (One minute)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultUseCallerCallContext">
+            <summary>
+            Indicate to copy the security context of the caller and then use it in the call. (false)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultUseCallerHttpContext">
+            <summary>
+            Indicate to copy the HTTP context of the caller and then use it in the call. (false)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultDisposeOfStateObjects">
+            <summary>
+            Indicate to dispose of the state objects if they support the IDispose interface. (false)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultCallToPostExecute">
+            <summary>
+            The default option to run the post execute (CallToPostExecute.Always)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultWorkItemPriority">
+            <summary>
+            The default work item priority (WorkItemPriority.Normal)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultStartSuspended">
+            <summary>
+            The default is to work on work items as soon as they arrive
+            and not to wait for the start. (false)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultThreadPriority">
+            <summary>
+            The default thread priority (ThreadPriority.Normal)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultThreadPoolName">
+            <summary>
+            The default thread pool name. (SmartThreadPool)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultFillStateWithArgs">
+            <summary>
+            The default fill state with params. (false)
+            It is relevant only to QueueWorkItem of Action&lt;...&gt;/Func&lt;...&gt;
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultAreThreadsBackground">
+            <summary>
+            The default thread backgroundness. (true)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultApartmentState">
+            <summary>
+            The default apartment state of a thread in the thread pool. 
+            The default is ApartmentState.Unknown which means the STP will not 
+            set the apartment of the thread. It will use the .NET default.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultPostExecuteWorkItemCallback">
+            <summary>
+            The default post execute method to run. (None)
+            When null it means not to call it.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultPerformanceCounterInstanceName">
+            <summary>
+            The default name to use for the performance counters instance. (null)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.DefaultMaxStackSize">
+            <summary>
+            The default Max Stack Size. (SmartThreadPool)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._workerThreads">
+            <summary>
+            Dictionary of all the threads in the thread pool.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._workItemsQueue">
+            <summary>
+            Queue of work items.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._workItemsProcessed">
+            <summary>
+            Count the work items handled.
+            Used by the performance counter.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._inUseWorkerThreads">
+            <summary>
+            Number of threads that currently work (not idle).
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._stpStartInfo">
+            <summary>
+            Stores a copy of the original STPStartInfo.
+            It is used to change the MinThread and MaxThreads
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._currentWorkItemsCount">
+            <summary>
+            Total number of work items that are stored in the work items queue 
+            plus the work items that the threads in the pool are working on.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._isIdleWaitHandle">
+            <summary>
+            Signaled when the thread pool is idle, i.e. no thread is busy
+            and the work items queue is empty
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._shuttingDownEvent">
+            <summary>
+            An event to signal all the threads to quit immediately.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._isSuspended">
+            <summary>
+            A flag to indicate if the Smart Thread Pool is now suspended.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._shutdown">
+            <summary>
+            A flag to indicate the threads to quit.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._threadCounter">
+            <summary>
+            Counts the threads created in the pool.
+            It is used to name the threads.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._isDisposed">
+            <summary>
+            Indicate that the SmartThreadPool has been disposed
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._workItemsGroups">
+            <summary>
+            Holds all the WorkItemsGroup instaces that have at least one 
+            work item int the SmartThreadPool
+            This variable is used in case of Shutdown
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._canceledSmartThreadPool">
+            <summary>
+            A common object for all the work items int the STP
+            so we can mark them to cancel in O(1)
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._windowsPCs">
+            <summary>
+            Windows STP performance counters
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool._localPCs">
+            <summary>
+            Local STP performance counters
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.#ctor(System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="idleTimeout">Idle timeout in milliseconds</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.#ctor(System.Int32,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="idleTimeout">Idle timeout in milliseconds</param>
+            <param name="maxWorkerThreads">Upper limit of threads in the pool</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.#ctor(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="idleTimeout">Idle timeout in milliseconds</param>
+            <param name="maxWorkerThreads">Upper limit of threads in the pool</param>
+            <param name="minWorkerThreads">Lower limit of threads in the pool</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.#ctor(ZyGames.Framework.Common.Threading.STPStartInfo)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="stpStartInfo">A SmartThreadPool configuration that overrides the default behavior</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Dequeue">
+            <summary>
+            Waits on the queue for a work item, shutdown, or timeout.
+            </summary>
+            <returns>
+            Returns the WaitingCallback or null in case of timeout or shutdown.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Enqueue(ZyGames.Framework.Common.Threading.WorkItem)">
+            <summary>
+            Put a new work item in the queue
+            </summary>
+            <param name="workItem">A work item to queue</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.InformCompleted">
+            <summary>
+            Inform that the current thread is about to quit or quiting.
+            The same thread may call this method more than once.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.StartThreads(System.Int32)">
+            <summary>
+            Starts new threads
+            </summary>
+            <param name="threadsCount">The number of threads to start</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.ProcessQueuedItems">
+            <summary>
+            A worker thread method that processes work items from the work items queue.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Shutdown">
+            <summary>
+            Force the SmartThreadPool to shutdown
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Shutdown(System.Boolean,System.TimeSpan)">
+            <summary>
+            Force the SmartThreadPool to shutdown with timeout
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Shutdown(System.Boolean,System.Int32)">
+            <summary>
+            Empties the queue of work items and abort the threads in the pool.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAll(ZyGames.Framework.Common.Threading.IWaitableResult[])">
+            <summary>
+            Wait for all work items to complete
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <returns>
+            true when every work item in workItemResults has completed; otherwise false.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAll(ZyGames.Framework.Common.Threading.IWaitableResult[],System.TimeSpan,System.Boolean)">
+            <summary>
+            Wait for all work items to complete
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="timeout">The number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely. </param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <returns>
+            true when every work item in workItemResults has completed; otherwise false.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAll(ZyGames.Framework.Common.Threading.IWaitableResult[],System.TimeSpan,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Wait for all work items to complete
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="timeout">The number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely. </param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the wait if needed</param>
+            <returns>
+            true when every work item in workItemResults has completed; otherwise false.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAll(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Int32,System.Boolean)">
+            <summary>
+            Wait for all work items to complete
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or Timeout.Infinite (-1) to wait indefinitely.</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <returns>
+            true when every work item in workItemResults has completed; otherwise false.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAll(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Int32,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Wait for all work items to complete
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or Timeout.Infinite (-1) to wait indefinitely.</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the wait if needed</param>
+            <returns>
+            true when every work item in workItemResults has completed; otherwise false.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAny(ZyGames.Framework.Common.Threading.IWaitableResult[])">
+            <summary>
+            Waits for any of the work items in the specified array to complete, cancel, or timeout
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <returns>
+            The array index of the work item result that satisfied the wait, or WaitTimeout if any of the work items has been canceled.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAny(ZyGames.Framework.Common.Threading.IWaitableResult[],System.TimeSpan,System.Boolean)">
+            <summary>
+            Waits for any of the work items in the specified array to complete, cancel, or timeout
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="timeout">The number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely. </param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <returns>
+            The array index of the work item result that satisfied the wait, or WaitTimeout if no work item result satisfied the wait and a time interval equivalent to millisecondsTimeout has passed or the work item has been canceled.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAny(ZyGames.Framework.Common.Threading.IWaitableResult[],System.TimeSpan,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Waits for any of the work items in the specified array to complete, cancel, or timeout
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="timeout">The number of milliseconds to wait, or a TimeSpan that represents -1 milliseconds to wait indefinitely. </param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the wait if needed</param>
+            <returns>
+            The array index of the work item result that satisfied the wait, or WaitTimeout if no work item result satisfied the wait and a time interval equivalent to millisecondsTimeout has passed or the work item has been canceled.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAny(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Int32,System.Boolean)">
+            <summary>
+            Waits for any of the work items in the specified array to complete, cancel, or timeout
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or Timeout.Infinite (-1) to wait indefinitely.</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <returns>
+            The array index of the work item result that satisfied the wait, or WaitTimeout if no work item result satisfied the wait and a time interval equivalent to millisecondsTimeout has passed or the work item has been canceled.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitAny(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Int32,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Waits for any of the work items in the specified array to complete, cancel, or timeout
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or Timeout.Infinite (-1) to wait indefinitely.</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the wait if needed</param>
+            <returns>
+            The array index of the work item result that satisfied the wait, or WaitTimeout if no work item result satisfied the wait and a time interval equivalent to millisecondsTimeout has passed or the work item has been canceled.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.CreateWorkItemsGroup(System.Int32)">
+            <summary>
+            Creates a new WorkItemsGroup.
+            </summary>
+            <param name="concurrency">The number of work items that can be run concurrently</param>
+            <returns>A reference to the WorkItemsGroup</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.CreateWorkItemsGroup(System.Int32,ZyGames.Framework.Common.Threading.WIGStartInfo)">
+            <summary>
+            Creates a new WorkItemsGroup.
+            </summary>
+            <param name="concurrency">The number of work items that can be run concurrently</param>
+            <param name="wigStartInfo">A WorkItemsGroup configuration that overrides the default behavior</param>
+            <returns>A reference to the WorkItemsGroup</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.AbortOnWorkItemCancel">
+            <summary>
+            Checks if the work item has been cancelled, and if yes then abort the thread.
+            Can be used with Cancel and timeout
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Dispose">
+            <summary>
+            Releases all resource used by the <see cref="T:ZyGames.Framework.Common.Threading.SmartThreadPool"/> object.
+            </summary>
+            <remarks>Call <see cref="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Dispose"/> when you are finished using the
+            <see cref="T:ZyGames.Framework.Common.Threading.SmartThreadPool"/>. The <see cref="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Dispose"/> method leaves the
+            <see cref="T:ZyGames.Framework.Common.Threading.SmartThreadPool"/> in an unusable state. After calling
+            <see cref="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Dispose"/>, you must release all references to the
+            <see cref="T:ZyGames.Framework.Common.Threading.SmartThreadPool"/> so the garbage collector can reclaim the
+            memory that the <see cref="T:ZyGames.Framework.Common.Threading.SmartThreadPool"/> was occupying.</remarks>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.GetStates">
+            <summary>
+            Get an array with all the state objects of the currently running items.
+            The array represents a snap shot and impact performance.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Start">
+            <summary>
+            Start the thread pool if it was started suspended.
+            If it is already running, this method is ignored.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Cancel(System.Boolean)">
+            <summary>
+            Cancel all work items using thread abortion
+            </summary>
+            <param name="abortExecution">True to stop work items by raising ThreadAbortException</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitForIdle(System.Int32)">
+            <summary>
+            Wait for the thread pool to be idle
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Join(System.Collections.Generic.IEnumerable{ZyGames.Framework.Common.Threading.Action})">
+            <summary>
+            Executes all actions in parallel.
+            Returns when they all finish.
+            </summary>
+            <param name="actions">Actions to execute</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Join(ZyGames.Framework.Common.Threading.Action[])">
+            <summary>
+            Executes all actions in parallel.
+            Returns when they all finish.
+            </summary>
+            <param name="actions">Actions to execute</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Choice(System.Collections.Generic.IEnumerable{ZyGames.Framework.Common.Threading.Action})">
+            <summary>
+            Executes all actions in parallel
+            Returns when the first one completes
+            </summary>
+            <param name="actions">Actions to execute</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Choice(ZyGames.Framework.Common.Threading.Action[])">
+            <summary>
+            Executes all actions in parallel
+            Returns when the first one completes
+            </summary>
+            <param name="actions">Actions to execute</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Pipe``1(``0,System.Collections.Generic.IEnumerable{System.Action{``0}})">
+            <summary>
+            Executes actions in sequence asynchronously.
+            Returns immediately.
+            </summary>
+            <param name="pipeState">A state context that passes </param>
+            <param name="actions">Actions to execute in the order they should run</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.SmartThreadPool.Pipe``1(``0,System.Action{``0}[])">
+            <summary>
+            Executes actions in sequence asynchronously.
+            Returns immediately.
+            </summary>
+            <param name="pipeState"></param>
+            <param name="actions">Actions to execute in the order they should run</param>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.SmartThreadPool._onThreadInitialization">
+            <summary>
+            An event to call after a thread is created, but before 
+            it's first use.
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.SmartThreadPool._onThreadTermination">
+            <summary>
+            An event to call when a thread is about to exit, after 
+            it is no longer belong to the pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.CurrentThreadEntry">
+            <summary>
+            A reference to the current work item a thread from the thread pool 
+            is executing.
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.SmartThreadPool.OnThreadInitialization">
+            <summary>
+            This event is fired when a thread is created.
+            Use it to initialize a thread before the work items use it.
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.SmartThreadPool.OnThreadTermination">
+            <summary>
+            This event is fired when a thread is terminating.
+            Use it for cleanup.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.MinThreads">
+            <summary>
+            Get/Set the lower limit of threads in the pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.MaxThreads">
+            <summary>
+            Get/Set the upper limit of threads in the pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.ActiveThreads">
+            <summary>
+            Get the number of threads in the thread pool.
+            Should be between the lower and the upper limits.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.InUseThreads">
+            <summary>
+            Get the number of busy (not idle) threads in the thread pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.IsWorkItemCanceled">
+            <summary>
+            Returns true if the current running work item has been cancelled.
+            Must be used within the work item's callback method.
+            The work item should sample this value in order to know if it
+            needs to quit before its completion.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.STPStartInfo">
+            <summary>
+            Thread Pool start information (readonly)
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.IsShuttingdown">
+            <summary>
+            Gets a value indicating whether this instance is shuttingdown.
+            </summary>
+            <value><c>true</c> if this instance is shuttingdown; otherwise, <c>false</c>.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.PerformanceCountersReader">
+            <summary>
+            Return the local calculated performance counters
+            Available only if STPStartInfo.EnableLocalPerformanceCounters is true.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.Concurrency">
+            <summary>
+            Get/Set the maximum number of work items that execute cocurrency on the thread pool
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.WaitingCallbacks">
+            <summary>
+            Get the number of work items in the queue.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.WIGStartInfo">
+            <summary>
+            WorkItemsGroup start information (readonly)
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.SmartThreadPool.OnIdle">
+            <summary>
+            This event is fired when all work items are completed.
+            (When IsIdle changes to true)
+            This event only work on WorkItemsGroup. On SmartThreadPool
+            it throws the NotImplementedException.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.ThreadEntry._creationTime">
+            <summary>
+            The thread creation time
+            The value is stored as UTC value.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.ThreadEntry._lastAliveTime">
+            <summary>
+            The last time this thread has been running
+            It is updated by IAmAlive() method
+            The value is stored as UTC value.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.SmartThreadPool.ThreadEntry._associatedSmartThreadPool">
+            <summary>
+            A reference from each thread in the thread pool to its SmartThreadPool
+            object container.
+            With this variable a thread can know whatever it belongs to a 
+            SmartThreadPool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.SmartThreadPool.ThreadEntry.CurrentWorkItem">
+            <summary>
+            A reference to the current work item a thread from the thread pool 
+            is executing.
+            </summary>            
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.Stopwatch">
+            <summary>
+            Stopwatch class
+            Used with WindowsCE and Silverlight which don't have Stopwatch
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.ISTPPerformanceCountersReader">
+            <summary>
+            ISTP performance counters reader.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.ISTPPerformanceCountersReader.InUseThreads">
+            <summary>
+            Gets the in use threads.
+            </summary>
+            <value>The in use threads.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.ISTPPerformanceCountersReader.ActiveThreads">
+            <summary>
+            Gets the active threads.
+            </summary>
+            <value>The active threads.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.ISTPPerformanceCountersReader.WorkItemsQueued">
+            <summary>
+            Gets the work items queued.
+            </summary>
+            <value>The work items queued.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.ISTPPerformanceCountersReader.WorkItemsProcessed">
+            <summary>
+            Gets the work items processed.
+            </summary>
+            <value>The work items processed.</value>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.STPPerformanceCounter">
+            <summary>
+            Summary description for STPPerformanceCounter.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.STPStartInfo">
+            <summary>
+            Summary description for STPStartInfo.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WIGStartInfo">
+            <summary>
+            Summary description for WIGStartInfo.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WIGStartInfo._readOnly">
+            <summary>
+            The _read only.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WIGStartInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WIGStartInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WIGStartInfo.#ctor(ZyGames.Framework.Common.Threading.WIGStartInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WIGStartInfo"/> class.
+            </summary>
+            <param name="wigStartInfo">Wig start info.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WIGStartInfo.ThrowIfReadOnly">
+            <summary>
+            Throws if read only.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WIGStartInfo.AsReadOnly">
+            <summary>
+            Get a readonly version of this WIGStartInfo
+            </summary>
+            <returns>Returns a readonly reference to this WIGStartInfoRO</returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.UseCallerCallContext">
+            <summary>
+            Get/Set if to use the caller's security context
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.UseCallerHttpContext">
+            <summary>
+            Get/Set if to use the caller's HTTP context
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.DisposeOfStateObjects">
+            <summary>
+            Get/Set if to dispose of the state object of a work item
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.CallToPostExecute">
+            <summary>
+            Get/Set the run the post execute options
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.PostExecuteWorkItemCallback">
+            <summary>
+            Get/Set the default post execute callback
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.StartSuspended">
+            <summary>
+            Get/Set if the work items execution should be suspended until the Start()
+            method is called.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.WorkItemPriority">
+            <summary>
+            Get/Set the default priority that a work item gets when it is enqueued
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WIGStartInfo.FillStateWithArgs">
+            <summary>
+            Get/Set the if QueueWorkItem of Action&lt;...&gt;/Func&lt;...&gt; fill the
+            arguments as an object array into the state of the work item.
+            The arguments can be access later by IWorkItemResult.State.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.STPStartInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.STPStartInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.STPStartInfo.#ctor(ZyGames.Framework.Common.Threading.STPStartInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.STPStartInfo"/> class.
+            </summary>
+            <param name="stpStartInfo">Stp start info.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.STPStartInfo.AsReadOnly">
+            <summary>
+            Get a readonly version of this STPStartInfo.
+            </summary>
+            <returns>Returns a readonly reference to this STPStartInfo</returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.IdleTimeout">
+            <summary>
+            Get/Set the idle timeout in milliseconds.
+            If a thread is idle (starved) longer than IdleTimeout then it may quit.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.MinWorkerThreads">
+            <summary>
+            Get/Set the lower limit of threads in the pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.MaxWorkerThreads">
+            <summary>
+            Get/Set the upper limit of threads in the pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.ThreadPriority">
+            <summary>
+            Get/Set the scheduling priority of the threads in the pool.
+            The Os handles the scheduling.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.ThreadPoolName">
+            <summary>
+            Get/Set the thread pool name. Threads will get names depending on this.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.PerformanceCounterInstanceName">
+            <summary>
+            Get/Set the performance counter instance name of this SmartThreadPool
+            The default is null which indicate not to use performance counters at all.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.EnableLocalPerformanceCounters">
+            <summary>
+            Enable/Disable the local performance counter.
+            This enables the user to get some performance information about the SmartThreadPool 
+            without using Windows performance counters. (Useful on WindowsCE, Silverlight, etc.)
+            The default is false.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.AreThreadsBackground">
+            <summary>
+            Get/Set backgroundness of thread in thread pool.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.ApartmentState">
+            <summary>
+            Get/Set the apartment state of threads in the thread pool
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.STPStartInfo.MaxStackSize">
+            <summary>
+            Get/Set the max stack size of threads in the thread pool
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItem">
+            <summary>
+            Holds a callback delegate and the state for that delegate.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._callback">
+            <summary>
+            Callback delegate for the callback.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._state">
+            <summary>
+            State with which to call the callback delegate.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._callerContext">
+            <summary>
+            Stores the caller's context
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._result">
+            <summary>
+            Holds the result of the mehtod
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._exception">
+            <summary>
+            Hold the exception if the method threw it
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._workItemState">
+            <summary>
+            Hold the state of the work item
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._workItemCompleted">
+            <summary>
+            A ManualResetEvent to indicate that the result is ready
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._workItemCompletedRefCount">
+            <summary>
+            A reference count to the _workItemCompleted. 
+            When it reaches to zero _workItemCompleted is Closed
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._workItemResult">
+            <summary>
+            Represents the result state of the work item
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._workItemInfo">
+            <summary>
+            Work item info
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._canceledWorkItemsGroup">
+            <summary>
+            A reference to an object that indicates whatever the 
+            WorkItemsGroup has been canceled
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._canceledSmartThreadPool">
+            <summary>
+            A reference to an object that indicates whatever the 
+            SmartThreadPool has been canceled
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._workItemsGroup">
+            <summary>
+            The work item group this work item belong to.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._executingThread">
+            <summary>
+            The thread that executes this workitem.
+            This field is available for the period when the work item is executed, before and after it is null.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._expirationTime">
+            <summary>
+            The absulote time when the work item will be timeout
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._waitingOnQueueStopwatch">
+            <summary>
+            Stores how long the work item waited on the stp queue
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem._processingStopwatch">
+            <summary>
+            Stores how much time it took the work item to execute after it went out of the queue
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.#ctor(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Initialize the callback holding object.
+            </summary>
+            <param name="workItemsGroup">The workItemGroup of the workitem</param>
+            <param name="workItemInfo">The WorkItemInfo of te workitem</param>
+            <param name="callback">Callback delegate for the callback.</param>
+            <param name="state">State with which to call the callback delegate.</param>
+            
+            We assume that the WorkItem object is created within the thread
+            that meant to run the callback
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.StartingWorkItem">
+            <summary>
+            Change the state of the work item to in progress if it wasn't canceled.
+            </summary>
+            <returns>
+            Return true on success or false in case the work item was canceled.
+            If the work item needs to run a post execute then the method will return true.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.Execute">
+            <summary>
+            Execute the work item and the post execute
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.ExecuteWorkItem">
+            <summary>
+            Execute the work item
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.PostExecute">
+            <summary>
+            Runs the post execute callback
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.SetResult(System.Object,System.Exception)">
+            <summary>
+            Set the result of the work item to return
+            </summary>
+            <param name="result">The result of the work item</param>
+            <param name="exception">The exception that was throw while the workitem executed, null
+            if there was no exception.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.GetWorkItemResult">
+            <summary>
+            Returns the work item result
+            </summary>
+            <returns>The work item result</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.WaitAll(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Int32,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Wait for all work items to complete
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or Timeout.Infinite (-1) to wait indefinitely.</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the wait if needed</param>
+            <returns>
+            true when every work item in waitableResults has completed; otherwise false.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.WaitAny(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Int32,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Waits for any of the work items in the specified array to complete, cancel, or timeout
+            </summary>
+            <param name="waitableResults">Array of work item result objects</param>
+            <param name="millisecondsTimeout">The number of milliseconds to wait, or Timeout.Infinite (-1) to wait indefinitely.</param>
+            <param name="exitContext">
+            true to exit the synchronization domain for the context before the wait (if in a synchronized context), and reacquire it; otherwise, false. 
+            </param>
+            <param name="cancelWaitHandle">A cancel wait handle to interrupt the wait if needed</param>
+            <returns>
+            The array index of the work item result that satisfied the wait, or WaitTimeout if no work item result satisfied the wait and a time interval equivalent to millisecondsTimeout has passed or the work item has been canceled.
+            </returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.GetWaitHandles(ZyGames.Framework.Common.Threading.IWaitableResult[],System.Threading.WaitHandle[])">
+            <summary>
+            Fill an array of wait handles with the work items wait handles.
+            </summary>
+            <param name="waitableResults">An array of work item results</param>
+            <param name="waitHandles">An array of wait handles to fill</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.ReleaseWaitHandles(ZyGames.Framework.Common.Threading.IWaitableResult[])">
+            <summary>
+            Release the work items' wait handles
+            </summary>
+            <param name="waitableResults">An array of work item results</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.SetWorkItemState(ZyGames.Framework.Common.Threading.WorkItem.WorkItemState)">
+            <summary>
+            Sets the work item's state
+            </summary>
+            <param name="workItemState">The state to set the work item to</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.SignalComplete(System.Boolean)">
+            <summary>
+            Signals that work item has been completed or canceled
+            </summary>
+            <param name="canceled">Indicates that the work item has been canceled</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.Cancel(System.Boolean)">
+            <summary>
+            Cancel the work item if it didn't start running yet.
+            </summary>
+            <returns>Returns true on success or false if the work item is in progress or already completed</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.GetResult(System.Int32,System.Boolean,System.Threading.WaitHandle)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits for the result, timeout, or cancel.
+            In case of error the method throws and exception
+            </summary>
+            <returns>The result of the work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.GetResult(System.Int32,System.Boolean,System.Threading.WaitHandle,System.Exception@)">
+            <summary>
+            Get the result of the work item.
+            If the work item didn't run yet then the caller waits for the result, timeout, or cancel.
+            In case of error the e argument is filled with the exception
+            </summary>
+            <returns>The result of the work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.GetWaitHandle">
+            <summary>
+            A wait handle to wait for completion, cancel, or timeout 
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItem.DisposeOfState">
+            <summary>
+            Disposes the state of the of.
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.WorkItem._workItemStartedEvent">
+            <summary>
+            Called when the WorkItem starts
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.WorkItem._workItemCompletedEvent">
+            <summary>
+            Called when the WorkItem completes
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.WaitingTime">
+            <summary>
+            Gets the waiting time.
+            </summary>
+            <value>The waiting time.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.ProcessTime">
+            <summary>
+            Gets the process time.
+            </summary>
+            <value>The process time.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.IsCompleted">
+            <summary>
+            Returns true when the work item has completed or canceled
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.IsCanceled">
+            <summary>
+            Returns true when the work item has canceled
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.WorkItemPriority">
+            <summary>
+            Returns the priority of the work item
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItem.WorkItemState">
+            <summary>
+            Indicates the state of the work item in the thread pool
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItem.WorkItemResult._workItem">
+            <summary>
+            A back reference to the work item
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.WorkItemResult.Result">
+            <summary>
+            Return the result, same as GetResult()
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItem.WorkItemResult.Exception">
+            <summary>
+            Returns the exception if occured otherwise returns null.
+            This value is valid only after the work item completed,
+            before that it is always null.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemFactory">
+            <summary>
+            Work item factory.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The WorkItemsGroup of this workitem</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The WorkItemsGroup of this workitem</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="workItemPriority">The priority of the work item</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The WorkItemsGroup of this workitem</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="workItemInfo">Work item info</param>
+            <param name="callback">A callback to execute</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The WorkItemsGroup of this workitem</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The work items group</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The work items group</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="workItemInfo">Work item information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The work items group</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The work items group</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.CallToPostExecute)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The work items group</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="callToPostExecute">Indicates on which cases to call to the post execute callback</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemFactory.CreateWorkItem(ZyGames.Framework.Common.Threading.IWorkItemsGroup,ZyGames.Framework.Common.Threading.WIGStartInfo,ZyGames.Framework.Common.Threading.WorkItemCallback,System.Object,ZyGames.Framework.Common.Threading.PostExecuteWorkItemCallback,ZyGames.Framework.Common.Threading.CallToPostExecute,ZyGames.Framework.Common.Threading.WorkItemPriority)">
+            <summary>
+            Create a new work item
+            </summary>
+            <param name="workItemsGroup">The work items group</param>
+            <param name="wigStartInfo">Work item group start information</param>
+            <param name="callback">A callback to execute</param>
+            <param name="state">
+            The context object of the work item. Used for passing arguments to the work item. 
+            </param>
+            <param name="postExecuteWorkItemCallback">
+            A delegate to call after the callback completion
+            </param>
+            <param name="callToPostExecute">Indicates on which cases to call to the post execute callback</param>
+            <param name="workItemPriority">The work item priority</param>
+            <returns>Returns a work item</returns>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemInfo">
+            <summary>
+            Summary description for WorkItemInfo.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemInfo.#ctor(ZyGames.Framework.Common.Threading.WorkItemInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemInfo"/> class.
+            </summary>
+            <param name="workItemInfo">Work item info.</param>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.UseCallerCallContext">
+            <summary>
+            Get/Set if to use the caller's security context
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.UseCallerHttpContext">
+            <summary>
+            Get/Set if to use the caller's HTTP context
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.DisposeOfStateObjects">
+            <summary>
+            Get/Set if to dispose of the state object of a work item
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.CallToPostExecute">
+            <summary>
+            Get/Set the run the post execute options
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.PostExecuteWorkItemCallback">
+            <summary>
+            Get/Set the post execute callback
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.WorkItemPriority">
+            <summary>
+            Get/Set the work item's priority
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemInfo.Timeout">
+            <summary>
+            Get/Set the work item's timout in milliseconds.
+            This is a passive timout. When the timout expires the work item won't be actively aborted!
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemsGroup">
+            <summary>
+            Summary description for WorkItemsGroup.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._stp">
+            <summary>
+            A reference to the SmartThreadPool instance that created this 
+            WorkItemsGroup.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._isSuspended">
+            <summary>
+            A flag to indicate if the Work Items Group is now suspended.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._concurrency">
+            <summary>
+            Defines how many work items of this WorkItemsGroup can run at once.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._workItemsQueue">
+            <summary>
+            Priority queue to hold work items before they are passed 
+            to the SmartThreadPool.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._workItemsInStpQueue">
+            <summary>
+            Indicate how many work items are waiting in the SmartThreadPool
+            queue.
+            This value is used to apply the concurrency.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._workItemsExecutingInStp">
+            <summary>
+            Indicate how many work items are currently running in the SmartThreadPool.
+            This value is used with the Cancel, to calculate if we can send new 
+            work items to the STP.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._workItemsGroupStartInfo">
+            <summary>
+            WorkItemsGroup start information
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._isIdleWaitHandle">
+            <summary>
+            Signaled when all of the WorkItemsGroup's work item completed.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsGroup._canceledWorkItemsGroup">
+            <summary>
+            A common object for all the work items that this work items group
+            generate so we can mark them to cancel in O(1)
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.#ctor(ZyGames.Framework.Common.Threading.SmartThreadPool,System.Int32,ZyGames.Framework.Common.Threading.WIGStartInfo)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsGroup"/> class.
+            </summary>
+            <param name="stp">Stp.</param>
+            <param name="concurrency">Concurrency.</param>
+            <param name="wigStartInfo">Wig start info.</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.GetStates">
+            <summary>
+            Get an array with all the state objects of the currently running items.
+            The array represents a snap shot and impact performance.
+            </summary>
+            <returns>The states.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.Start">
+            <summary>
+            Start the Work Items Group if it was started suspended
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.Cancel(System.Boolean)">
+            <summary>
+            Cancel all work items using thread abortion
+            </summary>
+            <param name="abortExecution">True to stop work items by raising ThreadAbortException</param>
+            <returns><c>true</c> if this instance cancel abortExecution; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.WaitForIdle(System.Int32)">
+            <summary>
+            Wait for the thread pool to be idle
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.OnSTPIsStarting">
+            <summary>
+            Raises the STP is starting event.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsGroup.EnqueueToSTPNextNWorkItem(System.Int32)">
+            <summary>
+            Enqueues to STP next N work item.
+            </summary>
+            <param name="count">Count.</param>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.WorkItemsGroup._onIdle">
+            <summary>
+            The OnIdle event
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroup.Concurrency">
+            <summary>
+            Get/Set the maximum number of workitem that execute cocurrency on the thread pool
+            </summary>
+            <value>The concurrency.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroup.WaitingCallbacks">
+            <summary>
+            Get the number of work items waiting in the queue.
+            </summary>
+            <value>The waiting callbacks.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsGroup.WIGStartInfo">
+            <summary>
+            WorkItemsGroup start information
+            </summary>
+        </member>
+        <member name="E:ZyGames.Framework.Common.Threading.WorkItemsGroup.OnIdle">
+            <summary>
+            This event is fired when all work items are completed.
+            (When IsIdle changes to true)
+            This event only work on WorkItemsGroup. On SmartThreadPool
+            it throws the NotImplementedException.
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemsQueue">
+            <summary>
+            WorkItemsQueue class.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue._headWaiterEntry">
+            <summary>
+            Waiters queue (implemented as stack).
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue._waitersCount">
+            <summary>
+            Waiters count
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue._workItems">
+            <summary>
+            Work items queue
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue._isWorkItemsQueueActive">
+            <summary>
+            Indicate that work items are allowed to be queued
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue._isDisposed">
+            <summary>
+            A flag that indicates if the WorkItemsQueue has been disposed.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.EnqueueWorkItem(ZyGames.Framework.Common.Threading.WorkItem)">
+            <summary>
+            Enqueue a work item to the queue.
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.DequeueWorkItem(System.Int32,System.Threading.WaitHandle)">
+            <summary>
+            Waits for a work item or exits on timeout or cancel
+            </summary>
+            <param name="millisecondsTimeout">Timeout in milliseconds</param>
+            <param name="cancelEvent">Cancel wait handle</param>
+            <returns>Returns true if the resource was granted</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.Cleanup">
+            <summary>
+            Cleanup the work items queue, hence no more work 
+            items are allowed to be queue
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.GetStates">
+            <summary>
+            Gets the states.
+            </summary>
+            <returns>The states.</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.GetThreadWaiterEntry">
+            <summary>
+            Returns the WaiterEntry of the current thread
+            </summary>
+            <returns></returns>
+            In order to avoid creation and destuction of WaiterEntry
+            objects each thread has its own WaiterEntry object.
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.PushWaiter(ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry)">
+            <summary>
+            Push a new waiter into the waiter's stack
+            </summary>
+            <param name="newWaiterEntry">A waiter to put in the stack</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.PopWaiter">
+            <summary>
+            Pop a waiter from the waiter's stack
+            </summary>
+            <returns>Returns the first waiter in the stack</returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.RemoveWaiter(ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry,System.Boolean)">
+            <summary>
+            Remove a waiter from the stack
+            </summary>
+            <param name="waiterEntry">A waiter entry to remove</param>
+            <param name="popDecrement">If true the waiter count is always decremented</param>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.Dispose">
+            <summary>
+            Releases all resource used by the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsQueue"/> object.
+            </summary>
+            <remarks>Call <see cref="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.Dispose"/> when you are finished using the
+            <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsQueue"/>. The <see cref="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.Dispose"/> method leaves the
+            <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsQueue"/> in an unusable state. After calling
+            <see cref="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.Dispose"/>, you must release all references to the
+            <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsQueue"/> so the garbage collector can reclaim the
+            memory that the <see cref="T:ZyGames.Framework.Common.Threading.WorkItemsQueue"/> was occupying.</remarks>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsQueue.CurrentWaiterEntry">
+            <summary>
+            Each thread in the thread pool keeps its own waiter entry.
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsQueue.Count">
+            <summary>
+            Returns the current number of work items in the queue
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaitersCount">
+            <summary>
+            Returns the current number of waiters
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry">
+            <summary>
+             A waiter entry in the _waiters queue.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry._waitHandle">
+            <summary>
+            Event to signal the waiter that it got the work item.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry._isTimedout">
+            <summary>
+            Flag to know if this waiter already quited from the queue 
+            because of a timeout.
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry._isSignaled">
+            <summary>
+            Flag to know if the waiter was signaled and got a work item. 
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry._workItem">
+            <summary>
+            A work item that passed directly to the waiter withou going 
+            through the queue
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.#ctor">
+            <summary>
+            Initializes a new instance of the
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.Signal(ZyGames.Framework.Common.Threading.WorkItem)">
+            <summary>
+            Signal the waiter that it got a work item.
+            </summary>
+            <returns>Return true on success</returns>
+            The method fails if Timeout() preceded its call
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.Timeout">
+            <summary>
+            Mark the wait entry that it has been timed out
+            </summary>
+            <returns>Return true on success</returns>
+            The method fails if Signal() preceded its call
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.Reset">
+            <summary>
+            Reset the wait entry so it can be used again
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.Close">
+            <summary>
+            Free resources
+            </summary>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.Dispose">
+            <summary>
+            Releases all resource used by the
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.WaitHandle">
+            <summary>
+            Gets the wait handle.
+            </summary>
+            <value>The wait handle.</value>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Threading.WorkItemsQueue.WaiterEntry.WorkItem">
+            <summary>
+            Gets the work item.
+            </summary>
+            <value>The work item.</value>
+        </member>
         <member name="T:ZyGames.Framework.Common.Timing.BaseTask">
             <summary>
             任务接口
@@ -3047,57 +6201,96 @@
             Time("test1", 1, () => { });
             </code>
         </member>
+        <member name="T:ZyGames.Framework.Common.Timing.PlanCycle">
+            <summary>
+            计划周期
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Timing.PlanCycle.Once">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Timing.PlanCycle.Day">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:ZyGames.Framework.Common.Timing.PlanCycle.Week">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:ZyGames.Framework.Common.Timing.PlanCallback">
+            <summary>
+            
+            </summary>
+            <param name="planConfig"></param>
+        </member>
         <member name="T:ZyGames.Framework.Common.Timing.PlanConfig">
             <summary>
             计划配置信息
             </summary>
         </member>
-        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.#ctor(ZyGames.Framework.Common.Timing.PlanConfig.PlanCallback,System.DayOfWeek,System.String,System.String,System.Boolean,System.Int32,System.String)">
-            <summary>
-            第几周
-            </summary>
-            <param name="callback"></param>
-            <param name="week"></param>
-            <param name="beginTime"></param>
-            <param name="endTime"></param>
-            <param name="secondInterval"></param>
-            <param name="isCycle"></param>
-            <param name="name"></param>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.#ctor(ZyGames.Framework.Common.Timing.PlanConfig.PlanCallback,System.Boolean,System.Int32,System.String)">
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.OncePlan(ZyGames.Framework.Common.Timing.PlanCallback,System.String,System.String)">
             <summary>
             
             </summary>
-            <param name="callback"></param>
-            <param name="isCycle"></param>
-            <param name="secondInterval"></param>
-            <param name="name"></param>
+            <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.#ctor(ZyGames.Framework.Common.Timing.PlanConfig.PlanCallback,System.String,System.String,System.Boolean,System.Int32,System.String)">
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.EveryMinutePlan(ZyGames.Framework.Common.Timing.PlanCallback,System.String,System.String,System.String,System.Int32)">
             <summary>
             
             </summary>
-            <param name="callback"></param>
-            <param name="beginTime"></param>
-            <param name="endTime"></param>
-            <param name="isCycle"></param>
-            <param name="secondInterval"></param>
-            <param name="name"></param>
+            <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.AutoStart">
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.EveryDayPlan(ZyGames.Framework.Common.Timing.PlanCallback,System.String,System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.EveryWeekPlan(ZyGames.Framework.Common.Timing.PlanCallback,System.String,System.DayOfWeek,System.String)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.EveryWeekPlan(ZyGames.Framework.Common.Timing.PlanCallback,System.String,System.DayOfWeek,System.String,System.String,System.Int32)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.AutoStart(System.DateTime)">
             <summary>
             自动开始
             </summary>
             <returns></returns>
         </member>
-        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.ResetDate">
-            <summary>
-            重置日期
-            </summary>
-        </member>
-        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.SetDiffInterval(System.Int32)">
+        <member name="M:ZyGames.Framework.Common.Timing.PlanConfig.SetDiffInterval(System.Double)">
             <summary>
             设置误差间隔
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.PlanWeek">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.BeginTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.EndTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.PlanCycle">
+            <summary>
+            
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.Name">
@@ -3112,22 +6305,12 @@
         </member>
         <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.Target">
             <summary>
-            目标对象
+            
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.IsCycle">
             <summary>
-            是否循环
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.IsExpired">
-            <summary>
-            是否过期,过期的计划将被移除定时执行任务
-            </summary>
-        </member>
-        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.IsEnd">
-            <summary>
-            是否结束
+            是否循环（每天）
             </summary>
         </member>
         <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.SecondInterval">
@@ -3135,15 +6318,34 @@
             间隔秒，0:为单次
             </summary>
         </member>
-        <member name="T:ZyGames.Framework.Common.Timing.PlanConfig.PlanCallback">
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.ExpiredTime">
+            <summary>
+            Expired time
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.IsExpired">
             <summary>
             
             </summary>
-            <param name="planConfig"></param>
         </member>
-        <member name="T:ZyGames.Framework.Common.Timing.PlanConfig.PlanCycle">
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.IsEnd">
             <summary>
-            计划周期
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.PreviousExecuteTime">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.PlanState.IsExpired">
+            <summary>
+            是否过期,过期的计划将被移除定时执行任务
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.PlanConfig.PlanState.IsEnd">
+            <summary>
+            是否当天结束
             </summary>
         </member>
         <member name="T:ZyGames.Framework.Common.Timing.RunTimeWatch">
@@ -3279,6 +6481,16 @@
             </summary>
             <param name="match"></param>
             <returns></returns>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.TimeListener.HasWaitPlan">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.Common.Timing.TimeListener.PlanList">
+            <summary>
+            
+            </summary>
         </member>
         <member name="T:ZyGames.Framework.Common.VersionConfig">
             <summary>

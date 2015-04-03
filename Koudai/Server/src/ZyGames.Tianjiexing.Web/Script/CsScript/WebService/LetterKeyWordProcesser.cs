@@ -41,12 +41,12 @@ namespace ZyGames.Tianjiexing.BLL.WebService
             var sender = DataSyncManager.GetDataSender();
             if (op == "add" || op == "save")
             {
-                sender.Send(keyword);
+                sender.Send(new[] { keyword });
             }
             else if (op == "delete")
             {
                 keyword.OnDelete();
-                sender.Send(keyword);
+                sender.Send(new[] { keyword });
             }
 
         }

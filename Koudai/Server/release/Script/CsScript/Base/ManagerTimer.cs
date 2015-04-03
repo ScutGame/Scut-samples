@@ -38,9 +38,8 @@ namespace ZyGames.Yinhe.BLL
         public static void Init()
         {
 
-
-            PlanConfig planConfig = new PlanConfig(Rank, true, ConfigEnvSet.GetInt("Rank.SJT"), "");
-            TimeListener.Append(planConfig);
+            //PlanConfig planConfig = new PlanConfig(Rank, true, ConfigEnvSet.GetInt("Rank.SJT"), "");
+            //TimeListener.Append(planConfig);
 
         }
       

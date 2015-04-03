@@ -49,7 +49,7 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId
+    userId = str(parent.Current.UserId)
     userShengJiTa = GameDataCacheSet[UserShengJiTa]().FindKey(userId)    #获取玩家信息
     percent = 100.0;
     if urlParam.PropertyType==PropertyType.Life:

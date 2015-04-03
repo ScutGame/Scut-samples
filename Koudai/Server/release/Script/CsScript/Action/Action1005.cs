@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Game.Context;
+using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
@@ -134,7 +135,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (new GameDataCacheSet<GameUser>().FindKey(Uid) == null)
             {
                 userEntity = CreateGameUser(userSex);
-                user = userEntity;
+                user = new SessionUser(userEntity);
                 NoviceHelper.RetailLoginDaysReceive(userEntity); //渠道登录奖励
                 CreateGeneral(careerInfo);
                 CreateMagic(userEntity);

@@ -26,6 +26,7 @@ using System.Web;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Game.Context;
+using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
@@ -89,7 +90,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1004_IDDisable;
                     return false;
                 }
-                user = userInfo;
+                user = new SessionUser(userInfo);
                 //todo
                 //NoticeHelper.RankNotice(userInfo); //公告
                 CombatHelper.LoadProperty(userInfo);

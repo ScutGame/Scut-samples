@@ -4,6 +4,7 @@ import ReferenceLib
 from action import *
 from System import *
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
@@ -62,7 +63,8 @@ def clearMail(userMailList):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.UserId;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
 
     # 没有 Email
     def loadError():
@@ -72,7 +74,7 @@ def takeAction(urlParam, parent):
         actionResult.Result = False;
         return actionResult;
 
-    tjxMailService = TjxMailService(parent.Current.User);
+    tjxMailService = TjxMailService(contextUser);
     mailList =[]
     result = tjxMailService.GetMail();
     if not result:

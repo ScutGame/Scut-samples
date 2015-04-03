@@ -3043,7 +3043,7 @@ function _4001Callback(pScutScene, lpExternalData)
                 DataTabel.ResetNum =ZyReader:getInt()
                 DataTabel.BackpackType =ZyReader:getInt()
     else
-     ZyToast.show(pScutScene,ZyReader:readErrorMsg(),1.5,0.35)
+     ZyToast.show(pScutScene,DataTabel.ResetNum,1.5,0.35)
     end
     return DataTabel
 end

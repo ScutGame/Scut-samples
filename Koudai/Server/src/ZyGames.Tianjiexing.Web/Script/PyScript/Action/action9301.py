@@ -3,6 +3,7 @@ import ReferenceLib
 
 from action import *
 from System import *
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from lang import Lang
 from ZyGames.Framework.Common.Log import *
@@ -55,8 +56,9 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.UserId;
-    userName = parent.Current.User.NickName;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+    userName = contextUser.NickName;
     
     mailInfoCacheSet = ShareCacheStruct[MailInfo]();
     mailInfo = mailInfoCacheSet.Find(lambda s:s.MailType ==  MathUtils.ToInt(MailType.Friends));
@@ -86,7 +88,7 @@ def takeAction(urlParam, parent):
         tempMail.Content = urlParam.content;
         tempMail.SendDate = DateTime.Now;
         tempMail.IsGuide = urlParam.isGuide;
-        tjxMailService = TjxMailService(parent.Current.User);
+        tjxMailService = TjxMailService(contextUser);
         tjxMailService.Send(tempMail);
         return actionResult;
 

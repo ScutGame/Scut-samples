@@ -66,7 +66,6 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1006_PasswordExceptional;
                     return false;
                 }
-                password = CryptoHelper.DES_Encrypt(password, GameEnvironment.Setting.ProductDesEnKey);
                 if (SnsManager.ChangePass(Uid, password) <= 0)
                 {
                     this.ErrorCode = LanguageManager.GetLang().ErrorCode;
