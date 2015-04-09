@@ -1255,6 +1255,24 @@
             <param name="offset"></param>
             <returns></returns>
         </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.IsEquals(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.MathUtils.StartsWith(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.Common.MathUtils.ToDefaultValue(System.Type)">
             <summary>
             Convert to default value by type.
@@ -1907,6 +1925,24 @@
             </summary>
             <param name="type"></param>
             <param name="args"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.IsEquals(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ZyGames.Framework.Common.ObjectExtend.StartsWith(System.String,System.String,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="a"></param>
+            <param name="b"></param>
+            <param name="ignoreCase"></param>
             <returns></returns>
         </member>
         <member name="M:ZyGames.Framework.Common.ObjectExtend.IsEmpty(System.String)">

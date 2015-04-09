@@ -1,5 +1,6 @@
-﻿"""Send chat"""
+"""Send chat"""
 import clr, sys
+import json
 import ReferenceLib
 from action import *
 from ZyGames.Framework.Common import *
@@ -46,8 +47,14 @@ def buildPacket(urlParam, actionResult):
 	
     result = JsonDataResult(urlParam)
     result.setBody(True)
-    return MathUtils.ToJson(result)
+    jsonStr = json.dumps(result, default=convert_to_builtin_type)
+    return jsonStr
 
 def sendCallback(session, asyncResult):
     # send to client result.
     return
+
+def convert_to_builtin_type(obj): 
+    d = {  }
+    d.update(obj.__dict__)
+    return d

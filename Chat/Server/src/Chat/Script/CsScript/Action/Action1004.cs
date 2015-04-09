@@ -18,6 +18,7 @@ namespace GameServer.Script.CsScript.Action
         public MyLogin(string userName)
         {
             PassportID = userName;
+            Password = string.Empty;
         }
 
         public string GetRegPassport()
@@ -52,7 +53,7 @@ namespace GameServer.Script.CsScript.Action
         public string PassportID { get; private set; }
         public string UserID { get; private set; }
         public int UserType { get; private set; }
-        public string Password { get; private set; }
+        public string Password { get; set; }
         public string SessionID { get; private set; }
     }
 
