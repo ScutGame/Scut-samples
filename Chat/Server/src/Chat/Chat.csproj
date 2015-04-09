@@ -97,6 +97,7 @@
     <None Include="NLog.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Script\PyScript\Action\action3002.py" />
     <Content Include="Script\PyScript\Action\action3001.py" />
     <Content Include="Script\PyScript\Lib\action.py" />
     <Content Include="Script\PyScript\Lib\lang.py" />
