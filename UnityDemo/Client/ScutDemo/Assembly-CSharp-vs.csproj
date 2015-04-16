@@ -87,6 +87,9 @@
  <Reference Include="protobuf-net">
  <HintPath>F:/oschina/Scut-samples/UnityDemo/Client/ScutDemo/Assets/Lib/protobuf-net.dll</HintPath>
  </Reference>
+ <Reference Include="Newtonsoft.Json">
+ <HintPath>F:/oschina/Scut-samples/UnityDemo/Client/ScutDemo/Assets/Lib/Newtonsoft.Json.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
