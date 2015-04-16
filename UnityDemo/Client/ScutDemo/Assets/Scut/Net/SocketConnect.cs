@@ -141,7 +141,7 @@ public class SocketConnect
                         }
 
                         NetReader reader = new NetReader(_formater);
-                        reader.pushNetStream(data, NetworkType.Socket);
+                        reader.pushNetStream(data, NetworkType.Socket, NetWriter.ResponseContentType);
                         SocketPackage findPackage = null;
 
                         Debug.Log("Socket receive ok, revLen:" + recnum

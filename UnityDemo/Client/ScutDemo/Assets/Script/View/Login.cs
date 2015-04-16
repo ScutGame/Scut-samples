@@ -10,7 +10,7 @@ public class Login : MonoBehaviour
     /// </summary>
     void Awake()
     {
-
+        //NetWriter.SetMd5Key("");
     }
 
     /// <summary>
@@ -18,7 +18,6 @@ public class Login : MonoBehaviour
     /// </summary>
     void Start()
     {
-        NetWriter.SetUrl("127.0.0.1:9001");
     }
 
     /// <summary>
@@ -62,11 +61,16 @@ public class Login : MonoBehaviour
 
         if (GUI.Button(new Rect(cwidth - 100, cheight - 80, 80, 22), "Regist"))
         {
+            //TODO:登录服务器分布式访问
+            //NetWriter.SetUrl("http://pass.scutgame.com/", ResponseContentType.Json, true);
+            //Debug.Log("Started to access login server, resp-type:" + NetWriter.ResponseContentType.ToString());
+
             Net.Instance.Send((int)ActionType.Regist, RegistCallback, null);
         }
 
         if (GUI.Button(new Rect(cwidth, cheight - 80, 80, 22), "Login"))
         {
+            NetWriter.SetUrl("127.0.0.1:9001");
             GameSetting.Instance.Pid = user;
             GameSetting.Instance.Password = pwd;
             Net.Instance.Send((int)ActionType.Login, LoginCallback, null);
@@ -90,7 +94,7 @@ public class Login : MonoBehaviour
             Application.LoadLevelAsync("RoleScene");
             return;
         }
-       Application.LoadLevelAsync("MainScene");
+        Application.LoadLevelAsync("MainScene");
     }
 
     /// <summary>

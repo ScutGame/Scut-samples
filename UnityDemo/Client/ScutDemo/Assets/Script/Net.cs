@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Text;
 using UnityEngine;
 
 
@@ -67,10 +68,10 @@ public class Net : MonoBehaviour, IHttpCallback
     {
         try
         {
-            if(package == null) return;
-			//do Heartbeat package
-			if(package.ActionId == 1) return;
-			
+            if (package == null) return;
+            //do Heartbeat package
+            if (package.ActionId == 1) return;
+
             GameAction gameAction = ActionFactory.Create(package.ActionId);
             if (gameAction == null)
             {
@@ -167,14 +168,14 @@ public class Net : MonoBehaviour, IHttpCallback
             return s_instance;
         }
     }
-	
-	public void ReBuildHearbeat()
-	{
-		if(mSocket != null)
-		{
-			mSocket.ReBuildHearbeat();
-		}
-	}
+
+    public void ReBuildHearbeat()
+    {
+        if (mSocket != null)
+        {
+            mSocket.ReBuildHearbeat();
+        }
+    }
 
     /// <summary>
     /// Send
@@ -219,7 +220,7 @@ public class Net : MonoBehaviour, IHttpCallback
             string[] arr = strUrl.Split(new char[] { ':' });
             int nPort = int.Parse(arr[1]);
             mSocket = new SocketConnect(arr[0], nPort, formater);
-            
+
         }
         gameAction.Head.MsgId = NetWriter.MsgId - 1;
 
@@ -278,7 +279,7 @@ public class Net : MonoBehaviour, IHttpCallback
         byte[] postData = gameAction.Send(actionParam);
         DateTime start = DateTime.Now;
         HttpPackage httpPackage = new HttpPackage();
-        httpPackage.WwwObject = new WWW(url, postData);
+        httpPackage.WwwObject = NetWriter.IsGet ? new WWW(string.Format("{0}?{1}", url, Encoding.UTF8.GetString(postData))) : new WWW(url, postData);
         httpPackage.ActionId = gameAction.ActionId;
         httpPackage.Action = gameAction;
         httpPackage.Reader = new NetReader(formater);
@@ -323,9 +324,16 @@ public class Net : MonoBehaviour, IHttpCallback
         {
             NetReader reader = package.Reader;
             byte[] buffBytes = package.GetResponse();
-            if (reader.pushNetStream(buffBytes, NetworkType.Http))
+            if (reader.pushNetStream(buffBytes, NetworkType.Http, NetWriter.ResponseContentType))
             {
-                OnRespond(package);
+                if (reader.Success)
+                {
+                    OnRespond(package);
+                }
+                else
+                {
+                    OnNetError(package.ActionId, reader.Description);
+                }
             }
         }
     }
@@ -365,5 +373,5 @@ public class Net : MonoBehaviour, IHttpCallback
         }
 
     }
-  
+
 }
