@@ -8,7 +8,7 @@ namespace ZyGames.Doudizhu.Model
     /// 玩家昵称缓存
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(CacheType.Entity, DbConfig.Data, IsStoreInDb = false, IsExpired = false)]
+    [EntityTable(CacheType.Entity, DbConfig.Data, StorageType = StorageType.ReadWriteRedis, IsExpired = false)]
     public class UserNickName : ShareEntity
     {
         public UserNickName()

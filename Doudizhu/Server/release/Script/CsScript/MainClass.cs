@@ -37,6 +37,7 @@ using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Runtime;
+using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.RPC.Sockets;
 using ZyGames.Framework.Script;
 
@@ -58,6 +59,12 @@ namespace Game.Script
         {
             Console.WriteLine("客户端UserId:[{0}]已与服务器断开", session.EndAddress);
             base.OnDisconnected(session);
+        }
+
+        protected override void OnRequested(ActionGetter actionGetter, BaseGameResponse response)
+        {
+            Console.WriteLine("请求Action:{0}", actionGetter.GetActionId());
+            base.OnRequested(actionGetter, response);
         }
 
         protected override void OnStartAffer()

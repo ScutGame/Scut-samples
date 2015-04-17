@@ -137,10 +137,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Script\CsScript\ActionIDDefine.cs">
-      <SubType>Code</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Script\CsScript\Action\Action100.cs">
       <SubType>Code</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -197,6 +193,7 @@
       <SubType>Code</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Script\CsScript\Action\ActionIDDefine.cs" />
     <Compile Include="Script\CsScript\Action\BaseAction.cs">
       <SubType>Code</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -483,9 +480,6 @@
   <ItemGroup>
     <Content Include="Config\Appstore.cfg.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Script\CsScript\AssemblyInfo.cs">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Script\Model\AssemblyInfo.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

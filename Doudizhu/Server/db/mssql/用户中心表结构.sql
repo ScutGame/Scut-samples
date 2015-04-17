@@ -181,3 +181,6 @@ CREATE TABLE [LogUserLogin](
 END
 
 GO
+DROP INDEX In_mark ON dbo.SnsPassportLog
+CREATE INDEX Index_RegPushTime ON dbo.SnsPassportLog(RegPushTime)
+GO

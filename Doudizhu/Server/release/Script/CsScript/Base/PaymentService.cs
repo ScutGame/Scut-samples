@@ -3,6 +3,7 @@ using ZyGames.Doudizhu.Bll.Com.Share;
 using ZyGames.Doudizhu.Bll.Logic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Pay;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Sns;
@@ -22,7 +23,7 @@ namespace ZyGames.Doudizhu.Bll.Base
         /// <returns></returns>
         public static void Trigger(GameUser user)
         {
-            new DdzPaymentNotify().Notify(user);
+            new DdzPaymentNotify().Notify(new SessionUser(user));
         }
 
         /// <summary>

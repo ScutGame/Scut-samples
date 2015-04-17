@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using ProtoBuf;
 
 namespace ZyGames.Doudizhu.Model
@@ -7,7 +7,7 @@ namespace ZyGames.Doudizhu.Model
     /// 玩家属性
     /// </summary>
     [Serializable, ProtoContract]
-    public class UserProperty
+    public class UserProperty : ZyGames.Framework.Event.EntityChangeEvent
     {
         public UserProperty()
         {

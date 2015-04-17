@@ -13,7 +13,7 @@ from ZyGames.Doudizhu.Bll import *
 from ZyGames.Doudizhu.Bll.Com.Chat import *
 from ZyGames.Doudizhu.Bll.Logic import *
 from ZyGames.Doudizhu.Bll.Base import *
-from ZyGames.Doudizhu.Bll.Script.CsScript import *
+from ZyGames.Doudizhu.Script.CsScript.Action import *
 
 def compareTo(x, y):
     result = y.IsTop.CompareTo(x.IsTop);

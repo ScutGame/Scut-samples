@@ -4,6 +4,7 @@ from System import *
 from mathUtils import MathUtils
 from lang import Lang
 
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.SyncThreading import *
 from ZyGames.Framework.Common import *
@@ -19,7 +20,7 @@ from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Cache import *
 from ZyGames.Framework.Net import *
-from ZyGames.Doudizhu.Bll.Script.CsScript import *
+from ZyGames.Doudizhu.Script.CsScript.Action import *
 
 #商店物品购买接口
 class UrlParam(HttpParam):
@@ -42,7 +43,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    user = parent.Current.User
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     
     shopinfo = ConfigCacheSet[ShopInfo]().FindKey(urlParam.ItemID)
     if shopinfo == None:

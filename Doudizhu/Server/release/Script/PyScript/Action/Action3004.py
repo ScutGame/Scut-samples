@@ -5,6 +5,7 @@ from System import *
 from mathUtils import MathUtils
 from lang import Lang
 
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.SyncThreading import *
 from ZyGames.Framework.Common import *
@@ -44,8 +45,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    user = parent.Current.User
-    userId = parent.Current.User.PersonalId;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     AchieveTask.RefreashUserTask(userId)
     usertaskInfo = AchieveTask.GetUserTaskInfo(userId,urlParam.TaskID)
     if not usertaskInfo or usertaskInfo.TaskStatus == TaskStatus.Unfinished:

@@ -1,6 +1,5 @@
 ﻿using System;
 using ZyGames.Doudizhu.Bll;
-using ZyGames.Doudizhu.Bll.Script.CsScript;
 using ZyGames.Framework.Common.Security;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Lang;
@@ -33,8 +32,7 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
                     this.ErrorInfo = Language.Instance.St1006_PasswordTooLong;
                     return false;
                 }
-                password = CryptoHelper.DES_Encrypt(password, GameEnvironment.Setting.ProductDesEnKey);
-                if (SnsManager.ChangePass(Uid, password) <= 0)
+                if (SnsManager.ChangePass(UserId.ToString(), password) <= 0)
                 {
                     this.ErrorCode = Language.Instance.ErrorCode;
                     ErrorInfo = Language.Instance.St1006_ChangePasswordError;

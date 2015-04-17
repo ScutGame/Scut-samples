@@ -13,6 +13,8 @@ class Lang:
     __langconfig = {
         "ErrorCode": 10000,
         "ErrorInfo": "系统繁忙",
+        "UserLoadError": "主角数据加载失败！",
+        "TableOver": "牌桌已经结束！",
         "LoadError": "加载数据失败！",
         "St1010_ChangeHeadError": "更新头像失败！",
         "St2001_CoinNotEnough": "您的金豆余额为{0}，进入房间至少需要{1}金豆，您的金豆不足！是否到商城购买金豆？",

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ZyGames.Doudizhu.Bll.Script.CsScript;
 using ZyGames.Doudizhu.Model;
+using ZyGames.Doudizhu.Script.CsScript.Action;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Net;
+using ZyGames.Framework.Plugin.PythonScript;
 using ZyGames.Framework.Script;
 
 namespace ZyGames.Doudizhu.Bll.Logic
@@ -761,7 +762,7 @@ namespace ZyGames.Doudizhu.Bll.Logic
                 //结束
                 foreach (var p in tableData.Positions)
                 {
-                    TraceLog.WriteComplement("桌子:{0} in {1}玩家:{2}-{3}剩余牌{4}",
+                    TraceLog.WriteComplement("桌子:{0},房间:{1},玩家:{2}-{3}剩余牌{4}",
                         tableData.TableId, tableData.RoomId, p.UserId, p.NickName, string.Join(",", p.CardData));
                 }
                 tableData.IsClosed = true;

@@ -33,7 +33,7 @@ namespace ZyGames.Doudizhu.Model
         /// 
         /// </summary>        
         [ProtoMember(1)]
-        [EntityField(IsKey = true)]
+        [EntityField(true)]
         public int UserId { get; set; }
 
         /// <summary>

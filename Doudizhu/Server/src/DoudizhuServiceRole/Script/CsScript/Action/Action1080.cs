@@ -1,6 +1,5 @@
 ﻿using ZyGames.Doudizhu.Bll;
 using ZyGames.Doudizhu.Bll.Base;
-using ZyGames.Doudizhu.Bll.Script.CsScript;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Contract;

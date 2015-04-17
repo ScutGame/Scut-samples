@@ -3,6 +3,7 @@ import ReferenceLib
 from action import *
 from lang import Lang
 from cardAILogic import CardAILogic
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Lang import *
@@ -44,7 +45,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    user = parent.Current.User
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     table = GameRoom.Current.GetTableData(user)
     if not user or not table:
         parent.ErrorCode = Lang.getLang("ErrorCode")

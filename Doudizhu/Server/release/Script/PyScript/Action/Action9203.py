@@ -2,6 +2,7 @@
 from action import *
 from System import *
 from mathUtils import MathUtils
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.SyncThreading import *
 from ZyGames.Framework.Common import *
@@ -57,7 +58,8 @@ def takeAction(urlParam, parent):
             result = y.CreateDate.CompareTo(x.CreateDate);
         return result;
     actionResult = ActionResult();
-    #user = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
    
     actionResult.gameNoticelsit = ShareCacheStruct[GameNotice]().FindAll(match=lambda m:filterNotice(m));
     MathUtils.QuickSort[GameNotice](actionResult.gameNoticelsit,  lambda x,y:sortNotice(x,y))

@@ -1,5 +1,4 @@
 ﻿using System;
-using ZyGames.Doudizhu.Bll.Script.CsScript;
 using ZyGames.Doudizhu.Model;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
