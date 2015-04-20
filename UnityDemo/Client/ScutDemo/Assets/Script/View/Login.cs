@@ -65,12 +65,15 @@ public class Login : MonoBehaviour
             //NetWriter.SetUrl("http://pass.scutgame.com/", ResponseContentType.Json, true);
             //Debug.Log("Started to access login server, resp-type:" + NetWriter.ResponseContentType.ToString());
 
+            NetWriter.SetUrl("127.0.0.1:9001");
             Net.Instance.Send((int)ActionType.Regist, RegistCallback, null);
         }
 
         if (GUI.Button(new Rect(cwidth, cheight - 80, 80, 22), "Login"))
         {
             NetWriter.SetUrl("127.0.0.1:9001");
+
+            Debug.Log(NetWriter.GetUrl());
             GameSetting.Instance.Pid = user;
             GameSetting.Instance.Password = pwd;
             Net.Instance.Send((int)ActionType.Login, LoginCallback, null);

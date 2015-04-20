@@ -216,8 +216,13 @@ public class Net : MonoBehaviour, IHttpCallback
     {
         if (mSocket == null)
         {
-            string strUrl = NetWriter.GetUrl();
-            string[] arr = strUrl.Split(new char[] { ':' });
+            string url = NetWriter.GetUrl();
+            string[] arr = url.Split(new char[] { ':' });
+            if (arr.Length != 2)
+            {
+                Debug.LogError("Url is error:" + url);
+                return;
+            }
             int nPort = int.Parse(arr[1]);
             mSocket = new SocketConnect(arr[0], nPort, formater);
 
