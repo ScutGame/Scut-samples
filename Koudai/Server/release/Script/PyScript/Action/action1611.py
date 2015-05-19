@@ -54,7 +54,7 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
+    userId = str(parent.Current.UserId)
     actionResult.userId = userId;
     # 佣兵
     if urlParam.albumType == AlbumType.General:

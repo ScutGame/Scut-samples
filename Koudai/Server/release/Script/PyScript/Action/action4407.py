@@ -8,6 +8,7 @@ from lang import Lang
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
@@ -44,9 +45,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    gameUser = parent.Current.User
-    # contextUser = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    gameUser = PersonalCacheStruct.Get[GameUser](userId)
 
     def loadError():
         parent.ErrorCode = Lang.getLang("ErrorCode");

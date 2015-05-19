@@ -3,6 +3,7 @@ import ReferenceLib
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -47,9 +48,10 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    urlParam.userID = parent.Current.User.PersonalId;
-    contextUser = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+
+    urlParam.userID =userId;
     package = UserItemPackage.Get(userId);
     if package != None:
         useritemArray = package.ItemPackage.FindAll(lambda s : s.ItemType == ItemType.DaoJu and s.PropType == 14);   

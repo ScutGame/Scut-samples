@@ -62,13 +62,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
             user = null;
             //原因：重登录时，数据会回档问题
             var cacheSet = new GameDataCacheSet<GameUser>();
-            GameUser userInfo = cacheSet.FindKey(Uid);
+            GameUser userInfo = cacheSet.FindKey(userId.ToString());
             if (userInfo != null)
             {
                 //原因：还在加载中时，返回
                 if (userInfo.IsRefreshing)
                 {
-                    Uid = string.Empty;
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
                     ErrorInfo = LanguageManager.GetLang().ServerLoading;
                     return false;
@@ -79,8 +78,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 string.IsNullOrEmpty(userInfo.SessionID) ||
                 !userInfo.IsOnline)
             {
-                UserCacheGlobal.Load(Uid); //重新刷缓存
-                userInfo = cacheSet.FindKey(Uid);
+                UserCacheGlobal.Load(userId.ToString()); //重新刷缓存
+                userInfo = cacheSet.FindKey(userId.ToString());
             }
             if (userInfo != null)
             {
@@ -143,6 +142,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             else
             {
+                user = new SessionUser()
+                {
+                    UserId = userId,
+                    PassportId = PassportId
+                };
                 ErrorCode = 1005;
                 ErrorInfo = LanguageManager.GetLang().St1005_RoleCheck;
             }

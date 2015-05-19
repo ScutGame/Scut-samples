@@ -2011,7 +2011,7 @@
         </member>
         <member name="F:ZyGames.Framework.Cache.Generic.DataSyncQueueManager.SendWaitCount">
             <summary>
-            
+            Total change count.
             </summary>
         </member>
         <member name="F:ZyGames.Framework.Cache.Generic.DataSyncQueueManager.ExecuteSuccessCount">
@@ -6962,6 +6962,11 @@
             entity modify time.
             </summary>
         </member>
+        <member name="P:ZyGames.Framework.Model.AbstractEntity.ExpiredTime">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="P:ZyGames.Framework.Model.AbstractEntity.Item(System.String)">
             <summary>
             对象索引器属性
@@ -11463,6 +11468,18 @@
             </summary>
             <param name="statusCode"></param>
         </member>
+        <member name="M:ZyGames.Framework.RPC.Sockets.ClientSocket.Receive(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="millisecondsTimeout"></param>
+        </member>
+        <member name="M:ZyGames.Framework.RPC.Sockets.ClientSocket.TryReceiveBytes(System.Byte[]@)">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:ZyGames.Framework.RPC.Sockets.ClientSocket.PostSend(System.Byte[],System.Int32,System.Int32)">
             <summary>
             
@@ -11568,6 +11585,11 @@
             </summary>
             <param name="reason"></param>
         </member>
+        <member name="M:ZyGames.Framework.RPC.Sockets.ClientSocket.Dispose">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="E:ZyGames.Framework.RPC.Sockets.ClientSocket.DataReceived">
             <summary>
             接收到数据事件
@@ -11594,6 +11616,11 @@
             </summary>
         </member>
         <member name="P:ZyGames.Framework.RPC.Sockets.ClientSocket.Settings">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.RPC.Sockets.ClientSocket.LocalEndPoint">
             <summary>
             
             </summary>
@@ -11803,6 +11830,11 @@
         <member name="P:ZyGames.Framework.RPC.Sockets.DataToken.DataFrames">
             <summary>
             Web socket data
+            </summary>
+        </member>
+        <member name="P:ZyGames.Framework.RPC.Sockets.DataToken.SyncSegments">
+            <summary>
+            Sync recieve data.
             </summary>
         </member>
         <member name="P:ZyGames.Framework.RPC.Sockets.DataToken.DataOffset">

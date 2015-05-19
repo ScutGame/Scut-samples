@@ -2,6 +2,7 @@
 import ReferenceLib
 from action import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
@@ -44,9 +45,9 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    urlParam.userID = parent.Current.User.PersonalId;
-    contextUser = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+    urlParam.userID = userId;
     if contextUser.HeritageList.Count > 0:
         actionResult.heritageList = contextUser.HeritageList.ToList();
         GeneralHelper.HeritageGeneral(contextUser, urlParam.ops);

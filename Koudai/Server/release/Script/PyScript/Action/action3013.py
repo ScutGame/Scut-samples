@@ -42,7 +42,7 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
+    userId = str(parent.Current.UserId)
 
     # 加载数据出错
     def loadError():

@@ -4,6 +4,7 @@ from action import *
 from System import *
 from lang import Lang
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -41,8 +42,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    contextUser = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
    
     package = UserItemPackage.Get(userId);
     userGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId, urlParam.generalID);
@@ -72,9 +73,9 @@ def takeAction(urlParam, parent):
     isUse = False;
     #总的经验
     i=0               #用于循环到第几个佣兵
-    for str in itemStr:
+    for s in itemStr:
         exprience = 0; 
-        useritem = package.ItemPackage.Find(lambda s:not s.IsRemove and s.UserItemID == str);
+        useritem = package.ItemPackage.Find(lambda s:not s.IsRemove and s.UserItemID == s);
         if useritem :
             itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(useritem.ItemID);  
             if itemInfo != None:

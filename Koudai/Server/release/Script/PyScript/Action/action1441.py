@@ -1,8 +1,10 @@
 ﻿import clr, sys
+import hashlib
 import ReferenceLib
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -60,9 +62,10 @@ def GetItemBaseInfo(userID, userItemID):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    urlParam.userID = parent.Current.User.PersonalId;
-    userId = parent.Current.User.PersonalId;
-    contextUser = parent.Current.User;
+	
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+    urlParam.userID = userId
 
     usergeneralList = GameDataCacheSet[UserGeneral]().FindAll(userId, lambda s:s.GeneralID != urlParam.generalID and s.GeneralType == GeneralType.YongBing,True);
     for item in usergeneralList:
@@ -74,9 +77,9 @@ def takeAction(urlParam, parent):
         if userGeneral.GeneralCard:
             urlParam.strUserItemID = userGeneral.GeneralCard.TrimEnd(',').Split(',');
     strList = "";
-    for str in urlParam.strUserItemID:
-        if(GetItemBaseInfo(userId,str)):
-            strList += str + ",";
+    for s in urlParam.strUserItemID:
+        if(GetItemBaseInfo(userId,s)):
+            strList += s + ",";
     if(strList!=""):
         strList = strList.TrimEnd(',');
         urlParam.strUserItemID = strList.Split(',');
@@ -122,14 +125,14 @@ def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(len(urlParam.strUserItemID));
     index = 0;
     experienceCards = 0;
-    for str in urlParam.strUserItemID:
-        #if not str:
+    for s in urlParam.strUserItemID:
+        #if not s:
         #    itemInfo = None;
         #else:
-        #    itemInfo = GetItemBaseInfo(urlParam.userID, str);
-        itemInfo = None if str == None else GetItemBaseInfo(urlParam.userID, str);
+        #    itemInfo = GetItemBaseInfo(urlParam.userID, s);
+        itemInfo = None if s == None else GetItemBaseInfo(urlParam.userID, s);
         dsItem = DataStruct();
-        dsItem.PushIntoStack(MathUtils.ToNotNullString(str));
+        dsItem.PushIntoStack(MathUtils.ToNotNullString(s));
         dsItem.PushIntoStack(0 if itemInfo == None else itemInfo.ItemID);
         dsItem.PushIntoStack('' if itemInfo == None else MathUtils.ToNotNullString(itemInfo.ItemName));
         dsItem.PushIntoStack('' if itemInfo == None else MathUtils.ToNotNullString(itemInfo.HeadID));

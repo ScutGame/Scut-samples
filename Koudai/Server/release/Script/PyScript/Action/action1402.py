@@ -3,6 +3,7 @@ import ReferenceLib
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -40,8 +41,11 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    urlParam.userId = parent.Current.User.PersonalId;
-    urlParam.contextUser = parent.Current.User;
+	
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+    urlParam.userId = userId
+    urlParam.contextUser = contextUser
     return actionResult;
 
 def buildPacket(writer, urlParam, actionResult):

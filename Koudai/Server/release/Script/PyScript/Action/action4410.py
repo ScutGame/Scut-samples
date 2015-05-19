@@ -4,6 +4,7 @@ from action import *
 from System import *
 from System.Collections.Generic import *
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -39,8 +40,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    userId = parent.Current.User.PersonalId
-    gameUser= parent.Current.User
+    userId = str(parent.Current.UserId)
+    gameUser = PersonalCacheStruct.Get[GameUser](userId)
     userShengJiTa = GameDataCacheSet[UserShengJiTa]().FindKey(userId)    #获取玩家信息
     rewardInfo=ShareCacheStruct[SJTRewarInfo]().FindKey(userShengJiTa.IsTierNum)
     if userShengJiTa.RoundPoor>0:

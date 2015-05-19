@@ -123,7 +123,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            GameUser userEntity = new GameDataCacheSet<GameUser>().FindKey(Uid);
+            GameUser userEntity = new GameDataCacheSet<GameUser>().FindKey(UserId.ToString());
             if (userEntity != null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -132,7 +132,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             bool userSex = Sex == 0 ? false : true;
 
-            if (new GameDataCacheSet<GameUser>().FindKey(Uid) == null)
+            if (new GameDataCacheSet<GameUser>().FindKey(UserId.ToString()) == null)
             {
                 userEntity = CreateGameUser(userSex);
                 user = new SessionUser(userEntity);
@@ -144,10 +144,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //开启默认功能
                 EnableFunction();
                 //SendGifItem();
-                UserPrayHelper.AddUserPray(Uid.ToInt(), PrayType.SanTianQiDao);
-                UserPackHelper.AddUserPack(Uid);
+                UserPrayHelper.AddUserPray(UserId, PrayType.SanTianQiDao);
+                UserPackHelper.AddUserPack(UserId.ToString());
                 UserLoginLog userLoginLog = new UserLoginLog();
-                userLoginLog.UserId = Uid;
+                userLoginLog.UserId = UserId.ToString();
                 userLoginLog.SessionID = Sid;
                 userLoginLog.MobileType = MobileType;
                 userLoginLog.ScreenX = ScreenX;
@@ -162,9 +162,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 var sender = DataSyncManager.GetDataSender();
                 sender.Send(userLoginLog);
                 BackPackHelper.AddBack(userEntity);
-                UserHelper.OpenMagic(Uid, 1);
+                UserHelper.OpenMagic(UserId.ToString(), 1);
                 //封测注册发放礼包
-                UserItemHelper.AddUserItem(Uid, 1704, 1, ItemStatus.BeiBao);
+                UserItemHelper.AddUserItem(UserId.ToString(), 1704, 1, ItemStatus.BeiBao);
             }
             else
             {
@@ -172,7 +172,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1005_RoleExist;
                 return false;
             }
-            PlotHelper.EnablePlot(Uid, ConfigEnvSet.GetInt("UserPlot.OpenLockPlotID"));
+            PlotHelper.EnablePlot(UserId.ToString(), ConfigEnvSet.GetInt("UserPlot.OpenLockPlotID"));
             return true;
         }
 
@@ -182,7 +182,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private void SendGifItem()
         {
             const int newitemID = 5000;
-            UserItemHelper.AddUserItem(Uid, newitemID, 1);
+            UserItemHelper.AddUserItem(UserId.ToString(), newitemID, 1);
 
             int itemID = 0;  //送武器
             if (_careerID == 1)
@@ -197,7 +197,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 itemID = 1013;
             }
-            UserItemHelper.AddUserItem(Uid, itemID, 1, ItemStatus.YongBing);
+            UserItemHelper.AddUserItem(UserId.ToString(), itemID, 1, ItemStatus.YongBing);
         }
 
         private void EnableFunction()
@@ -209,7 +209,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 if (fun.TrimEnd().Length > 0)
                 {
                     UserFunction userFun = new UserFunction();
-                    userFun.UserID = Uid;
+                    userFun.UserID = UserId.ToString();
                     userFun.FunEnum = fun.ToEnum<FunctionEnum>();
                     userFun.CreateDate = DateTime.Now;
                     cacheSet.Add(userFun);
@@ -220,11 +220,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         private void CreateDailyRestrain()
         {
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid) == null)
+            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(UserId.ToString()) == null)
             {
                 UserDailyRestrain dailyRestrain = new UserDailyRestrain();
 
-                dailyRestrain.UserID = Uid;
+                dailyRestrain.UserID = UserId.ToString();
                 dailyRestrain.RefreshDate = DateTime.Now;
                 dailyRestrain.Funtion1 = 0;
                 dailyRestrain.Funtion2 = 0;
@@ -277,14 +277,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private void CreateGeneral(CareerInfo careerInfo)
         {
             GeneralInfo general = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
-            List<UserGeneral> userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(Uid);
+            List<UserGeneral> userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(UserId.ToString());
             if (userGeneralArray.Count > 0 || general == null)
             {
                 return;
             }
 
             UserGeneral userGeneral = new UserGeneral();
-            userGeneral.UserID = Uid;
+            userGeneral.UserID = UserId.ToString();
             userGeneral.GeneralID = general.GeneralID;
             userGeneral.GeneralName = general.GeneralName;
             userGeneral.HeadID = general.HeadID;
@@ -313,7 +313,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             var cacheSet = new GameDataCacheSet<UserGeneral>();
             cacheSet.Add(userGeneral);
             cacheSet.Update();
-            UserAbilityHelper.AddUserAbility(general.AbilityID, Uid.ToInt(), generalID, 1);
+            UserAbilityHelper.AddUserAbility(general.AbilityID, UserId, generalID, 1);
           
         }
 
@@ -321,7 +321,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             GameUser userEntity = new GameUser
             {
-                UserID = Uid,
+                UserID = UserId.ToString(),
                 CountryID = 0,
                 CityID = ConfigEnvSet.GetInt("user.UserMinCityID"),
                 PointX = (short)ConfigEnvSet.GetInt("User.CityPointX"),

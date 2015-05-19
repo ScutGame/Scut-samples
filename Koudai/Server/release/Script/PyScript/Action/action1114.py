@@ -45,7 +45,7 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
+    userId = str(parent.Current.UserId)
     packageCacheSet = GameDataCacheSet[UserItemPackage]();
     if not packageCacheSet:
         actionResult.Result = False;

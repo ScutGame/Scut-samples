@@ -4,6 +4,7 @@ import ReferenceLib
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
@@ -43,8 +44,8 @@ def takeAction(urlParam,parent):
     #    TraceLog.ReleaseWrite('{0}={1}',key,value);
     #TraceLog.ReleaseWrite('1004 param BackpackType:{0}', urlParam.BackpackType);
     actionResult =ActionResult();
-    userId =parent.Current.UserId;
-    user = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     cacheSetUserAbility =  GameDataCacheSet[UserAbility]();
     cacheSetAbility =  ConfigCacheSet[AbilityInfo]();
     cacheSetAbilityLv =  ConfigCacheSet[AbilityLvInfo]();
