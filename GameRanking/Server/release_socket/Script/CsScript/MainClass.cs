@@ -22,8 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
+using System.Text;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Runtime;
+using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.RPC.Sockets;
 using ZyGames.Framework.Script;
 
@@ -39,8 +41,26 @@ namespace Game.Script
 
         protected override void OnDisconnected(GameSession session)
         {
-            Console.WriteLine("客户端UserId:[{0}]已与服务器断开", session.EndAddress);
+            Console.WriteLine("客户端UserId:[{0}]已与服务器断开", session.RemoteAddress);
             base.OnDisconnected(session);
+        }
+
+        protected override void OnHeartbeat(GameSession session)
+        {
+            Console.WriteLine("{0}>>Hearbeat package: {1} session count {2}", DateTime.Now.ToString("HH:mm:ss"), session.RemoteAddress, GameSession.Count);
+            base.OnHeartbeat(session);
+        }
+
+        protected override void OnReceivedBefore(ConnectionEventArgs e)
+        {
+            Console.WriteLine(Encoding.UTF8.GetString(e.Data));
+            base.OnReceivedBefore(e);
+        }
+
+        protected override void OnRequested(ActionGetter actionGetter, BaseGameResponse response)
+        {
+            Console.WriteLine(actionGetter.ToParamString());
+            base.OnRequested(actionGetter, response);
         }
 
         protected override void OnStartAffer()
