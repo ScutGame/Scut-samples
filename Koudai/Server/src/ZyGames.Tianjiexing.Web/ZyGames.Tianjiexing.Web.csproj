@@ -922,7 +922,9 @@
     <Compile Include="Script\Model\UserCacheGlobal.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GameServer.exe.config" />
+    <None Include="GameServer.exe.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="NLog.config" />
   </ItemGroup>
   <ItemGroup />

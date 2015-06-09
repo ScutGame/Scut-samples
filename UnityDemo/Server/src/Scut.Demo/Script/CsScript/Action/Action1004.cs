@@ -25,8 +25,8 @@ namespace GameServer.Script.CsScript.Action
             user = null;
             var cacheSet = new PersonalCacheStruct<GameUser>();
             var roleCache = new PersonalCacheStruct<UserRole>();
-            var roleList = roleCache.FindAll(Uid);
-            GameUser gameUser = cacheSet.FindKey(Uid);
+            var roleList = roleCache.FindAll(userId.ToString());
+            GameUser gameUser = cacheSet.FindKey(userId.ToString());
             if (gameUser == null || roleList.Count == 0)
             {
                 //通知客户跳转到创建角色接口

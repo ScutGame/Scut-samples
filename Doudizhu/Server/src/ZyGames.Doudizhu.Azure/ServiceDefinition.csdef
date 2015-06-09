@@ -3,6 +3,8 @@
   <WorkerRole name="DoudizhuServiceRole" vmsize="Small">
     <Imports>
       <Import moduleName="Diagnostics" />
+      <Import moduleName="RemoteAccess" />
+      <Import moduleName="RemoteForwarder" />
     </Imports>
     <Endpoints>
       <InputEndpoint name="DdzEndpoint" protocol="tcp" port="9700" localPort="9700" />

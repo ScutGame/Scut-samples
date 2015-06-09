@@ -43,7 +43,7 @@ namespace GameServer.Script.CsScript.Action
             var userCache = new PersonalCacheStruct<GameUser>();
             var roleCache = new PersonalCacheStruct<UserRole>();
             GameUser gameUser;
-            if (userCache.TryFindKey(Uid, out gameUser) == LoadingStatus.Success)
+            if (userCache.TryFindKey(UserId.ToString(), out gameUser) == LoadingStatus.Success)
             {
                 if (gameUser == null)
                 {
