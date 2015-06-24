@@ -3,6 +3,7 @@ import ReferenceLib
 from action import *
 from lang import Lang
 from System import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Message import *
@@ -44,7 +45,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    user = parent.Current.User
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     if not user:
         parent.ErrorCode = Lang.getLang("ErrorCode")
         parent.ErrorInfo = Lang.getLang("LoadError")

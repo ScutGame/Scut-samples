@@ -4,6 +4,7 @@ from action import *
 from System import *
 from System.Collections.Generic import *
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -48,8 +49,9 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    userId = parent.Current.User.PersonalId
-    gameUser=parent.Current.User
+	
+    userId = str(parent.Current.UserId)
+    gameUser = PersonalCacheStruct.Get[GameUser](userId)
 
     def loadError():
         parent.ErrorCode = Lang.getLang("ErrorCode");
@@ -83,7 +85,7 @@ def takeAction(urlParam, parent):
         actionResult.Result = False;
         return actionResult;
     if IsTierNum%5==0 and IsTierNum!=0:
-        #userId = parent.Current.User.PersonalId
+        
         actionResult.IsTierStar=userShengJiTa.IsTierStar
         actionResult.Modulus=rewardInfo.GameCoin
 

@@ -356,7 +356,7 @@ function update(mtable)
  ]]
     mList:clear();
     if #mtable<=0 then
-        noMsg:setString(Language.RANKING_ZANWUPAIMING);--暂无排名
+        noMsg:setString('None');--暂无排名
         noMsg:setColor(ccRED1)
         ---
         for k,v in ipairs(allTable.title) do 

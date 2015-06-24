@@ -3,6 +3,7 @@ from action import *
 from System import *
 from mathUtils import MathUtils
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.SyncThreading import *
 from ZyGames.Framework.Common import *
@@ -42,7 +43,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    user = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     table = GameRoom.Current.GetTableData(user)
     if not table or not user:
         parent.ErrorCode = Lang.getLang("ErrorCode");

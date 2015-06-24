@@ -43,7 +43,7 @@ namespace GameServer.Script.CsScript.Action
             var userCache = new PersonalCacheStruct<GameUser>();
             var roleCache = new PersonalCacheStruct<UserRole>();
             GameUser gameUser;
-            if (userCache.TryFindKey(Uid, out gameUser) == LoadingStatus.Success)
+            if (userCache.TryFindKey(UserId.ToString(), out gameUser) == LoadingStatus.Success)
             {
                 if (gameUser == null)
                 {
@@ -56,7 +56,7 @@ namespace GameServer.Script.CsScript.Action
                     };
                     userCache.Add(gameUser);
                 }
-                user = gameUser;
+                user =new SessionUser(gameUser);
                 UserRole role;
                 if (roleCache.TryFind(gameUser.PersonalId, r => r.RoleName == UserName, out role) == LoadingStatus.Success)
                 {
@@ -90,8 +90,8 @@ namespace GameServer.Script.CsScript.Action
 
         public override void TakeActionAffter(bool state)
         {
-            var notifyUsers = new List<GameUser>();
-            notifyUsers.Add(Current.User as GameUser);
+            var notifyUsers = new List<IUser>();
+            notifyUsers.Add(Current.User);
             ActionFactory.SendAsyncAction(notifyUsers, (int)ActionType.World, null, t => { });
             base.TakeActionAffter(state);
         }

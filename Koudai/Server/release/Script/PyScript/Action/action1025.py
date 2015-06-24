@@ -5,6 +5,7 @@ from action import *
 from System import *
 from System.Collections.Generic import *
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model.ConfigModel import *
 from ZyGames.Framework.Common import *
@@ -39,8 +40,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    contextUser = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
     escalateInfo =  ConfigCacheSet[GeneralEscalateInfo]().FindKey(contextUser.UserLv, GeneralType.YongHu);
     if(escalateInfo):
         for info in escalateInfo.Award:

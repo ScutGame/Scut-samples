@@ -1,6 +1,5 @@
 ﻿using System;
 using ZyGames.Doudizhu.Bll;
-using ZyGames.Doudizhu.Bll.Script.CsScript;
 using ZyGames.Doudizhu.Model;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Cache;
@@ -29,12 +28,12 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
         {
             user = null;
             var cacheSet = new GameDataCacheSet<GameUser>();
-            GameUser gameUser = cacheSet.FindKey(Uid);
+            GameUser gameUser = cacheSet.FindKey(userId.ToString());
             if (gameUser == null ||
                 string.IsNullOrEmpty(gameUser.SessionID) ||
-                !gameUser.IsOnlining)
+                (Current.User != null && !Current.User.IsOnlining))
             {
-                gameUser = cacheSet.FindKey(Uid);
+                gameUser = cacheSet.FindKey(userId.ToString());
             }
 
             if (gameUser != null)
@@ -42,21 +41,21 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
                 //原因：还在加载中时，返回
                 if (gameUser.Property.IsRefreshing)
                 {
-                    Uid = string.Empty;
                     ErrorCode = Language.Instance.ErrorCode;
                     ErrorInfo = Language.Instance.ServerLoading;
                     return false;
                 }
-                
+
             }
 
             var nowTime = DateTime.Now;
             if (gameUser == null)
             {
+                user = new SessionUser() { PassportId = PassportId, UserId = userId };
                 this.ErrorCode = 1005;
                 return true;
             }
-            user = gameUser;
+            user = new SessionUser(gameUser);
             if (gameUser.UserStatus == UserStatus.FengJin)
             {
                 ErrorCode = Language.Instance.TimeoutCode;
@@ -90,8 +89,7 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
                 userLoginLog.Pid = gameUser.Pid;
                 userLoginLog.UserLv = gameUser.UserLv;
                 var sender = DataSyncManager.GetDataSender();
-
-                sender.Send(userLoginLog);
+                sender.Send(new[] { userLoginLog });
             });
             return true;
         }

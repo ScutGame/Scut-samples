@@ -26,6 +26,7 @@ using System.Web;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Game.Context;
+using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
@@ -61,13 +62,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
             user = null;
             //原因：重登录时，数据会回档问题
             var cacheSet = new GameDataCacheSet<GameUser>();
-            GameUser userInfo = cacheSet.FindKey(Uid);
+            GameUser userInfo = cacheSet.FindKey(userId.ToString());
             if (userInfo != null)
             {
                 //原因：还在加载中时，返回
                 if (userInfo.IsRefreshing)
                 {
-                    Uid = string.Empty;
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
                     ErrorInfo = LanguageManager.GetLang().ServerLoading;
                     return false;
@@ -78,8 +78,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 string.IsNullOrEmpty(userInfo.SessionID) ||
                 !userInfo.IsOnline)
             {
-                UserCacheGlobal.Load(Uid); //重新刷缓存
-                userInfo = cacheSet.FindKey(Uid);
+                UserCacheGlobal.Load(userId.ToString()); //重新刷缓存
+                userInfo = cacheSet.FindKey(userId.ToString());
             }
             if (userInfo != null)
             {
@@ -89,7 +89,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1004_IDDisable;
                     return false;
                 }
-                user = userInfo;
+                user = new SessionUser(userInfo);
                 //todo
                 //NoticeHelper.RankNotice(userInfo); //公告
                 CombatHelper.LoadProperty(userInfo);
@@ -142,6 +142,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             else
             {
+                user = new SessionUser()
+                {
+                    UserId = userId,
+                    PassportId = PassportId
+                };
                 ErrorCode = 1005;
                 ErrorInfo = LanguageManager.GetLang().St1005_RoleCheck;
             }

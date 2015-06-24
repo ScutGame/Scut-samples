@@ -79,12 +79,14 @@ namespace ZyGames.Doudizhu.Bll.Logic
             //}
             //str = str.TrimStart(',');
             //Console.WriteLine("Notify action:{0} {1}", actionId, str);
-
-            ActionFactory.SendAsyncAction(userList, actionId, parameters, g => { });
-            if (callback != null)
+            List<SessionUser> sessionUsers = userList.ConvertAll(user => new SessionUser(user));
+            ActionFactory.SendAsyncAction(sessionUsers, actionId, parameters, g =>
             {
-                callback(actionId);
-            }
+                if (callback != null)
+                {
+                    callback(actionId);
+                }
+            }).Wait();
         }
 
         /// <summary>

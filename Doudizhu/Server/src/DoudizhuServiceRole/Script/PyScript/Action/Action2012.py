@@ -2,6 +2,7 @@
 import ReferenceLib
 from action import *
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Lang import *
@@ -47,17 +48,25 @@ def compeareTo(x, y):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    user = parent.Current.User
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     table = GameRoom.Current.GetTableData(user)
-    if not table or not user:
+    if not user:
         parent.ErrorCode = Lang.getLang("ErrorCode")
-        parent.ErrorInfo = Lang.getLang("LoadError")
+        parent.ErrorInfo = Lang.getLang("UserLoadError")
         actionResult.Result = False
         return actionResult
+
+    if not table:
+        parent.ErrorCode = Lang.getLang("ErrorCode")
+        parent.ErrorInfo = Lang.getLang("TableOver")
+        actionResult.Result = False
+        return actionResult
+
     position = GameTable.Current.GetUserPosition(user, table)
     if not position:
         parent.ErrorCode = Lang.getLang("ErrorCode")
-        parent.ErrorInfo = Lang.getLang("LoadError")
+        parent.ErrorInfo = Lang.getLang("TableOver")
         actionResult.Result = False
         return actionResult
     actionResult.IsLandlord = position.IsLandlord and 1 or 0

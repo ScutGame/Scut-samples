@@ -4,6 +4,7 @@ from System import *
 from mathUtils import MathUtils
 from lang import *
 
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.SyncThreading import *
 from ZyGames.Framework.Common import *
@@ -18,7 +19,7 @@ from ZyGames.Doudizhu.Model import *
 from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Cache import *
-from ZyGames.Doudizhu.Bll.Script.CsScript import *
+from ZyGames.Doudizhu.Script.CsScript.Action import *
 
 
 #聊天发送接口
@@ -44,7 +45,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    user = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     table = GameRoom.Current.GetTableData(user)
     if not table or not user:
         parent.ErrorCode = Lang.getLang("ErrorCode");

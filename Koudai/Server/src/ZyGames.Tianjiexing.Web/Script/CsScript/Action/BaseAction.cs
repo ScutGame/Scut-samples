@@ -1,4 +1,5 @@
 ﻿using System;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Cache;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Service;
@@ -15,6 +16,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
         }
 
+        public string Uid
+        {
+            get { return Current.UserId.ToString(); }
+        }
         /// <summary>
         /// 上下文玩家
         /// </summary>
@@ -22,7 +27,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             get
             {
-                return Current.User as GameUser;
+                return PersonalCacheStruct.Get<GameUser>(Current.UserId.ToString());
             }
         }
 
@@ -47,7 +52,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         private bool CheckGmAction()
         {
-            if (actionId == ActionIDDefine.Cst_Action1000 )
+            if (actionId == ActionIDDefine.Cst_Action1000)
             {
                 int timeOut = 10;
                 try

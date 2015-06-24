@@ -4,6 +4,7 @@ import ReferenceLib
 
 from action import *
 from System import *
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
@@ -72,8 +73,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    contextUser = parent.Current.User
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
     actionResult.contextUser = contextUser;
     lastLv = contextUser.UserLv
 
@@ -229,7 +230,7 @@ def takeAction(urlParam, parent):
     actionResult.parent = parent
 
     # 信件未读数目
-    tjxMailService = TjxMailService(parent.Current.User);
+    tjxMailService = TjxMailService(contextUser);
     tempMailList = tjxMailService.GetMail();
     if tempMailList:
         actionResult.unReadCount = tempMailList[1];

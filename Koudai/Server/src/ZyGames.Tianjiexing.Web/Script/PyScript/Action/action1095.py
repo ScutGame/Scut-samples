@@ -5,6 +5,7 @@ import ReferenceLib
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
@@ -37,8 +38,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    userId = parent.Current.User.PersonalId
-    contextUser = parent.Current.User
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
     noviceUser = GameDataCacheSet[NoviceUser]().FindKey(userId)
     if noviceUser and noviceUser.IsClose :
         if((DateTime.Now- ContextUser.LoginTime).Minutes >=10):

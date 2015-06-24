@@ -34,7 +34,7 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
         protected override bool CreateUserRole(out IUser user)
         {
             user = null;
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(Uid);
+            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(UserId.ToString());
             if (gameUser == null)
             {
                 var roleFunc = new RoleFunc();
@@ -51,9 +51,9 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
                 gameUser = CreateRole();
                 roleFunc.OnCreateAfter(gameUser);
             }
-            user = gameUser;
+            user = new SessionUser(gameUser);
             UserLoginLog userLoginLog = new UserLoginLog();
-            userLoginLog.UserId = Uid;
+            userLoginLog.UserId = UserId.ToString();
             userLoginLog.SessionID = Sid;
             userLoginLog.MobileType = (short)MobileType;
             userLoginLog.ScreenX = ScreenX;
@@ -66,7 +66,7 @@ namespace ZyGames.Doudizhu.Script.CsScript.Action
             userLoginLog.Pid = gameUser.Pid;
             userLoginLog.UserLv = gameUser.UserLv;
             var sender = DataSyncManager.GetDataSender();
-            sender.Send(userLoginLog);
+            sender.Send(new[] { userLoginLog });
 
             return true;
         }

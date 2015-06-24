@@ -1,6 +1,7 @@
 ﻿"""1014_用户信息变更通知接口"""
 import ReferenceLib
 from action import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Lang import *
 from ZyGames.Doudizhu.Model import *
@@ -38,7 +39,8 @@ def takeAction(urlParam, parent):
     gameRoom = GameRoom.Current
     actionResult = ActionResult();
     actionResult.Rooms = gameRoom.RoomList
-    user = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     if user:
         gameHall = GameHall(user)
         actionResult.HeadIcon = user.HeadIcon

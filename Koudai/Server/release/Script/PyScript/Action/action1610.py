@@ -59,8 +59,7 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult();
-    userId = parent.Current.User.PersonalId;
-    #userId = parent.Current.UserId;
+    userId = str(parent.Current.UserId)
     result = [];
     list = [];
 

@@ -19,7 +19,6 @@ namespace ZyGames.Doudizhu.Model
         /// <summary>
         /// </summary>
         public UserAchieve()
-            : base(false)
         {
             AchievePackage = new CacheList<UserAchieveInfo>();
         }

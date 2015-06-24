@@ -4,6 +4,7 @@ from System import *
 from mathUtils import MathUtils
 from lang import Lang
 
+from ZyGames.Framework.Cache.Generic import *
 from System.Collections.Generic import *
 from ZyGames.Framework.SyncThreading import *
 from ZyGames.Framework.Common import *
@@ -47,8 +48,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    userId = parent.Current.User.PersonalId
-    user = parent.Current.User
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     gameRoom = GameRoom.Current
     dailyFreeNum = ConfigEnvSet.GetInt("User.DailyFreeNum", 3);
     useNum = 0

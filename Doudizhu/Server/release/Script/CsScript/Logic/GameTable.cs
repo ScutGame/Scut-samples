@@ -762,7 +762,7 @@ namespace ZyGames.Doudizhu.Bll.Logic
                 //结束
                 foreach (var p in tableData.Positions)
                 {
-                    TraceLog.WriteComplement("桌子:{0} in {1}玩家:{2}-{3}剩余牌{4}",
+                    TraceLog.WriteComplement("桌子:{0},房间:{1},玩家:{2}-{3}剩余牌{4}",
                         tableData.TableId, tableData.RoomId, p.UserId, p.NickName, string.Join(",", p.CardData));
                 }
                 tableData.IsClosed = true;

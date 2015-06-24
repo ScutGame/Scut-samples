@@ -1845,11 +1845,6 @@ namespace ZyGames.Tianjiexing.Model
             return RetailID;
         }
 
-        public override string GetSessionId()
-        {
-            return SessionID;
-        }
-
         public override int GetUserId()
         {
             return UserID.ToInt();

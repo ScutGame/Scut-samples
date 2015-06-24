@@ -2,6 +2,7 @@
 import ReferenceLib
 from action import *
 from lang import Lang
+from ZyGames.Framework.Cache.Generic import *
 from cardAILogic import CardAILogic
 from System.Collections.Generic import *
 from ZyGames.Framework.Game.Service import *
@@ -11,7 +12,7 @@ from ZyGames.Doudizhu.Bll import *
 from ZyGames.Doudizhu.Bll.Logic import *
 from ZyGames.Doudizhu.Bll.Base import *
 from ZyGames.Doudizhu.Bll.Com.Chat import *
-from ZyGames.Doudizhu.Bll.Script.CsScript import *
+from ZyGames.Doudizhu.Script.CsScript.Action import *
 
 class UrlParam(HttpParam):
     def __init__(self):
@@ -37,7 +38,8 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()    
-    user = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    user = PersonalCacheStruct.Get[GameUser](userId)
     gameRoom = GameRoom.Current
     roomInfo = gameRoom.GetRoom(urlParam.RoomId)
     if not roomInfo or not user:

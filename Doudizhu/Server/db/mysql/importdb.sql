@@ -697,3 +697,7 @@ INSERT INTO `titleinfo` VALUES ('1017', '萌妹大神组II级', '4999999');
 INSERT INTO `titleinfo` VALUES ('1018', '萌妹大神组III级', '9999999');
 
 select 'create tables for ddzconfig successfull!';
+
+
+DROP INDEX In_mark ON dbo.SnsPassportLog
+CREATE INDEX Index_RegPushTime ON dbo.SnsPassportLog(RegPushTime)

@@ -3,6 +3,7 @@ import sys
 import ReferenceLib
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
@@ -38,8 +39,9 @@ def getUrlElement(httpGet,parent):
 
 def takeAction(urlParam,parent):
     actionResult = ActionResult()
-    userId = parent.Current.UserId
-    contextUser = parent.Current.User;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+   
     itemConfigList = ConfigCacheSet[ItemBaseInfo]().FindAll(lambda m:m.Athletics > 0,True)
     result = MathUtils.GetPaging[ItemBaseInfo](itemConfigList,urlParam.PageIndex,urlParam.PageSize)
     if result :

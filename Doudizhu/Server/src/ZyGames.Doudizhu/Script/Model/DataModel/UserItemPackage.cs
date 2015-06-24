@@ -19,7 +19,6 @@ namespace ZyGames.Doudizhu.Model
         /// <summary>
         /// </summary>
         public UserItemPackage()
-            : base(false)
         {
             ItemPackage = new CacheList<UserItem>();
         }

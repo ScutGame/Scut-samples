@@ -19,7 +19,6 @@ namespace ZyGames.Doudizhu.Model
         /// <summary>
         /// </summary>
         public UserTask()
-            : base(false)
         {
             TaskPackage = new CacheList<UserTaskInfo>();
         }

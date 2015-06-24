@@ -5,6 +5,7 @@ import ReferenceLib
 from action import *
 from System import *
 from System.Collections.Generic import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
@@ -41,7 +42,9 @@ def getUrlElement(httpGet, parent):
 
 def takeAction(urlParam, parent):
     actionResult = ActionResult()
-    userExtend = parent.Current.User.UserExtend;
+    userId = str(parent.Current.UserId)
+    contextUser = PersonalCacheStruct.Get[GameUser](userId)
+    userExtend = contextUser.UserExtend;
     tjxNoviceGuideService = TjxNoviceGuideService(parent.Current.UserId)
     if urlParam.Ops == 0:
         result = tjxNoviceGuideService.Check()

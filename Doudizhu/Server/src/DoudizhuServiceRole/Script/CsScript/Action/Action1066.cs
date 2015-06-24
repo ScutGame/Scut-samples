@@ -5,7 +5,6 @@ using System.Net;
 using System.Text;
 using ZyGames.Doudizhu.Bll;
 using ZyGames.Doudizhu.Bll.Base;
-using ZyGames.Doudizhu.Bll.Script.CsScript;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
 using ZyGames.Framework.Game.Contract;

@@ -60,7 +60,7 @@ namespace GameServer.Script.CsScript.Action
             {
                 string[] userList = SnsManager.GetRegPassport(deviceID);
                 passport = userList[0];
-                password = CryptoHelper.DES_Decrypt(userList[1], GameEnvironment.Setting.ProductDesEnKey);
+                password = userList[1];
                 return true;
             }
             catch (Exception ex)

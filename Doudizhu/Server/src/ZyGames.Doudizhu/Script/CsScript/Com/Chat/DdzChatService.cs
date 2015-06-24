@@ -146,7 +146,7 @@ namespace ZyGames.Doudizhu.Bll.Com.Chat
             };
             using (var sender = DataSyncManager.GetDataSender())
             {
-                sender.Send(chatLog);
+                sender.Send(new[] { chatLog });
             }
         }
     }

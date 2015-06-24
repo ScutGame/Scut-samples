@@ -38,8 +38,12 @@ namespace GameServer.Script.CsScript.Action
         /// <returns>false:中断后面的方式执行并返回Error</returns>
         public override bool TakeAction()
         {
-            GameUser user = Current.User as GameUser;
-            if (user == null) return false;
+            var user = PersonalCacheStruct.Get<GameUser>(UserId.ToString());
+            if (user == null)
+            {
+                ErrorCode = Language.Instance.ErrorCode;
+                return false;
+            }
 
             var roleCache = new PersonalCacheStruct<UserRole>();
             _role = roleCache.FindKey(user.PersonalId, user.CurrRoleId, user.UserId);
