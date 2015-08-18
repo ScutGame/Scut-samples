@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Data;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -79,8 +79,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (var task in _storyTaskArray)
             {
                 int collectNum = TrumpHelper.GetUserItemNum(ContextUser.UserID, task.TargetItemID);
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(task.PlotID);
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(task.TargetItemID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(task.PlotID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(task.TargetItemID);
                 iscomplete = GeneralHelper.IsComplete(ContextUser, task);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(task.TaskID);
@@ -118,8 +118,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
-            GeneralInfo generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            GeneralInfo generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             if (generalInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -129,7 +129,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             _headID = generalInfo.HeadID;
             _lifeNum = generalInfo.LifeNum;
             _careerID = generalInfo.CareerID;
-            CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(generalInfo.CareerID);
+            CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(generalInfo.CareerID);
             if (careerInfo != null)
             {
                 _careerName = careerInfo.CareerName;
@@ -148,13 +148,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 _intellectNum = general.IntellectNum;
                 _isRecruit = 2;
             }
-            AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(abilityId);
+            AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(abilityId);
             if (abilityInfo != null)
             {
                 _abilityName = abilityInfo.AbilityName;
                 _abilityDesc = abilityInfo.AbilityDesc;
             }
-            _storyTaskArray = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.GeneralID == generalInfo.GeneralID && m.TaskType == TaskType.General).ToArray();
+            _storyTaskArray = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.GeneralID == generalInfo.GeneralID && m.TaskType == TaskType.General).ToArray();
             return true;
         }
     }

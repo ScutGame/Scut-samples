@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Timing;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Model;
@@ -51,7 +51,7 @@ namespace ZyGames.Tianjiexing.BLL.Task
         protected override void DoExecute(object obj)
         {
             int packType = 0;
-            new GameDataCacheSet<UserRecharge>().Foreach((personalId, key, recharge) =>
+            new PersonalCacheStruct<UserRecharge>().Foreach((personalId, key, recharge) =>
             {
                 if (!IsCurrentWeek(recharge.ChargeDate) && recharge.WeekNum > 0)
                 {
@@ -79,7 +79,7 @@ namespace ZyGames.Tianjiexing.BLL.Task
         public static void TriggerReceivePack(string userID, int packType, int gameCoin)
         {
             PackageReceive receive = new PackageReceive();
-            List<RechargePacks> rechargePackseArray = new ConfigCacheSet<RechargePacks>().FindAll(m => m.PacksType == packType);
+            List<RechargePacks> rechargePackseArray = new ShareCacheStruct<RechargePacks>().FindAll(m => m.PacksType == packType);
             foreach (RechargePacks rechargePackse in rechargePackseArray)
             {
                 if (rechargePackse.RechargeNum <= gameCoin)
@@ -89,7 +89,7 @@ namespace ZyGames.Tianjiexing.BLL.Task
                     receive.UserID = userID;
                     receive.IsReceive = false;
                     receive.ReceiveDate = DateTime.Now;
-                    new GameDataCacheSet<PackageReceive>().Add(receive);
+                    new PersonalCacheStruct<PackageReceive>().Add(receive);
                 }
             }
         }

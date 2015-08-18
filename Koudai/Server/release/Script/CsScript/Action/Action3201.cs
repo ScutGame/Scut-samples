@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -73,13 +73,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
 
-            if (new GameDataCacheSet<UserFunction>().FindKey(Uid, FunctionEnum.PetRun) == null)
+            if (new PersonalCacheStruct<UserFunction>().FindKey(Uid, FunctionEnum.PetRun) == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St_NoFun;
                 return false;
             }
-            UserDailyRestrain restrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+            UserDailyRestrain restrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
             if (restrain != null && restrain.UserExtend != null)
             {
                 var dailyCacheSet = new ShareCacheStruct<DailyRestrainSet>();
@@ -99,7 +99,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     UserHelper.ProcessPetPrize(petRun);
                 }
                 _coldTime = petRun.ColdTime;
-                _petHead = (new ConfigCacheSet<PetInfo>().FindKey(petRun.PetID) ?? new PetInfo()).PetHead;
+                _petHead = (new ShareCacheStruct<PetInfo>().FindKey(petRun.PetID) ?? new PetInfo()).PetHead;
                 if (ContextUser.UserExtend != null)
                     _petId = ContextUser.UserExtend.LightPetID;
             }

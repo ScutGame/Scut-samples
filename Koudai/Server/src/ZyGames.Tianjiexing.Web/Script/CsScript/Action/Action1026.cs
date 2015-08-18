@@ -27,7 +27,7 @@ using System.Data;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.BLL.Action
 {
@@ -50,7 +50,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(generalList.Count);
             foreach (var general in generalList)
             {
-                AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(general.AbilityID);
+                AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(general.AbilityID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(general.GeneralID);
                 dsItem.PushIntoStack(general.GeneralName.ToNotNullString());
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            generalList = new ConfigCacheSet<GeneralInfo>().FindAll();
+            generalList = new ShareCacheStruct<GeneralInfo>().FindAll();
             return true;
         }
     }

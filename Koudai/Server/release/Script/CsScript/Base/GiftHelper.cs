@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.Enum;
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static Int16 SurplusGoldNum(string userID)
         {
             short goldNum = 0;
-            UserDailyRestrain userDaily = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain userDaily = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             DailyRestrainSet restrainSet =
                 new ShareCacheStruct<DailyRestrainSet>().FindKey(RestrainType.PresentationGoldNum);
             if (restrainSet != null)
@@ -100,12 +100,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int FeelUpPropertyNum(string userID, int generalID, AbilityType abilityType)
         {
             int upPropertyNum = 0;
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (userGeneral != null)
             {
                 short maxFeelLv = ConfigEnvSet.GetInt("Gift.MaxFeelLv").ToShort();
                 short feelLv = MathUtils.Addition(userGeneral.FeelLv, (short)1, maxFeelLv);
-                FeelLvInfo upfeelLvInfo = new ConfigCacheSet<FeelLvInfo>().FindKey(feelLv);
+                FeelLvInfo upfeelLvInfo = new ShareCacheStruct<FeelLvInfo>().FindKey(feelLv);
                 if (upfeelLvInfo != null && upfeelLvInfo.Property.Count > 0)
                 {
                     GeneralProperty property = upfeelLvInfo.Property.Find(m => m.AbilityType == abilityType);
@@ -133,7 +133,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 while (true)
                 {
                     short feelLv = MathUtils.Addition(general.FeelLv, (short)1, maxFeelLv);
-                    FeelLvInfo upfeelLvInfo = new ConfigCacheSet<FeelLvInfo>().FindKey(feelLv);
+                    FeelLvInfo upfeelLvInfo = new ShareCacheStruct<FeelLvInfo>().FindKey(feelLv);
                     if (general.FeelLv < feelLv && upfeelLvInfo != null)
                     {
                         if (general.FeelExperience >= upfeelLvInfo.Experience)
@@ -141,7 +141,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             general.FeelLv = MathUtils.Addition(general.FeelLv, (short)1, maxFeelLv);
                             general.FeelExperience = MathUtils.Subtraction(general.FeelExperience, upfeelLvInfo.Experience, 0);
                             general.RefreshMaxLife();
-                            GeneralInfo generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(general.GeneralID);
+                            GeneralInfo generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(general.GeneralID);
                             if (generalInfo != null && generalInfo.ReplaceSkills != null)
                             {
                                 if (general.FeelLv >= generalInfo.ReplaceSkills.FeelLv && general.AbilityID != generalInfo.ReplaceSkills.AbilityID)

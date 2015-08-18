@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 
 namespace ZyGames.Tianjiexing.BLL.GM
@@ -38,7 +38,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
 
         private void Process(string userID, int goinNum)
         {
-            GameUser currentUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser currentUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (currentUser != null)
             {
                 currentUser.GameCoin = MathUtils.Addition(currentUser.GameCoin, goinNum, int.MaxValue);

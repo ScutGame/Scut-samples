@@ -1,6 +1,6 @@
 ﻿using System;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Contract.Action;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;

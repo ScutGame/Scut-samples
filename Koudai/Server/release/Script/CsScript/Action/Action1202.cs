@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Component;
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
              _userItem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID.Equals(_userItemId)) ?? new UserItemInfo();
 
-            _itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(_userItem.ItemID);
+            _itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(_userItem.ItemID);
             if (_itemInfo == null)
             {
                 SaveDebuLog(string.Format("玩家{0}物品ID={1}[{2}]不存在！", Uid, _userItem.UserItemID, _userItem.ItemID));
@@ -93,13 +93,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             _strongMoney = new UserItemHelper(_userItem, 1).StrongMoney;
             _tenTimesStrongMoney = new UserItemHelper(_userItem, 10).StrongMoney;  // 强化 10 次用钱
-            _itemEquArray = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(m => m.ItemID == _userItem.ItemID);
+            _itemEquArray = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(m => m.ItemID == _userItem.ItemID);
 
             if (_userItem.ItemLv >= ContextUser.UserLv || _strongMoney > ContextUser.GameCoin)
             {
                 _isStrong = 1;
             }
-            List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.EquipmentStrong);
+            List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.EquipmentStrong);
             userQueueArray.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;
@@ -138,7 +138,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (string career in careerArray)
             {
                 DataStruct ds = new DataStruct();
-                CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(career);
+                CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(career);
                 ds.PushIntoStack(careerInfo == null ? 0 : careerInfo.CareerID);
                 ds.PushIntoStack(careerInfo == null ? string.Empty : careerInfo.CareerName.ToNotNullString());
                 PushIntoStack(ds);

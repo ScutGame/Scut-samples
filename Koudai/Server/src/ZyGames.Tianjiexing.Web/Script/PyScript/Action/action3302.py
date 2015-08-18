@@ -8,7 +8,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -34,8 +34,8 @@ def takeAction(urlParam,parent):
     #TraceLog.ReleaseWrite('1004 param BackpackType:{0}', urlParam.BackpackType);
     actionResult =ActionResult();
     userId =parent.Current.UserId;
-    _cacheSetUserPray =  GameDataCacheSet[UserPray]();
-    _cacheSetPray =  ConfigCacheSet[PrayInfo]();
+    _cacheSetUserPray =  PersonalCacheStruct[UserPray]();
+    _cacheSetPray =  ShareCacheStruct[PrayInfo]();
     userPray = _cacheSetUserPray.FindKey(userId.ToString());
     prayInfo = _cacheSetPray.FindKey(Convert.ToInt32(userPray.PrayType));
     if (prayInfo == None or userPray == None):

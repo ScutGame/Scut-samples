@@ -10,7 +10,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -54,7 +54,7 @@ def takeAction(urlParam, parent):
         parent.ErrorCode = LanguageManager.GetLang().ErrorCode;
         actionResult.Result = False;
         return actionResult;
-    userGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId, urlParam.generalID);
+    userGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId, urlParam.generalID);
     if userGeneral != None:
         userGeneral.GeneralCard = urlParam.generalCard;
         userGeneral.GeneralCardNum=MathUtils.ToNotNullString(urlParam.GeneralCardNum)         #对应佣兵列表的数量

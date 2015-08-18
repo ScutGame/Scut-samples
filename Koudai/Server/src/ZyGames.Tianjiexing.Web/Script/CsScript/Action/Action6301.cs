@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;

@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -55,8 +55,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            _gameUser = new GameDataCacheSet<GameUser>().FindKey(ContextUser.UserID);
-            _cityInfoArray = new ConfigCacheSet<CityInfo>().FindAll(c => c.CityType == 0 &&
+            _gameUser = new PersonalCacheStruct<GameUser>().FindKey(ContextUser.UserID);
+            _cityInfoArray = new ShareCacheStruct<CityInfo>().FindAll(c => c.CityType == 0 &&
                 c.MinLv <= _gameUser.UserLv &&
                 ((int)c.CountryID == 0 || c.CountryID == ContextUser.CountryID));
             return true;

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -44,7 +44,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(cityID);
+            CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(cityID);
             if (cityInfo != null && cityInfo.CityType == 0)
             {
                 ContextUser.UserLocation = Location.City;

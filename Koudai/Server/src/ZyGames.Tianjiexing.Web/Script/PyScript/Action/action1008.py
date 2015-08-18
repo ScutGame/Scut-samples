@@ -10,7 +10,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -89,7 +89,7 @@ def takeAction(urlParam, parent):
     else:
         actionResult.genlv = contextUser.UserLv;
 
-    cacheSetGeneralEscalate = ConfigCacheSet[GeneralEscalateInfo]();
+    cacheSetGeneralEscalate = ShareCacheStruct[GeneralEscalateInfo]();
     GeneralEscalateHelper.AddUserLv(contextUser, 0);
     actionResult._honourNum = contextUser.HonourNum;
     lv = contextUser.UserLv;
@@ -105,9 +105,9 @@ def takeAction(urlParam, parent):
         #wuzf 去掉刷新血量，其它改变血量接口有触发刷新
         #actionResult.userGeneralInfo.RefreshMaxLife();
         actionResult.generalID = actionResult.userGeneralInfo.GeneralID;
-        #careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(actionResult.userGeneralInfo.CareerID);
+        #careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(actionResult.userGeneralInfo.CareerID);
         actionResult.headID = actionResult.userGeneralInfo.HeadID; # contextUser.Sex ? careerInfo.HeadID2 : careerInfo.HeadID;
-        actionResult.escalateInfo = ConfigCacheSet[GeneralEscalateInfo]().FindKey(actionResult.genlv);
+        actionResult.escalateInfo = ShareCacheStruct[GeneralEscalateInfo]().FindKey(actionResult.genlv);
         actionResult.lifeNum = actionResult.userGeneralInfo.LifeNum;
         actionResult.careerID = actionResult.userGeneralInfo.CareerID;
         
@@ -118,21 +118,21 @@ def takeAction(urlParam, parent):
     # 道具图标
     actionResult._blessingList = UserHelper.BlessingInfoList(contextUser);
     # 变身卡图标
-    userPropsList = GameDataCacheSet[UserProps]().FindAll(contextUser.UserID, lambda u:u.PropType == 3 and u.ItemID != 5200 and u.ItemID != 7003);
+    userPropsList = PersonalCacheStruct[UserProps]().FindAll(contextUser.UserID, lambda u:u.PropType == 3 and u.ItemID != 5200 and u.ItemID != 7003);
     if userPropsList.Count > 0:
         props = userPropsList[0];
         pTime = props.DoRefresh();
-        itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(props.ItemID);
+        itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(props.ItemID);
         if itemInfo and pTime > actionResult.pictureTime:
             actionResult.pictureID = itemInfo.PictrueID;
             actionResult.pictureTime = pTime;
             
     # 兼容客户端上已版本血量图标
-    userPropsList2 = GameDataCacheSet[UserProps]().FindAll(contextUser.UserID, lambda u:u.PropType == 1);
+    userPropsList2 = PersonalCacheStruct[UserProps]().FindAll(contextUser.UserID, lambda u:u.PropType == 1);
     if userPropsList2.Count > 0:
         props = userPropsList2[0];
         pTime = props.DoRefresh();
-        itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(props.ItemID);
+        itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(props.ItemID);
         if itemInfo and pTime > actionResult.pictureTime:
             actionResult._itemLiveNum = props.SurplusNum;
             actionResult._itemLiveMaxNum = itemInfo.EffectNum;
@@ -142,7 +142,7 @@ def takeAction(urlParam, parent):
         UserHelper.GetGeneralLife(contextUser.UserID);
          
     # 精力恢复
-    energyQueueArray = GameDataCacheSet[UserQueue]().FindAll(contextUser.UserID, lambda m:m.QueueType == QueueType.EnergyHuiFu);
+    energyQueueArray = PersonalCacheStruct[UserQueue]().FindAll(contextUser.UserID, lambda m:m.QueueType == QueueType.EnergyHuiFu);
     if energyQueueArray.Count > 0:
         energyQueue = energyQueueArray[0];
         energyMaxNum = MathUtils.ToShort(ConfigEnvSet.GetInt("User.MaxEnergyNum"));
@@ -174,8 +174,8 @@ def takeAction(urlParam, parent):
         queue.TotalColdTime = 0;
         queue.IsSuspend = False;
         queue.StrengNum = 0;
-        GameDataCacheSet[UserQueue]().Add(queue);
-    lvInfo = ConfigCacheSet[VipLvInfo]().FindKey(MathUtils.Addition(contextUser.VipLv, 1, int.MaxValue));
+        PersonalCacheStruct[UserQueue]().Add(queue);
+    lvInfo = ShareCacheStruct[VipLvInfo]().FindKey(MathUtils.Addition(contextUser.VipLv, 1, int.MaxValue));
     if lvInfo:
         actionResult.demandGold = MathUtils.Subtraction(lvInfo.PayGold, contextUser.PayGold, 0);
         actionResult.demandGold = MathUtils.Subtraction(actionResult.demandGold, contextUser.ExtGold, 0);
@@ -215,7 +215,7 @@ def takeAction(urlParam, parent):
     userEmbattleList = EmbattleHelper.CurrEmbattle(contextUser.UserID, True);
     #for userEmbattle in userEmbattleList:
     actionResult._talPriority = CombatHelper.TotalPriorityNum(contextUser.UserID, 0);
-    actionResult.functionList = GameDataCacheSet[UserFunction]().FindAll(userId);
+    actionResult.functionList = PersonalCacheStruct[UserFunction]().FindAll(userId);
 
     # 精灵祝福
     if contextUser:

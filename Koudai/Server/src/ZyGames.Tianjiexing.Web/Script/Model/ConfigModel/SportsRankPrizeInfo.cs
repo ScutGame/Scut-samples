@@ -33,7 +33,7 @@ namespace ZyGames.Tianjiexing.Model
     /// @personalName: 映射UserId对应的字段名,默认为"UserId"
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(AccessLevel.ReadOnly, DbConfig.Config, "SportsRankPrizeInfo")]
+    [EntityTable(AccessLevel.ReadOnly, DbConfig.Config)]
     public class SportsRankPrizeInfo : ShareEntity
     {
 

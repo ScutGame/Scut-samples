@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     result = x.ItemID.CompareTo(y.ItemID);
                 }
-                //return new ConfigCacheSet<ItemBaseInfo>().FindKey(x.ItemID).EquParts.CompareTo(new ConfigCacheSet<ItemBaseInfo>().FindKey(y.ItemID).EquParts);
+                //return new ShareCacheStruct<ItemBaseInfo>().FindKey(x.ItemID).EquParts.CompareTo(new ShareCacheStruct<ItemBaseInfo>().FindKey(y.ItemID).EquParts);
                 return result;
             });
             coldTime = ConfigEnvSet.GetInt("UserItem.EquColdTime");
@@ -88,7 +88,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     isStrong = 1;
                 }
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 DataStruct dsItem = new DataStruct();
 
                 dsItem.PushIntoStack(item == null ? string.Empty : item.UserItemID.ToNotNullString());
@@ -102,7 +102,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(isStrong);
                 dsItem.PushIntoStack(UserHelper.StrongEquPayPrice(Uid, item.UserItemID));
 
-                List<ItemEquAttrInfo> itemEquArray = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(e => e.ItemID.Equals(item.ItemID));
+                List<ItemEquAttrInfo> itemEquArray = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(e => e.ItemID.Equals(item.ItemID));
                 //当前等级装备属性
                 dsItem.PushIntoStack(itemEquArray.Count);
                 foreach (ItemEquAttrInfo equ in itemEquArray)

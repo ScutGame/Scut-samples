@@ -24,7 +24,7 @@ THE SOFTWARE.
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.BLL.Action
 {
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 return false;
             }
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral != null)
             {
                 userGeneral.GeneralCard = generalCard;

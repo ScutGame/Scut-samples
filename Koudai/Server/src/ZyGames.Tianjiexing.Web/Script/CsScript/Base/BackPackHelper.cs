@@ -34,7 +34,7 @@ using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Model;
 
@@ -49,8 +49,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static void AddBack(GameUser user)
         {
-            var cacheSet = new GameDataCacheSet<UserPack>();
-            var cacheSetBackPack = new ConfigCacheSet<BackpackConfigInfo>();
+            var cacheSet = new PersonalCacheStruct<UserPack>();
+            var cacheSetBackPack = new ShareCacheStruct<BackpackConfigInfo>();
             var userPack = cacheSet.FindKey(user.UserID);
 
             if (userPack == null)

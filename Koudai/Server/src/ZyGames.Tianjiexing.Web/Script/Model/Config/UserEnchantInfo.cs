@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ProtoBuf;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model.Config
 {
@@ -91,7 +91,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(EnchantID);
+                EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(EnchantID);
                 if (enchantInfo != null)
                 {
                     return enchantInfo.AbilityType;

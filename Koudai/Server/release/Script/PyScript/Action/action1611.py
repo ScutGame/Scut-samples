@@ -12,7 +12,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -58,18 +58,18 @@ def takeAction(urlParam, parent):
     actionResult.userId = userId;
     # 佣兵
     if urlParam.albumType == AlbumType.General:
-        actionResult.generalInfo = ConfigCacheSet[GeneralInfo]().FindKey(urlParam.cardID);
+        actionResult.generalInfo = ShareCacheStruct[GeneralInfo]().FindKey(urlParam.cardID);
     # 装备
     if urlParam.albumType == AlbumType.Item:
-        actionResult.itemList = ConfigCacheSet[ItemBaseInfo]().FindKey(urlParam.cardID);
+        actionResult.itemList = ShareCacheStruct[ItemBaseInfo]().FindKey(urlParam.cardID);
     # 魂技
     if urlParam.albumType == AlbumType.Ability:
-        actionResult.abilityList = ConfigCacheSet[AbilityInfo]().FindKey(urlParam.cardID);
+        actionResult.abilityList = ShareCacheStruct[AbilityInfo]().FindKey(urlParam.cardID);
 
     return actionResult;
 
 def buildPacket(writer, urlParam, actionResult):
-    abilityCacheSet = ConfigCacheSet[AbilityInfo]();
+    abilityCacheSet = ShareCacheStruct[AbilityInfo]();
     # 佣兵信息
     general = actionResult.generalInfo;
     item = actionResult.itemList;
@@ -94,7 +94,7 @@ def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(generalAbilityInfo.HeadID if generalAbilityInfo else '');
 
     gPropertyList = None;
-    ugeneral = GameDataCacheSet[UserGeneral]().FindKey(actionResult.userId, (general.GeneralID if general else 0));
+    ugeneral = PersonalCacheStruct[UserGeneral]().FindKey(actionResult.userId, (general.GeneralID if general else 0));
     if ugeneral:
         gPropertyList = CombatHelper.GetAbility(actionResult.userId, ugeneral.GeneralID,ugeneral)
     if gPropertyList:
@@ -119,7 +119,7 @@ def buildPacket(writer, urlParam, actionResult):
     itemid = 0;
     if item:
         itemid =item.ItemID
-    itemEquAttrList = ConfigCacheSet[ItemEquAttrInfo]().FindAll(match=lambda x:x.ItemID == itemid);
+    itemEquAttrList = ShareCacheStruct[ItemEquAttrInfo]().FindAll(match=lambda x:x.ItemID == itemid);
     writer.PushIntoStack(len(itemEquAttrList));
     for item in itemEquAttrList:
         dsItem = DataStruct();

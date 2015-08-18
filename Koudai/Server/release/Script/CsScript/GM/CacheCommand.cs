@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 
 namespace ZyGames.Tianjiexing.BLL.GM
@@ -49,7 +49,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
             {
                 string userId = "";
                 string pid = childType;
-                new GameDataCacheSet<GameUser>().Foreach((personalId, key, value) =>
+                new PersonalCacheStruct<GameUser>().Foreach((personalId, key, value) =>
                 {
                     if (value != null && value.Pid.Equals(pid))
                     {

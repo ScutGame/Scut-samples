@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -54,8 +54,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(userCrystalArray.Count);
             foreach (UserCrystalInfo crystal in userCrystalArray)
             {
-                UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, crystal.GeneralID);
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, crystal.GeneralID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(crystal.UserCrystalID);
@@ -105,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static string CrystalAbilityNum(int crystalID, short cryLv)
         {
             string _attrNum = string.Empty;
-            CrystalLvInfo currCrystal = new ConfigCacheSet<CrystalLvInfo>().FindKey(crystalID, cryLv);
+            CrystalLvInfo currCrystal = new ShareCacheStruct<CrystalLvInfo>().FindKey(crystalID, cryLv);
             if (currCrystal != null)
             {
                 //_attrNum = (currCrystal.AbilityNum * 100) + "%";

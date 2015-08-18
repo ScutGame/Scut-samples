@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -69,8 +69,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTask usertask = new GameDataCacheSet<UserTask>().FindKey(ContextUser.UserID, TaskID);
-            StoryTaskInfo taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(TaskID);
+            UserTask usertask = new PersonalCacheStruct<UserTask>().FindKey(ContextUser.UserID, TaskID);
+            StoryTaskInfo taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(TaskID);
             if(taskInfo==null)
             {
                 return false;
@@ -105,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     //对话直接完成
                     taskState = TaskState.Completed;
                 }
-                if (new GameDataCacheSet<UserTask>().FindKey(usertask.UserID, usertask.TaskID) == null)
+                if (new PersonalCacheStruct<UserTask>().FindKey(usertask.UserID, usertask.TaskID) == null)
                 {
                     usertask = new UserTask()
                     {
@@ -118,7 +118,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         CompleteNum = 0,
                         CreateDate = DateTime.Now
                     };
-                    new GameDataCacheSet<UserTask>().Add(usertask);
+                    new PersonalCacheStruct<UserTask>().Add(usertask);
                 }
                 else
                 {

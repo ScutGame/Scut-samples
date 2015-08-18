@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -95,7 +95,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     guildSet.Delete(guildInfo);
                 }
 
-                List<UserQueue> queueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.TuiChuGongHui);
+                List<UserQueue> queueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.TuiChuGongHui);
                 if (queueArray.Count > 0)
                 {
                     UserQueue queue = queueArray[0];
@@ -118,7 +118,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         IsSuspend = false,
                         UserID = ContextUser.UserID
                     };
-                    new GameDataCacheSet<UserQueue>().Add(userQueue);
+                    new PersonalCacheStruct<UserQueue>().Add(userQueue);
                 }
             }
             return true;

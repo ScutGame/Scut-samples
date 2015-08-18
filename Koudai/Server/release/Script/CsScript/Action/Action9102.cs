@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Model;
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             List<GameUser> friendArray = new List<GameUser>();
-            new GameDataCacheSet<GameUser>().Foreach((personId, key, user) =>
+            new PersonalCacheStruct<GameUser>().Foreach((personId, key, user) =>
             {
                 //查找相同等级的 并且好友类型非好友和关注的类型 
                 if (user.UserLv == ContextUser.UserLv && user.UserID != ContextUser.UserID)

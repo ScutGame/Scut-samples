@@ -26,7 +26,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Model;
@@ -41,7 +41,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
     {
         public MonsterQueue(int plotNpcID)
         {
-            var embattleList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcID);
+            var embattleList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcID);
             foreach (PlotEmbattleInfo embattle in embattleList)
             {
                 int index = embattle.GridSeqNo - 1;
@@ -69,7 +69,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <param name="difficultNum"></param>
         public MonsterQueue(int plotNpcID, double difficultNum)
         {
-            var sjtEmbattleList = new ConfigCacheSet<SJTPlotEmbattleInfo>().FindAll();
+            var sjtEmbattleList = new ShareCacheStruct<SJTPlotEmbattleInfo>().FindAll();
             sjtEmbattleList = sjtEmbattleList.FindAll(m => m.PlotNpcID == plotNpcID);
             foreach (SJTPlotEmbattleInfo embattle in sjtEmbattleList)
             {
@@ -87,11 +87,11 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static IGeneral Create(SJTPlotEmbattleInfo embattle, double difficultNum)
         {
 
-            SJTMonsterInfo monster = new ConfigCacheSet<SJTMonsterInfo>().FindKey(embattle.MonsterID);
+            SJTMonsterInfo monster = new ShareCacheStruct<SJTMonsterInfo>().FindKey(embattle.MonsterID);
             if (monster == null) throw new Exception("Plot monster:" + embattle.MonsterID + " is not exist");
 
-            CareerInfo career = new ConfigCacheSet<CareerInfo>().FindKey(monster.CareerID);
-            AbilityInfo ability = new ConfigCacheSet<AbilityInfo>().FindKey(monster.AbilityID);
+            CareerInfo career = new ShareCacheStruct<CareerInfo>().FindKey(monster.CareerID);
+            AbilityInfo ability = new ShareCacheStruct<AbilityInfo>().FindKey(monster.AbilityID);
             if (career == null || ability == null)
             {
                 throw new Exception("career or ability is null.");
@@ -146,11 +146,11 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         public static IGeneral Create(PlotEmbattleInfo embattle)
         {
-            MonsterInfo monster = new ConfigCacheSet<MonsterInfo>().FindKey(embattle.MonsterID);
+            MonsterInfo monster = new ShareCacheStruct<MonsterInfo>().FindKey(embattle.MonsterID);
             if (monster == null) throw new Exception("Plot monster:" + embattle.MonsterID + " is not exist");
 
-            CareerInfo career = new ConfigCacheSet<CareerInfo>().FindKey(monster.CareerID);
-            AbilityInfo ability = new ConfigCacheSet<AbilityInfo>().FindKey(monster.AbilityID);
+            CareerInfo career = new ShareCacheStruct<CareerInfo>().FindKey(monster.CareerID);
+            AbilityInfo ability = new ShareCacheStruct<AbilityInfo>().FindKey(monster.AbilityID);
             if (career == null || ability == null)
             {
                 throw new Exception("career or ability is null.");
@@ -217,7 +217,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             decimal propertyNum = 0;
             bool isBoss = false;
             string bossPro = string.Empty;
-            var npcInfoList = new ConfigCacheSet<PlotNPCInfo>().FindAll(s => s.PlotNpcID == plotnpcID);
+            var npcInfoList = new ShareCacheStruct<PlotNPCInfo>().FindAll(s => s.PlotNpcID == plotnpcID);
             foreach (var info in npcInfoList)
             {
                 var activeList = new ShareCacheStruct<GameActive>().FindAll(s => s.ActiveType == FunctionEnum.Booszhang && s.BossPlotID == info.PlotID);

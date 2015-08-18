@@ -13,7 +13,7 @@ from ZyGames.Tianjiexing.Model.Enum import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *

@@ -8,7 +8,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -40,14 +40,14 @@ def getUrlElement(httpGet,parent):
 def takeAction(urlParam,parent):
     actionResult = ActionResult()
     userId = parent.Current.UserId
-    itemConfig = ConfigCacheSet[ItemBaseInfo]().FindKey(urlParam.ItemId)
+    itemConfig = ShareCacheStruct[ItemBaseInfo]().FindKey(urlParam.ItemId)
     if not itemConfig or itemConfig.Athletics <= 0:
         parent.ErrorCode = LanguageManager.GetLang().ErrorCode
         parent.ErrorInfo = LanguageManager.GetLang().LoadDataError
         actionResult.Result = False
         return actionResult
     userId = parent.Current.UserId
-    cacheSetUser = GameDataCacheSet[GameUser]()
+    cacheSetUser = PersonalCacheStruct[GameUser]()
     user = cacheSetUser.FindKey(userId.ToString())
     if not user:
         parent.ErrorCode = LanguageManager.GetLang().ErrorCode

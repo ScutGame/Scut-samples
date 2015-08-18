@@ -6,7 +6,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -45,7 +45,7 @@ def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(len(actionResult.generalList));
     for general in rang(1,actionResult.generalList):
         abilityName = '';
-        abilityInfo = ConfigCacheSet[AbilityInfo].FindKey(general.AbilityID);
+        abilityInfo = ShareCacheStruct[AbilityInfo].FindKey(general.AbilityID);
         if(abilityInfo!=null):
             abilityName = abilityInfo.AbilityName;
         ds = DataStruct();

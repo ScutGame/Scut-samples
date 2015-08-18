@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -63,7 +63,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            functionList = new GameDataCacheSet<UserFunction>().FindAll(ContextUser.UserID);
+            functionList = new PersonalCacheStruct<UserFunction>().FindAll(ContextUser.UserID);
             return true;
         }
     }

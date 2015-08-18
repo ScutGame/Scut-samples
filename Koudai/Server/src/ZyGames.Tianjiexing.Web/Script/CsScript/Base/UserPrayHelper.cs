@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -40,11 +40,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
     /// </summary>
     public class UserPrayHelper
     {
-        public static GameDataCacheSet<UserPray> _cacheSetUserPray = new GameDataCacheSet<UserPray>();
-        public static ConfigCacheSet<PrayInfo> _cacheSetPray = new ConfigCacheSet<PrayInfo>();
-        public static GameDataCacheSet<GameUser> _cacheSetGameUser = new GameDataCacheSet<GameUser>();
-        public static GameDataCacheSet<UserItemPackage> _cacheSetUserItem = new GameDataCacheSet<UserItemPackage>();
-        public static GameDataCacheSet<UserPack> _cacheSetUserPack = new GameDataCacheSet<UserPack>();
+        public static PersonalCacheStruct<UserPray> _cacheSetUserPray = new PersonalCacheStruct<UserPray>();
+        public static ShareCacheStruct<PrayInfo> _cacheSetPray = new ShareCacheStruct<PrayInfo>();
+        public static PersonalCacheStruct<GameUser> _cacheSetGameUser = new PersonalCacheStruct<GameUser>();
+        public static PersonalCacheStruct<UserItemPackage> _cacheSetUserItem = new PersonalCacheStruct<UserItemPackage>();
+        public static PersonalCacheStruct<UserPack> _cacheSetUserPack = new PersonalCacheStruct<UserPack>();
         /// <summary>
         /// 注册默认添加祈祷
         /// </summary>
@@ -113,7 +113,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             }
             prizeList.ForEach(prizeInfo =>
             {
-                var cacheSetUser = new GameDataCacheSet<GameUser>();
+                var cacheSetUser = new PersonalCacheStruct<GameUser>();
                 var user = cacheSetUser.FindKey(userID);
 
                 if (user != null)
@@ -169,7 +169,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             GeneralEscalateHelper.AddUserLv(user, prizeInfo.Num);
                             break;
                         case RewardType.CrystalId:
-                            var crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(prizeInfo.ItemID);
+                            var crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(prizeInfo.ItemID);
                             if (crystalInfo != null)
                             {
                                 //content += string.Format(LanguageManager.GetLang().St_Crystal, crystalInfo.CrystalName) + ",";
@@ -179,7 +179,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             break;
 
                         case RewardType.Item:
-                            var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prizeInfo.ItemID);
+                            var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prizeInfo.ItemID);
                             if (itemInfo != null)
                             {
                                 //content += string.Format(LanguageManager.GetLang().St_Item, itemInfo.ItemName,  prizeInfo.Num) + ",";
@@ -202,7 +202,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             //  获取 JSON 中的怪物记录
                             var monsterCard = prizeInfoList.Find(s => s.Type == RewardType.MonsterCard);
 
-                            var userPlotInfo = new GameDataCacheSet<UserPlotPackage>().FindKey(user.UserID);
+                            var userPlotInfo = new PersonalCacheStruct<UserPlotPackage>().FindKey(user.UserID);
                             if (userPlotInfo != null)
                             {
                                 List<PlotNPCInfo> plotNpcInfoList = new List<PlotNPCInfo>();

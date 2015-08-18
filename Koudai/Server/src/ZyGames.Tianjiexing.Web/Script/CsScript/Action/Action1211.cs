@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -63,7 +63,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(_sparePartList.Count);
             foreach (var sparePart in _sparePartList)
             {
-                var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
+                var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(sparePart.UserSparepartID.ToNotNullString());
@@ -119,7 +119,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 publicUserID = toUserID;
                 UserCacheGlobal.LoadOffline(publicUserID);
             }
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(publicUserID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(publicUserID);
             if (user == null)
             {
                 return false;

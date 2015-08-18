@@ -13,7 +13,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -37,7 +37,7 @@ class ActionResult(DataResult):
         self._userTalPriority = 0;
         self._npcTalPriority = 0;
         self.combatProcessList = None;
-        self._cacheSetGeneral = ConfigCacheSet[GeneralInfo]();
+        self._cacheSetGeneral = ShareCacheStruct[GeneralInfo]();
         self.gameCoin = 0
         self.obtion = 0
 

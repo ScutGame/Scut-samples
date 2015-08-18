@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             int nameLength = System.Text.Encoding.Default.GetByteCount(guildName);
-            List<UserQueue> queueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.TuiChuGongHui);
+            List<UserQueue> queueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.TuiChuGongHui);
             if (queueArray.Count > 0 && queueArray[0].DoRefresh() > 0 && queueArray[0].IsSuspend == false)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;

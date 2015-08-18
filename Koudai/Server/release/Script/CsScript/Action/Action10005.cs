@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             short optype = 0;
             int qualityID = 0;
             int totalNum = 0;
-            var plantQualitieArray = new GameDataCacheSet<UserPlantQuality>().FindAll(ContextUser.UserID, u => u.RefreshDate.Date == DateTime.Now.Date);
+            var plantQualitieArray = new PersonalCacheStruct<UserPlantQuality>().FindAll(ContextUser.UserID, u => u.RefreshDate.Date == DateTime.Now.Date);
             if (plantQualitieArray.Count > 0)
             {
                 totalNum = plantQualitieArray[0].RefreshNum;
@@ -96,7 +96,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 optype = 5;
             }
             int refreshNum = ConfigEnvSet.GetInt("UserPlant.QualityRefreshNum");
-            UserPlantQuality plantQuality = new GameDataCacheSet<UserPlantQuality>().FindKey(ContextUser.UserID, generalID, pType);
+            UserPlantQuality plantQuality = new PersonalCacheStruct<UserPlantQuality>().FindKey(ContextUser.UserID, generalID, pType);
             if (plantQuality == null)
             {
                 return false;
@@ -125,7 +125,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
                 ContextUser.UseGold = MathUtils.Addition(ContextUser.UseGold, GetRefreshNum(ContextUser.UserID, totalNum), int.MaxValue);
 
-                QualityProbabilityInfo probabilityInfo = new ConfigCacheSet<QualityProbabilityInfo>().FindKey(plantQuality.PlantQuality);
+                QualityProbabilityInfo probabilityInfo = new ShareCacheStruct<QualityProbabilityInfo>().FindKey(plantQuality.PlantQuality);
                 if (RandomUtils.IsHit(probabilityInfo.Light))
                 {
                     if (!string.IsNullOrEmpty(plantQuality.UserID) && DateTime.Now.Date == plantQuality.RefreshDate.Date && plantQuality.PlantQuality != PlantQualityType.Shenhua)
@@ -222,7 +222,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                              RefreshNum = 1,
                                              RefreshDate = DateTime.Now
                                          };
-            new GameDataCacheSet<UserPlantQuality>().Add(plant);
+            new PersonalCacheStruct<UserPlantQuality>().Add(plant);
         }
 
         //刷新所需晶石

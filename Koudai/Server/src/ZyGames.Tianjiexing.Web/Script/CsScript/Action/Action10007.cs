@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -67,7 +67,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int sumGold = 0;
             int userGold = ConfigEnvSet.GetInt("UserLand.UseGold");
             int intervalDate = ConfigEnvSet.GetInt("UserLand.IntervalDate");
-            UserLand land = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, landPostion);
+            UserLand land = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, landPostion);
             if (land != null)
             {
                 int subDate = (land.DoRefresh() / intervalDate);

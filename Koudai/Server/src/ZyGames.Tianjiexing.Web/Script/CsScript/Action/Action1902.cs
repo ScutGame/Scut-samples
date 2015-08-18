@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -77,7 +77,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            _userEmbattlePos = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, m => m.MagicID == magicID);
+            _userEmbattlePos = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, m => m.MagicID == magicID);
             Dictionary<int, short> generalPos = GetEmbattle(generalID.Split(','), location.Split(','));
             short rePostion = GeneralHelper.ReplacePostion(ContextUser.UserID, magicID);
             foreach (KeyValuePair<int, short> keyValuePair in generalPos)
@@ -112,7 +112,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     else if (ops == 1)
                     {
                         // 佣兵上阵或移除时，对 IsBattle 和 Position 进行更改
-                        var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, embattle.GeneralID);
+                        var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, embattle.GeneralID);
                         if (userGeneral != null)
                         {
                             if (generalId != embattle.GeneralID)
@@ -122,7 +122,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             }
 
                         }
-                        userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalId);
+                        userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalId);
                         if (userGeneral != null)
                         {
                             userGeneral.IsBattle = true;
@@ -138,7 +138,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //embattle.Update();
                 isModify = true;
             }
-            //var embattlesArray = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, m => m.GeneralID == LanguageManager.GetLang().GameUserGeneralID && m.MagicID == magicID);
+            //var embattlesArray = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, m => m.GeneralID == LanguageManager.GetLang().GameUserGeneralID && m.MagicID == magicID);
             //if (embattlesArray.Count == 0)
             //{
             //    ErrorCode = LanguageManager.GetLang().ErrorCode;

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Component;
@@ -68,13 +68,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump trump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump trump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (trump != null)
             {
                 currLife = trump.LiftNum.ToShort();
                 currExp = trump.Experience;
                 short uplv = MathUtils.Addition(trump.TrumpLv, (short)1, (short)GameConfigSet.MaxTrumpLv);
-                TrumpInfo trumpInfo = new ConfigCacheSet<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, uplv);
+                TrumpInfo trumpInfo = new ShareCacheStruct<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, uplv);
                 if (trumpInfo != null)
                 {
                     maxLift = trumpInfo.MaxLift;

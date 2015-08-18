@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -135,7 +135,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            //UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, userItem.GeneralID);
+            //UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, userItem.GeneralID);
             //if (userGeneral != null && userItem.ItemLv >= strongMaxLv)
             //{
             //    ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -150,10 +150,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+            itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
             if (itemInfo != null)
             {
-                itemEquArray = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(m => m.ItemID == itemInfo.ItemID);
+                itemEquArray = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(m => m.ItemID == itemInfo.ItemID);
             }
 
             if (strongMoney > ContextUser.GameCoin)
@@ -170,7 +170,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //日常任务-强化
             TaskHelper.TriggerDailyTask(Uid, 4001);
 
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, userItem.GeneralID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, userItem.GeneralID);
             if (general != null)
             {
                 general.RefreshMaxLife();
@@ -188,7 +188,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 user.GameCoin = MathUtils.Subtraction(user.GameCoin, strongMoney, 0);
                 var package = UserItemPackage.Get(user.UserID);
                 strongLv = 0;
-                VipLvInfo vipLvInfo = new ConfigCacheSet<VipLvInfo>().FindKey(user.VipLv);
+                VipLvInfo vipLvInfo = new ShareCacheStruct<VipLvInfo>().FindKey(user.VipLv);
                 for (int i = 0; i < ops; i++)
                 {
                     EquStreng streng = null;

@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.Enum;
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         public static void InitializeMapInfo(string userID)
         {
-            var userPlotPackage = new GameDataCacheSet<UserPlotPackage>().FindKey(userID);
+            var userPlotPackage = new PersonalCacheStruct<UserPlotPackage>().FindKey(userID);
             if (userPlotPackage != null)
             {
                 userPlotPackage.PlotPackage.Add(new UserPlotInfo() { PlotID = 1222, BossChallengeCount = 5 });

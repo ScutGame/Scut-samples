@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -90,8 +90,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
 
-                CrystalInfo crystalInfo1 = new ConfigCacheSet<CrystalInfo>().FindKey(userCryStal1.CrystalID);
-                CrystalInfo crystalInfo2 = new ConfigCacheSet<CrystalInfo>().FindKey(userCryStal2.CrystalID);
+                CrystalInfo crystalInfo1 = new ShareCacheStruct<CrystalInfo>().FindKey(userCryStal1.CrystalID);
+                CrystalInfo crystalInfo2 = new ShareCacheStruct<CrystalInfo>().FindKey(userCryStal2.CrystalID);
                 int cryExprience1 = 0;
                 int cryExprience2 = 0;
                 if (crystalInfo1 != null && crystalInfo2 != null)
@@ -138,8 +138,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     if (x == null && y == null) return 0;
                     if (x != null && y == null) return 1;
                     if (x == null) return -1;
-                    result = (int)new ConfigCacheSet<CrystalInfo>().FindKey(y.CrystalID).CrystalQuality.CompareTo(
-                        new ConfigCacheSet<CrystalInfo>().FindKey(x.CrystalID).CrystalQuality);
+                    result = (int)new ShareCacheStruct<CrystalInfo>().FindKey(y.CrystalID).CrystalQuality.CompareTo(
+                        new ShareCacheStruct<CrystalInfo>().FindKey(x.CrystalID).CrystalQuality);
                     if (result == 0)
                     {
                         result = y.CurrExprience.CompareTo(x.CurrExprience);
@@ -157,13 +157,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
                 short upLv = 10;
-                CrystalLvInfo crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(userCrystal1.CrystalID, upLv);
+                CrystalLvInfo crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(userCrystal1.CrystalID, upLv);
                 maxExprience = crystalLvInfo == null ? 0 : crystalLvInfo.UpExperience;
 
 
                 foreach (UserCrystalInfo crystal in userCrystalArray)
                 {
-                    CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                    CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
                     if (crystalInfo != null)
                     {
                         experience = crystalInfo.Experience;

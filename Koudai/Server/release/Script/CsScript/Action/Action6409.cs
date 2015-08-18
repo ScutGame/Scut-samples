@@ -27,7 +27,7 @@ using ZyGames.Framework.Collection;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -130,7 +130,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             ServerFight fight = new ShareCacheStruct<ServerFight>().FindKey(fightCombat.FastID, ContextUser.MercenariesID);
             if (fight != null)
             {
-                CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(fight.CityID);
+                CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(fight.CityID);
                 if (cityInfo != null)
                 {
                     cityName = cityInfo.CityName;

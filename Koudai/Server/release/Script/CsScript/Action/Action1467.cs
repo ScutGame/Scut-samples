@@ -25,7 +25,7 @@ using System;
 using System.Data;
 using System.Threading;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -67,7 +67,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             GeneralProperty property = null;
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.PropertyInfo.Count > 0)
             {
                 property = userTrump.PropertyInfo.Find(m => m.AbilityType == propertyID);

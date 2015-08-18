@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.ConfigModel;
@@ -78,7 +78,7 @@ namespace ZyGames.Tianjiexing.Component
         {
             if (userPlot != null)
             {
-                PlotInfo plotInfo1 = new ConfigCacheSet<PlotInfo>().FindKey(userPlot.PlotID);
+                PlotInfo plotInfo1 = new ShareCacheStruct<PlotInfo>().FindKey(userPlot.PlotID);
                 if (plotInfo1 != null && plotInfo1.PrePlotID > 0)
                 {
                     UserPlotInfo preUserPlot = GetUserPlotInfo(userID, plotInfo1.PrePlotID);

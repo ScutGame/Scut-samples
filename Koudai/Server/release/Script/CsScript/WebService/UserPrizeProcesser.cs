@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Model;
@@ -90,7 +90,7 @@ namespace ZyGames.Tianjiexing.BLL.WebService
             }
             string mailContent = Convert.ToString(parameters["MailContent"]);
             int opUserID = Convert.ToInt32(parameters["OpUserID"]);
-            //var cacheSetUserItem = new GameDataCacheSet<UserItemPackage>();
+            //var cacheSetUserItem = new PersonalCacheStruct<UserItemPackage>();
             var cacheSetItemInfo = new ShareCacheStruct<ItemBaseInfo>();
             var itemArray = itemPackage.Split(',');
             foreach (string str in UserList)
@@ -100,7 +100,7 @@ namespace ZyGames.Tianjiexing.BLL.WebService
                     int userID = str.Trim().ToInt();
 
 
-                    var user = new GameDataCacheSet<GameUser>().FindKey(str);
+                    var user = new PersonalCacheStruct<GameUser>().FindKey(str);
                     if(user!=null)
                     {
                         user.GiftGold = MathUtils.Addition(user.GiftGold, gold);
@@ -187,9 +187,9 @@ namespace ZyGames.Tianjiexing.BLL.WebService
                 short crystalLv = crystalList.Length > 1 ? Convert.ToInt16(crystalList[1]) : (short)0;
                 int crystalNum = crystalList.Length > 2 ? Convert.ToInt32(crystalList[2]) : 0;
 
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystalID);
-                var crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(crystalID, crystalLv);
-                if (crystalNum > 0 && new ConfigCacheSet<CrystalInfo>().FindKey(crystalID) != null && crystalLvInfo != null)
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystalID);
+                var crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(crystalID, crystalLv);
+                if (crystalNum > 0 && new ShareCacheStruct<CrystalInfo>().FindKey(crystalID) != null && crystalLvInfo != null)
                 {
                     for (int i = 0; i < crystalNum; i++)
                     {

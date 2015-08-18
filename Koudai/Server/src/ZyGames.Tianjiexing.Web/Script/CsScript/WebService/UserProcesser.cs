@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Net;
 using ZyGames.Tianjiexing.Model;
 
@@ -35,7 +35,7 @@ namespace ZyGames.Tianjiexing.BLL.WebService
             JsonParameterList parameters = JsonParameter.Convert(paramList);
             string op = parameters["op"];
             string userID = parameters["UserID"];
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
 
             OAOperationLog oAOperationLog = new OAOperationLog();
             oAOperationLog.ID = Guid.NewGuid().ToString();

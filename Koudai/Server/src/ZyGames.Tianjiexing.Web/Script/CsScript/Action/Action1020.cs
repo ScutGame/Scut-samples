@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -60,7 +60,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
             int baseNum = ConfigEnvSet.GetInt("FengLu");
             int useGold = (ContextUser.UserLv * baseNum);
 

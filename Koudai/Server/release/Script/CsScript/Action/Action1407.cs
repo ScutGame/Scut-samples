@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -67,7 +67,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(medicineID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(medicineID);
             var userItemArray = UserItemHelper.GetItems(Uid).FindAll(u => (u.ItemStatus == ItemStatus.BeiBao || u.ItemStatus == ItemStatus.CangKu));
             if (userItemArray.Count == 0)
             {
@@ -75,7 +75,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1407_MedicineNum;
                 return false;
             }
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (general == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -92,7 +92,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int sum = 0;
             short baseNum = 0;
             //佣兵服用ID为medicineID的丹药
-            var generalMedicineArray = new GameDataCacheSet<GeneralMedicine>().FindAll(ContextUser.UserID, g => g.MedicineID.Equals(medicineID) && g.GeneralID == generalID);
+            var generalMedicineArray = new PersonalCacheStruct<GeneralMedicine>().FindAll(ContextUser.UserID, g => g.MedicineID.Equals(medicineID) && g.GeneralID == generalID);
             if (generalMedicineArray.Count > 0)
             {
                 int mLv = itemInfo.MedicineLv;
@@ -134,7 +134,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     MedicineID = medicineID,
                     BaseNum = (int)baseNum
                 };
-                var cacheSet = new GameDataCacheSet<GeneralMedicine>();
+                var cacheSet = new PersonalCacheStruct<GeneralMedicine>();
                 cacheSet.Add(generalMedicine);
 
                 UserItemHelper.UseUserItem(ContextUser.UserID, itemInfo.ItemID, 1);
@@ -176,7 +176,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     MedicineID = medicineID,
                     BaseNum = (int)baseNum
                 };
-                var cacheSet = new GameDataCacheSet<GeneralMedicine>();
+                var cacheSet = new PersonalCacheStruct<GeneralMedicine>();
                 cacheSet.Add(generalMedicine);
 
                 ContextUser.UseGold = MathUtils.Addition(ContextUser.UseGold, useGold, int.MaxValue);

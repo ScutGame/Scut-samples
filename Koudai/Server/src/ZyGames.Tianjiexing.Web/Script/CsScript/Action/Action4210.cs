@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             if (plotInfo == null)
             {
                 this.ErrorCode = LanguageManager.GetLang().ErrorCode;

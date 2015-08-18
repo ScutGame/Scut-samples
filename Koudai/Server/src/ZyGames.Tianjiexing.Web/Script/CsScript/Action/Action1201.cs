@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -55,8 +55,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             string queID = string.Empty;
             int maxEquNum = ConfigEnvSet.GetInt("UserQueue.EquStrengMaxNum");
-            _userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll( ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong );
-            List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID,m=>m.QueueType== QueueType.EquipmentStrong);
+            _userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll( ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong );
+            List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID,m=>m.QueueType== QueueType.EquipmentStrong);
             if (userQueueArray.Count > 0 && userQueueArray.Count == ContextUser.QueueNum)
             {
                 int minEquNum = userQueueArray[0].StrengNum;
@@ -110,7 +110,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     if (x == null && y == null) return 0;
                     if (x != null && y == null) return 1;
                     if (x == null) return -1;
-                    return new ConfigCacheSet<ItemBaseInfo>().FindKey(x.ItemID).EquParts.CompareTo(new ConfigCacheSet<ItemBaseInfo>().FindKey(y.ItemID).EquParts);
+                    return new ShareCacheStruct<ItemBaseInfo>().FindKey(x.ItemID).EquParts.CompareTo(new ShareCacheStruct<ItemBaseInfo>().FindKey(y.ItemID).EquParts);
                 });
 
                 DataStruct ds = new DataStruct();
@@ -132,9 +132,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     {
                         isStrong = 2;
                     }
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                     List<ItemSynthesisInfo> itemSynthesisInfosArray =
-                        new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m=>m.SynthesisID== userItem.ItemID);
+                        new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m=>m.SynthesisID== userItem.ItemID);
                     if (itemSynthesisInfosArray.Count > 0 && itemInfo.DemandLv <= ContextUser.UserLv)
                     {
                         isSynthesis = 1;
@@ -158,7 +158,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
                     if (itemInfo != null)
                     {
-                        List<ItemEquAttrInfo> itemEquArray = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(e => e.ItemID.Equals(itemInfo.ItemID));
+                        List<ItemEquAttrInfo> itemEquArray = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(e => e.ItemID.Equals(itemInfo.ItemID));
                         dsItem.PushIntoStack(itemEquArray.Count);
                         foreach (ItemEquAttrInfo equ in itemEquArray)
                         {

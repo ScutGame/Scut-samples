@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Component.Chat;
 using ZyGames.Tianjiexing.Lang;
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 chatLeng += 150;
             }
-            GameUser toUser = new GameDataCacheSet<GameUser>().FindKey(_toUserID);
+            GameUser toUser = new PersonalCacheStruct<GameUser>().FindKey(_toUserID);
             if (toUser == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;

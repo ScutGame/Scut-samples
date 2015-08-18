@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -89,7 +89,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (userGuild != null)
             {
                 nextLv = MathUtils.Addition(userGuild.GuildLv, (short) 1, (short) GuildLvInfo.GuildMaxLv);
-                GuildLvInfo guildLvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(nextLv);
+                GuildLvInfo guildLvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(nextLv);
                 if (guildLvInfo != null)
                 {
                     demandExperience = MathUtils.Subtraction(guildLvInfo.UpExperience, userGuild.CurrExperience, 0);

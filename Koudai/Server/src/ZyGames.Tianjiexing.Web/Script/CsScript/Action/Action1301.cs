@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userCrystalArray1.Count);
             foreach (UserCrystalInfo crystal in userCrystalArray1)
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(crystal.UserCrystalID);
@@ -91,7 +91,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userCrystalArray2.Count);
             foreach (UserCrystalInfo crystal in userCrystalArray2)
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(crystal.UserCrystalID);
@@ -123,8 +123,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 publicUserID = toUserID;
                 UserCacheGlobal.LoadOffline(publicUserID);
             }
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(publicUserID);
-            if (new GameDataCacheSet<UserFunction>().FindKey(publicUserID, FunctionEnum.Mingyunshuijing) == null)
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(publicUserID);
+            if (new PersonalCacheStruct<UserFunction>().FindKey(publicUserID, FunctionEnum.Mingyunshuijing) == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St_NoFun;
@@ -135,7 +135,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             var package = UserCrystalPackage.Get(publicUserID);
 
             crystalPackNum = user.CrystalNum;
-            userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(publicUserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
+            userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(publicUserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
             // 佣兵排序
             GeneralSortHelper.GeneralSort(ContextUser.UserID, userGeneralArray);
             

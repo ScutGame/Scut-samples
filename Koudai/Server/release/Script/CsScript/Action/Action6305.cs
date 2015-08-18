@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Component.Chat;
 using ZyGames.Tianjiexing.Lang;
@@ -120,7 +120,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (ops == 0)
             {
                 exUser.QuestionNo = QuestionNo;
-                GuildQuestion Question = new ConfigCacheSet<GuildQuestion>().FindKey(guild.GuildExercise.QuestionID);
+                GuildQuestion Question = new ShareCacheStruct<GuildQuestion>().FindKey(guild.GuildExercise.QuestionID);
                 if (Question != null && Question.Answer == Answer)
                 {
                     exUser.AnswerStatus = true;

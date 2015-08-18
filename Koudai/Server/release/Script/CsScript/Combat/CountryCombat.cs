@@ -29,7 +29,7 @@ using System.Threading;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -277,7 +277,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             foreach (KeyValuePair<string, CountryUser> keyPair in cuserList)
             {
                 CountryUser cuser = keyPair.Value;
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(cuser.UserId);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(cuser.UserId);
                 if (gameUser != null)
                 {
                     gameUser.UserStatus = UserStatus.Normal;
@@ -317,7 +317,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// </summary>
         private void AssignGoup()
         {
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(_countryUser.UserId);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(_countryUser.UserId);
             if (gameUser == null) return;
             CountryGroup mogemaGroup;
             CountryGroup hashideGroup;
@@ -417,7 +417,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 cuser.CurrWinNum = 0;
                 cuser.Status = 0; //未参战状态
 
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(_countryUser.UserId);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(_countryUser.UserId);
                 if (gameUser != null)
                 {
                     gameUser.UserStatus = UserStatus.Normal;
@@ -532,7 +532,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             {
                 CountryUser countryUser = lvGroup.UserList[_countryUser.UserId];
 
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(_countryUser.UserId);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(_countryUser.UserId);
                 if (gameUser != null && gameUser.UserStatus == UserStatus.CountryCombat)
                 {
                     if (countryUser.InspirePercent < 1 && (isUseGold || RandomUtils.IsHit(InspirePercent)))
@@ -598,7 +598,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 CountryUser cuser = lvGroup.PairCombatQueue.Get();
                 if (cuser == null) continue;
 
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(cuser.UserId);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(cuser.UserId);
                 if (gameUser != null && gameUser.UserStatus == UserStatus.CountryCombat)
                 {
                     cuser.Status = 2;
@@ -612,7 +612,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
                 if (cuser.Status == 1 && cuser.Refresh.AddSeconds(CombatInterval) <= DateTime.Now)
                 {
-                    GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(cuser.UserId);
+                    GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(cuser.UserId);
                     if (gameUser != null && gameUser.UserStatus == UserStatus.CountryCombat)
                     {
                         cuser.Status = 2;
@@ -869,7 +869,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         {
             cuser.ObtainNum += obtainNum;
             cuser.GameCoin += gameCoin;
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(cuser.UserId);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(cuser.UserId);
             if (user != null)
             {
                 user.ObtainNum = MathUtils.Addition(user.ObtainNum, obtainNum, int.MaxValue);
@@ -905,7 +905,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 UserGuild userGuild = new ShareCacheStruct<UserGuild>().FindKey(member.GuildID);
                 if (userGuild != null)
                 {
-                    GuildLvInfo lvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(MathUtils.Addition(userGuild.GuildLv, 1, int.MaxValue));
+                    GuildLvInfo lvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(MathUtils.Addition(userGuild.GuildLv, 1, int.MaxValue));
                     userGuild.CurrExperience = MathUtils.Addition(userGuild.CurrExperience, experience, int.MaxValue);
                     if (lvInfo != null)
                     {

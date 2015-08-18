@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -53,10 +53,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            cityInfo = new ConfigCacheSet<CityInfo>().FindKey(cityID);
+            cityInfo = new ShareCacheStruct<CityInfo>().FindKey(cityID);
             if (ContextUser.UserLocation == Location.Guid)
             {
-                new GameDataCacheSet<GameUser>().Foreach((personalId, key, m) =>
+                new PersonalCacheStruct<GameUser>().Foreach((personalId, key, m) =>
                 {
                     if (m.UserID != Uid && m.MercenariesID == ContextUser.MercenariesID && m.UserLocation == Location.Guid && m.DayTime < totalDaySeconds && m.CityID == cityID)
                     {
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             else
             {
-                new GameDataCacheSet<GameUser>().Foreach((personalId, key, m) =>
+                new PersonalCacheStruct<GameUser>().Foreach((personalId, key, m) =>
                 {
                     if (m.UserID != Uid && m.DayTime < totalDaySeconds && m.CityID == cityID)
                     {
@@ -101,7 +101,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             {
                                 if (item.UserID != Uid)
                                 {
-                                    GameUser user = new GameDataCacheSet<GameUser>().FindKey(item.UserID);
+                                    GameUser user = new PersonalCacheStruct<GameUser>().FindKey(item.UserID);
                                     if (user != null)
                                         userList.Add(user);
                                 }
@@ -124,17 +124,17 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 string HeadID = string.Empty;
                 if (uGeneral != null)
                 {
-                    CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(uGeneral.CareerID);
+                    CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(uGeneral.CareerID);
                     HeadID = user.Sex ? careerInfo.HeadID2 : careerInfo.HeadID;
                 }
                 UserGuild userGuild = new ShareCacheStruct<UserGuild>().FindKey(user.MercenariesID);
                 string pictureID = string.Empty;
 
                 //原因：排除月饼和双倍材料卡  
-                List<UserProps> propsArray = new GameDataCacheSet<UserProps>().FindAll(user.UserID, u => u.PropType == 3 && u.ItemID != 5200 && u.ItemID != 7003);
+                List<UserProps> propsArray = new PersonalCacheStruct<UserProps>().FindAll(user.UserID, u => u.PropType == 3 && u.ItemID != 5200 && u.ItemID != 7003);
                 if (propsArray.Count > 0 && propsArray[0].DoRefresh() > 0)
                 {
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(propsArray[0].ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(propsArray[0].ItemID);
                     if (itemInfo != null)
                     {
                         pictureID = itemInfo.PictrueID;

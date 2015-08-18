@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -56,7 +56,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (UserTask userTask in userTaskList)
             {
                 SaveLog("任务ID:" + userTask.TaskID + ", 任务排行:" + MathUtils.Addition(rankID, 1));
-                StoryTaskInfo taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(userTask.TaskID);
+                StoryTaskInfo taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(userTask.TaskID);
                 CityNpcInfo reNpcInfo = null;
                 CityNpcInfo deNpcInfo = null;
                 PlotInfo plotInfo = null;
@@ -67,11 +67,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 string[] monsterCurrNumList = new string[0];
                 if (taskInfo != null)
                 {
-                    reNpcInfo = new ConfigCacheSet<CityNpcInfo>().FindKey(taskInfo.ReleaseNpcID);
-                    deNpcInfo = new ConfigCacheSet<CityNpcInfo>().FindKey(taskInfo.DeliveryNpcID);
-                    plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(taskInfo.PlotID);
-                    npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(taskInfo.PlotNpcID);
-                    itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(taskInfo.TargetItemID);
+                    reNpcInfo = new ShareCacheStruct<CityNpcInfo>().FindKey(taskInfo.ReleaseNpcID);
+                    deNpcInfo = new ShareCacheStruct<CityNpcInfo>().FindKey(taskInfo.DeliveryNpcID);
+                    plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(taskInfo.PlotID);
+                    npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(taskInfo.PlotNpcID);
+                    itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(taskInfo.TargetItemID);
                     monsterList = taskInfo.TargetMonsterID.ToNotNullString().Split(new char[] { ',' });
                     monsterNumList = taskInfo.TargetMonsterNum.ToNotNullString().Split(new char[] { ',' });
                     monsterCurrNumList = userTask.TaskTargetNum.ToNotNullString().Split(new char[] { ',' });
@@ -101,7 +101,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     int monsterID = monsterList[i].ToInt();
                     int monsterNum = monsterNumList[i].ToInt();
                     int currNum = monsterCurrNumList.Length > i ? monsterCurrNumList[i].ToInt() : 0;
-                    MonsterInfo monsterInfo = new ConfigCacheSet<MonsterInfo>().FindKey(monsterID);
+                    MonsterInfo monsterInfo = new ShareCacheStruct<MonsterInfo>().FindKey(monsterID);
 
                     DataStruct dsItem1 = new DataStruct();
                     dsItem1.PushIntoStack(monsterInfo != null ? monsterInfo.GeneralName.ToNotNullString() : string.Empty);
@@ -136,7 +136,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //增加初始任务
             userTaskList = TaskHelper.SendAllowTask(ContextUser, ContextUser.TaskProgress);
 
-            userTaskList = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID, m => m.TaskType.Equals(TaskType) && m.TaskState != TaskState.Close);
+            userTaskList = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID, m => m.TaskType.Equals(TaskType) && m.TaskState != TaskState.Close);
             userTaskList.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;

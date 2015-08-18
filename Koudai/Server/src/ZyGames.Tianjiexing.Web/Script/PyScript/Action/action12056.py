@@ -14,7 +14,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -49,7 +49,7 @@ def takeAction(urlParam, parent):
     userId = str(parent.Current.UserId)
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
 
-    plotNpcInfo = ConfigCacheSet[PlotNPCInfo]().FindKey(urlParam.plotNpcID);
+    plotNpcInfo = ShareCacheStruct[PlotNPCInfo]().FindKey(urlParam.plotNpcID);
     if not plotNpcInfo:
         parent.ErrorCode = Lang.getLang("ErrorCode");
         parent.ErrorInfo = Lang.getLang("LoadError");
@@ -57,7 +57,7 @@ def takeAction(urlParam, parent):
         return actionResult;
 
     # 移除宝箱记录并开启该位置卡片
-    userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+    userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
     plotPackage = userPlotPackage.PlotPackage.Find(match=lambda x:x.PlotID == urlParam.plotID);  # 玩家地图信息，and 类型为考古
     if not plotPackage:
         parent.ErrorCode = Lang.getLang("ErrorCode");

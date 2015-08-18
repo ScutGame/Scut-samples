@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -59,7 +59,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (GuildMember member in memberArray)
             {
                 UserCacheGlobal.CheckLoadUser(member.UserID);
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(member.UserID);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(member.UserID);
                 UserGeneral general = UserGeneral.GetMainGeneral(member.UserID);
                 int isHelp = 0;
                 if (member.DevilNum > 1)

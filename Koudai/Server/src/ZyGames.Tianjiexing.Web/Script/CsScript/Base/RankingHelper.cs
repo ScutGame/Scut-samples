@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Tianjiexing.Component.Chat;
 using ZyGames.Tianjiexing.Lang;
@@ -44,11 +44,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="user"></param>
         public static void DailySportsRankPrize(GameUser user)
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
             if (IsGainSportsReward(user.UserID) && dailyRestrain != null && dailyRestrain.UserExtend != null)
             {
                 //var envSet = ServerEnvSet.Get(ServerEnvKey.JingJiChangReward, "");
-                SportsRewardInfo sportsInfo = new ConfigCacheSet<SportsRewardInfo>().FindKey(dailyRestrain.UserExtend.UserRankID);
+                SportsRewardInfo sportsInfo = new ShareCacheStruct<SportsRewardInfo>().FindKey(dailyRestrain.UserExtend.UserRankID);
                 //if (envSet != null && sportsInfo != null && envSet.ToDateTime().Date > dailyRestrain.Funtion11.Date &&
                 // dailyRestrain.UserExtend.UserRankID > 0)
                 if (sportsInfo != null && DateTime.Now.Date != dailyRestrain.Funtion11.Date &&
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 if (ranking.TryGetRankNo(m => m.UserID == userID, out rankID))
                 {
                     SportSRewardGain(userID, rankID);
-                    SportsRewardInfo sportsInfo = new ConfigCacheSet<SportsRewardInfo>().FindKey(rankID);
+                    SportsRewardInfo sportsInfo = new ShareCacheStruct<SportsRewardInfo>().FindKey(rankID);
                     if (sportsInfo != null)
                     {
                         return true;
@@ -102,7 +102,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             if (UserHelper.IsOpenFunction(userID, FunctionEnum.Jingjichang))
             {
                 //var envSet = ServerEnvSet.Get(ServerEnvKey.JingJiChangReward, "");
-                UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+                UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
                 if (dailyRestrain == null)
                 {
                     return 0;

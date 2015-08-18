@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -69,7 +69,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 this.ErrorInfo = LanguageManager.GetLang().St_VipNotEnough;
                 return false;
             }
-            List<UserLand> uLandArray = new GameDataCacheSet<UserLand>().FindAll(ContextUser.UserID, u => u.IsRedLand == 1);
+            List<UserLand> uLandArray = new PersonalCacheStruct<UserLand>().FindAll(ContextUser.UserID, u => u.IsRedLand == 1);
             if (uLandArray.Count < 9)
             {
                 this.ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -83,7 +83,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            List<UserLand> landArray = new GameDataCacheSet<UserLand>().FindAll(ContextUser.UserID, u => u.IsBlackLand == 2);
+            List<UserLand> landArray = new PersonalCacheStruct<UserLand>().FindAll(ContextUser.UserID, u => u.IsBlackLand == 2);
             landArray.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;
@@ -112,7 +112,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     this.ErrorInfo = LanguageManager.GetLang().St_GoldNotEnough;
                     return false;
                 }
-                UserLand land = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, position);
+                UserLand land = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, position);
                 if (land != null && land.IsRedLand == 1 && land.IsBlackLand == 2)
                 {
                     if (land.IsRedLand == 1 && land.IsBlackLand == 2)

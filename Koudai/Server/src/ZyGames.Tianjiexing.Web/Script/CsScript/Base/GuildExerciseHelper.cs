@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -44,7 +44,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 if (_length == 0)
                 {
-                    _length = new ConfigCacheSet<GuildQuestion>().FindAll().Count;
+                    _length = new ShareCacheStruct<GuildQuestion>().FindAll().Count;
                 }
                 return _length;
             }
@@ -71,13 +71,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 && dt < userGuild.GuildExercise.QuesTime.AddSeconds(QuestionWaitTime)
                 && userGuild.GuildExercise.QuestionID != 0)
             {
-                Question = new ConfigCacheSet<GuildQuestion>().FindKey(userGuild.GuildExercise.QuestionID);
+                Question = new ShareCacheStruct<GuildQuestion>().FindKey(userGuild.GuildExercise.QuestionID);
             }
             else
             {
                 int questionid = GetID(userGuild.GuildExercise.QuestionIDList.ToList());
                 userGuild.GuildExercise.QuestionID = questionid;
-                Question = new ConfigCacheSet<GuildQuestion>().FindKey(userGuild.GuildExercise.QuestionID);
+                Question = new ShareCacheStruct<GuildQuestion>().FindKey(userGuild.GuildExercise.QuestionID);
                 userGuild.GuildExercise.UpdateNotify(obj =>
                 {
                     if (userGuild.GuildExercise.QuesTime < beginTime)
@@ -150,7 +150,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 (userGuild.GuildExercise.QuestionNo == exuser.QuestionNo
                 && exuser.AnswerStatus))
             {
-                GuildExercisePrize prize = new ConfigCacheSet<GuildExercisePrize>().FindKey(userGuild.GuildExercise.Level);
+                GuildExercisePrize prize = new ShareCacheStruct<GuildExercisePrize>().FindKey(userGuild.GuildExercise.Level);
                 if (prize == null)
                     return;
                 decimal precent = GetExercisePrecent(userGuild);

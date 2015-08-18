@@ -29,7 +29,7 @@ using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.BLL.Combat;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 namespace ZyGames.Tianjiexing.BLL.Action
@@ -117,7 +117,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //    return false;
             //}
 
-            GuildFightInfo fightInfo = new ConfigCacheSet<GuildFightInfo>().FindKey(cityID);
+            GuildFightInfo fightInfo = new ShareCacheStruct<GuildFightInfo>().FindKey(cityID);
             if (fightInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;

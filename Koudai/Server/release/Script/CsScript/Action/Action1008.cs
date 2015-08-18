@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -201,7 +201,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 genlv = ContextUser.UserLv;
             }
-            var cacheSetGeneralEscalate = new ConfigCacheSet<GeneralEscalateInfo>();
+            var cacheSetGeneralEscalate = new ShareCacheStruct<GeneralEscalateInfo>();
             GeneralEscalateHelper.AddUserLv(ContextUser, 0);
             _honourNum = ContextUser.HonourNum;
             int lv = ContextUser.UserLv;
@@ -213,7 +213,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 _nextHonourNum = generalEscalate.UpExperience;
             }
             guildID = ContextUser.MercenariesID;
-            var userGeneralList = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID);
+            var userGeneralList = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID);
             if (userGeneralList.Count == 0)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -226,9 +226,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //wuzf 去掉刷新血量，其它改变血量接口有触发刷新
                 //userGeneralInfo.RefreshMaxLife();
                 generalID = userGeneralInfo.GeneralID;
-                //careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(userGeneralInfo.CareerID);
+                //careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(userGeneralInfo.CareerID);
                 headID = userGeneralInfo.HeadID; //ContextUser.Sex ? careerInfo.HeadID2 : careerInfo.HeadID;
-                escalateInfo = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(genlv);
+                escalateInfo = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(genlv);
                 lifeNum = userGeneralInfo.LifeNum;
                 careerID = userGeneralInfo.CareerID;
             }
@@ -239,12 +239,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //道具图标
             _blessingList = UserHelper.BlessingInfoList(ContextUser);
             //变身卡图标
-            List<UserProps> userPropsList = new GameDataCacheSet<UserProps>().FindAll(ContextUser.UserID, u => u.PropType == 3 && u.ItemID != 5200 && u.ItemID != 7003);
+            List<UserProps> userPropsList = new PersonalCacheStruct<UserProps>().FindAll(ContextUser.UserID, u => u.PropType == 3 && u.ItemID != 5200 && u.ItemID != 7003);
             if (userPropsList.Count > 0)
             {
                 UserProps props = userPropsList[0];
                 int pTime = props.DoRefresh();
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(props.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(props.ItemID);
                 if (itemInfo != null && pTime > pictureTime)
                 {
                     pictureID = itemInfo.PictrueID;
@@ -252,12 +252,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
             }
             //兼容客户端上已版本血量图标
-            List<UserProps> userPropsList2 = new GameDataCacheSet<UserProps>().FindAll(ContextUser.UserID, u => u.PropType == 1);
+            List<UserProps> userPropsList2 = new PersonalCacheStruct<UserProps>().FindAll(ContextUser.UserID, u => u.PropType == 1);
             if (userPropsList2.Count > 0)
             {
                 UserProps props = userPropsList2[0];
                 int pTime = props.DoRefresh();
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(props.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(props.ItemID);
                 if (itemInfo != null && pTime > pictureTime)
                 {
                     _itemLiveNum = props.SurplusNum;
@@ -275,7 +275,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
 
             //精力恢复
-            List<UserQueue> energyQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.EnergyHuiFu);
+            List<UserQueue> energyQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.EnergyHuiFu);
             if (energyQueueArray.Count > 0)
             {
                 UserQueue energyQueue = energyQueueArray[0];
@@ -324,11 +324,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     IsSuspend = false,
                     StrengNum = 0
                 };
-                new GameDataCacheSet<UserQueue>().Add(queue);
+                new PersonalCacheStruct<UserQueue>().Add(queue);
             }
 
 
-            VipLvInfo lvInfo = new ConfigCacheSet<VipLvInfo>().FindKey(MathUtils.Addition(ContextUser.VipLv, 1, int.MaxValue));
+            VipLvInfo lvInfo = new ShareCacheStruct<VipLvInfo>().FindKey(MathUtils.Addition(ContextUser.VipLv, 1, int.MaxValue));
             if (lvInfo != null)
             {
                 demandGold = MathUtils.Subtraction(lvInfo.PayGold, ContextUser.PayGold, 0);
@@ -391,7 +391,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 _talPriority = MathUtils.Addition(_talPriority, PriorityHelper.GeneralTotalPriority(ContextUser.UserID, userEmbattle.GeneralID));
             }
-            functionList = new GameDataCacheSet<UserFunction>().FindAll(ContextUser.UserID);
+            functionList = new PersonalCacheStruct<UserFunction>().FindAll(ContextUser.UserID);
 
             // 精灵祝福
             if (ContextUser != null)

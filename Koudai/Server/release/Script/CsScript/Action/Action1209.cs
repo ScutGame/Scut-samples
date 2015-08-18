@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -52,12 +52,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override void BuildPacket()
         {
-            var cacheSetItemEqu = new ConfigCacheSet<ItemEquAttrInfo>();
+            var cacheSetItemEqu = new ShareCacheStruct<ItemEquAttrInfo>();
             PushIntoStack(_userItemArray.Count);
             foreach (UserItemInfo item in _userItemArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
-                var general = new GameDataCacheSet<UserGeneral>().FindKey(Uid, item.GeneralID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
+                var general = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, item.GeneralID);
                 var itemEquList = cacheSetItemEqu.FindAll(e => e.ItemID.Equals(item.ItemID));
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.UserItemID.ToNotNullString());
@@ -96,7 +96,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(Uid, _generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, _generalID);
             if (general != null)
             {
                 var package = UserItemPackage.Get(Uid);

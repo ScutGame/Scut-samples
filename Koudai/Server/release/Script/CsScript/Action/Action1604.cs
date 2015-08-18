@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Lang;
@@ -68,21 +68,21 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            ItemBaseInfo itemBaseInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(_materialsID);
+            ItemBaseInfo itemBaseInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(_materialsID);
             if (itemBaseInfo.ItemType == ItemType.CaiLiao)
             {
                 //寻材料
-                List<MonsterInfo> monsterArray = new ConfigCacheSet<MonsterInfo>().FindAll(m => m.ItemID == _materialsID);
+                List<MonsterInfo> monsterArray = new ShareCacheStruct<MonsterInfo>().FindAll(m => m.ItemID == _materialsID);
                 if (monsterArray.Count > 0)
                 {
                     MonsterInfo monsterInfo = monsterArray[0];
-                    var plotEmbattles = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.MonsterID == monsterInfo.MonsterID);
+                    var plotEmbattles = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.MonsterID == monsterInfo.MonsterID);
                     foreach (var embattle in plotEmbattles)
                     {
-                        PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(embattle.PlotNpcID);
+                        PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(embattle.PlotNpcID);
                         if (npcInfo != null)
                         {
-                            PlotInfo temp = new ConfigCacheSet<PlotInfo>().FindKey(npcInfo.PlotID);
+                            PlotInfo temp = new ShareCacheStruct<PlotInfo>().FindKey(npcInfo.PlotID);
                             if (temp != null && temp.CityID > CurrCityID(ContextUser.UserLv))
                             {
                                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -115,7 +115,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static int CurrCityID(short userlv)
         {
             int cityID = 0;
-            List<CityInfo> cityInfosList = new ConfigCacheSet<CityInfo>().FindAll(m => m.CityType == 0 && m.MinLv <= userlv);
+            List<CityInfo> cityInfosList = new ShareCacheStruct<CityInfo>().FindAll(m => m.CityType == 0 && m.MinLv <= userlv);
             cityInfosList.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;

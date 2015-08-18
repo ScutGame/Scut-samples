@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -40,7 +40,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
     /// </summary>
     public class UserAbilityHelper
     {
-        public static GameDataCacheSet<UserAbility> _cacheSetAbility = new GameDataCacheSet<UserAbility>();
+        public static PersonalCacheStruct<UserAbility> _cacheSetAbility = new PersonalCacheStruct<UserAbility>();
         /// <summary>
         /// 添加玩家魂技
         /// </summary>
@@ -52,7 +52,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             var ability = userAbility != null && userAbility.AbilityList != null
                               ? userAbility.AbilityList.Find(s => s.AbilityID == abilityId)
                               : null;
-            var abilityLv = new ConfigCacheSet<AbilityLvInfo>().FindKey(abilityId, 1);
+            var abilityLv = new ShareCacheStruct<AbilityLvInfo>().FindKey(abilityId, 1);
             int experienceNum = abilityLv != null ? abilityLv.Experience : 0;
             if (userAbility == null)
             {
@@ -96,12 +96,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool UseUserItem(string userID, int itemID)
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (itemInfo == null || itemInfo.PropType != 17 || itemInfo.EffectNum <= 0)
             {
                 return false;
             }
-            AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(itemInfo.EffectNum);
+            AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(itemInfo.EffectNum);
             if (abilityInfo != null)
             {
                 AddUserAbility(itemInfo.EffectNum, userID.ToInt(), 0, 0);
@@ -117,11 +117,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static List<SelfAbilityEffect> GetSelfAbilityEffectList(string userId, short role)
         {
             List<SelfAbilityEffect> selfAbilityEffectList = new List<SelfAbilityEffect>();
-            var cacheSetUserAbility = new GameDataCacheSet<UserAbility>();
-            var cacheSetUserEmbattle = new GameDataCacheSet<UserEmbattle>();
-            var cacheSetAbilityInfo = new ConfigCacheSet<AbilityInfo>();
+            var cacheSetUserAbility = new PersonalCacheStruct<UserAbility>();
+            var cacheSetUserEmbattle = new PersonalCacheStruct<UserEmbattle>();
+            var cacheSetAbilityInfo = new ShareCacheStruct<AbilityInfo>();
             var userAbility = cacheSetUserAbility.FindKey(userId);
-            var userMagic = new GameDataCacheSet<UserMagic>().Find(userId, s => s.IsEnabled);
+            var userMagic = new PersonalCacheStruct<UserMagic>().Find(userId, s => s.IsEnabled);
             if (userAbility != null && userAbility.AbilityList != null)
             {
                 var userEmbattleList = cacheSetUserEmbattle.FindAll(userId, s => s.MagicID == userMagic.MagicID);

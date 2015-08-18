@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -46,8 +46,8 @@ def takeAction(urlParam, parent):
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
    
     package = UserItemPackage.Get(userId);
-    userGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId, urlParam.generalID);
-    general = ConfigCacheSet[GeneralInfo]().FindKey(urlParam.generalID);
+    userGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId, urlParam.generalID);
+    general = ShareCacheStruct[GeneralInfo]().FindKey(urlParam.generalID);
     if package == None or general == None:
         parent.ErrorCode = Lang.getLang("ErrorCode");
         parent.ErrorInfo = Lang.getLang("LoadError");
@@ -77,7 +77,7 @@ def takeAction(urlParam, parent):
         exprience = 0; 
         useritem = package.ItemPackage.Find(lambda s:not s.IsRemove and s.UserItemID == s);
         if useritem :
-            itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(useritem.ItemID);  
+            itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(useritem.ItemID);  
             if itemInfo != None:
                 conunt = itemNum[i]
                 conunt =MathUtils.ToInt(conunt)

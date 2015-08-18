@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
 
             int _itemID = 5050;
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (general == null || general.SaturationNum == 0)
             {
                 return false;
@@ -95,14 +95,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1423_UserItemNotEnough;
                 return false;
             }
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
             if (itemInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St1107_UserItemNotEnough;
                 return false;
             }
-            var cacheSet = new GameDataCacheSet<UserDailyRestrain>();
+            var cacheSet = new PersonalCacheStruct<UserDailyRestrain>();
             UserDailyRestrain userRestrain = cacheSet.FindKey(ContextUser.UserID);
             if (userRestrain != null && userRestrain.UserExtend != null && userRestrain.UserExtend.WaterNum.Count > 0)
             {

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Model;
@@ -61,14 +61,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheSet = new GameDataCacheSet<UserQueue>();
+            var cacheSet = new PersonalCacheStruct<UserQueue>();
             List<UserQueue> userQueueList = cacheSet.FindAll(ContextUser.UserID, m => m.QueueType == QueueType.SaoDang);
 
             foreach (UserQueue queue in userQueueList)
             {
                 if (queue != null)
                 {
-                    int npcCount = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotID).Count;
+                    int npcCount = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotID).Count;
                     //战斗次数
                     int totalBattleNum = (int)Math.Floor((double)(queue.TotalColdTime - queue.DoRefresh()) / PlotInfo.BattleSpeedNum);
                     int turnsNum = totalBattleNum / npcCount;

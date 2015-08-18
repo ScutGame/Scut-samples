@@ -31,8 +31,7 @@ namespace ZyGames.Tianjiexing.Model.DataModel
     /// <summary>
     /// 玩家拉新卡奖励表
     /// </summary>
-    [Serializable, ProtoContract, EntityTable(DbConfig.Data, "UserCardReward", DbConfig.PeriodTime, DbConfig.PersonalName)]
-
+    [Serializable, ProtoContract, EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class UserCardReward : BaseEntity
     {
         public const string Index_UserID = "Index_UserID";

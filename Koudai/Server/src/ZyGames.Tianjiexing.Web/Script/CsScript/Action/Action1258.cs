@@ -28,7 +28,7 @@ using ZyGames.Framework.Cache;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Component;

@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -53,8 +53,8 @@ def takeAction(urlParam, parent):
     userId = str(parent.Current.UserId)
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
 
-    soulGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId,urlParam.GeneralID);
-    generalInfo = ConfigCacheSet[GeneralInfo]().Find(lambda s:s.SoulID == urlParam.GeneralID);
+    soulGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId,urlParam.GeneralID);
+    generalInfo = ShareCacheStruct[GeneralInfo]().Find(lambda s:s.SoulID == urlParam.GeneralID);
     #if generalInfo is None or soulGeneral is None or soulGeneral.GeneralType is not GeneralType.Soul:
     if soulGeneral.GeneralType != GeneralType.Soul:
         parent.ErrorCode = Lang.getLang("ErrorCode");
@@ -82,7 +82,7 @@ def takeAction(urlParam, parent):
             parent.ErrorCode = Lang.getLang("ErrorCode");
             actionResult.Result = False;
             return actionResult;
-        userGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId,generalInfo.GeneralID);
+        userGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId,generalInfo.GeneralID);
         if userGeneral is None:
             parent.ErrorCode = Lang.getLang("ErrorCode");
             parent.ErrorInfo = Lang.getLang("St1425_MercenaryNoRecruitment");

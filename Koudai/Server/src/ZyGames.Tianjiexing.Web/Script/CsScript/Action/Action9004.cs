@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Model;
@@ -70,8 +70,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             FestivalInfo festivalInfo = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
             if (festivalInfo != null && !festivalInfo.IsStop) return false;
 
-            _packsInfo = new ConfigCacheSet<RechargePacks>().FindKey(_packsID);
-            //  List<PackageReceive> receivesArray = new GameDataCacheSet<PackageReceive>().FindAll(PackageReceive.Index_UserID_PacksID,ContextUser.UserID, _packsID);
+            _packsInfo = new ShareCacheStruct<RechargePacks>().FindKey(_packsID);
+            //  List<PackageReceive> receivesArray = new PersonalCacheStruct<PackageReceive>().FindAll(PackageReceive.Index_UserID_PacksID,ContextUser.UserID, _packsID);
             if (isRecevies(ContextUser.UserID, _packsID))
             {
                 _isRevice = 1;
@@ -86,7 +86,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static bool isRecevies(string userID, int packID)
         {
             bool result = false;
-            List<PackageReceive> receivesArray = new GameDataCacheSet<PackageReceive>().FindAll(userID, m => m.PacksID == packID);
+            List<PackageReceive> receivesArray = new PersonalCacheStruct<PackageReceive>().FindAll(userID, m => m.PacksID == packID);
             foreach (PackageReceive package in receivesArray)
             {
                 if (!package.IsReceive)

@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Framework.Collection;
@@ -241,7 +241,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             {
                 if (!string.IsNullOrEmpty(combatEmbattle.UserID))
                 {
-                    var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(combatEmbattle.UserID, combatEmbattle.GeneralID);
+                    var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(combatEmbattle.UserID, combatEmbattle.GeneralID);
                     if (userGeneral != null && userGeneral.IsOver)
                     {
                         userGeneral.LifeNum = (int)Math.Floor(combatEmbattle.LiveMaxNum * resumeLife);

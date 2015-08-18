@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             int sumGold = 0;
             int payDewTime = 0;
-            UserPlant plant = new GameDataCacheSet<UserPlant>().FindKey(ContextUser.UserID);
+            UserPlant plant = new PersonalCacheStruct<UserPlant>().FindKey(ContextUser.UserID);
             if (plant.DewNum == 8)
             {
                 this.ErrorCode = LanguageManager.GetLang().ErrorCode;

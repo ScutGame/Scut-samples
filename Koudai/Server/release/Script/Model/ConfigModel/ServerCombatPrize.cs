@@ -30,7 +30,7 @@ using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model
 {
-    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config, "ServerCombatPrize")]
+    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config)]
     public class ServerCombatPrize : ShareEntity
     {
         public ServerCombatPrize()

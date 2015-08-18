@@ -26,7 +26,7 @@ using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.Enum;
 
@@ -53,9 +53,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(userItemList.Count);
             foreach (var item in userItemList)
             {
-                List<ItemEquAttrInfo> itemEquList = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(e => e.ItemID.Equals(item.ItemID));
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
-                UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, item.GeneralID);
+                List<ItemEquAttrInfo> itemEquList = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(e => e.ItemID.Equals(item.ItemID));
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
+                UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, item.GeneralID);
                 int strongMoney = new UserItemHelper(item).StrongMoney;
                 int isStrong = 0;
                 if (strongMoney > ContextUser.GameCoin)

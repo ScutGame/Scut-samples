@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
@@ -67,7 +67,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(prizeItems.Count);
             foreach (PrizeItemInfo prizeItem in prizeItems)
             {
-                SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(prizeItem.ItemID);
+                SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(prizeItem.ItemID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(partInfo == null ? string.Empty : partInfo.Name.ToNotNullString());
                 dsItem.PushIntoStack(partInfo == null ? string.Empty : partInfo.HeadID.ToNotNullString());
@@ -213,18 +213,18 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheEnvSet = new ConfigCacheSet<ConfigEnvSet>();
+            var cacheEnvSet = new ShareCacheStruct<ConfigEnvSet>();
             var envset = cacheEnvSet.FindKey("CombatMaxBout");
             if (envset != null)
             {
 
             }
-            PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(PlotNpcID);
+            PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(PlotNpcID);
             if (npcInfo == null)
             {
                 return false;
             }
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(npcInfo.PlotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(npcInfo.PlotID);
             if (plotInfo == null)
             {
                 return false;
@@ -275,13 +275,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St4004_NoUseMagic;
                 return false;
             }
-            if (new GameDataCacheSet<UserEmbattle>().FindAll(Uid, m => m.MagicID == ContextUser.UseMagicID).Count == 0)
+            if (new PersonalCacheStruct<UserEmbattle>().FindAll(Uid, m => m.MagicID == ContextUser.UseMagicID).Count == 0)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St4004_EmbattleEmpty;
                 return false;
             }
-            //PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(PlotNpcID);
+            //PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(PlotNpcID);
             if (IsPlotOut(npcInfo))
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -297,7 +297,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 return false;
             }
-            var cacheSet = new GameDataCacheSet<UserPlotCombat>();
+            var cacheSet = new PersonalCacheStruct<UserPlotCombat>();
             userPlotCombat = cacheSet.FindKey(ContextUser.UserID, PlotNpcID);
             if (userPlotCombat == null)
             {
@@ -335,7 +335,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ContextUser.UserExtend = new GameUserExtend();
                     }
 
-                    PlotInfo[] plotInfoList = new ConfigCacheSet<PlotInfo>().FindAll(m => m.LayerNum == ContextUser.UserExtend.LayerNum && m.PlotSeqNo == nextHurdleNum && m.PlotType == PlotType.Kalpa).ToArray();
+                    PlotInfo[] plotInfoList = new ShareCacheStruct<PlotInfo>().FindAll(m => m.LayerNum == ContextUser.UserExtend.LayerNum && m.PlotSeqNo == nextHurdleNum && m.PlotType == PlotType.Kalpa).ToArray();
                     if (plotInfoList.Length > 0)
                     {
                         int layerNum = ContextUser.UserExtend.LayerNum;
@@ -355,7 +355,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     else if (IsGotoNextLayer(nextLayerNum))
                     {
                         //判断是否能到下一层
-                        plotInfoList = new ConfigCacheSet<PlotInfo>().FindAll(m => m.LayerNum == nextLayerNum && m.PlotType == PlotType.Kalpa).ToArray();
+                        plotInfoList = new ShareCacheStruct<PlotInfo>().FindAll(m => m.LayerNum == nextLayerNum && m.PlotType == PlotType.Kalpa).ToArray();
                         if (plotInfoList.Length > 0)
                         {
                             ContextUser.UserExtend.UpdateNotify(obj =>
@@ -395,11 +395,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         private bool CheckHurdleNum(string userID, int layerNum, int hurdleNum)
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && dailyRestrain.UserExtend.KalpaPlot.Count > 0)
             {
                 List<FunPlot> funPlotArray = dailyRestrain.UserExtend.KalpaPlot.ToList();
-                var plotInfosArray = new ConfigCacheSet<PlotInfo>().FindAll(u => u.PlotSeqNo == hurdleNum && u.LayerNum == layerNum && u.PlotType == PlotType.Kalpa);
+                var plotInfosArray = new ShareCacheStruct<PlotInfo>().FindAll(u => u.PlotSeqNo == hurdleNum && u.LayerNum == layerNum && u.PlotType == PlotType.Kalpa);
                 if (plotInfosArray.Count > 0)
                 {
                     foreach (FunPlot plot in funPlotArray)
@@ -423,11 +423,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 int layerNum = ContextUser.UserExtend.LayerNum;
                 int nextLayerNum = MathUtils.Addition(layerNum, 1);
-                if (new ConfigCacheSet<PlotInfo>().FindAll(m => m.LayerNum == nextLayerNum && m.PlotType == PlotType.Kalpa).Count == 0)
+                if (new ShareCacheStruct<PlotInfo>().FindAll(m => m.LayerNum == nextLayerNum && m.PlotType == PlotType.Kalpa).Count == 0)
                 {
                     int nextHurdleNum = MathUtils.Addition(ContextUser.UserExtend.HurdleNum, 1);
                     //是否有下一关
-                    return new ConfigCacheSet<PlotInfo>().FindAll(m => m.LayerNum == layerNum && m.PlotSeqNo == nextHurdleNum && m.PlotType == PlotType.Kalpa).Count == 0;
+                    return new ShareCacheStruct<PlotInfo>().FindAll(m => m.LayerNum == layerNum && m.PlotSeqNo == nextHurdleNum && m.PlotType == PlotType.Kalpa).Count == 0;
                 }
             }
             return false;
@@ -456,7 +456,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <param name="plotNPCInfo"></param>
         private void KalpaDailyRestrain(PlotNPCInfo plotNPCInfo)
         {
-            var cacheSet = new GameDataCacheSet<UserDailyRestrain>();
+            var cacheSet = new PersonalCacheStruct<UserDailyRestrain>();
             UserDailyRestrain userRestrain = cacheSet.FindKey(Uid);
             if (userRestrain == null)
             {
@@ -518,7 +518,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 if (info.Type == 0)
                 {
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(info.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(info.ItemID);
                     if (itemInfo != null)
                     {
                         universalList.Add(new UniversalInfo() { Name = itemInfo.ItemName, HeadID = itemInfo.HeadID, Num = info.Num });
@@ -526,7 +526,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 else if (info.Type == 1)
                 {
-                    SparePartInfo sparePart = new ConfigCacheSet<SparePartInfo>().FindKey(info.ItemID);
+                    SparePartInfo sparePart = new ShareCacheStruct<SparePartInfo>().FindKey(info.ItemID);
                     if (sparePart != null)
                     {
                         universalList.Add(new UniversalInfo() { Name = sparePart.Name, HeadID = sparePart.HeadID, Num = info.Num });
@@ -534,7 +534,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 else if (info.Type == 2)
                 {
-                    EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(info.ItemID);
+                    EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(info.ItemID);
                     if (enchantInfo != null)
                     {
                         universalList.Add(new UniversalInfo() { Name = enchantInfo.EnchantName, HeadID = enchantInfo.HeadID, Num = info.Num });

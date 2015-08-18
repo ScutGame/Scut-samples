@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Model;
 using ZyGames.Tianjiexing.Component;
@@ -49,7 +49,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void CheckDialNum(string userID)
         {
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
             if (userDial != null && userDial.RefreshDate.Date != DateTime.Now.Date)
             {
                 userDial.DialNum = 0;
@@ -57,7 +57,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             }
             if (userDial == null)
             {
-                var cacheSet = new GameDataCacheSet<UserDial>();
+                var cacheSet = new PersonalCacheStruct<UserDial>();
                 userDial = new UserDial();
                 userDial.UserID = userID;
                 userDial.HeadID = string.Empty;
@@ -74,7 +74,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         ///// <returns></returns>
         //public static bool IsDialFree(string userID)
         //{
-        //    UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+        //    UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
         //    int freeNum = GameConfigSet.FreeSweepstakes;
         //    if (userDial != null && userDial.RefreshDate.Date == DateTime.Now.Date && userDial.DialNum >= freeNum)
         //    {
@@ -112,19 +112,19 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     name = string.Format(LanguageManager.GetLang().St_GiftGoldNum, (int)treasure.Num);
                     break;
                 case RewardType.CrystalId:
-                    CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(treasure.ItemID);
+                    CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(treasure.ItemID);
                     name = crystal == null ? string.Empty : crystal.CrystalName;
                     break;
                 case RewardType.Item:
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(treasure.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(treasure.ItemID);
                     name = itemInfo == null ? string.Empty : itemInfo.ItemName;
                     break;
                 case RewardType.Spare:
-                    SparePartInfo sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(treasure.ItemID);
+                    SparePartInfo sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(treasure.ItemID);
                     name = sparePartInfo == null ? string.Empty : sparePartInfo.Name;
                     break;
                 case RewardType.Enchant:
-                    EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(treasure.ItemID);
+                    EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(treasure.ItemID);
                     name = enchantInfo == null ? string.Empty : enchantInfo.EnchantName;
                     break;
                 case RewardType.Again:
@@ -149,13 +149,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //{
         //    int groupID = 0;
         //    int postion = 0;
-        //    var dialFreeList = new ConfigCacheSet<DialInfo>().FindAll(m => m.DialType == 1);
-        //    var dialGoldList = new ConfigCacheSet<DialInfo>().FindAll(m => m.DialType == 2);
+        //    var dialFreeList = new ShareCacheStruct<DialInfo>().FindAll(m => m.DialType == 1);
+        //    var dialGoldList = new ShareCacheStruct<DialInfo>().FindAll(m => m.DialType == 2);
         //    if (dialFreeList.Count == 0 || dialGoldList.Count == 0)
         //    {
         //        return groupID;
         //    }
-        //    UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+        //    UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
         //    if (userDial != null)
         //    {
         //        int freeNum = GameConfigSet.FreeSweepstakes;
@@ -199,7 +199,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //    }
         //    else
         //    {
-        //        var cacheSet = new GameDataCacheSet<UserDial>();
+        //        var cacheSet = new PersonalCacheStruct<UserDial>();
         //        postion = RandomUtils.GetRandom(0, dialFreeList.Count);
         //        var dialpostion = dialFreeList[postion];
         //        if (dialpostion != null)
@@ -231,7 +231,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //    treasure.ItemID = dialInfo.ItemID;
         //    treasure.Num = dialInfo.ItemNum;
         //    treasure.ItemLv = 1;
-        //    UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+        //    UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
         //    if (userDial == null)
         //    {
         //        userDial = new UserDial();
@@ -268,7 +268,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         //    if (dialInfo.IsBroadcast && !string.IsNullOrEmpty(dialInfo.BroadContent))
         //    {
-        //        GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+        //        GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
         //        if (user != null)
         //        {
         //            TjxChatService chatService = new TjxChatService();
@@ -351,7 +351,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //            userPrize.MailContent += string.Format(LanguageManager.GetLang().St_GiftGoldNum, userPrize.Gold) + ",";
         //            break;
         //        case RewardType.Item:
-        //            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prize.ItemID);
+        //            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prize.ItemID);
         //            if (itemInfo != null)
         //            {
         //                userPrize.ItemPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.ItemLv, (int)prize.Num);
@@ -359,7 +359,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //            }
         //            break;
         //        case RewardType.CrystalId:
-        //            CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(prize.ItemID);
+        //            CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(prize.ItemID);
         //            if (crystal != null)
         //            {
         //                userPrize.CrystalPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.ItemLv, (int)prize.Num);
@@ -367,7 +367,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //            }
         //            break;
         //        case RewardType.Spare:
-        //            SparePartInfo spare = new ConfigCacheSet<SparePartInfo>().FindKey(prize.ItemID);
+        //            SparePartInfo spare = new ShareCacheStruct<SparePartInfo>().FindKey(prize.ItemID);
         //            if (spare != null)
         //            {
         //                userPrize.SparePackage = string.Format("{0}={1}={2}", prize.ItemID, prize.ItemLv, (int)prize.Num);
@@ -375,7 +375,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //            }
         //            break;
         //        case RewardType.Enchant:
-        //            EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(prize.ItemID);
+        //            EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(prize.ItemID);
         //            if (enchantInfo != null)
         //            {
         //                userPrize.EnchantPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.ItemLv, (int)prize.Num);
@@ -397,7 +397,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static void ReturnRatioGold(string userID, int goldNum)
         {
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
             if (userDial != null && userDial.ReturnRatio > 0)
             {
                 int giftGold = MathUtils.RoundCustom(goldNum * userDial.ReturnRatio);
@@ -433,14 +433,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
         ///// <returns></returns>
         //public static short DialPrizePostion(string userID, int ops)
         //{
-        //    UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+        //    UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
         //    if (userDial == null)
         //    {
         //        return 0;
         //    }
         //    int postion = 0;
         //    int groupId = DialGroupID(userID);
-        //    var dialList = new ConfigCacheSet<DialInfo>().FindAll(m => m.GroupID == groupId);
+        //    var dialList = new ShareCacheStruct<DialInfo>().FindAll(m => m.GroupID == groupId);
         //    double[] dialDoubleList = new double[dialList.Count];
         //    for (int i = 0; i < dialList.Count; i++)
         //    {
@@ -516,17 +516,17 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int ChestDialGroupID(string userID, int itemID)
         {
             int groupID = 0;
-            var dialFreeList = new ConfigCacheSet<DialInfo>().FindAll(m => m.DialType == itemID.ToShort());
+            var dialFreeList = new ShareCacheStruct<DialInfo>().FindAll(m => m.DialType == itemID.ToShort());
             if (dialFreeList.Count == 0)
             {
                 return groupID;
             }
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(userID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(userID);
             if (userDial == null)
             {
                 userDial = new UserDial();
                 userDial.UserID = userID;
-                var cacheSet = new GameDataCacheSet<UserDial>();
+                var cacheSet = new PersonalCacheStruct<UserDial>();
                 cacheSet.Add(userDial);
             }
             int postion = RandomUtils.GetRandom(0, dialFreeList.Count);
@@ -585,14 +585,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static short ChestDialPrizePostion(GameUser user)
         {
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(user.UserID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(user.UserID);
             if (userDial == null)
             {
                 return 0;
             }
             short postion = 0;
             int groupId = userDial.GroupID; //UserItemHelper.GetUserItemInfoID(user.UserID, userDial.UserItemID);
-            var dialList = new ConfigCacheSet<DialInfo>().FindAll(m => m.GroupID == groupId);
+            var dialList = new ShareCacheStruct<DialInfo>().FindAll(m => m.GroupID == groupId);
             double[] dialDoubleList = new double[dialList.Count];
             for (int i = 0; i < dialList.Count; i++)
             {
@@ -623,7 +623,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             treasure.ItemID = dialInfo.ItemID;
             treasure.Num = dialInfo.ItemNum;
             treasure.ItemLv = 1;
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(user.UserID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(user.UserID);
             if (userDial == null)
             {
                 userDial = new UserDial();
@@ -729,7 +729,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="spareID"></param>
         public static void AppendSpare(GameUser user, int spareID)
         {
-            SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(spareID);
+            SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(spareID);
             UserSparePart sparePart = UserSparePart.GetRandom(spareID);
             if (partInfo == null || sparePart == null || !SparePartInfo.IsExist(spareID))
             {

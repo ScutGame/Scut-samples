@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Component;
@@ -69,14 +69,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
             UserItemInfo userItem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID == userItemID);
             if (userItem != null)
             {
-                UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+                UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
                 if (userTrump != null && userTrump.TrumpLv >= GameConfigSet.MaxTrumpLv)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
                     ErrorInfo = LanguageManager.GetLang().St1456_OutTrumpMaxLv;
                     return false;
                 }
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                 if (itemInfo != null && itemInfo.PropType == 10)
                 {
                     TrumpHelper.CheckTrumpEscalate(ContextUser.UserID, itemInfo.EffectNum);

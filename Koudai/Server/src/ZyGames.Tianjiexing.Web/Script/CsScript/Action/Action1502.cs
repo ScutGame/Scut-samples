@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -69,8 +69,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            magicInfo = new ConfigCacheSet<MagicInfo>().FindKey(magicID);
-            userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(ContextUser.UserID, u => u.MagicID == magicID);
+            magicInfo = new ShareCacheStruct<MagicInfo>().FindKey(magicID);
+            userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(ContextUser.UserID, u => u.MagicID == magicID);
             if (userMagicArray.Count > 0)
             {
                 magicLv = userMagicArray[0].MagicLv;
@@ -78,7 +78,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int upgradeLv = MathUtils.Addition(magicLv, 1, int.MaxValue);
             if (upgradeLv <= 10)
             {
-                magicLvInfo = new ConfigCacheSet<MagicLvInfo>().FindKey(magicID, upgradeLv);
+                magicLvInfo = new ShareCacheStruct<MagicLvInfo>().FindKey(magicID, upgradeLv);
             }
 
             return true;

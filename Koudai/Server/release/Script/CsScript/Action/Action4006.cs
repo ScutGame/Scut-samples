@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -88,9 +88,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            List<PlotNPCInfo> plotNPCInfoList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
+            List<PlotNPCInfo> plotNPCInfoList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
             npcCount = (short)plotNPCInfoList.Count;
-            var cacheSet = new GameDataCacheSet<UserQueue>();
+            var cacheSet = new PersonalCacheStruct<UserQueue>();
             List<UserQueue> userQueueList = cacheSet.FindAll(ContextUser.UserID, m => m.QueueType == QueueType.SaoDang);
             if (userQueueList.Count > 0)
             {
@@ -121,7 +121,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //}
             }
             userItemCount = (short)UserItemHelper.GetItems(Uid).FindAll(m => m.ItemStatus == ItemStatus.BeiBao).Count;
-            plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             if (plotInfo == null)
             {
                 return false;
@@ -132,7 +132,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     continue;
                 }
-                List<PlotEmbattleInfo> embattleInfoList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == npcInfo.PlotNpcID);
+                List<PlotEmbattleInfo> embattleInfoList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == npcInfo.PlotNpcID);
                 foreach (PlotEmbattleInfo embattleInfo in embattleInfoList)
                 {
                     if (monsterDict.ContainsKey(embattleInfo.MonsterID))
@@ -144,7 +144,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                     else
                     {
-                        MonsterInfo monsterInfo = new ConfigCacheSet<MonsterInfo>().FindKey(embattleInfo.MonsterID);
+                        MonsterInfo monsterInfo = new ShareCacheStruct<MonsterInfo>().FindKey(embattleInfo.MonsterID);
                         if (monsterInfo != null)
                         {
                             monsterDict.Add(embattleInfo.MonsterID, monsterInfo);

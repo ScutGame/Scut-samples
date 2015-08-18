@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Component.Chat;
@@ -30,15 +30,15 @@ namespace ZyGames.Tianjiexing.BLL.Base
             switch (prize.Type)
             {
                 case RewardType.CrystalId:
-                    CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(prize.ItemID);
+                    CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(prize.ItemID);
                     name = crystal == null ? string.Empty : crystal.CrystalName;
                     break;
                 case RewardType.Item:
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prize.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prize.ItemID);
                     name = itemInfo == null ? string.Empty : itemInfo.ItemName;
                     break;
                 case RewardType.Spare:
-                    SparePartInfo sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(prize.ItemID);
+                    SparePartInfo sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(prize.ItemID);
                     name = sparePartInfo == null ? string.Empty : sparePartInfo.Name;
                     break;
                 case RewardType.CrystalType:
@@ -59,15 +59,15 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static short IsGeneralRecruit(string userID, int generalID)
         {
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (general != null)
             {
                 return 2;
             }
-            var storyList = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.GeneralID == generalID && m.TaskType == TaskType.General);
+            var storyList = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.GeneralID == generalID && m.TaskType == TaskType.General);
             foreach (var info in storyList)
             {
-                UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(userID, info.TaskID);
+                UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(userID, info.TaskID);
                 if (userTask != null && userTask.TaskState == TaskState.Close)
                 {
                     continue;
@@ -88,7 +88,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static short IsComplete(GameUser user, StoryTaskInfo taskInfo)
         {
-            UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(user.UserID, taskInfo.TaskID);
+            UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(user.UserID, taskInfo.TaskID);
             if (userTask != null && userTask.TaskState == TaskState.Close)
             {
                 return 3;
@@ -141,11 +141,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="user"></param>
         public static void StotyTaskFunction(GameUser user)
         {
-            var storyTaskList = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.FunctionEnum == FunctionEnum.ReplaceGeneral && m.TaskType == TaskType.Master);
+            var storyTaskList = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.FunctionEnum == FunctionEnum.ReplaceGeneral && m.TaskType == TaskType.Master);
             if (storyTaskList.Count > 0)
             {
-                var userTask = new GameDataCacheSet<UserTask>().FindKey(user.UserID, storyTaskList[0].TaskID);
-                var userFunction = new GameDataCacheSet<UserFunction>().FindKey(user.UserID, FunctionEnum.ReplaceGeneral);
+                var userTask = new PersonalCacheStruct<UserTask>().FindKey(user.UserID, storyTaskList[0].TaskID);
+                var userFunction = new PersonalCacheStruct<UserFunction>().FindKey(user.UserID, FunctionEnum.ReplaceGeneral);
                 if (userTask != null && userFunction == null)
                 {
                     TaskHelper.EnableFunction(user, FunctionEnum.ReplaceGeneral);
@@ -162,10 +162,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static short ReplacePostion(string userID, int magicID)
         {
             short replacePostion = 0;
-            UserMagic userMagic = new GameDataCacheSet<UserMagic>().FindKey(userID, magicID);
+            UserMagic userMagic = new PersonalCacheStruct<UserMagic>().FindKey(userID, magicID);
             if (userMagic != null)
             {
-                MagicLvInfo magicLv = new ConfigCacheSet<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv);
+                MagicLvInfo magicLv = new ShareCacheStruct<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv);
                 if (magicLv != null && magicLv.ReplacePostion > 0)
                 {
                     replacePostion = magicLv.ReplacePostion.ToShort();
@@ -217,20 +217,20 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     break;
                 case RewardType.Item:
                     userPrize.ItemPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.UserLv, prize.Num);
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prize.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prize.ItemID);
                     if (itemInfo != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", itemInfo.ItemName, prize.Num) + ",";
                     }
                     break;
                 case RewardType.CrystalType:
-                    //List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(CrystalInfo.Index_CrystalQuality, prize.CrystalType);
+                    //List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(CrystalInfo.Index_CrystalQuality, prize.CrystalType);
                     //userPrize.CrystalPackage = string.Format("{0}={1}={2}", itemID, prize.UserLv, itemNum);
                     break;
                 case RewardType.CrystalId:
 
                     userPrize.CrystalPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.UserLv, prize.Num);
-                    CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(prize.ItemID);
+                    CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(prize.ItemID);
                     if (crystal != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", crystal.CrystalName, prize.Num) + ",";
@@ -238,7 +238,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     break;
                 case RewardType.Spare:
                     userPrize.SparePackage = string.Format("{0}={1}={2}", prize.ItemID, prize.UserLv, prize.Num);
-                    SparePartInfo spare = new ConfigCacheSet<SparePartInfo>().FindKey(prize.ItemID);
+                    SparePartInfo spare = new ShareCacheStruct<SparePartInfo>().FindKey(prize.ItemID);
                     if (spare != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", spare.Name, prize.Num) + ",";
@@ -286,13 +286,13 @@ THE SOFTWARE.
             short isRecruit = 0;
             recruitNum = 0;
             demandNum = 0;
-            var general = new ConfigCacheSet<GeneralInfo>().Find(s => s.SoulID == generalID);
+            var general = new ShareCacheStruct<GeneralInfo>().Find(s => s.SoulID == generalID);
             if (general != null)
             {
                 demandNum = general.DemandNum;
                 recruitNum = demandNum;
-                var soulGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
-                var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, general.GeneralID);
+                var soulGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
+                var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, general.GeneralID);
                 if (soulGeneral == null)
                 {
                     demandNum = general.DemandNum;
@@ -338,7 +338,7 @@ THE SOFTWARE.
         public static int SurplusNum(string userID, int freenum, RecruitType type)
         {
             int surNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && dailyRestrain.RefreshDate.Date == DateTime.Now.Date && dailyRestrain.UserExtend != null)
             {
                 if (type == RecruitType.ShiLiTiaoYi)
@@ -366,7 +366,7 @@ THE SOFTWARE.
         /// <returns></returns>
         public static void UpdateDailyRecruitNum(string userID, RecruitType type)
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null)
             {
                 if (dailyRestrain.UserExtend == null)
@@ -432,7 +432,7 @@ THE SOFTWARE.
             {
                 queueType = QueueType.Golden;
             }
-            UserQueue userQueue = new GameDataCacheSet<UserQueue>().Find(userID, s => s.QueueType == queueType);
+            UserQueue userQueue = new PersonalCacheStruct<UserQueue>().Find(userID, s => s.QueueType == queueType);
             if (userQueue != null && userQueue.DoRefresh() > 0)
             {
                 return true;
@@ -461,7 +461,7 @@ THE SOFTWARE.
             {
                 queueType = QueueType.Golden;
             }
-            var cacheSet = new GameDataCacheSet<UserQueue>();
+            var cacheSet = new PersonalCacheStruct<UserQueue>();
             UserQueue userQueue = cacheSet.Find(userID, s => s.QueueType == queueType);
             if (userQueue == null)
             {
@@ -500,7 +500,7 @@ THE SOFTWARE.
             {
                 queueType = QueueType.Golden;
             }
-            UserQueue userQueue = new GameDataCacheSet<UserQueue>().Find(userID, s => s.QueueType == queueType);
+            UserQueue userQueue = new PersonalCacheStruct<UserQueue>().Find(userID, s => s.QueueType == queueType);
             if (userQueue != null)
             {
                 return userQueue.DoRefresh();
@@ -548,7 +548,7 @@ THE SOFTWARE.
             {
                 return;
             }
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             UserGeneral ugeneral = cacheSet.FindKey(user.UserID, heritage.GeneralID);
             UserGeneral general = cacheSet.FindKey(user.UserID, hGernal.GeneralID);
             if (ugeneral == null || general == null)
@@ -576,23 +576,23 @@ THE SOFTWARE.
         /// <param name="experience"></param>
         public static void UserGeneralExp(string userID, int generalID, int experience)
         {
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (userGeneral != null)
             {
                 UserHelper.TriggerGeneral(userGeneral, experience);
             }
             else
             {
-                UserMagic userMagic = new GameDataCacheSet<UserMagic>().Find(userID,
+                UserMagic userMagic = new PersonalCacheStruct<UserMagic>().Find(userID,
                                                                              s =>
                                                                              s.IsEnabled &&
                                                                              s.MagicType == MagicType.MoFaZhen);
                 if (userMagic != null)
                 {
-                    List<UserEmbattle> userEmbattleArray = new GameDataCacheSet<UserEmbattle>().FindAll(userID, m => m.MagicID == userMagic.MagicID);
+                    List<UserEmbattle> userEmbattleArray = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, m => m.MagicID == userMagic.MagicID);
                     foreach (UserEmbattle embattle in userEmbattleArray)
                     {
-                        UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(userID, embattle.GeneralID);
+                        UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(userID, embattle.GeneralID);
                         if (general != null)
                         {
                             UserHelper.TriggerGeneral(general, experience);
@@ -608,7 +608,7 @@ THE SOFTWARE.
         /// <param name="general"></param>
         public static void GeneralUpgradeproperty(UserGeneral general)
         {
-            GeneralInfo generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(general.GeneralID);
+            GeneralInfo generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(general.GeneralID);
             if (generalInfo != null && generalInfo.Mature.Count > 0)
             {
                 foreach (var mature in generalInfo.Mature)
@@ -660,7 +660,7 @@ THE SOFTWARE.
         public static void GeneralUp(UserGeneral userGeneral)
         {
 
-            var cacheSetGeneralEscalate = new ConfigCacheSet<GeneralEscalateInfo>();
+            var cacheSetGeneralEscalate = new ShareCacheStruct<GeneralEscalateInfo>();
             var GeneralEscalateList = cacheSetGeneralEscalate.FindAll(s => s.GeneralType == GeneralType.YongBing && s.UpExperience <= userGeneral.CurrExperience);
             short generalLv = userGeneral.GeneralLv;
             GeneralEscalateInfo generalEscalateInfo = new GeneralEscalateInfo();
@@ -689,7 +689,7 @@ THE SOFTWARE.
         /// <param name="type"></param>
         public static void UpdateUserGeneral(string userID, GeneralInfo generalInfo, GeneralType type, int num)
         {
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             UserGeneral userGeneral = null;
             if (type == GeneralType.YongBing)
             {
@@ -726,13 +726,13 @@ THE SOFTWARE.
         /// <param name="num"></param>
         public static void CreateUserGeneral(string userID, GeneralInfo general, GeneralType type, int num)
         {
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             int generalID = 0;
             CareerInfo careerInfo = null;
             if (type == GeneralType.YongBing)
             {
                 generalID = general.GeneralID;
-                careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(general.CareerID);
+                careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(general.CareerID);
             }
             else if (type == GeneralType.Soul)
             {
@@ -822,10 +822,10 @@ THE SOFTWARE.
         /// <returns></returns>
         public static bool IsGeneralAbility(string userID, int generalID)
         {
-            var package = new GameDataCacheSet<UserAbility>().FindKey(userID);
+            var package = new PersonalCacheStruct<UserAbility>().FindKey(userID);
             if (package != null)
             {
-                var generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+                var generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
                 int abilityID = generalInfo == null ? 0 : generalInfo.AbilityID;
                 var usercrystalList = package.AbilityList.FindAll(s => s.GeneralID == generalID && s.AbilityID != abilityID);
                 if (usercrystalList.Count > 0)

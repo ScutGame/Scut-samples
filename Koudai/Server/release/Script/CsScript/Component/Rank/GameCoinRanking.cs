@@ -28,7 +28,7 @@ using System.Web;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Framework.Game.Com;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Lang;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.Component
         {
             List<UserRank> rankingUserlv = new List<UserRank>();
 
-            new GameDataCacheSet<GameUser>().Foreach((personalId,key, user) =>
+            new PersonalCacheStruct<GameUser>().Foreach((personalId,key, user) =>
             {
                 UserRank rankingUser = new UserRank();
                 rankingUser.UserID = user.UserID;

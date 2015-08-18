@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 
@@ -37,7 +37,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
 
         private void Process(string userID, int expNum)
         {
-            GameUser currentUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser currentUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (currentUser != null)
             {
                 currentUser.ExpNum += expNum;

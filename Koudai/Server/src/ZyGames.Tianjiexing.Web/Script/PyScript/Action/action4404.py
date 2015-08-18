@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -56,7 +56,7 @@ def takeAction(urlParam, parent):
 	
     userId = str(parent.Current.UserId)
     gameUser = PersonalCacheStruct.Get[GameUser](userId)
-    userShengJiTa = GameDataCacheSet[UserShengJiTa]().FindKey(userId)    #获取玩家信息
+    userShengJiTa = PersonalCacheStruct[UserShengJiTa]().FindKey(userId)    #获取玩家信息
     actionResult.PlotID=userShengJiTa.IsTierNum+1
     actionResult.IsTierStar=userShengJiTa.IsTierStar
     actionResult.IsRountStar=userShengJiTa.IsRountStar

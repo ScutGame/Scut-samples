@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -59,7 +59,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userItemArray.Count);
             foreach (UserItemInfo item in userItemArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 DataStruct dsItem = new DataStruct();
                 int mallPrice = 0;
                 if (itemInfo != null && itemInfo.ItemType == ItemType.ZhuangBei)

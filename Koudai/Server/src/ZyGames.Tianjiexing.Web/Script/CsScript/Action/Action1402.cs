@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool GetUrlElement()
         {
-            recruitList = new ConfigCacheSet<RecruitRule>().FindAll();
+            recruitList = new ShareCacheStruct<RecruitRule>().FindAll();
             return true;
         }
 

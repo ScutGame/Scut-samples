@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -48,8 +48,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-           // int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.Plot).CurVersion;
-            plotList = new ConfigCacheSet<PlotInfo>().FindAll();
+           // int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.Plot).CurVersion;
+            plotList = new ShareCacheStruct<PlotInfo>().FindAll();
             return true;
         }
 
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ds.PushIntoStack(plotInfo.SceneY1);
                 ds.PushIntoStack(plotInfo.SceneY2);
 
-                var npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotInfo.PlotID);
+                var npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotInfo.PlotID);
                 ds.PushIntoStack(npcList.Count);
                 foreach (PlotNPCInfo npcInfo in npcList)
                 {
@@ -87,11 +87,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     dsItem.PushIntoStack(npcInfo.AftStoryCode.ToNotNullString());
                     dsItem.PushIntoStack(npcInfo.IsBoss.ToShort());
 
-                    var plotEmbattleList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == npcInfo.PlotNpcID);
+                    var plotEmbattleList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == npcInfo.PlotNpcID);
                     dsItem.PushIntoStack(plotEmbattleList.Count);
                     foreach (PlotEmbattleInfo embattleInfo in plotEmbattleList)
                     {
-                        MonsterInfo monster = new ConfigCacheSet<MonsterInfo>().FindKey(embattleInfo.MonsterID);
+                        MonsterInfo monster = new ShareCacheStruct<MonsterInfo>().FindKey(embattleInfo.MonsterID);
                         if (monster == null)
                         {
                             SaveLog(new Exception(string.Format(LanguageManager.GetLang().St4011_NoMonster, plotInfo.PlotID, embattleInfo.MonsterID)));

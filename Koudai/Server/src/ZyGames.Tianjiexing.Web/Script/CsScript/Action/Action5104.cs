@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserChallengeNum userchallenge = new GameDataCacheSet<UserChallengeNum>().FindKey(ContextUser.UserID);
+            UserChallengeNum userchallenge = new PersonalCacheStruct<UserChallengeNum>().FindKey(ContextUser.UserID);
 
             int openGold = GetChallengeNum(ContextUser.UserID);
             if (ops == 1)
@@ -92,7 +92,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             ChallengeNum = 1,
                             InsertDate = DateTime.Now
                         };
-                        new GameDataCacheSet<UserChallengeNum>().Add(userChallengeNum);
+                        new PersonalCacheStruct<UserChallengeNum>().Add(userChallengeNum);
                     }
                     else
                     {
@@ -137,7 +137,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static int GetChallengeNum(string userID)
         {
             int openGold = 0;
-            UserChallengeNum challengeNum = new GameDataCacheSet<UserChallengeNum>().FindKey(userID);
+            UserChallengeNum challengeNum = new PersonalCacheStruct<UserChallengeNum>().FindKey(userID);
             if (challengeNum != null && DateTime.Now.Date == challengeNum.InsertDate.Date)
             {
                 openGold = (MathUtils.Addition(challengeNum.ChallengeNum, 1, int.MaxValue) * 2);

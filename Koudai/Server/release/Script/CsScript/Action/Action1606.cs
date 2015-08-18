@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -98,7 +98,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static void MysteriousSpree(UserItemInfo item, GameUser user)
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
             if (itemInfo != null)
             {
                 var prizeInfosArray = itemInfo.ItemPack;
@@ -162,7 +162,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 else if (reward.Type == 3)
                 {
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(reward.Reward);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(reward.Reward);
                     UserGeneral userGeneral = UserGeneral.GetMainGeneral(user.UserID);
                     if (itemInfo.ItemType == ItemType.ZhuangBei && !itemInfo.CheckCareer(userGeneral.CareerID))
                     {
@@ -200,7 +200,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <param name="user"></param>
         public static void GetProbabilityReward(GameUser user, UserItemInfo item)
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
             if (itemInfo != null)
             {
                 var prizeInfosArray = itemInfo.ItemPack;

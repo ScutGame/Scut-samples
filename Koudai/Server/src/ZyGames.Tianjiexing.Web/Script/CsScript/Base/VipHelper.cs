@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -49,7 +49,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 baseNum = restrainSet.MaxNum;
             }
-            VipLvInfo lvInfo = new ConfigCacheSet<VipLvInfo>().FindKey(vipLv);
+            VipLvInfo lvInfo = new ShareCacheStruct<VipLvInfo>().FindKey(vipLv);
             var restrainArray = new CacheList<DailyRestrain>();
             if (lvInfo != null)
             {
@@ -74,7 +74,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int DailyRestrainSurplusNum(GameUser user, RestrainType restrainType, int restrainNum)
         {
             int surplusNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
             DailyRestrainSet dailyRestrainSet = new ShareCacheStruct<DailyRestrainSet>().FindKey(restrainType);
             if (dailyRestrainSet != null && dailyRestrain != null)
             {
@@ -98,7 +98,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool GetVipOpenFun(int vipLv, ExpandType expandType)
         {
             bool isOpen = false;
-            VipLvInfo lvInfo = new ConfigCacheSet<VipLvInfo>().FindKey(vipLv);
+            VipLvInfo lvInfo = new ShareCacheStruct<VipLvInfo>().FindKey(vipLv);
             string eType = ((short)expandType).ToString();
             if (lvInfo != null)
             {

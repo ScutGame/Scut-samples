@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -75,7 +75,7 @@ def takeAction(urlParam, parent):
         return actionResult;
 
     
-    userAlbumInfo = GameDataCacheSet[UserAlbum]().FindKey(userId);
+    userAlbumInfo = PersonalCacheStruct[UserAlbum]().FindKey(userId);
     if not userAlbumInfo:
         return loadError();
 

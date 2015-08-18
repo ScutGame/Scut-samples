@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             int mallPrice = 0;
             if (itemInfo != null)
             {

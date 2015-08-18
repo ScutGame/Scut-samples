@@ -34,7 +34,7 @@ namespace ZyGames.Tianjiexing.Model.DataModel
     /// 玩家大转盘奖励表
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data, "UserDial", DbConfig.PeriodTime, DbConfig.PersonalName)]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class UserDial : BaseEntity
     {
         public UserDial()

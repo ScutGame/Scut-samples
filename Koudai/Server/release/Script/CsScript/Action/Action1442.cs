@@ -28,7 +28,7 @@ using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 namespace ZyGames.Tianjiexing.BLL.Action
@@ -64,8 +64,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             var package = UserItemPackage.Get(ContextUser.UserID);
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
-            GeneralInfo general = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            GeneralInfo general = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             if (package == null || general == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -93,7 +93,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     continue;
                 }
                 int exprience = 0;
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
                 if (itemInfo != null)
                 {
                     exprience = itemInfo.EffectNum;

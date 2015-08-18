@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(careerList.Length);
                 foreach (string CareerID in careerList)
                 {
-                    CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(CareerID.ToInt());
+                    CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(CareerID.ToInt());
                     DataStruct dsItem1 = new DataStruct();
                     dsItem1.PushIntoStack(careerInfo != null ? careerInfo.CareerID.ToInt() : (int)0);
                     dsItem1.PushIntoStack(careerInfo != null ? careerInfo.CareerName.ToNotNullString() : string.Empty);
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     dsItem.PushIntoStack(dsItem1);
                 }
 
-                var equList = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(m => m.ItemID == itemInfo.ItemID);
+                var equList = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(m => m.ItemID == itemInfo.ItemID);
                 dsItem.PushIntoStack(equList.Count);
                 foreach (ItemEquAttrInfo equ in equList)
                 {
@@ -90,7 +90,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(itemInfo.PropType);
                 dsItem.PushIntoStack(itemInfo.EffectNum.ToNotNullString());
 
-                var itemSynthesisList = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemInfo.ItemID);
+                var itemSynthesisList = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemInfo.ItemID);
                 dsItem.PushIntoStack(itemSynthesisList.Count);
                 foreach (ItemSynthesisInfo synthesisInfo in itemSynthesisList)
                 {
@@ -118,8 +118,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.Item).CurVersion;
-            itemBaseList = new ConfigCacheSet<ItemBaseInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
+            int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.Item).CurVersion;
+            itemBaseList = new ShareCacheStruct<ItemBaseInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
             return true;
         }
     }

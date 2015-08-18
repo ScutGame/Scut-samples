@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -54,7 +54,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 short _isRevice = 0;
                 short _isShow = 0;
-                List<PackageReceive> receivesArray = new GameDataCacheSet<PackageReceive>().FindAll(ContextUser.UserID, u => u.IsReceive == false && u.PacksID == packs.PacksID);
+                List<PackageReceive> receivesArray = new PersonalCacheStruct<PackageReceive>().FindAll(ContextUser.UserID, u => u.IsReceive == false && u.PacksID == packs.PacksID);
                 if (receivesArray.Count == 0)
                 {
                     _isRevice = 2;
@@ -91,12 +91,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             RemovePack(ContextUser.UserID);
 
-            List<RechargePacks> packsesList = new ConfigCacheSet<RechargePacks>().FindAll();
+            List<RechargePacks> packsesList = new ShareCacheStruct<RechargePacks>().FindAll();
             foreach (RechargePacks packse in packsesList)
             {
                 if (packse.PacksType == 1 || packse.PacksType == 2)
                 {
-                    List<PackageReceive> receivesArray = new GameDataCacheSet<PackageReceive>().FindAll(ContextUser.UserID, m => m.PacksID == packse.PacksID);
+                    List<PackageReceive> receivesArray = new PersonalCacheStruct<PackageReceive>().FindAll(ContextUser.UserID, m => m.PacksID == packse.PacksID);
                     if (receivesArray.Count == 0 ||
                         (receivesArray.Count > 0 && !receivesArray[0].IsReceive))
                     {
@@ -117,7 +117,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <param name="userID"></param>
         public static void RemovePack(string userID)
         {
-            var cacheSet = new GameDataCacheSet<PackageReceive>();
+            var cacheSet = new PersonalCacheStruct<PackageReceive>();
             List<PackageReceive> packageReceiveArray = cacheSet.FindAll(userID, u => u.PacksType == 3 || u.PacksType == 4);
             foreach (PackageReceive packageReceive in packageReceiveArray)
             {

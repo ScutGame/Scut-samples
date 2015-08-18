@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
@@ -62,9 +62,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 publicUserID = toUserID;
             }
-            UserMagic userMagic = new GameDataCacheSet<UserMagic>().Find(publicUserID, s => s.IsEnabled);
+            UserMagic userMagic = new PersonalCacheStruct<UserMagic>().Find(publicUserID, s => s.IsEnabled);
 
-            var cacheSetUserEmbattle = new GameDataCacheSet<UserEmbattle>();
+            var cacheSetUserEmbattle = new PersonalCacheStruct<UserEmbattle>();
             var cacheGeneral = new PersonalCacheStruct<UserGeneral>();
             var userGeneralList = new List<UserGeneral>();
             switch (generalType)

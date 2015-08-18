@@ -31,7 +31,7 @@ namespace ZyGames.Tianjiexing.Model.ConfigModel
     /// <summary>
     /// 大转盘奖励配置表
     /// </summary>
-    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config, "DialInfo")]
+    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config)]
     public class DialInfo : ShareEntity
     {
         public const string Index_GroupID = "Index_GroupID";

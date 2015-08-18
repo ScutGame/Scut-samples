@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -125,14 +125,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
                 worshipLv = userTrump.WorshipLv;
                 growth = userTrump.MatureNum.ToString();
                 trumpLv = userTrump.TrumpLv;
                 matureType = TrumpHelper.GetEnumMatureType(userTrump.MatureNum).ToShort();
-                TrumpInfo trumpInfo = new ConfigCacheSet<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, userTrump.TrumpLv);
+                TrumpInfo trumpInfo = new ShareCacheStruct<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, userTrump.TrumpLv);
                 if (trumpInfo != null && trumpInfo.Property.Count > 0)
                 {
                     currLiftNum = TrumpHelper.GetTrumpProperty(trumpInfo, AbilityType.ShengMing).ToInt();
@@ -147,8 +147,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 totalNum = userTrump.PropertyInfo.Count;
                 skcount = userTrump.SkillInfo.Count;
             }
-            trumpInfoArray = new ConfigCacheSet<TrumpInfo>().FindAll(m => m.SkillID > 0 && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
-            worshipInfoInfoArray = new ConfigCacheSet<WorshipInfo>().FindAll(m => m.IsOpen && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
+            trumpInfoArray = new ShareCacheStruct<TrumpInfo>().FindAll(m => m.SkillID > 0 && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
+            worshipInfoInfoArray = new ShareCacheStruct<WorshipInfo>().FindAll(m => m.IsOpen && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
             return true;
         }
     }

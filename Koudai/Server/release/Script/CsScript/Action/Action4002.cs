@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -126,7 +126,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             UserHelper.UserGeneralPromptBlood(ContextUser);//佣兵自动使用绷带补血
 
-            plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
            
             if (plotInfo == null)
             {
@@ -202,7 +202,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St4002_EnchantPackageFull;
                 return false;
             }
-            //var cacheSetUserPlot = new GameDataCacheSet<UserPlotPackage>();
+            //var cacheSetUserPlot = new PersonalCacheStruct<UserPlotPackage>();
             //var userPlotPack = cacheSetUserPlot.FindKey(ContextUser.UserID);
             //var userPlot = userPlotPack != null ? userPlotPack.PlotPackage.Find(s => s.PlotID == npcInfo.PlotID) : null;
             var userPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, plotID);
@@ -221,7 +221,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
             }
-            npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
+            npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
             //if (ContextUser.EnergyNum < (npcList.Count * PlotInfo.BattleEnergyNum))
             //{
             //    ErrorCode = 3;

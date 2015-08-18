@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -77,8 +77,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1256_EnchantNotEnough;
                 return false;
             }
-            EnchantInfo enchant = new ConfigCacheSet<EnchantInfo>().FindKey(userEnchantInfo.EnchantID);
-            EnchantLvInfo enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(userEnchantInfo.EnchantID, userEnchantInfo.EnchantLv);
+            EnchantInfo enchant = new ShareCacheStruct<EnchantInfo>().FindKey(userEnchantInfo.EnchantID);
+            EnchantLvInfo enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(userEnchantInfo.EnchantID, userEnchantInfo.EnchantLv);
             if (enchant != null && enchantLvInfo != null)
             {
                 ContextUser.GameCoin = MathUtils.Addition(ContextUser.GameCoin, enchantLvInfo.CoinPrice);

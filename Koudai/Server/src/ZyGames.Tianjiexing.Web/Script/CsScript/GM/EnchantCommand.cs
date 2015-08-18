@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Net;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
         public static UserEnchantInfo GetUserEnchantInfo(int enchantID)
         {
             UserEnchantInfo enchant = new UserEnchantInfo();
-            EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchantID);
+            EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchantID);
             if (enchantInfo != null)
             {
                 enchant.UserEnchantID = Guid.NewGuid().ToString();

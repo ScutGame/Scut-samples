@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -100,7 +100,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             UserHelper.GetFeelHunger(ContextUser.UserID, generalID);
             UserHelper.ChechDailyRestrain(ContextUser.UserID);
-            generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             if (generalInfo != null)
             {
                 giftName = GiftHelper.GetGiftTypeName(generalInfo.GiftType);
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     demandLv = generalInfo.ReplaceSkills.FeelLv;
                     AbilityInfo abilityInfo =
-                        new ConfigCacheSet<AbilityInfo>().FindKey(generalInfo.ReplaceSkills.AbilityID);
+                        new ShareCacheStruct<AbilityInfo>().FindKey(generalInfo.ReplaceSkills.AbilityID);
                     if (abilityInfo != null)
                     {
                         skillName = abilityInfo.AbilityName;
@@ -116,16 +116,16 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                 }
             }
-            userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral != null)
             {
-                FeelLvInfo feelLvInfo = new ConfigCacheSet<FeelLvInfo>().FindKey(userGeneral.FeelLv);
+                FeelLvInfo feelLvInfo = new ShareCacheStruct<FeelLvInfo>().FindKey(userGeneral.FeelLv);
                 if (feelLvInfo != null)
                 {
                     propertyList = feelLvInfo.Property.ToList();
                 }
                 short feelLv = MathUtils.Addition(userGeneral.FeelLv, (short)1, GiftHelper.maxFeelLv);
-                FeelLvInfo upfeelLvInfo = new ConfigCacheSet<FeelLvInfo>().FindKey(feelLv);
+                FeelLvInfo upfeelLvInfo = new ShareCacheStruct<FeelLvInfo>().FindKey(feelLv);
                 if (upfeelLvInfo != null)
                 {
                     upExperience = upfeelLvInfo.Experience;

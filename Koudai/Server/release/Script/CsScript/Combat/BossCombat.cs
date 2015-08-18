@@ -27,7 +27,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -125,10 +125,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             CombatGeneral boss = null;
             if (active != null)
             {
-                var plotNpcInfoList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == active.BossPlotID);
+                var plotNpcInfoList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == active.BossPlotID);
                 if (plotNpcInfoList.Count > 0)
                 {
-                    var embattleList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcInfoList[0].PlotNpcID);
+                    var embattleList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcInfoList[0].PlotNpcID);
                     if (embattleList.Count > 0)
                     {
                         int npcId = plotNpcInfoList[0].PlotNpcID;
@@ -439,7 +439,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             for (int i = 0; i < length; i++)
             {
                 string prizeItemMsg = string.Empty;
-                GameUser tempUser = new GameDataCacheSet<GameUser>().FindKey(rankingList[i].UserId);
+                GameUser tempUser = new PersonalCacheStruct<GameUser>().FindKey(rankingList[i].UserId);
                 tempUser.GameCoin = MathUtils.Addition(tempUser.GameCoin, bossPrize.TopObtainNum, int.MaxValue);
                 //前3名奖励
                 if (i == 0)
@@ -505,7 +505,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         {
             string prizeItemMsg = string.Empty;
             //筛选物品
-            var itemInfoList = new ConfigCacheSet<ItemBaseInfo>().FindAll(m =>
+            var itemInfoList = new ShareCacheStruct<ItemBaseInfo>().FindAll(m =>
             {
                 bool result = false;
                 if (m.ItemType == bossItem.Type)

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -134,9 +134,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             _magicMaxNum = ConfigEnvSet.GetInt("UserQueue.MagicStrengMaxNum");
 
             equCount = ContextUser.QueueNum;
-            List<UserLand> landArray = new GameDataCacheSet<UserLand>().FindAll(ContextUser.UserID, u => u.IsGain == 1 || u.DoRefresh() > 0);
+            List<UserLand> landArray = new PersonalCacheStruct<UserLand>().FindAll(ContextUser.UserID, u => u.IsGain == 1 || u.DoRefresh() > 0);
             currPlantNum = landArray.Count;
-            UserPlant plant = new GameDataCacheSet<UserPlant>().FindKey(ContextUser.UserID);
+            UserPlant plant = new PersonalCacheStruct<UserPlant>().FindKey(ContextUser.UserID);
             if (plant != null)
             {
                 maxPlantNum = plant.LandNum;
@@ -146,7 +146,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 maxPlantNum = 0;
             }
 
-            UserExpedition expedition = new GameDataCacheSet<UserExpedition>().FindKey(ContextUser.UserID);
+            UserExpedition expedition = new PersonalCacheStruct<UserExpedition>().FindKey(ContextUser.UserID);
             if (expedition != null && DateTime.Now.Date == expedition.InsertDate.Date)
             {
                 currExploreNum = expedition.ExpeditionNum;
@@ -156,7 +156,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 currExploreNum = 0;
             }
 
-            UserFunction function = new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Meiritanxian);
+            UserFunction function = new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Meiritanxian);
             if (function != null)
             {
                 maxExploreNum = 10;
@@ -165,7 +165,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 maxExploreNum = 0;
             }
-            var cacheSet = new GameDataCacheSet<UserQueue>();
+            var cacheSet = new PersonalCacheStruct<UserQueue>();
             List<UserQueue> uQueueArray = cacheSet.FindAll(ContextUser.UserID, m => m.QueueType == QueueType.EquipmentStrong);
             if (uQueueArray.Count > 3)
             {
@@ -174,7 +174,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     cacheSet.Delete(uQueueArray[i]);
                 }
             }
-            queueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, u => u.QueueType == QueueType.EquipmentStrong || u.QueueType == QueueType.MagicStrong || u.QueueType == QueueType.TianXianStrong);
+            queueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, u => u.QueueType == QueueType.EquipmentStrong || u.QueueType == QueueType.MagicStrong || u.QueueType == QueueType.TianXianStrong);
             queueArray.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;
@@ -189,8 +189,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static int EquStrongQueue(string userID)
         {
             int equNum = 0;
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
-            UserFunction userFunction = new GameDataCacheSet<UserFunction>().FindKey(userID, FunctionEnum.Qianghuaqueue);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
+            UserFunction userFunction = new PersonalCacheStruct<UserFunction>().FindKey(userID, FunctionEnum.Qianghuaqueue);
             if (user != null && userFunction != null && user.QueueNum <= 1)
             {
                 equNum = MathUtils.Addition(equNum, 1, int.MaxValue);

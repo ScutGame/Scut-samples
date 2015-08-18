@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Component.Chat;
@@ -78,13 +78,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 content = LanguageManager.GetLang().St1107_UserItemNotEnough;
                 return false;
             }
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo == null)
             {
                 content = LanguageManager.GetLang().Load_User_Error;
                 return false;
             }
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
             if (itemInfo == null)
             {
                 content = LanguageManager.GetLang().St1107_UserItemNotEnough;
@@ -132,7 +132,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     int demandItemNum = UserHelper.GetUserItemNum(userID, info.DemandItem);
                     if (demandItemNum < info.DemandNum)
                     {
-                        ItemBaseInfo itembaseInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(info.DemandItem);
+                        ItemBaseInfo itembaseInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(info.DemandItem);
                         if (itembaseInfo != null)
                         {
                             content = string.Format(LanguageManager.GetLang().St1606_OpenPackLackItem, itembaseInfo.ItemName, itemInfo.ItemName);
@@ -276,7 +276,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 return false;
                             }
                             UserItemHelper.AddUserItem(userInfo.UserID, prize.ItemID, num);
-                            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prize.ItemID);
+                            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prize.ItemID);
                             if (itemInfo != null)
                             {
                                 if (content.Length == 0)
@@ -291,14 +291,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 content = LanguageManager.GetLang().St1307_FateBackpackFull;
                                 return false;
                             }
-                            List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(m => m.CrystalQuality == prize.CrystalType);
+                            List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(m => m.CrystalQuality == prize.CrystalType);
                             if (crystalArray2.Count > 0)
                             {
                                 int randomNum = RandomUtils.GetRandom(0, crystalArray2.Count);
                                 int crystalID = crystalArray2[randomNum].CrystalID;
                                 UserHelper.CrystalAppend(userInfo.UserID, crystalID, 2);
                                 CrystalHelper.SendChat(crystalArray2[randomNum].CrystalID, userInfo);
-                                crystal = new ConfigCacheSet<CrystalInfo>().FindKey(crystalID);
+                                crystal = new ShareCacheStruct<CrystalInfo>().FindKey(crystalID);
                                 if (crystal != null)
                                 {
                                     content += string.Format(LanguageManager.GetLang().St_Crystal, CrystalHelper.GetQualityName(crystal.CrystalQuality), crystal.CrystalName) + ",";
@@ -318,7 +318,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             }
                             UserHelper.CrystalAppend(userInfo.UserID, prize.ItemID, 2);
                             CrystalHelper.SendChat(prize.ItemID, userInfo);
-                            crystal = new ConfigCacheSet<CrystalInfo>().FindKey(prize.ItemID);
+                            crystal = new ShareCacheStruct<CrystalInfo>().FindKey(prize.ItemID);
                             if (crystal != null)
                             {
                                 content += string.Format(LanguageManager.GetLang().St_Crystal, CrystalHelper.GetQualityName(crystal.CrystalQuality), crystal.CrystalName) + ",";
@@ -332,7 +332,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 return false;
                             }
                             UserSparePart sparePart = UserSparePart.GetRandom(prize.ItemID);
-                            SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(prize.ItemID);
+                            SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(prize.ItemID);
                             if (partInfo != null && sparePart != null && UserHelper.AddSparePart(userInfo, sparePart))
                             {
                                 SendChat(prize, userInfo.NickName, partInfo.Name);

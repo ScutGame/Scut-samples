@@ -27,7 +27,7 @@ using System.Threading;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Tianjiexing.Component.Chat;
@@ -115,7 +115,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             List<GameActive> activeList = new List<GameActive>();
             foreach (var gameActive in _gameActiveList)
             {
-                UserFunction function = new GameDataCacheSet<UserFunction>().FindKey(_userId, gameActive.ActiveType);
+                UserFunction function = new PersonalCacheStruct<UserFunction>().FindKey(_userId, gameActive.ActiveType);
                 if (function == null) continue;
                 if (function.FunEnum != FunctionEnum.Gonghui)
                 {
@@ -124,13 +124,13 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 }
                 else if (function.FunEnum == FunctionEnum.Gonghui)
                 {
-                    GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(_userId);
+                    GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(_userId);
                     if (userInfo != null)
                     {
                         UserGuild guild = new ShareCacheStruct<UserGuild>().FindKey(userInfo.MercenariesID);
                         if (guild != null)
                         {
-                            GuildLvInfo lvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(guild.GuildLv);
+                            GuildLvInfo lvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(guild.GuildLv);
                             if (lvInfo != null)
                             {
                                 var activityArray = lvInfo.ActivityDesc;
@@ -155,19 +155,19 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             foreach (var gameActive in _gameActiveList)
             {
                 if (gameActive.ActiveType != FunctionEnum.Gonghui && (gameActive.ActiveType != activeType ||
-                    new GameDataCacheSet<UserFunction>().FindKey(_userId, gameActive.ActiveType) == null)) continue;
+                    new PersonalCacheStruct<UserFunction>().FindKey(_userId, gameActive.ActiveType) == null)) continue;
                 activeList.Add(gameActive);
                 if (activeType == FunctionEnum.Gonghui)
                 {
                     if (gameActive.ActiveType == FunctionEnum.Gonghui)
                     {
-                        GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(_userId);
+                        GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(_userId);
                         if (userInfo != null)
                         {
                             UserGuild guild = new ShareCacheStruct<UserGuild>().FindKey(userInfo.MercenariesID);
                             if (guild != null)
                             {
-                                GuildLvInfo lvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(guild.GuildLv);
+                                GuildLvInfo lvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(guild.GuildLv);
                                 if (lvInfo != null)
                                 {
                                     var activityArray = lvInfo.ActivityDesc;

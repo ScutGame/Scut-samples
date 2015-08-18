@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -47,7 +47,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private int _activeId;
         private int _userTalPriority = 0;
         private int _npcTalPriority = 0;
-        private ConfigCacheSet<GeneralInfo> _cacheSetGeneral = new ConfigCacheSet<GeneralInfo>();
+        private ShareCacheStruct<GeneralInfo> _cacheSetGeneral = new ShareCacheStruct<GeneralInfo>();
 
         public Action5405(ZyGames.Framework.Game.Contract.HttpGet httpGet)
             : base(ActionIDDefine.Cst_Action5405, httpGet)

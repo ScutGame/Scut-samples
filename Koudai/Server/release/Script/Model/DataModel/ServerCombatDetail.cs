@@ -29,7 +29,7 @@ using ZyGames.Tianjiexing.Model.Config;
 using Newtonsoft.Json;
 namespace ZyGames.Tianjiexing.Model
 {
-    [Serializable, ProtoContract, JsonObject, EntityTable(CacheType.Entity, DbConfig.Data, "ServerCombatDetail")]
+    [Serializable, ProtoContract, JsonObject, EntityTable(CacheType.Entity, DbConfig.Data)]
     public class ServerCombatDetail : ShareEntity
     {
 

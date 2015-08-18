@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -53,7 +53,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             int gameGoin = 20000;
             string fatherTime = "2012-06-17 00:00:00";
             DateTime fatherDate = DateTime.Parse(fatherTime);
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
             if (dailyRestrain != null && dailyRestrain.Funtion13 < 1)
             {
                 if (DateTime.Now.Date == fatherDate.Date)
@@ -77,8 +77,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void DragonBoatFestival(string userID, int festivalID)
         {
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
-            FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userID, festivalID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
+            FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userID, festivalID);
             FestivalInfo festival = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
             var chatService = new TjxChatService();
             if (festival != null)
@@ -117,7 +117,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                            RefreashDate = DateTime.Now,
                                            RestrainNum = 1,
                                        };
-                        new GameDataCacheSet<FestivalRestrain>().Add(restrain);
+                        new PersonalCacheStruct<FestivalRestrain>().Add(restrain);
                     }
                 }
             }
@@ -131,7 +131,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="num"></param>
         public static void GameUserReward(string userID, RewardType reward, int itemID, int num)
         {
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo != null)
             {
                 if (reward == RewardType.GameGoin)
@@ -188,7 +188,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string GameUserRewardNocite(string userID, RewardType reward, int itemID, int num, CrystalQualityType qualityType)
         {
             string content = string.Empty;
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo != null)
             {
                 if (reward == RewardType.GameGoin)
@@ -229,7 +229,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 else if (reward == RewardType.Item)
                 {
                     UserItemHelper.AddUserItem(userID, itemID, num);
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                     if (itemInfo != null)
                     {
                         content = string.Format(LanguageManager.GetLang().St_SummerThreeItemNotice, num, itemInfo.ItemName);
@@ -242,7 +242,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 else if (reward == RewardType.CrystalId)
                 {
                     UserHelper.CrystalAppend(userID, itemID, 2);
-                    CrystalInfo info = new ConfigCacheSet<CrystalInfo>().FindKey(itemID);
+                    CrystalInfo info = new ShareCacheStruct<CrystalInfo>().FindKey(itemID);
                     if (info != null)
                     {
                         content = string.Format(LanguageManager.GetLang().St_SummerCrystalNotice, info.CrystalName);
@@ -257,11 +257,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void GetUserCrystal(GameUser user, CrystalQualityType qualityType)
         {
-            List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(m => m.CrystalQuality == qualityType);
+            List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(m => m.CrystalQuality == qualityType);
             if (crystalArray2.Count > 0)
             {
                 int randomNum = RandomUtils.GetRandom(0, crystalArray2.Count);
-                CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
+                CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
                 UserHelper.CrystalAppend(user.UserID, crystal.CrystalID, 2);
                 string chatcontent = string.Empty;
                 if (crystal.CrystalQuality == CrystalQualityType.Orange)
@@ -287,9 +287,9 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void HolidayFestival(string userID)
         {
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             int festivalID = 0;// 1004;
-            FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userID, festivalID);
+            FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userID, festivalID);
             if (restrain != null)
             {
                 if (restrain.RefreashDate.Date != DateTime.Now.Date)
@@ -336,7 +336,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                            RefreashDate = DateTime.Now,
                                            RestrainNum = 1,
                                        };
-                        new GameDataCacheSet<FestivalRestrain>().Add(restrain);
+                        new PersonalCacheStruct<FestivalRestrain>().Add(restrain);
                     }
                 }
             }
@@ -354,8 +354,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
             FestivalInfo festival = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
             if (festival != null)
             {
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
                 if (plotInfo != null)
                 {
                     TimePriod priod = festival.TimePriod;
@@ -376,7 +376,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 int index2 = RandomUtils.GetHitIndex(probability);
                                 int itemID = rewardsArray[index2].Item;
                                 UserItemHelper.AddUserItem(userID, itemID, 1);
-                                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                                 if (userInfo != null && itemInfo != null)
                                 {
                                     string content = string.Empty;
@@ -418,7 +418,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string GameUserUniversalNocite(string userID, RewardType reward, int itemID, int num, string systemContent)
         {
             string content = string.Empty;
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo != null)
             {
                 if (reward == RewardType.GameGoin)
@@ -459,7 +459,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 else if (reward == RewardType.Item)
                 {
                     UserItemHelper.AddUserItem(userID, itemID, num);
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                     if (itemInfo != null)
                     {
                         string itemcontent = string.Format(LanguageManager.GetLang().St_Item, itemInfo.ItemName, 1, num);
@@ -486,7 +486,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         CreateDate = DateTime.Now
                     };
                     packageCrystal.SaveCrystal(userCrystal);
-                    CrystalInfo info = new ConfigCacheSet<CrystalInfo>().FindKey(itemID);
+                    CrystalInfo info = new ShareCacheStruct<CrystalInfo>().FindKey(itemID);
                     if (info != null)
                     {
                         content = string.Format(LanguageManager.GetLang().st_FestivalInfoReward, systemContent, string.Format(LanguageManager.GetLang().St_Crystal, info.CrystalQuality, info.CrystalName));
@@ -503,11 +503,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string UserUserUniversalCrystal(GameUser user, CrystalQualityType qualityType, string systemContent)
         {
             string crystalContent = string.Empty;
-            List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(m => m.CrystalQuality == qualityType);
+            List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(m => m.CrystalQuality == qualityType);
             if (crystalArray2.Count > 0)
             {
                 int randomNum = RandomUtils.GetRandom(0, crystalArray2.Count);
-                CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
+                CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
                 var packageCrystal = UserCrystalPackage.Get(user.UserID);
                 UserCrystalInfo userCrystal = new UserCrystalInfo()
                 {

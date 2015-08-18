@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Com.Rank;
@@ -40,8 +40,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
     /// </summary>
     public class GeneralEscalateHelper
     {
-        public static GameDataCacheSet<UserAbility> _cacheSetAbility = new GameDataCacheSet<UserAbility>();
-        public static GameDataCacheSet<UserFunction> _cacheSetUserFun = new GameDataCacheSet<UserFunction>();
+        public static PersonalCacheStruct<UserAbility> _cacheSetAbility = new PersonalCacheStruct<UserAbility>();
+        public static PersonalCacheStruct<UserFunction> _cacheSetUserFun = new PersonalCacheStruct<UserFunction>();
         /// <summary>
         /// 玩家荣誉值升级
         /// </summary>
@@ -60,7 +60,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             short nextLv = MathUtils.Addition(user.UserLv, 1.ToShort());
             while (nextLv <= generalMaxLv)
             {
-                GeneralEscalateInfo generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(nextLv, GeneralType.YongHu);
+                GeneralEscalateInfo generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(nextLv, GeneralType.YongHu);
                 if (generalEscalate != null && user.HonourNum >= generalEscalate.UpExperience)
                 {
                     user.UserLv = nextLv;
@@ -116,7 +116,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         public static void CheckFun(GameUser user)
         {
-            var generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindAll(s => s.GeneralLv <= user.UserLv && s.GeneralType == GeneralType.YongHu && s.FunctionEnum != "0" && s.FunctionEnum != "");
+            var generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindAll(s => s.GeneralLv <= user.UserLv && s.GeneralType == GeneralType.YongHu && s.FunctionEnum != "0" && s.FunctionEnum != "");
             foreach (var generalEscalateInfo in generalEscalate)
             {
                 var feArray = generalEscalateInfo.FunctionEnum.Split(',');

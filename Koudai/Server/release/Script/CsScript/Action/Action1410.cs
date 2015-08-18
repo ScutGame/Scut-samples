@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             if (ops == 0)
             {
-                UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, ContextUser.GeneralID);
+                UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, ContextUser.GeneralID);
                 if (userGeneral == null)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;

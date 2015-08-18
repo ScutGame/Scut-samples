@@ -32,7 +32,7 @@ using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.ConfigModel;
 using ZyGames.Tianjiexing.Model.DataModel;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.BLL.Base;
 
 namespace ZyGames.Tianjiexing.BLL.Action
@@ -88,7 +88,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             DialHelper.CheckDialNum(ContextUser.UserID);
             //freeNum = GameConfigSet.FreeSweepstakes;
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(ContextUser.UserID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(ContextUser.UserID);
             if (userDial == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -118,7 +118,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //}
          
             int itemID = UserItemHelper.GetUserItemInfoID(ContextUser.UserID, userItemID);
-            var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (itemInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -126,7 +126,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             int groupID = DialHelper.ChestDialGroupID(ContextUser.UserID, itemID);
             freeNum = UserItemHelper.UserItemNum(ContextUser.UserID, itemID);
-            dialList = new ConfigCacheSet<DialInfo>().FindAll(m => m.GroupID == groupID);
+            dialList = new ShareCacheStruct<DialInfo>().FindAll(m => m.GroupID == groupID);
             dialList.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;

@@ -10,7 +10,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -69,7 +69,7 @@ def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(actionResult.pageCount);
     writer.PushIntoStack(actionResult.useritemList.Count);
     for item in actionResult.useritemList:
-        itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(item.ItemID);
+        itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(item.ItemID);
         #itemNum = UserItemHelper.CheckItemNum(urlParam.userID, item.ItemID);
         if itemInfo != None:
             itemName = itemInfo.ItemName;

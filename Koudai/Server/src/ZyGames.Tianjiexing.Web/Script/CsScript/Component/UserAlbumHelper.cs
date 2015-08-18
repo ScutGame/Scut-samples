@@ -27,7 +27,7 @@ using System.Linq;
 using System.Web;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -37,7 +37,7 @@ namespace ZyGames.Tianjiexing.Component
 {
     public class UserAlbumHelper
     {
-        public static GameDataCacheSet<UserAlbum> _cacheSetAlbum = new GameDataCacheSet<UserAlbum>();
+        public static PersonalCacheStruct<UserAlbum> _cacheSetAlbum = new PersonalCacheStruct<UserAlbum>();
 
         /// <summary>
         /// 添加玩家集邮卡牌

@@ -9,7 +9,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -50,11 +50,11 @@ def takeAction(urlParam,parent):
     actionResult.UserItemIDList = urlParam.UserItemIDs.Split(',');
     userId = str(parent.Current.UserId)
     user = PersonalCacheStruct.Get[GameUser](userId)
-    cacheSetItemBaseInfo =  ConfigCacheSet[ItemBaseInfo]();
-    cacheSetUserAbility =  GameDataCacheSet[UserAbility]();
-    cacheSetUserItemPackage =  GameDataCacheSet[UserItemPackage]();
-    cacheSetAbility =  ConfigCacheSet[AbilityInfo]();
-    cacheSetAbilityLv =  ConfigCacheSet[AbilityLvInfo]();
+    cacheSetItemBaseInfo =  ShareCacheStruct[ItemBaseInfo]();
+    cacheSetUserAbility =  PersonalCacheStruct[UserAbility]();
+    cacheSetUserItemPackage =  PersonalCacheStruct[UserItemPackage]();
+    cacheSetAbility =  ShareCacheStruct[AbilityInfo]();
+    cacheSetAbilityLv =  ShareCacheStruct[AbilityLvInfo]();
     userAbility = cacheSetUserAbility.FindKey(userId.ToString());
     abilityInfo = cacheSetAbility.FindKey(urlParam.AbilityID);
     if (userAbility == None or abilityInfo == None):

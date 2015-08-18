@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 using System.Diagnostics;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;

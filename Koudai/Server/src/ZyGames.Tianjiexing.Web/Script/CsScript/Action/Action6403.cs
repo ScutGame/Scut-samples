@@ -28,7 +28,7 @@ using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Combat;
 using ZyGames.Tianjiexing.Model;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.BLL.Base;
 
 namespace ZyGames.Tianjiexing.BLL.Action
@@ -60,7 +60,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 rankID = MathUtils.Addition(rankID, (short)1);
                 UserGuild guild = new ShareCacheStruct<UserGuild>().FindKey(fight.GuildID);
-                CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(fight.CityID);
+                CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(fight.CityID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(rankID);
                 dsItem.PushIntoStack(guild == null ? string.Empty : guild.GuildName.ToNotNullString());

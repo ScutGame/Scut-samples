@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -67,7 +67,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             if (ContextUser.TempEnergyNum > 0 && ContextUser.UserStatus != UserStatus.Combat)
             {
-                List<UserPlotCombat> plotCombatList = new GameDataCacheSet<UserPlotCombat>().FindAll(ContextUser.UserID, m => m.PlotID == plotID);
+                List<UserPlotCombat> plotCombatList = new PersonalCacheStruct<UserPlotCombat>().FindAll(ContextUser.UserID, m => m.PlotID == plotID);
                 //没发生战斗或上次战斗失败都返还精力
                 if (plotCombatList.Count == 0 || (ContextUser.TempEnergyNum > 0 && IsNotCombat(plotCombatList)))
                 {

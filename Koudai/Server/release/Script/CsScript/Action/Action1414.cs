@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -62,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     string b = mArray[1];
                     medicineLv = q.ToShort();
                     useGold = b.ToShort();
-                    itemInfoArray = new ConfigCacheSet<ItemBaseInfo>().FindAll(u => u.MedicineLv.Equals(medicineLv) && u.MedicineType.Equals(mType) && u.ItemType == ItemType.YaoJi);
+                    itemInfoArray = new ShareCacheStruct<ItemBaseInfo>().FindAll(u => u.MedicineLv.Equals(medicineLv) && u.MedicineType.Equals(mType) && u.ItemType == ItemType.YaoJi);
                 }
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(itemInfoArray.Count == 0 ? 0 : itemInfoArray[0].ItemID);

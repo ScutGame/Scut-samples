@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -75,13 +75,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             PlantType pType = plantType.ToEnum<PlantType>();
-            UserPlantQuality userPlantQuality = new GameDataCacheSet<UserPlantQuality>().FindKey(ContextUser.UserID, generalID, pType);
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserPlantQuality userPlantQuality = new PersonalCacheStruct<UserPlantQuality>().FindKey(ContextUser.UserID, generalID, pType);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userPlantQuality == null)
             {
                 return false;
             }
-            UserPlant userPlant = new GameDataCacheSet<UserPlant>().FindKey(ContextUser.UserID);
+            UserPlant userPlant = new PersonalCacheStruct<UserPlant>().FindKey(ContextUser.UserID);
             if (userPlant == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -106,7 +106,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
             }
 
-            var cacheSet = new GameDataCacheSet<UserLand>();
+            var cacheSet = new PersonalCacheStruct<UserLand>();
             UserLand land = cacheSet.FindKey(ContextUser.UserID, landPsition);
             if (land == null)
             {

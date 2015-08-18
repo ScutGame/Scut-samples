@@ -14,7 +14,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -59,9 +59,9 @@ def takeAction(urlParam, parent):
         return actionResult;
 
 
-    userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+    userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
     # 下发地图列表
-    plotList = ConfigCacheSet[PlotInfo]().FindAll(match=lambda x:x.PlotType == PlotType.KaoGuPlot); # 副本地图信息
+    plotList = ShareCacheStruct[PlotInfo]().FindAll(match=lambda x:x.PlotType == PlotType.KaoGuPlot); # 副本地图信息
     if not plotList or not userPlotPackage:
         return loadError();
 
@@ -69,7 +69,7 @@ def takeAction(urlParam, parent):
     plotMapList = userPlotPackage.PlotPackage.FindAll(match=lambda x:x.PlotType == PlotType.KaoGuPlot);
     if not plotMapList and contextUser.UserLv >= 20:
         UserArchaeologyHelper.InitializeMapInfo(userId);
-        userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+        userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
 
     actionResult.mapList = plotList;
     actionResult.userPlotPackage = userPlotPackage.PlotPackage;

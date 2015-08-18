@@ -35,7 +35,7 @@ namespace ZyGames.Tianjiexing.Model
     /// @personalName: 映射UserId对应的字段名,默认为"UserId"
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data, "UserMail", DbConfig.PeriodTime, DbConfig.PersonalName, Condition = "IsRemove=0")]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data, Condition = "IsRemove=0")]
     public class UserMail : MailMessage
     {
 

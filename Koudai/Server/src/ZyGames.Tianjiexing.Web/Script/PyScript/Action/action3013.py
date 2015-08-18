@@ -12,7 +12,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.Model.Enum import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -51,7 +51,7 @@ def takeAction(urlParam, parent):
         actionResult.Result = False;
         return actionResult;
 
-    userInfo = GameDataCacheSet[GameUser]().FindKey(userId);
+    userInfo = PersonalCacheStruct[GameUser]().FindKey(userId);
     if not userInfo:
         return loadError();
 

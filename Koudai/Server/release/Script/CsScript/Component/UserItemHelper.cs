@@ -29,7 +29,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Net;
 using ZyGames.Framework.SyncThreading;
@@ -51,14 +51,14 @@ namespace ZyGames.Tianjiexing.Model
         public UserItemHelper(UserItemInfo item)
         {
             _item = item;
-            _itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(_item.ItemID) ?? new ItemBaseInfo();
+            _itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(_item.ItemID) ?? new ItemBaseInfo();
         }
 
         // 重载构造函数，用于强化 10 次
         public UserItemHelper(UserItemInfo item, int count)
         {
             _item = item;
-            _itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(_item.ItemID) ?? new ItemBaseInfo();
+            _itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(_item.ItemID) ?? new ItemBaseInfo();
             _strongCount = count;
         }
 
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.Model
         /// </summary>
         public GeneralStatus GeneralStatus(string userID)
         {
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             if (cacheSet.FindKey(userID, _item.GeneralID) != null)
             {
                 return _item.IsNotUsed ? Model.GeneralStatus.YinCang : cacheSet.FindKey(userID, _item.GeneralID).GeneralStatus;
@@ -232,7 +232,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <returns></returns>
         public static bool PackIsFull(string userId, BackpackType backpackType, int buyNum)
         {
-            var _cacheSetUserPack = new GameDataCacheSet<UserPack>();
+            var _cacheSetUserPack = new PersonalCacheStruct<UserPack>();
 
             bool isFull = false;
             var userPack = _cacheSetUserPack.FindKey(userId);
@@ -250,12 +250,12 @@ namespace ZyGames.Tianjiexing.Model
         /// <param name="userId"></param>
         public static void AddUserAbility(int abilityId, int userId, int generalID, int position)
         {
-            var cacheSetAbility = new GameDataCacheSet<UserAbility>();
+            var cacheSetAbility = new PersonalCacheStruct<UserAbility>();
             var userAbility = cacheSetAbility.FindKey(userId.ToString());
             var ability = userAbility != null && userAbility.AbilityList != null
                               ? userAbility.AbilityList.Find(s => s.AbilityID == abilityId)
                               : null;
-            var abilityLv = new ConfigCacheSet<AbilityLvInfo>().FindKey(abilityId, 1);
+            var abilityLv = new ShareCacheStruct<AbilityLvInfo>().FindKey(abilityId, 1);
             int experienceNum = abilityLv != null ? abilityLv.Experience : 0;
             if (userAbility == null)
             {
@@ -341,9 +341,9 @@ namespace ZyGames.Tianjiexing.Model
             AddUserAlbum(userID,itemID);
 
             var chatService = new TjxChatService();
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
 
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (user == null || itemInfo == null)
             {
                 return;
@@ -475,8 +475,8 @@ namespace ZyGames.Tianjiexing.Model
         /// <param name="num"></param>
         public static void AddGeneralSoul(string userId, int itemId, int num)
         {
-            var cacheSetGeneral = new GameDataCacheSet<UserGeneral>();
-            var cacheSetGeneralInfo = new ConfigCacheSet<GeneralInfo>();
+            var cacheSetGeneral = new PersonalCacheStruct<UserGeneral>();
+            var cacheSetGeneralInfo = new ShareCacheStruct<GeneralInfo>();
             var generalInfo = cacheSetGeneralInfo.Find(s => s.SoulID == itemId);
             var userGeneral = cacheSetGeneral.FindKey(userId, itemId);
             if (userGeneral != null && generalInfo != null)
@@ -528,7 +528,7 @@ namespace ZyGames.Tianjiexing.Model
         {
             var loger = new BaseLog();
             bool result = false;
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (itemInfo == null) return result;
             var package = UserItemPackage.Get(userID);
 
@@ -627,7 +627,7 @@ namespace ZyGames.Tianjiexing.Model
             UserItemInfo userItem = package.ItemPackage.Find(m => !m.IsRemove && string.Equals(m.UserItemID, userItemID));
             if (userItem != null)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                 if (itemInfo == null) return;
                 if (userItem.Num == itemInfo.PackMaxNum)
                 {
@@ -715,7 +715,7 @@ namespace ZyGames.Tianjiexing.Model
                 double yellowNum = 1.7;
                 double redNum = 1.7*1.85;
 
-                ItemBaseInfo _itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                ItemBaseInfo _itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                 QualityType quality = _itemInfo.QualityType;
                 if (_itemInfo.EquParts == EquParts.WuQi && quality == QualityType.BaiSe)
                 {
@@ -893,7 +893,7 @@ namespace ZyGames.Tianjiexing.Model
         /// <param name="userId"></param>
         public static int GetPackTypePositionNum(BackpackType backpackType, string userId)
         {
-            GameDataCacheSet<UserPack> _cacheSetUserPack = new GameDataCacheSet<UserPack>();
+            PersonalCacheStruct<UserPack> _cacheSetUserPack = new PersonalCacheStruct<UserPack>();
             var userPack = _cacheSetUserPack.FindKey(userId);
             var packType = userPack != null && userPack.PackTypeList != null
                               ? userPack.PackTypeList.Find(s => s.BackpackType == backpackType)

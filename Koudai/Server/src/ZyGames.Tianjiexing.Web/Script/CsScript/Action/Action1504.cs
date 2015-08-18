@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -57,7 +57,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(magicInfo.HeadID.ToNotNullString());
                 dsItem.PushIntoStack(magicInfo.MagicDesc.ToNotNullString());
 
-                var magicLvList = new ConfigCacheSet<MagicLvInfo>().FindAll(m => m.MagicID == magicInfo.MagicID);
+                var magicLvList = new ShareCacheStruct<MagicLvInfo>().FindAll(m => m.MagicID == magicInfo.MagicID);
                 dsItem.PushIntoStack(magicLvList.Count);
                 foreach (MagicLvInfo magicLv in magicLvList)
                 {
@@ -89,9 +89,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            //int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.Magic).CurVersion;
-            //magicList = new ConfigCacheSet<MagicInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
-            magicList = new ConfigCacheSet<MagicInfo>().FindAll();
+            //int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.Magic).CurVersion;
+            //magicList = new ShareCacheStruct<MagicInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
+            magicList = new ShareCacheStruct<MagicInfo>().FindAll();
             return true;
         }
     }

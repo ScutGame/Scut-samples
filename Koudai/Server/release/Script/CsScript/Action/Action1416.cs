@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -61,8 +61,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(heritageList.Count);
             foreach (var item in heritageList)
             {
-                UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, item.GeneralID);
-                GeneralInfo general = new ConfigCacheSet<GeneralInfo>().FindKey(item.GeneralID);
+                UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, item.GeneralID);
+                GeneralInfo general = new ShareCacheStruct<GeneralInfo>().FindKey(item.GeneralID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack((short)item.Type);
                 dsItem.PushIntoStack(userGeneral == null ? 0 : userGeneral.GeneralID);
@@ -111,14 +111,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             if (heritage != null)
             {
-                UserGeneral uGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, heritage.GeneralID);
+                UserGeneral uGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, heritage.GeneralID);
                 disGeneralName = uGeneral == null ? string.Empty : uGeneral.GeneralName;
                 heritageLv = heritage.GeneralLv;
             }
             var heritageGeneral = heritageList.Find(s => s.Type == HeritageType.IsHeritage);
             if (heritageGeneral != null)
             {
-                UserGeneral uGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, heritageGeneral.GeneralID);
+                UserGeneral uGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, heritageGeneral.GeneralID);
                 heritageName = uGeneral == null ? string.Empty : uGeneral.GeneralName;
             }
 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.BLL.Combat;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Model;
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static short EnchantOpenGridNum(short itemLv)
         {
             short gridNum = 0;
-            var mosaicInfos = new ConfigCacheSet<MosaicInfo>().FindAll(m => m.DemandLv <= itemLv);
+            var mosaicInfos = new ShareCacheStruct<MosaicInfo>().FindAll(m => m.DemandLv <= itemLv);
             mosaicInfos.QuickSort((x, y) =>
             {
                 int result = 0;
@@ -95,7 +95,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 while (uEInfo1.EnchantLv <= GameConfigSet.MaxEnchantLv)
                 {
                     short upLv = MathUtils.Addition(uEInfo1.EnchantLv, (short)1);
-                    EnchantLvInfo enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(uEInfo1.EnchantID, upLv);
+                    EnchantLvInfo enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(uEInfo1.EnchantID, upLv);
                     if (enchantLvInfo != null && uEInfo1.CurrExprience >= enchantLvInfo.Experience)
                     {
                         uEInfo1.EnchantLv = MathUtils.Addition(uEInfo1.EnchantLv, (short)1);
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
                 if (uEInfo1.EnchantLv >= GameConfigSet.MaxEnchantLv)
                 {
-                    EnchantLvInfo enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(uEInfo1.EnchantID, GameConfigSet.MaxEnchantLv);
+                    EnchantLvInfo enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(uEInfo1.EnchantID, GameConfigSet.MaxEnchantLv);
                     if (enchantLvInfo != null)
                     {
                         uEInfo1.EnchantLv = GameConfigSet.MaxEnchantLv.ToShort();
@@ -186,7 +186,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsMosaicColor(int postion, ColorType colorType)
         {
-            MosaicInfo mosaicInfo = new ConfigCacheSet<MosaicInfo>().FindKey(postion);
+            MosaicInfo mosaicInfo = new ShareCacheStruct<MosaicInfo>().FindKey(postion);
             if (mosaicInfo != null)
             {
                 var strPostion = mosaicInfo.MosaicColor.Split(',');
@@ -230,7 +230,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static UserEnchantInfo GetUserEnchantInfo(int enchantID)
         {
             UserEnchantInfo enchant = new UserEnchantInfo();
-            EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchantID);
+            EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchantID);
             if (enchantInfo != null)
             {
                 enchant.UserEnchantID = Guid.NewGuid().ToString();
@@ -252,8 +252,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static UserEnchantInfo GetUserEnchantInfo(int enchantID, short enchantLv)
         {
             UserEnchantInfo enchant = new UserEnchantInfo();
-            var enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(enchantID, enchantLv);
-            EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchantID);
+            var enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(enchantID, enchantLv);
+            EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchantID);
             if (enchantInfo != null && enchantLvInfo != null)
             {
                 enchant.UserEnchantID = Guid.NewGuid().ToString();
@@ -275,12 +275,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsEnchantPackage(string userID)
         {
             int enchantNum = 0;
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (user != null && user.UserExtend != null)
             {
                 enchantNum = user.UserExtend.EnchantGridNum;
             }
-            UserFunction function = new GameDataCacheSet<UserFunction>().FindKey(userID, FunctionEnum.Enchant);
+            UserFunction function = new PersonalCacheStruct<UserFunction>().FindKey(userID, FunctionEnum.Enchant);
             if (function == null)
             {
                 return false;

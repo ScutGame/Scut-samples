@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int expID = 0;
             int usegoldTime = GetExpCodeTime(ContextUser.UserID);
             useGold = MathUtils.Addition((usegoldTime / 60), 1, int.MaxValue);
-            UserExpedition userExp = new GameDataCacheSet<UserExpedition>().FindKey(ContextUser.UserID);
+            UserExpedition userExp = new PersonalCacheStruct<UserExpedition>().FindKey(ContextUser.UserID);
 
             if (userExp != null && DateTime.Now.Date == userExp.InsertDate.Date)
             {
@@ -104,17 +104,17 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 question = 1;
             }
 
-            List<ExpeditionInfo> expeditionArray = new ConfigCacheSet<ExpeditionInfo>().FindAll(m => m.GroupID == question);
+            List<ExpeditionInfo> expeditionArray = new ShareCacheStruct<ExpeditionInfo>().FindAll(m => m.GroupID == question);
             if (expeditionArray.Count > 0)
             {
                 if (IsAnswer(expeditionArray, expID))
                 {
-                    expInfo = new ConfigCacheSet<ExpeditionInfo>().FindKey(expID);
+                    expInfo = new ShareCacheStruct<ExpeditionInfo>().FindKey(expID);
                 }
                 else
                 {
                     index = RandomUtils.GetRandom(0, expeditionArray.Count);
-                    expInfo = new ConfigCacheSet<ExpeditionInfo>().FindKey(expeditionArray[index].ExpID);
+                    expInfo = new ShareCacheStruct<ExpeditionInfo>().FindKey(expeditionArray[index].ExpID);
                     if (userExp != null)
                     {
                         userExp.ExpID = expeditionArray[index].ExpID;
@@ -127,7 +127,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public int GetExpCodeTime(string userID)
         {
             int coldTime = 0;
-            UserExpedition userExp = new GameDataCacheSet<UserExpedition>().FindKey(userID);
+            UserExpedition userExp = new PersonalCacheStruct<UserExpedition>().FindKey(userID);
             if (userExp == null)
             {
                 return coldTime;

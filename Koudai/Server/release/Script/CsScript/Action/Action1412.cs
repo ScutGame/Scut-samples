@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Com;
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 genLv = ContextUser.UserLv;
             }
-            GeneralPracticeInfo generalpractice = new ConfigCacheSet<GeneralPracticeInfo>().FindKey(genLv);
+            GeneralPracticeInfo generalpractice = new ShareCacheStruct<GeneralPracticeInfo>().FindKey(genLv);
             var ranking = RankingFactory.Get<UserRank>(CombatNumRanking.RankingKey);
             UserRank rankInfo = ranking.Find(m => m.UserID == ContextUser.UserID);
             if (rankInfo != null && rankInfo.TotalCombatNum > 0)
@@ -100,7 +100,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
             totalTime = (generalpractice.MaxHour * 60 * 60);
-            List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.XiuLian);
+            List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.XiuLian);
             if (userQueueArray.Count > 0 && !userQueueArray[0].IsSuspend)
             {
                 UserQueue queueInfo = userQueueArray[0];

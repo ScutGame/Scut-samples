@@ -25,7 +25,7 @@ using System;
 using ProtoBuf;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Event;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model.Config
 {
@@ -243,7 +243,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(PlotID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(PlotID);
                 if (plotInfo != null)
                 {
                     return plotInfo.PlotType;

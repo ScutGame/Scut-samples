@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Component;
@@ -87,7 +87,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1419_IsHeritageNotEnough;
                     return false;
                 }
-                var cacheSet = new GameDataCacheSet<UserGeneral>();
+                var cacheSet = new PersonalCacheStruct<UserGeneral>();
                 UserGeneral general = cacheSet.FindKey(ContextUser.UserID, heritage.GeneralID);
                 UserGeneral heritagegeneral = cacheSet.FindKey(ContextUser.UserID, gheritage.GeneralID);
                 if (general == null || heritagegeneral == null || general.GeneralID == heritagegeneral.GeneralID)
@@ -177,7 +177,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorCode = ops;
                 heritagegeneral.GeneralLv = gheritage.GeneralLv;
                 general.GeneralStatus = GeneralStatus.YinCang;
-                var embattleList = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, s => s.GeneralID == general.GeneralID);
+                var embattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, s => s.GeneralID == general.GeneralID);
                 foreach (var embattle in embattleList)
                 {
                     embattle.GeneralID = 0;

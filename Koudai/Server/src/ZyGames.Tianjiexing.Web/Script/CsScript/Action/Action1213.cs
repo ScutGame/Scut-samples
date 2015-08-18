@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -127,7 +127,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     UserItemInfo userItem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID.Equals(sparePart.UserItemID));
                     if (userItem != null && userItem.ItemStatus.Equals(ItemStatus.YongBing))
                     {
-                        var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(Uid, userItem.GeneralID);
+                        var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, userItem.GeneralID);
                         if (userGeneral != null) userGeneral.RefreshMaxLife();
                     }
                 }
@@ -156,7 +156,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     UserLogHelper.AppendSparePartLog(ContextUser.UserID, sparePart, 3);
                     if (userItem != null && userItem.ItemStatus.Equals(ItemStatus.YongBing))
                     {
-                        var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(Uid, userItem.GeneralID);
+                        var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, userItem.GeneralID);
                         if (userGeneral != null) userGeneral.RefreshMaxLife();
                     }
                 }
@@ -166,7 +166,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 var sparePart = ContextUser.SparePartList.Find(m => m.UserSparepartID.Equals(_sparepartID));
                 if (sparePart != null)
                 {
-                    var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
+                    var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
                     ContextUser.GameCoin = MathUtils.Addition(ContextUser.GameCoin, sparePartInfo.CoinPrice);
                     ContextUser.UserExtend.UpdateNotify(obj =>
                         {

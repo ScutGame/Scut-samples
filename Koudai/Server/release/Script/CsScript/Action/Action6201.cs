@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -62,12 +62,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(abilityArray.Count);
             foreach (GuildAbility ability in abilityArray)
             {
-                GuildAbilityInfo abilityInfo = new ConfigCacheSet<GuildAbilityInfo>().FindKey(ability.ID);
+                GuildAbilityInfo abilityInfo = new ShareCacheStruct<GuildAbilityInfo>().FindKey(ability.ID);
                 if (abilityInfo != null)
                 {
                     isCityCombat = abilityInfo.IsCityCombat ? (short)1 : (short)0;
                 }
-                GuildAbilityLvInfo abilityLvInfo = new ConfigCacheSet<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
+                GuildAbilityLvInfo abilityLvInfo = new ShareCacheStruct<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(ability.ID);
                 dsItem.PushIntoStack(abilityInfo == null ? string.Empty : abilityInfo.AbilityName.ToNotNullString());

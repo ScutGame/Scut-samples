@@ -25,7 +25,7 @@ using System;
 
 using System.Data;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -81,7 +81,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     GuildAbility ability = guild.AbilityInfo.Find(m => m.ID == guildSkillID);
                     if (ability != null)
                     {
-                        GuildAbilityLvInfo abilityLvInfo = new ConfigCacheSet<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
+                        GuildAbilityLvInfo abilityLvInfo = new ShareCacheStruct<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
                         if (abilityLvInfo != null && ability.Lv < 10)
                         {
                             if (abilityLvInfo.UpDonateNum > guild.CurrDonateNum)
@@ -90,12 +90,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                 ErrorInfo = LanguageManager.GetLang().St6205_GuildMemberDonateNotEnough;
                                 return false;
                             }
-                            GuildAbilityInfo abilityInfo = new ConfigCacheSet<GuildAbilityInfo>().FindKey(ability.ID);
+                            GuildAbilityInfo abilityInfo = new ShareCacheStruct<GuildAbilityInfo>().FindKey(ability.ID);
                             if (abilityInfo != null)
                             {
                                 guild.CurrDonateNum = MathUtils.Subtraction(guild.CurrDonateNum, abilityLvInfo.UpDonateNum, 0);
                                 ability.Lv = MathUtils.Addition(ability.Lv, (short)1);
-                                abilityLvInfo = new ConfigCacheSet<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
+                                abilityLvInfo = new ShareCacheStruct<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
                                 ability.Type = abilityInfo.GuildAbilityType;
                                 ability.Num = abilityLvInfo.EffectNum;
                                 //guild.Update();

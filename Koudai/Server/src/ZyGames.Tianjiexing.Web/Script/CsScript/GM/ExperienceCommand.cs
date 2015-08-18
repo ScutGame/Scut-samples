@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 
 namespace ZyGames.Tianjiexing.BLL.GM
@@ -39,7 +39,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
 
         private void Process(string userID, int generalID, int experience)
         {
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             var usergeneral = cacheSet.FindKey(userID, generalID);
             if(usergeneral!=null)
             {

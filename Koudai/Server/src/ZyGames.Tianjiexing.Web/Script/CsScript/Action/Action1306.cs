@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 UserCrystalInfo userCrystal = package.CrystalPackage.Find(m => m.UserCrystalID.Equals(userCrystalID));
                 if (userCrystal != null)
                 {
-                    totalPrice = (new ConfigCacheSet<CrystalInfo>().FindKey(userCrystal.CrystalID) ?? new CrystalInfo()).Price;
+                    totalPrice = (new ShareCacheStruct<CrystalInfo>().FindKey(userCrystal.CrystalID) ?? new CrystalInfo()).Price;
 
                     ContextUser.GameCoin = MathUtils.Addition(ContextUser.GameCoin, totalPrice, int.MaxValue);
                     //ContextUser.Update();

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ProtoBuf;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model.Enum;
 using ZyGames.Framework.Event;
 
@@ -126,7 +126,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(ItemID);
                 if (itemInfo != null)
                 {
                     return itemInfo.PropType;
@@ -142,7 +142,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(ItemID);
                 if (itemInfo != null)
                 {
                     return itemInfo.IsUse;
@@ -155,7 +155,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(ItemID);
                 if (itemInfo != null)
                 {
                     return itemInfo.EquParts;
@@ -175,7 +175,7 @@ namespace ZyGames.Tianjiexing.Model.Config
             get
             {
                 ItemBaseInfo itemInfo = null;
-                itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(ItemID);
+                itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(ItemID);
 
                 if (itemInfo != null)
                 {
@@ -195,8 +195,8 @@ namespace ZyGames.Tianjiexing.Model.Config
             result = ((int)ItemType).CompareTo((int)item.ItemType);
             if (result == 0)
             {
-                var itemInfo1 = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID) ?? new ItemBaseInfo();
-                var itemInfo2 = new ConfigCacheSet<ItemBaseInfo>().FindKey(this.ItemID) ?? new ItemBaseInfo();
+                var itemInfo1 = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID) ?? new ItemBaseInfo();
+                var itemInfo2 = new ShareCacheStruct<ItemBaseInfo>().FindKey(this.ItemID) ?? new ItemBaseInfo();
 
                 result = ((int)itemInfo1.QualityType).CompareTo((int)itemInfo2.QualityType);
                 if (result == 0)

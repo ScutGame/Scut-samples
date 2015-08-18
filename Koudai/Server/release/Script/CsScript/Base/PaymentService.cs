@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Pay;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -56,7 +56,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             trigger.BeginInvoke(user.GameId, user.ServerId, user.Pid, user.UserID, null, null);
             int vipLv;
             int vipGold = MathUtils.Addition(user.PayGold, user.ExtGold, int.MaxValue);
-            List<VipLvInfo> vipLvArray = new ConfigCacheSet<VipLvInfo>().FindAll(u => u.PayGold <= vipGold);
+            List<VipLvInfo> vipLvArray = new ShareCacheStruct<VipLvInfo>().FindAll(u => u.PayGold <= vipGold);
             vipLv = vipLvArray.Count > 0 ? vipLvArray[vipLvArray.Count - 1].VipLv : (short)0;
             user.VipLv = vipLv;
             //user.Update();
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
                 if (userInfo == null) return false;
                 var chatService = new TjxChatService();
                 OrderInfo[] model = PayManager.getPayment(game, server, account);
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             var sender = DataSyncManager.GetDataSender();
             sender.Send(rechargeLog);
 
-            UserRecharge recharge = new GameDataCacheSet<UserRecharge>().FindKey(userID);
+            UserRecharge recharge = new PersonalCacheStruct<UserRecharge>().FindKey(userID);
             if (recharge == null)
             {
                 recharge = new UserRecharge() { UserID = userID };
@@ -141,7 +141,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
             recharge.TotalGoldNum = MathUtils.Addition(recharge.TotalGoldNum, order.GameCoins, int.MaxValue);
             recharge.ChargeDate = DateTime.Now;
-            var rechargeCacheSet = new GameDataCacheSet<UserRecharge>();
+            var rechargeCacheSet = new PersonalCacheStruct<UserRecharge>();
             if (rechargeCacheSet.FindKey(userID) == null)
             {
                 packType = 1;
@@ -149,7 +149,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 TriggerReceivePack(userID, packType, recharge.FirstNum);
                 rechargeCacheSet.Add(recharge);
                 FestivalHelper.GetFirstReward(userID, FestivalType.FirstReward);
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
                 if (userInfo != null)
                 {
                     FestivalHelper.GetPayReward(userInfo, order.GameCoins, FestivalType.FirstPayDoubleSpar);
@@ -159,7 +159,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             //触发总累计充值礼包
             packType = 2;
             TriggerReceivePack(userID, packType, recharge.TotalGoldNum);
-            List<RechargePacks> rechargePackseArray = new ConfigCacheSet<RechargePacks>().FindAll(m => m.PacksType == packType);
+            List<RechargePacks> rechargePackseArray = new ShareCacheStruct<RechargePacks>().FindAll(m => m.PacksType == packType);
             foreach (RechargePacks rechargePackse in rechargePackseArray)
             {
                 RemoveCharge(userID, rechargePackse.PacksID);
@@ -194,10 +194,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void TriggerReceivePack(string userID, int packType, int gameCoin)
         {
-            List<RechargePacks> rechargePackseArray = new ConfigCacheSet<RechargePacks>().FindAll(m => m.PacksType == packType);
+            List<RechargePacks> rechargePackseArray = new ShareCacheStruct<RechargePacks>().FindAll(m => m.PacksType == packType);
             foreach (RechargePacks rechargePackse in rechargePackseArray)
             {
-                List<PackageReceive> packageReceivess = new GameDataCacheSet<PackageReceive>().FindAll(userID, m => m.PacksID == rechargePackse.PacksID);
+                List<PackageReceive> packageReceivess = new PersonalCacheStruct<PackageReceive>().FindAll(userID, m => m.PacksID == rechargePackse.PacksID);
                 if (packageReceivess.Count == 0)
                 {
                     if (rechargePackse.RechargeNum <= gameCoin)
@@ -208,7 +208,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         receive.UserID = userID;
                         receive.IsReceive = false;
                         receive.ReceiveDate = DateTime.Now;
-                        new GameDataCacheSet<PackageReceive>().Add(receive);
+                        new PersonalCacheStruct<PackageReceive>().Add(receive);
                     }
                 }
             }
@@ -217,12 +217,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static void TriggerWeekPack(string userID, int gameCoin)
         {
             int packType = 3;
-            List<RechargePacks> rechargePackseArray = new ConfigCacheSet<RechargePacks>().FindAll(m => m.PacksType == packType);
+            List<RechargePacks> rechargePackseArray = new ShareCacheStruct<RechargePacks>().FindAll(m => m.PacksType == packType);
             foreach (RechargePacks rechargePackse in rechargePackseArray)
             {
                 if (rechargePackse.RechargeNum <= gameCoin)
                 {
-                    var packCacheSet = new GameDataCacheSet<PackageReceive>();
+                    var packCacheSet = new PersonalCacheStruct<PackageReceive>();
                     List<PackageReceive> packageReceivess = packCacheSet.FindAll(userID, m => m.PacksID == rechargePackse.PacksID);
                     if (packageReceivess.Count == 0)
                     {
@@ -256,12 +256,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static void TriggerMonthPack(string userID, int gameCoin)
         {
             int packType = 4;
-            List<RechargePacks> rechargePackseArray = new ConfigCacheSet<RechargePacks>().FindAll(m => m.PacksType == packType);
+            List<RechargePacks> rechargePackseArray = new ShareCacheStruct<RechargePacks>().FindAll(m => m.PacksType == packType);
             foreach (RechargePacks rechargePackse in rechargePackseArray)
             {
                 if (rechargePackse.RechargeNum <= gameCoin)
                 {
-                    List<PackageReceive> packageReceivess = new GameDataCacheSet<PackageReceive>().FindAll(userID, m => m.PacksID == rechargePackse.PacksID);
+                    List<PackageReceive> packageReceivess = new PersonalCacheStruct<PackageReceive>().FindAll(userID, m => m.PacksID == rechargePackse.PacksID);
                     if (packageReceivess.Count == 0)
                     {
                         PackageReceive receive = new PackageReceive();
@@ -270,7 +270,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         receive.UserID = userID;
                         receive.IsReceive = false;
                         receive.ReceiveDate = DateTime.Now;
-                        new GameDataCacheSet<PackageReceive>().Add(receive);
+                        new PersonalCacheStruct<PackageReceive>().Add(receive);
                     }
                     else if (!IsHaveMonth(packageReceivess))
                     {
@@ -284,7 +284,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         }
 
 
-                        var cacheSet = new GameDataCacheSet<PackageReceive>();
+                        var cacheSet = new PersonalCacheStruct<PackageReceive>();
                         for (int i = 1; i <= packageReceivess.Count - 1; i++)
                         {
                             cacheSet.Delete(packageReceivess[i]);
@@ -303,10 +303,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static void RemoveCharge(string userID, int packID)
         {
-            List<PackageReceive> packageReceiveArray = new GameDataCacheSet<PackageReceive>().FindAll(userID, m => m.PacksID == packID);
+            List<PackageReceive> packageReceiveArray = new PersonalCacheStruct<PackageReceive>().FindAll(userID, m => m.PacksID == packID);
             if (packageReceiveArray.Count > 1)
             {
-                var packCacheSet = new GameDataCacheSet<PackageReceive>();
+                var packCacheSet = new PersonalCacheStruct<PackageReceive>();
                 packageReceiveArray = packCacheSet.FindAll(userID, u => u.IsReceive && u.PacksID == packID);
                 if (packageReceiveArray.Count > 0)
                 {

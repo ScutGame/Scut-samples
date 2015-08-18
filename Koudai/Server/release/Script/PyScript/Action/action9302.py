@@ -12,7 +12,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -42,7 +42,7 @@ def getUrlElement(httpGet, parent):
 
 # 多于 15 条需移除
 def removeMail(userMailList,mailCount):
-    cacheSet = GameDataCacheSet[UserMail]();
+    cacheSet = PersonalCacheStruct[UserMail]();
     maxMailNumber = 15;
     if mailCount > maxMailNumber:
         for i in range(maxMailNumber, mailCount):
@@ -53,7 +53,7 @@ def removeMail(userMailList,mailCount):
 
 # 所有邮件默认隔一周清空一次
 def clearMail(userMailList):
-    cacheSet = GameDataCacheSet[UserMail]();
+    cacheSet = PersonalCacheStruct[UserMail]();
     for mail in userMailList:
         days = (DateTime.Now - mail.SendDate).Days;
         if days >= 7:

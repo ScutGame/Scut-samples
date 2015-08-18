@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -57,7 +57,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(userGuildArray.Count);
             foreach (UserGuild guild in userGuildArray)
             {
-                GuildLvInfo guildLvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(guild.GuildLv);
+                GuildLvInfo guildLvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(guild.GuildLv);
                 if (guildLvInfo != null)
                 {
                     maxPeople = MathUtils.Addition(guildLvInfo.MaxPeople, guild.AddMember);
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     {
                         if (guildMember.PostType == PostType.Chairman)
                         {
-                            gameUser = new GameDataCacheSet<GameUser>().FindKey(guildMember.UserID);
+                            gameUser = new PersonalCacheStruct<GameUser>().FindKey(guildMember.UserID);
                         }
                     }
                 }

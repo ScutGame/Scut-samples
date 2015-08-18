@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             int energyNum = ConfigEnvSet.GetInt("User.EnergyNum");
             UserHelper.ChechDailyRestrain(ContextUser.UserID);
-            var cacheSet = new GameDataCacheSet<UserDailyRestrain>();
+            var cacheSet = new PersonalCacheStruct<UserDailyRestrain>();
             double addNum = FestivalHelper.SurplusPurchased(ContextUser.UserID, FestivalType.PurchasedEnergy);//活动加成
             int payNum = FestivalHelper.SurplusEnergyNum(ContextUser.UserID);
             UserDailyRestrain userRestrain = cacheSet.FindKey(ContextUser.UserID);
@@ -184,7 +184,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             if (payNum == 0)
             {
-                UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+                UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
                 maxNum = VipHelper.GetVipUseNum(vipLv, RestrainType.GouMaiJingLi);
 
                 if (DateTime.Now.Date == dailyRestrain.RefreshDate.Date)
@@ -258,7 +258,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private static int GetPayEnergyNum(string userID)
         {
             int currNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && DateTime.Now.Date == dailyRestrain.RefreshDate.Date)
             {
                 currNum = dailyRestrain.Funtion4;
@@ -275,7 +275,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static short GetEnergyNum(string userID, int vipLv, int payType)
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             int maxNum = VipHelper.GetVipUseNum(vipLv, RestrainType.GouMaiJingLi);
             int currNum = 0;
             if (DateTime.Now.Date == dailyRestrain.RefreshDate.Date)

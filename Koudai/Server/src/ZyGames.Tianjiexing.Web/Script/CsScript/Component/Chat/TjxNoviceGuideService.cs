@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.ConfigModel;
@@ -52,7 +52,7 @@ namespace ZyGames.Tianjiexing.Component.Chat
             {
                 return null;
             }
-            var noviceUser = new GameDataCacheSet<NoviceUser>().FindKey(UserId.ToString());
+            var noviceUser = new PersonalCacheStruct<NoviceUser>().FindKey(UserId.ToString());
             if (noviceUser == null)
             {
                 return null;
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.Component.Chat
                     case 0:
                         foreach (var itemId in prizeInfo.Value)
                         {
-                            var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemId);
+                            var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemId);
                             if (itemInfo == null)
                             {
                                 continue;
@@ -78,19 +78,19 @@ namespace ZyGames.Tianjiexing.Component.Chat
                             UserItemHelper.AddUserItem(UserId.ToString(), itemId, 1);
                             itemList.Add(itemInfo);
 
-                            var gameUser = new GameDataCacheSet<GameUser>().FindKey(UserId.ToString());
+                            var gameUser = new PersonalCacheStruct<GameUser>().FindKey(UserId.ToString());
                             if (gameUser!=null)
                             {
                                  if(gameUser.UserExtend.NoviceIsPase == true)
                                  {
-                                     var noviceTask = new ConfigCacheSet<NoviceTaskInfo>().FindKey("1013");
+                                     var noviceTask = new ShareCacheStruct<NoviceTaskInfo>().FindKey("1013");
                                      if (noviceTask != null && noviceTask.PrizeList!=null)
                                      {
                                          foreach (var gift in noviceTask.PrizeList)
                                          {
                                              foreach (var Id in gift.Value)
                                              {
-                                                 var item = new ConfigCacheSet<ItemBaseInfo>().FindKey(Id);
+                                                 var item = new ShareCacheStruct<ItemBaseInfo>().FindKey(Id);
                                                  UserItemHelper.AddUserItem(UserId.ToString(), Id, 1);
                                                  itemList.Add(item);
                                              }
@@ -107,7 +107,7 @@ namespace ZyGames.Tianjiexing.Component.Chat
                         if (prizeInfo.Value.Count > userGeneral.CareerID)
                         {
                             var itemId = prizeInfo.Value[userGeneral.CareerID];
-                            var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemId);
+                            var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemId);
                             if (itemInfo == null)
                             {
                                 continue;

@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
@@ -59,8 +59,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(abilityArray.Count);
             foreach (GuildAbility item in abilityArray)
             {
-                GuildAbilityInfo gAbilityInfo = new ConfigCacheSet<GuildAbilityInfo>().FindKey(item.ID);
-                GuildAbilityLvInfo abilityLvInfo = new ConfigCacheSet<GuildAbilityLvInfo>().FindKey(item.ID, item.Lv);
+                GuildAbilityInfo gAbilityInfo = new ShareCacheStruct<GuildAbilityInfo>().FindKey(item.ID);
+                GuildAbilityLvInfo abilityLvInfo = new ShareCacheStruct<GuildAbilityLvInfo>().FindKey(item.ID, item.Lv);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.ID);
                 dsItem.PushIntoStack(gAbilityInfo == null ? string.Empty : gAbilityInfo.AbilityName.ToNotNullString());
@@ -101,7 +101,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     List<GuildAbility> abilitiesList = guild.AbilityInfo.FindAll(m => m.Lv < 10);
                     foreach (GuildAbility ability in abilitiesList)
                     {
-                        GuildAbilityLvInfo abilityLvInfo = new ConfigCacheSet<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
+                        GuildAbilityLvInfo abilityLvInfo = new ShareCacheStruct<GuildAbilityLvInfo>().FindKey(ability.ID, ability.Lv);
                         if (abilityLvInfo != null && guild.CurrDonateNum >= abilityLvInfo.UpDonateNum)
                         {
                             guildAbilitiesList.Add(ability);

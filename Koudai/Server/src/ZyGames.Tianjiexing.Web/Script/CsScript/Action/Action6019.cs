@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
@@ -81,7 +81,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             UserGuild guildInfo = new ShareCacheStruct<UserGuild>().FindKey(guildID);
             if (guildInfo != null)
             {
-                GuildLvInfo guildLvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(guildInfo.GuildLv);
+                GuildLvInfo guildLvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(guildInfo.GuildLv);
                 if (guildLvInfo != null)
                 {
                     int maxPeople = MathUtils.Addition(guildInfo.AddMember, guildLvInfo.MaxPeople);

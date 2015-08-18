@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             if (user == null) return;
             if (user.GrayCrystalList == null) user.GrayCrystalList = new CacheList<GrayCrystal>();
 
-            CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystalID);
+            CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystalID);
             if (crystalInfo == null) return;
 
             if (CheckAllowCrystall(user))
@@ -228,7 +228,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userInfo"></param>
         public static void SendChat(int CrystalID, GameUser userInfo)
         {
-            CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(CrystalID);
+            CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(CrystalID);
             if (crystal == null)
                 return;
             string chatcontent = string.Empty;
@@ -256,8 +256,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="crystalLv"></param>
         public static void AppendCrystal(string userID, int crystalID, short crystalLv)
         {
-            CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystalID);
-            var crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(crystalID, crystalLv);
+            CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystalID);
+            var crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(crystalID, crystalLv);
             var package = UserCrystalPackage.Get(userID);
             if (package == null || crystalInfo == null || crystalLvInfo == null)
             {
@@ -302,7 +302,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int UserLightLit(string userID)
         {
             int hunLight = 1001;
-            var userLightArray = new GameDataCacheSet<UserLight>().FindAll(userID, s => s.IsLight == 1);
+            var userLightArray = new PersonalCacheStruct<UserLight>().FindAll(userID, s => s.IsLight == 1);
             if (userLightArray.Count > 0)
             {
                 hunLight = userLightArray[userLightArray.Count - 1].HuntingID;
@@ -331,13 +331,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
             errStr = string.Empty;
             int huntingID = UserLightLit(user.UserID);
             int huntingID2 = UserNextLight(user.UserID, huntingID);
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
-            var probabilityInfo = new ConfigCacheSet<ProbabilityInfo>().FindKey(huntingID); //当前猎命人物的概率
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
+            var probabilityInfo = new ShareCacheStruct<ProbabilityInfo>().FindKey(huntingID); //当前猎命人物的概率
             if (probabilityInfo == null)
             {
                 return errStr;
             }
-            ProbabilityInfo probability1 = new ConfigCacheSet<ProbabilityInfo>().FindKey(huntingID2);
+            ProbabilityInfo probability1 = new ShareCacheStruct<ProbabilityInfo>().FindKey(huntingID2);
             if (userRestrain != null && userRestrain.Funtion2 >= VipHelper.GetVipUseNum(user.VipLv, RestrainType.MianFeiLieMing) && DateTime.Now.Date == userRestrain.RefreshDate.Date)
             {
                 if (probabilityInfo.Price > user.GameCoin)
@@ -352,7 +352,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 errStr = LanguageManager.GetLang().St1305_BeiBaoBackpackFull;
                 return errStr;
             }
-            var lightCacheSet = new GameDataCacheSet<UserLight>();
+            var lightCacheSet = new PersonalCacheStruct<UserLight>();
             if (huntingID != 1001)
             {
                 UserLight userLight1 = lightCacheSet.FindKey(user.UserID, huntingID);
@@ -365,7 +365,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     userLight1.IsLight = 2;
                 }
             }
-            UserLight userLight = new GameDataCacheSet<UserLight>().FindKey(user.UserID, huntingID2);
+            UserLight userLight = new PersonalCacheStruct<UserLight>().FindKey(user.UserID, huntingID2);
             if (RandomUtils.IsHit(probability1.Light))
             {
                 if (userLight != null)
@@ -408,11 +408,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
             double[] probabilityArray2 = { (double)probabilityInfo.Gray, (double)probabilityInfo.Green, (double)probabilityInfo.Blue, (double)probabilityInfo.Purple, (double)probabilityInfo.Yellow, (double)probabilityInfo.Red };
             int index2 = RandomUtils.GetHitIndex(probabilityArray2);
             CrystalQualityType qualityType = (CrystalQualityType)Enum.Parse(typeof(CrystalQualityType), (index2 + 1).ToString());
-            List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(u => u.CrystalQuality == qualityType && u.DemandLv <= user.UserLv);
+            List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(u => u.CrystalQuality == qualityType && u.DemandLv <= user.UserLv);
             if (crystalArray2.Count > 0)
             {
                 int randomNum = RandomUtils.GetRandom(0, crystalArray2.Count);
-                var crystal = new ConfigCacheSet<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
+                var crystal = new ShareCacheStruct<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
                 if (crystal != null && crystal.CrystalQuality == CrystalQualityType.Gray)
                 {
                     //wuzf修改 8-15 灰色放在临时背包不存DB

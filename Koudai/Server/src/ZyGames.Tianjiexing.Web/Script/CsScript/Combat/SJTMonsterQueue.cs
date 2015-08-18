@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -38,7 +38,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         public SJTMonsterQueue(int plotNpcID)
         {
-            var embattleList = new ConfigCacheSet<SJTPlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcID);
+            var embattleList = new ShareCacheStruct<SJTPlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcID);
             foreach (SJTPlotEmbattleInfo embattle in embattleList)
             {
                 int index = embattle.GridSeqNo - 1;
@@ -62,12 +62,12 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         public static IGeneral Create(SJTPlotEmbattleInfo embattle)
         {
-            var monster = new ConfigCacheSet<SJTMonsterInfo>().FindKey(embattle.MonsterID);
+            var monster = new ShareCacheStruct<SJTMonsterInfo>().FindKey(embattle.MonsterID);
             if (monster == null) throw new Exception("Plot monster:" + embattle.MonsterID + " is not exist");
 
-            CareerInfo career = new ConfigCacheSet<CareerInfo>().FindKey(monster.CareerID);
-            AbilityInfo ability = new ConfigCacheSet<AbilityInfo>().FindKey(monster.AbilityID);
-            var abilityLv = new ConfigCacheSet<AbilityLvInfo>().FindKey(monster.AbilityLv);
+            CareerInfo career = new ShareCacheStruct<CareerInfo>().FindKey(monster.CareerID);
+            AbilityInfo ability = new ShareCacheStruct<AbilityInfo>().FindKey(monster.AbilityID);
+            var abilityLv = new ShareCacheStruct<AbilityLvInfo>().FindKey(monster.AbilityLv);
 
             if (career == null || ability == null || abilityLv == null)
             {

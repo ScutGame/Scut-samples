@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using ServiceStack.Text;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 
@@ -55,7 +55,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserSparePackage>().Foreach((personalId, key, package) =>
+                new PersonalCacheStruct<UserSparePackage>().Foreach((personalId, key, package) =>
                 {
                     if (isAll || package.HasChanged)
                     {
@@ -74,7 +74,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserItemPackage>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<UserItemPackage>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {
@@ -94,7 +94,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserCrystalPackage>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<UserCrystalPackage>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {
@@ -113,7 +113,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserEnchant>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<UserEnchant>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {
@@ -132,7 +132,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserTrump>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<UserTrump>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {
@@ -151,7 +151,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<GeneralMedicine>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<GeneralMedicine>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {
@@ -170,7 +170,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserGeneral>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<UserGeneral>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {
@@ -189,7 +189,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             try
             {
-                new GameDataCacheSet<UserMagic>().Foreach((personalId, key, data) =>
+                new PersonalCacheStruct<UserMagic>().Foreach((personalId, key, data) =>
                 {
                     if (isAll || data.HasChanged)
                     {

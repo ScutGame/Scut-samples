@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -59,7 +59,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(enchantArray.Length);
             foreach (var enchant in enchantArray)
             {
-                EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchant.EnchantID);
+                EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchant.EnchantID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(enchant.UserEnchantID.ToNotNullString());
                 dsItem.PushIntoStack(enchantInfo == null ? string.Empty : enchantInfo.EnchantName.ToNotNullString());
@@ -96,7 +96,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 puUserID = toUserID;
                 UserCacheGlobal.LoadOffline(puUserID);
             }
-            user = new GameDataCacheSet<GameUser>().FindKey(puUserID);
+            user = new PersonalCacheStruct<GameUser>().FindKey(puUserID);
             if (user != null)
             {
                 goldNum = user.GoldNum;

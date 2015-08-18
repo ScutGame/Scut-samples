@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -78,7 +78,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             UserItemInfo userItem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID.Equals(userItemID));
             if (userItem != null)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                 if (itemInfo == null)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         private bool DoCaiLiaoYueBingItem(UserItemInfo userItem, ItemBaseInfo itemInfo)
         {
-            UserProps props = new GameDataCacheSet<UserProps>().FindKey(ContextUser.UserID, userItem.ItemID);
+            UserProps props = new PersonalCacheStruct<UserProps>().FindKey(ContextUser.UserID, userItem.ItemID);
             if (props != null)
             {
                 if (userItem.ItemID == 5200 && props.DoRefresh() > 0)
@@ -136,7 +136,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                            SurplusNum = itemInfo.EffectNum,
                                            ChangeTime = DateTime.Now
                                        };
-                new GameDataCacheSet<UserProps>().Add(uProps);
+                new PersonalCacheStruct<UserProps>().Add(uProps);
             }
             return true;
         }
@@ -144,7 +144,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         private static bool UseProps(string userID, ItemBaseInfo itemInfo)
         {
-            var cacheSet = new GameDataCacheSet<UserProps>();
+            var cacheSet = new PersonalCacheStruct<UserProps>();
             List<UserProps> propsArray = cacheSet.FindAll(userID, u => u.PropType == itemInfo.PropType);
 
             if (itemInfo.PropType == 9 && propsArray.Count > 0)
@@ -175,7 +175,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
 
             }
-            //List<UserProps> propsArray1 = new GameDataCacheSet<UserProps>().FindAll(UserProps.Index_UserID, u => u.PropType == itemInfo.PropType && u.ItemID == itemInfo.ItemID, userID);
+            //List<UserProps> propsArray1 = new PersonalCacheStruct<UserProps>().FindAll(UserProps.Index_UserID, u => u.PropType == itemInfo.PropType && u.ItemID == itemInfo.ItemID, userID);
             if (!isUsed)
             {
                 UserProps uProps = new UserProps(userID, itemInfo.ItemID)
@@ -183,7 +183,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     SurplusNum = itemInfo.EffectNum,
                     ChangeTime = DateTime.Now
                 };
-                new GameDataCacheSet<UserProps>().Add(uProps);
+                new PersonalCacheStruct<UserProps>().Add(uProps);
             }
             return true;
         }

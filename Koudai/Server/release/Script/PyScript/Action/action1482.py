@@ -9,7 +9,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -46,9 +46,9 @@ def takeAction(urlParam,parent):
     actionResult =ActionResult();
     userId = str(parent.Current.UserId)
     user = PersonalCacheStruct.Get[GameUser](userId)
-    cacheSetUserAbility =  GameDataCacheSet[UserAbility]();
-    cacheSetAbility =  ConfigCacheSet[AbilityInfo]();
-    cacheSetAbilityLv =  ConfigCacheSet[AbilityLvInfo]();
+    cacheSetUserAbility =  PersonalCacheStruct[UserAbility]();
+    cacheSetAbility =  ShareCacheStruct[AbilityInfo]();
+    cacheSetAbilityLv =  ShareCacheStruct[AbilityLvInfo]();
    
     userAbility = cacheSetUserAbility.FindKey(userId.ToString());
     if (userAbility == None ):
@@ -85,7 +85,7 @@ def takeAction(urlParam,parent):
 
 def buildPacket(writer, urlParam, actionResult):
     #输出
-    cacheSetAbility =  ConfigCacheSet[AbilityInfo]();
+    cacheSetAbility =  ShareCacheStruct[AbilityInfo]();
     writer.PushIntoStack(actionResult.AbilityName);
     writer.PushIntoStack(actionResult.AbilityLv);
     writer.PushIntoStack(actionResult.IsExperienceNum);

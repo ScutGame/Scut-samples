@@ -11,7 +11,7 @@ namespace ZyGames.Doudizhu.Model
     /// 每日限制表
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data)]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class UserDailyRestrain : BaseEntity
     {
 

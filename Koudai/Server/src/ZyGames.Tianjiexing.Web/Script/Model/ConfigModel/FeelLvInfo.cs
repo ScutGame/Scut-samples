@@ -33,7 +33,7 @@ namespace ZyGames.Tianjiexing.Model
     /// <summary>
     /// 礼物配置表
     /// </summary>
-    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config, "FeelLvInfo")]
+    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config)]
     public class FeelLvInfo : ShareEntity
     {
 

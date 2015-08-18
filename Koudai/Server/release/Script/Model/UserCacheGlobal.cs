@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model
 {
@@ -40,7 +40,7 @@ namespace ZyGames.Tianjiexing.Model
 
         public static GameUser LoadOffline(string userId)
         {
-            var cacheSet = new GameDataCacheSet<GameUser>();
+            var cacheSet = new PersonalCacheStruct<GameUser>();
             DoLoad(userId, false, true);
             return cacheSet.FindKey(userId);
         }
@@ -52,7 +52,7 @@ namespace ZyGames.Tianjiexing.Model
 
         public static GameUser CheckLoadUser(string userId)
         {
-            var cacheSet = new GameDataCacheSet<GameUser>();
+            var cacheSet = new PersonalCacheStruct<GameUser>();
             GameUser gameUser = cacheSet.FindKey(userId);
             if (gameUser == null)
             {
@@ -83,7 +83,7 @@ namespace ZyGames.Tianjiexing.Model
                 //int periodTime = GameEnvironment.CacheUserPeriod;
                 //GameLoadManager.Add(new GameUserDataLoader<GameUser>(isAuto, fieldName, userId.ToInt(), 1, periodTime), ignore);
 
-                var cacheSet = new GameDataCacheSet<GameUser>();
+                var cacheSet = new PersonalCacheStruct<GameUser>();
                 GameUser gameUser = cacheSet.FindKey(personalId);
                 string pid = gameUser != null ? gameUser.Pid : string.Empty;
 
@@ -97,10 +97,10 @@ namespace ZyGames.Tianjiexing.Model
                     //gameUser.IsOnline = false;
                     //gameUser.OnlineDate = DateTime.Now;
                 }
-                //new GameDataCacheSet<UserShengJiTa>().AutoLoad(personalId);
-                //new GameDataCacheSet<UserShengJiTa>().AutoLoad("1448620");
-                //new GameDataCacheSet<UserShengJiTa>().AutoLoad("1449220");
-                //new GameDataCacheSet<UserShengJiTa>().AutoLoad("1449182");
+                //new PersonalCacheStruct<UserShengJiTa>().AutoLoad(personalId);
+                //new PersonalCacheStruct<UserShengJiTa>().AutoLoad("1448620");
+                //new PersonalCacheStruct<UserShengJiTa>().AutoLoad("1449220");
+                //new PersonalCacheStruct<UserShengJiTa>().AutoLoad("1449182");
 
                 gameUser.IsRefreshing = true;
                 gameUser.IsRefreshing = false;
@@ -109,7 +109,7 @@ namespace ZyGames.Tianjiexing.Model
 
         public static GameUser GetGameUser(string userID)
         {
-            var cacheSet = new GameDataCacheSet<GameUser>();
+            var cacheSet = new PersonalCacheStruct<GameUser>();
             GameUser userInfo = cacheSet.FindKey(userID);
             if (userInfo == null)
             {

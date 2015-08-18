@@ -33,7 +33,7 @@ namespace ZyGames.Tianjiexing.Model.ConfigModel
     /// <summary>
     /// 招募规则信息表
     /// </summary>
-    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config, "RecruitRule")]
+    [Serializable, ProtoContract, EntityTable(AccessLevel.ReadOnly, DbConfig.Config)]
     public class RecruitRule : ShareEntity
     {
         public RecruitRule()

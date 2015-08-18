@@ -33,7 +33,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Model;
 
@@ -80,7 +80,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         private static UserFunction GetUserFunction(string userID, FunctionEnum funEnum)
         {
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             UserFunction function1 = cacheSet.FindKey(userID, funEnum);
             if (function1 != null)
             {

@@ -8,7 +8,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -48,7 +48,7 @@ def buildPacket(writer, urlParam, actionResult):
     for info in actionResult.List:
         if info :
             ds = DataStruct();
-            itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(info.ItemID);
+            itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(info.ItemID);
             HeadID='';
             ItemName='';
             ItemDesc='';

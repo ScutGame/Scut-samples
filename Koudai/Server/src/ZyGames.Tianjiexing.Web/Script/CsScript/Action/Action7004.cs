@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Net;
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(_itemId);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(_itemId);
             //UserItemHelper.AddUserItem(ContextUser.UserID, 1702, 1);
             //UserItemHelper.AddUserItem(ContextUser.UserID, 1701, 1);
             //UserItemHelper.AddUserItem(ContextUser.UserID, 1213, 1);
@@ -102,7 +102,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
             //读取物品信息
-            MallItemsInfo mallItemInfo = new ConfigCacheSet<MallItemsInfo>().FindKey(_itemId, CityId, _commandType);
+            MallItemsInfo mallItemInfo = new ShareCacheStruct<MallItemsInfo>().FindKey(_itemId, CityId, _commandType);
             if (mallItemInfo == null)
             {
                 return false;
@@ -171,7 +171,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         //判断背包是否已满
         public static bool IsBeiBaoFull(GameUser user, int itembaseId)
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itembaseId);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itembaseId);
             if (itemInfo != null)
             {
                 var package = UserItemPackage.Get(user.UserID);

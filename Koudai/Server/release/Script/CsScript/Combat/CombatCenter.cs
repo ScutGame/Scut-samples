@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         private static void ReplaceGeneralPostion(string userID, IGeneral replaceGeneral)
         {
-            var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, replaceGeneral.GeneralID);
+            var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, replaceGeneral.GeneralID);
             if (userGeneral != null)
             {
                 userGeneral.ReplacePosition = replaceGeneral.Position;

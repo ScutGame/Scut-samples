@@ -14,7 +14,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -60,7 +60,7 @@ def takeAction(urlParam, parent):
         actionResult.Result = False;
         return actionResult;
 
-    userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+    userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
     if not userPlotPackage:
         return loadError();
     plotPackage = userPlotPackage.PlotPackage.Find(match=lambda x:x.PlotID == urlParam.plotID);  # 玩家地图信息，and 类型为考古
@@ -68,7 +68,7 @@ def takeAction(urlParam, parent):
         return loadError();
     actionResult.plotPackage = plotPackage;
 
-    plotNpcInfo = ConfigCacheSet[PlotNPCInfo]().FindKey(plotPackage.CurrPlotNpcID);
+    plotNpcInfo = ShareCacheStruct[PlotNPCInfo]().FindKey(plotPackage.CurrPlotNpcID);
     if not plotNpcInfo or plotNpcInfo.IsBoss == False:
         return loadError();
     actionResult.npcInfo = plotNpcInfo;
@@ -112,7 +112,7 @@ def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(len(rewardList));
     for info in rewardList:
         dsItem = DataStruct();
-        itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(info.ItemID);
+        itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(info.ItemID);
         dsItem.PushIntoStack(itemInfo.ItemName if itemInfo else '');
         dsItem.PushIntoStack(info.HeadID);
         writer.PushIntoStack(dsItem);

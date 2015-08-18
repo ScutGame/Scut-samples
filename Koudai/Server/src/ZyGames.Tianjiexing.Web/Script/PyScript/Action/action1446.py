@@ -8,7 +8,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -53,7 +53,7 @@ def takeAction(urlParam, parent):
         GeneralHelper.HeritageGeneral(contextUser, urlParam.ops);
     heritage = actionResult.heritageList.Find(lambda s:s.Type == HeritageType.Heritage);
     if heritage != None:
-        uGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId, heritage.GeneralID);
+        uGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId, heritage.GeneralID);
         if uGeneral == None:
             urlParam.disGeneralName = '';
         else:
@@ -61,7 +61,7 @@ def takeAction(urlParam, parent):
         generlv = heritage.GeneralLv;
     heritageGeneral = actionResult.heritageList.Find(lambda s:s.Type == HeritageType.IsHeritage);
     if heritageGeneral != None:
-        uGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId, heritageGeneral.GeneralID);
+        uGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId, heritageGeneral.GeneralID);
         if uGeneral == None:
             urlParam.heritageName = '';
         else:
@@ -81,8 +81,8 @@ def takeAction(urlParam, parent):
 def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(actionResult.heritageList.Count);
     for item in actionResult.heritageList:
-        userGeneral = GameDataCacheSet[UserGeneral]().FindKey(urlParam.userID, item.GeneralID);
-        general = ConfigCacheSet[GeneralInfo]().FindKey(item.GeneralID);
+        userGeneral = PersonalCacheStruct[UserGeneral]().FindKey(urlParam.userID, item.GeneralID);
+        general = ShareCacheStruct[GeneralInfo]().FindKey(item.GeneralID);
         dsItem = DataStruct();
         dsItem.PushShortIntoStack(MathUtils.ToShort(item.Type));
         if userGeneral == None:

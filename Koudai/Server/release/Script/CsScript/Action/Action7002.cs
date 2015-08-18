@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -60,7 +60,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(mysteryShopsList.Count);
             foreach (MysteryShops shops in mysteryShopsList)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(shops.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(shops.ItemID);
                 int mallPrice = 0;
                 if (itemInfo != null)
                 {
@@ -86,7 +86,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            if (new GameDataCacheSet<UserFunction>().FindKey(Uid, FunctionEnum.Shengmishangdian) == null)
+            if (new PersonalCacheStruct<UserFunction>().FindKey(Uid, FunctionEnum.Shengmishangdian) == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St_NoFun;

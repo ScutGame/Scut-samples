@@ -9,7 +9,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -57,7 +57,7 @@ def takeAction(urlParam, parent):
             parent.ErrorInfo = LanguageManager.GetLang().St1419_IsHeritageNotEnough;
             actionResult.Result = False;
             return actionResult;
-        cacheSet = GameDataCacheSet[UserGeneral]();
+        cacheSet = PersonalCacheStruct[UserGeneral]();
         general = cacheSet.FindKey(userId, heritage.GeneralID);
         heritagegeneral = cacheSet.FindKey(userId, gheritage.GeneralID);
             
@@ -143,7 +143,7 @@ def takeAction(urlParam, parent):
         lv = MathUtils.Subtraction(heritagegeneral.GeneralLv,ishgenerLv)
         for i in range(0,lv):
             GeneralHelper.GeneralUpgradeproperty(heritagegeneral)
-        embattleList = GameDataCacheSet[UserEmbattle]().FindAll(userId, lambda s:s.GeneralID == general.GeneralID,True);
+        embattleList = PersonalCacheStruct[UserEmbattle]().FindAll(userId, lambda s:s.GeneralID == general.GeneralID,True);
         for embattle in embattleList:
             embattle.GeneralID = 0;
         contextUser.HeritageList.Remove(heritage);
@@ -170,7 +170,7 @@ def isNomalHeritage(userID, opsType):
     if opsInfo != None:
         itemid = opsInfo.ItemID;
         itemnum = opsInfo.ItemNum;
-        itemInfo = ConfigCacheSet[ItemBaseInfo]().FindKey(itemid);
+        itemInfo = ShareCacheStruct[ItemBaseInfo]().FindKey(itemid);
     if itemid > 0 and itemnum > 0:
         package = UserItemPackage.Get(userID);
         if package != None:
