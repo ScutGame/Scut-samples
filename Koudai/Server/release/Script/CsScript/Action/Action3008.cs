@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -46,8 +46,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.StoryTask).CurVersion;
-            taskList = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
+            int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.StoryTask).CurVersion;
+            taskList = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
             return true;
         }
 

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -52,7 +52,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userItemArray.Length);
             foreach (var item in userItemArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.UserItemID.ToNotNullString());
                 dsItem.PushIntoStack(itemInfo == null ? string.Empty : itemInfo.ItemName.ToNotNullString());

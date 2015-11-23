@@ -28,7 +28,7 @@ using System.Linq;
 using ZyGames.Framework.Collection.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -310,7 +310,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 {
                     _userList.Add(_userId, teamId);
                 }
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(_userId);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(_userId);
                 team.Append(gameUser);
                 return true;
             }
@@ -319,12 +319,12 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         public bool IsCombat(int plotId)
         {
-            var plot = new ConfigCacheSet<PlotInfo>().FindKey(plotId);
+            var plot = new ShareCacheStruct<PlotInfo>().FindKey(plotId);
             if (plot != null)
             {
                 //todo
                 var userPlot = UserPlotHelper.GetUserPlotInfo(_userId, plot.PrePlotID);
-                    //new GameDataCacheSet<UserPlot>().FindKey(_userId, plot.PrePlotID);)
+                    //new PersonalCacheStruct<UserPlot>().FindKey(_userId, plot.PrePlotID);)
                 if (userPlot != null && userPlot.PlotStatus == PlotStatus.Completed)
                 {
                     //string key = _userId + plotId;
@@ -339,7 +339,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         public bool IsMoreCombat(int plotId)
         {
-            var plot = new ConfigCacheSet<PlotInfo>().FindKey(plotId);
+            var plot = new ShareCacheStruct<PlotInfo>().FindKey(plotId);
             if (plot != null)
             {
                 //string key = _userId + plotId;
@@ -359,10 +359,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         {
             List<MorePlot> morePlotsList = new List<MorePlot>();
             var plotsArray = UserPlotHelper.UserPlotFindAll(_userId);
-                // todo new GameDataCacheSet<UserPlot>().FindAll(_userId);)
+                // todo new PersonalCacheStruct<UserPlot>().FindAll(_userId);)
             foreach (UserPlotInfo plot in plotsArray)
             {
-                var morePlotArray = new ConfigCacheSet<PlotInfo>().FindAll(u => u.PlotType == PlotType.MorePlot && u.PrePlotID == plot.PlotID);
+                var morePlotArray = new ShareCacheStruct<PlotInfo>().FindAll(u => u.PlotType == PlotType.MorePlot && u.PrePlotID == plot.PlotID);
 
                 if (morePlotArray.Count > 0)
                 {
@@ -386,11 +386,11 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             var morePlotArray = new List<PlotInfo>();
             if (functionEnum == FunctionEnum.MorePlotCoin)
             {
-                morePlotArray = new ConfigCacheSet<PlotInfo>().FindAll(m => m.PlotType == PlotType.MorePlotCoin);
+                morePlotArray = new ShareCacheStruct<PlotInfo>().FindAll(m => m.PlotType == PlotType.MorePlotCoin);
             }
             else if (functionEnum == FunctionEnum.MorePlotEnergy)
             {
-                morePlotArray = new ConfigCacheSet<PlotInfo>().FindAll(m => m.PlotType == PlotType.MorePlotEnergy);
+                morePlotArray = new ShareCacheStruct<PlotInfo>().FindAll(m => m.PlotType == PlotType.MorePlotEnergy);
             }
             if (morePlotArray.Count > 0)
             {
@@ -438,7 +438,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 //退出组队
                 if (!LeaveTeam(teamId)) return false;
             }
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(_userId);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(_userId);
             teamId = Create(gameUser, plotId);
             return true;
         }
@@ -476,7 +476,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         }
         private MorePlot GetItem(int plotId)
         {
-            var plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotId);
+            var plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotId);
             MorePlot morePlot = new MorePlot
             {
                 PlotID = plotId,
@@ -496,7 +496,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 string[] itemArray = itemRandArray[0].Split('=');
                 if (itemArray.Length == 2)
                 {
-                    var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemArray[0]);
+                    var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemArray[0]);
                     morePlot.ItemId = itemInfo.ItemID;
                     morePlot.ItemName = itemInfo.ItemName;
                     morePlot.ItemNum = Convert.ToInt32(itemArray[1]);
@@ -638,7 +638,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         private void DoCombat(MorePlotTeam team)
         {
             //初始阵形
-            var plotNpcTeam = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == team.MorePlot.PlotID);
+            var plotNpcTeam = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == team.MorePlot.PlotID);
             List<MonsterQueue> monsterQueueList = new List<MonsterQueue>(plotNpcTeam.Count);
             var userEmbattleList = new List<UserEmbattleQueue>(team.UserList.Count);
             foreach (var npcInfo in plotNpcTeam)
@@ -647,7 +647,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             }
             foreach (var user in team.UserList)
             {
-                var gameUser = new GameDataCacheSet<GameUser>().FindKey(user.UserId);
+                var gameUser = new PersonalCacheStruct<GameUser>().FindKey(user.UserId);
                 userEmbattleList.Add(new UserEmbattleQueue(user.UserId, gameUser.UseMagicID, 0, CombatType.MultiPlot));
             }
             bool isLoop = true;
@@ -713,7 +713,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 var chatService = new TjxChatService();
                 foreach (var user in team.UserList)
                 {
-                    GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(user.UserId);
+                    GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(user.UserId);
                     gameUser.ExpNum = MathUtils.Addition(gameUser.ExpNum, team.MorePlot.ExpNum, int.MaxValue);
                     //gameUser.Update();
                     UserItemHelper.AddUserItem(user.UserId, team.MorePlot.ItemId, team.MorePlot.ItemNum);

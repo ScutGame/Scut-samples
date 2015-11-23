@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -46,7 +46,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private int resetNum = 0;
         private List<CityInfo> _cityInfoList = new List<CityInfo>();
         private int _backpackType = 0;
-        private ConfigCacheSet<PlotInfo> _cacheSetPlot = new ConfigCacheSet<PlotInfo>();
+        private ShareCacheStruct<PlotInfo> _cacheSetPlot = new ShareCacheStruct<PlotInfo>();
         public Action4001(ZyGames.Framework.Game.Contract.HttpGet httpGet)
             : base(ActionIDDefine.Cst_Action4001, httpGet)
         {
@@ -55,7 +55,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override void BuildPacket()
         {
-            var cacheSetItem = new ConfigCacheSet<ItemBaseInfo>();
+            var cacheSetItem = new ShareCacheStruct<ItemBaseInfo>();
             PushIntoStack(_cityInfoList.Count);
             foreach (var city in _cityInfoList)
             {
@@ -113,7 +113,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 if (plotType == PlotType.Normal)
                 {
-                    var plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(userPlot.PlotID);
+                    var plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(userPlot.PlotID);
                     if (plotInfo.PrePlotID > 0)
                     {
                         var preUserPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, plotInfo.PrePlotID);
@@ -127,7 +127,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     if (plotType == PlotType.Elite)
                     {
-                        var plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(userPlot.PlotID);
+                        var plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(userPlot.PlotID);
                         if (plotInfo.PrePlotID > 0 && plotInfo.JYPrePlotID > 0)
                         {
                             var preUserPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, plotInfo.JYPrePlotID);
@@ -154,12 +154,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
         }
         private void PlotLsit()
         {
-            var cacheSet = new GameDataCacheSet<UserPlotPackage>();
+            var cacheSet = new PersonalCacheStruct<UserPlotPackage>();
             var userPlotPack = cacheSet.FindKey(ContextUser.UserID);
             var plotPackList = userPlotPack != null ? userPlotPack.PlotPackage : null;
 
 
-            var cityInfoList = new ConfigCacheSet<CityInfo>().FindAll();
+            var cityInfoList = new ShareCacheStruct<CityInfo>().FindAll();
             foreach (var cityInfo in cityInfoList)
             {
                 var plotInfoList = _cacheSetPlot.FindAll(s => s.CityID == cityInfo.CityID && s.PlotType == plotType);
@@ -205,10 +205,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     PlotLsit();
                 }
             }
-            //var cacheSetUserAbility = new GameDataCacheSet<UserAbility>();
-            //var cacheSetItemPackage = new GameDataCacheSet<UserItemPackage>();
-            //var cacheSetUserGeneral = new GameDataCacheSet<UserGeneral>();
-            //var cacheSetUserPack = new GameDataCacheSet<UserPack>();
+            //var cacheSetUserAbility = new PersonalCacheStruct<UserAbility>();
+            //var cacheSetItemPackage = new PersonalCacheStruct<UserItemPackage>();
+            //var cacheSetUserGeneral = new PersonalCacheStruct<UserGeneral>();
+            //var cacheSetUserPack = new PersonalCacheStruct<UserPack>();
             //var userPack = cacheSetUserPack.FindKey(UserId.ToString());
             //if (userPack != null)
             //{

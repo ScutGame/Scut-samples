@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Cache;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -100,8 +100,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     matureNum = (decimal)userEnchant.MaxMature / GameConfigSet.MaxEnchantMature;
                     maxMature = CombatHelper.EnchantFinalNum(userEnchant);
-                    enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(userEnchant.EnchantID);
-                    EnchantLvInfo enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(userEnchant.EnchantID,
+                    enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(userEnchant.EnchantID);
+                    EnchantLvInfo enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(userEnchant.EnchantID,
                                                                                               userEnchant.EnchantLv);
                     if (enchantLvInfo != null)
                     {

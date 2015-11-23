@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -63,7 +63,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(cityInfo.FgScence.ToNotNullString());
                 dsItem.PushIntoStack(IsExistElite(cityInfo.CityID));
 
-                var cityNpcList = new ConfigCacheSet<CityNpcInfo>().FindAll(m => m.CityID == cityInfo.CityID);
+                var cityNpcList = new ShareCacheStruct<CityNpcInfo>().FindAll(m => m.CityID == cityInfo.CityID);
                 dsItem.PushIntoStack(cityNpcList.Count);
                 foreach (CityNpcInfo cityNpc in cityNpcList)
                 {
@@ -94,12 +94,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            ConfigVersion version = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.City);
+            ConfigVersion version = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.City);
             if (version != null)
             {
-                //int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.City).CurVersion;
+                //int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.City).CurVersion;
                 int currVersion = version.CurVersion;
-                cityList = new ConfigCacheSet<CityInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
+                cityList = new ShareCacheStruct<CityInfo>().FindAll(m => m.Version > ClientVersion && m.Version <= currVersion);
             }
             return true;
         }
@@ -107,14 +107,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private short IsExistElite(int cityId)
         {
             short isPlotType = 0;
-            List<PlotInfo> plotInfoList = new ConfigCacheSet<PlotInfo>().FindAll(m => m.CityID == cityId && m.PlotType == PlotType.HeroPlot);
+            List<PlotInfo> plotInfoList = new ShareCacheStruct<PlotInfo>().FindAll(m => m.CityID == cityId && m.PlotType == PlotType.HeroPlot);
             if (plotInfoList.Count > 0)
             {
                 isPlotType = 2;
             }
             else
             {
-                plotInfoList = new ConfigCacheSet<PlotInfo>().FindAll(m => m.CityID == cityId && m.PlotType == PlotType.Elite);
+                plotInfoList = new ShareCacheStruct<PlotInfo>().FindAll(m => m.CityID == cityId && m.PlotType == PlotType.Elite);
                 if (plotInfoList.Count > 0)
                 {
                     isPlotType = 1;

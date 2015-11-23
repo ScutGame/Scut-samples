@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
@@ -58,7 +58,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userCrystalArray.Count);
             foreach (UserCrystalInfo crystal in userCrystalArray)
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(crystal.UserCrystalID);
                 dsItem.PushIntoStack(crystalInfo == null ? 0 : crystalInfo.CrystalID);
@@ -93,8 +93,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             var package = UserCrystalPackage.Get(publicUserID);
             userCrystalArray = package.CrystalPackage.FindAll(m => m.GeneralID.Equals(_generalID));
-            userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, _generalID);
-            var generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(userGeneral != null ? userGeneral.GeneralID : 0);
+            userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, _generalID);
+            var generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(userGeneral != null ? userGeneral.GeneralID : 0);
             _maxHeadID = generalInfo != null ? generalInfo.PicturesID : string.Empty;
             return true;
         }

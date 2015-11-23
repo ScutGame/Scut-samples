@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -57,7 +57,7 @@ def GetItemBaseInfo(userID, userItemID):
     if package != None:
         useritem = package.ItemPackage.Find(lambda s:not s.IsRemove and s.UserItemID == userItemID);
         if useritem != None and useritem.Num > 0:
-            return ConfigCacheSet[ItemBaseInfo]().FindKey(useritem.ItemID);
+            return ShareCacheStruct[ItemBaseInfo]().FindKey(useritem.ItemID);
     return None;
 
 def takeAction(urlParam, parent):
@@ -67,10 +67,10 @@ def takeAction(urlParam, parent):
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
     urlParam.userID = userId
 
-    usergeneralList = GameDataCacheSet[UserGeneral]().FindAll(userId, lambda s:s.GeneralID != urlParam.generalID and s.GeneralType == GeneralType.YongBing,True);
+    usergeneralList = PersonalCacheStruct[UserGeneral]().FindAll(userId, lambda s:s.GeneralID != urlParam.generalID and s.GeneralType == GeneralType.YongBing,True);
     for item in usergeneralList:
         item.GeneralCard ='';
-    userGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId, urlParam.generalID);
+    userGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId, urlParam.generalID);
     actionResult.userGeneral = userGeneral;
     if userGeneral != None:
         actionResult.nextLv = userGeneral.GeneralLv;
@@ -86,10 +86,10 @@ def takeAction(urlParam, parent):
         urlParam.strUserCardNum = userGeneral.GeneralCardNum.Split(',');
     else:
         urlParam.strUserItemID = [];
-    generalInfo = ConfigCacheSet[GeneralInfo]().FindKey(urlParam.generalID);
+    generalInfo = ShareCacheStruct[GeneralInfo]().FindKey(urlParam.generalID);
     if generalInfo != None:
         urlParam.isUp = 1;       
-    #generalEscalate = ConfigCacheSet[GeneralEscalateInfo]().FindKey(actionResult.nextLv, GeneralType.YongBing);
+    #generalEscalate = ShareCacheStruct[GeneralEscalateInfo]().FindKey(actionResult.nextLv, GeneralType.YongBing);
     #if generalEscalate is not None:
     #    actionResult.upExperience =generalEscalate.UpExperience;
     # 玩家最高等级
@@ -97,7 +97,7 @@ def takeAction(urlParam, parent):
     # 玩家等级
     actionResult.userLv = contextUser.UserLv;
     # 升级经验百分比
-    generalEscalate = ConfigCacheSet[GeneralEscalateInfo]().FindKey(actionResult.nextLv + 1, GeneralType.YongBing);
+    generalEscalate = ShareCacheStruct[GeneralEscalateInfo]().FindKey(actionResult.nextLv + 1, GeneralType.YongBing);
     if generalEscalate:
         actionResult.experiencePercent = generalEscalate.UpExperience
 
@@ -106,7 +106,7 @@ def takeAction(urlParam, parent):
 # 提升到最高等级
 def improveLv(sumExperience, actionResult, tempUserLv):
     #while True:
-    generalEscalate = ConfigCacheSet[GeneralEscalateInfo]().FindKey(actionResult.nextLv + 1, GeneralType.YongBing);
+    generalEscalate = ShareCacheStruct[GeneralEscalateInfo]().FindKey(actionResult.nextLv + 1, GeneralType.YongBing);
     if generalEscalate:
         if sumExperience >= generalEscalate.UpExperience:
             if actionResult.nextLv >= tempUserLv:

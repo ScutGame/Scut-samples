@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Runtime;
@@ -44,7 +44,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
 
         private void Process(string userID, int potential)
         {
-            var generalList = new GameDataCacheSet<UserGeneral>().FindAll(userID);
+            var generalList = new PersonalCacheStruct<UserGeneral>().FindAll(userID);
 
             if (generalList.Count > 0)
             {

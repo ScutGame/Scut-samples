@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -79,7 +79,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            _itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(_useritem.ItemID);
+            _itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(_useritem.ItemID);
             if (_itemInfo == null)
             {
                 ErrorInfo = LanguageManager.GetLang().St1107_UserItemNotEnough;
@@ -112,14 +112,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
             }
 
-            _itemEquArray = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(m => m.ItemID == _useritem.ItemID);
-            List<ItemSynthesisInfo> synthsisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.SynthesisID == _useritem.ItemID);
+            _itemEquArray = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(m => m.ItemID == _useritem.ItemID);
+            List<ItemSynthesisInfo> synthsisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.SynthesisID == _useritem.ItemID);
             if (synthsisArray.Count > 0)
             {
                 var synthsis = synthsisArray[0];
                 if (_itemInfo.ItemType == ItemType.TuZhi || _itemInfo.ItemType == ItemType.TuZhi)
                 {
-                    _itemSynthsisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.ItemID == synthsis.ItemID && m.SynthesisID != _useritem.ItemID);
+                    _itemSynthsisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.ItemID == synthsis.ItemID && m.SynthesisID != _useritem.ItemID);
                 }
             }
 
@@ -156,7 +156,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (string career in _careerList)
             {
                 DataStruct ds = new DataStruct();
-                CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(career);
+                CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(career);
                 ds.PushIntoStack(careerInfo == null ? (short)0 : (short)careerInfo.CareerID);
                 ds.PushIntoStack(careerInfo == null ? string.Empty : careerInfo.CareerName.ToNotNullString());
                 PushIntoStack(ds);
@@ -169,7 +169,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (ItemSynthesisInfo synthesis in _itemSynthsisArray)
             {
                 int maxNum = GetItemMaxNum(synthesis);
-                ItemBaseInfo tempItem = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
+                ItemBaseInfo tempItem = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
 
                 DataStruct ds = new DataStruct();
                 ds.PushIntoStack(synthesis.SynthesisID);

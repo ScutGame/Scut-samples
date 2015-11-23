@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -45,7 +45,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
     {
         private static readonly string[] ScorePercent = ConfigEnvSet.GetString("Plot.ScorePercent").Split(new[] { ',' });
         private static readonly double ScorePrizePercent = ConfigEnvSet.GetDouble("Plot.ScorePrizePercent");
-        public static GameDataCacheSet<UserDailyRestrain> _cacheSetUserDaily = new GameDataCacheSet<UserDailyRestrain>();
+        public static PersonalCacheStruct<UserDailyRestrain> _cacheSetUserDaily = new PersonalCacheStruct<UserDailyRestrain>();
         /// <summary>
         /// 开启副本
         /// </summary>
@@ -79,8 +79,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 packge.SaveItem(userPlot);
                 if (userPlot.PlotType == PlotType.Kalpa)
                 {
-                    PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotId);
-                    GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userId);
+                    PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotId);
+                    GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userId);
                     if (plotInfo == null || userInfo == null)
                     {
                         return;
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             var userPlot = UserPlotHelper.GetUserPlotInfo(userID, plotID);
             if (userPlot != null)
             {
-                PlotInfo[] plotInfoArray = new ConfigCacheSet<PlotInfo>().FindAll(m => m.PlotType == PlotType.HeroPlot && m.PrePlotID == plotID).ToArray();
+                PlotInfo[] plotInfoArray = new ShareCacheStruct<PlotInfo>().FindAll(m => m.PlotType == PlotType.HeroPlot && m.PrePlotID == plotID).ToArray();
                 foreach (PlotInfo info in plotInfoArray)
                 {
                     var uplot = UserPlotHelper.GetUserPlotInfo(userID, info.PlotID);
@@ -140,15 +140,15 @@ namespace ZyGames.Tianjiexing.BLL.Base
             int turnsNum = 0;
             int battleNum = 0;
 
-            List<UserQueue> queueList = new GameDataCacheSet<UserQueue>().FindAll(userID, m => m.QueueType == QueueType.SaoDang);
+            List<UserQueue> queueList = new PersonalCacheStruct<UserQueue>().FindAll(userID, m => m.QueueType == QueueType.SaoDang);
             if (queueList.Count == 0)
             {
                 return false;
             }
             UserQueue saodangQueue = queueList[0];
-            var npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
+            var npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
             int npcCount = npcList.Count;
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
 
             while (HasSweep(userID, plotID, saodangQueue.GetTiming(), npcCount, out turnsNum, out battleNum))
             {
@@ -189,7 +189,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 if (gameUser.UserStatus != UserStatus.Normal)
                 {
-                    var cacheSet = new GameDataCacheSet<UserQueue>();
+                    var cacheSet = new PersonalCacheStruct<UserQueue>();
                     cacheSet.Delete(saodangQueue);
 
                     gameUser.UserStatus = UserStatus.Normal;
@@ -238,7 +238,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             turnsNum = 0;
             timesNum = 0;
 
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(userId);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(userId);
             if (gameUser.SweepPool == null)
             {
                 gameUser.SweepPool = new SweepPoolInfo { PlotID = plotID, TurnsNum = 0, BattleNum = 0 };
@@ -270,18 +270,18 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="npcCount"></param>
         internal static void DoPlotSweepPrize(string userID, int plotID, int turnsNum, int battleNum, int npcCount)
         {
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (user == null)
             {
                 return;
             }
 
             int experience = 0;
-            var npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotID && m.NpcSeqNo == battleNum);
+            var npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotID && m.NpcSeqNo == battleNum);
             if (npcList.Count == 0) return;
             PlotNPCInfo npcInfo = npcList[0];
             experience += npcInfo.Experience;
-            var cacheSet = new GameDataCacheSet<UserSweepPool>();
+            var cacheSet = new PersonalCacheStruct<UserSweepPool>();
             UserSweepPool sweepPool = cacheSet.FindKey(userID, turnsNum, battleNum);
             if (sweepPool == null)
             {
@@ -315,12 +315,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
             if (battleNum == npcCount)
             {
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
 
                 experience += plotInfo.Experience;
                 //通关奖励
                 int tempNum = 10;
-                //var cacheSet = new GameDataCacheSet<UserSweepPool>();
+                //var cacheSet = new PersonalCacheStruct<UserSweepPool>();
                 if (cacheSet.FindKey(userID, turnsNum, tempNum) == null)
                 {
                     sweepPool = new UserSweepPool
@@ -385,14 +385,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
             honourNum = 0;
             int experience = 0;
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotNpcInfo.PlotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotNpcInfo.PlotID);
             var package = UserPlotPackage.Get(userID);
             if (plotInfo == null || plotNpcInfo == null || userPlotCombat == null || package == null)
             {
                 return;
             }
 
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
 
             if (user != null)
             {
@@ -405,10 +405,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     userPlotCombat.Experience = MathUtils.RoundCustom(experience * CombatHelper.GetGuildAbilityNum(user.UserID, GuildAbilityType.Experience)).ToInt();
                     experience = userPlotCombat.Experience;
                 }
-                var cacheSetGeneral = new GameDataCacheSet<UserGeneral>();
-                var userMagic = new GameDataCacheSet<UserMagic>().Find(user.UserID, s => s.IsEnabled);
+                var cacheSetGeneral = new PersonalCacheStruct<UserGeneral>();
+                var userMagic = new PersonalCacheStruct<UserMagic>().Find(user.UserID, s => s.IsEnabled);
                 int userMagicID = userMagic == null ? 0 : userMagic.MagicID;
-                var userEmbattleList = new GameDataCacheSet<UserEmbattle>().FindAll(userID, s => s.MagicID == userMagicID && s.GeneralID > 0);
+                var userEmbattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, s => s.MagicID == userMagicID && s.GeneralID > 0);
                 int generalNum = 0;
                 userEmbattleList.ForEach(userEmbattle =>
                 {
@@ -446,7 +446,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     }
 
                     NoviceHelper.PlotFestivalList(user, plotInfo.PlotID); //活动集合
-                    List<UserPlotCombat> preUserPlotList = new GameDataCacheSet<UserPlotCombat>().FindAll(userID, m => !m.PlotNpcID.Equals(userPlotCombat.PlotNpcID) && m.PlotID == plotNpcInfo.PlotID);
+                    List<UserPlotCombat> preUserPlotList = new PersonalCacheStruct<UserPlotCombat>().FindAll(userID, m => !m.PlotNpcID.Equals(userPlotCombat.PlotNpcID) && m.PlotID == plotNpcInfo.PlotID);
                     preUserPlotList.Add(userPlotCombat);
                     List<UserPlotCombat> plotCombatList = preUserPlotList;
                     short starScore;
@@ -547,7 +547,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         if (itemList.Count > 0)
                         {
                             userPlot.ItemID = itemList[0].ItemID;
-                            var item = new ConfigCacheSet<ItemBaseInfo>().FindKey(userPlot.ItemID);
+                            var item = new ShareCacheStruct<ItemBaseInfo>().FindKey(userPlot.ItemID);
                             itemName = item != null ? item.ItemName : string.Empty;
                         }
                     }
@@ -748,7 +748,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static void AddExprerience(GameUser user, int experience)
         {
             string userID = user.UserID;
-            var userEmbattleList = new GameDataCacheSet<UserEmbattle>().FindAll(userID, m => m.MagicID == user.UseMagicID);
+            var userEmbattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, m => m.MagicID == user.UseMagicID);
             HashSet<int> generalHash = new HashSet<int>();
             foreach (UserEmbattle userEmbattle in userEmbattleList)
             {
@@ -763,7 +763,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 {
                     generalHash.Add(userEmbattle.GeneralID);
                 }
-                //UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, userEmbattle.GeneralID);
+                //UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, userEmbattle.GeneralID);
                 //if (userGeneral != null)
                 //{
                 //    userGeneral.CurrExperience = MathUtils.Addition(userGeneral.CurrExperience, experience);
@@ -805,15 +805,15 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static CacheList<PrizeItemInfo> GetPlotMonsterItems(string userID, int plotNpcID)
         {
             CacheList<PrizeItemInfo> itemList = new CacheList<PrizeItemInfo>();
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo != null)
             {
                 int doubleitem = GetDouble(userID, plotNpcID);
                 int multiple = FestivalHelper.DuplicateDropDouble(userID);
-                List<PlotEmbattleInfo> embattleInfoList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcID);
+                List<PlotEmbattleInfo> embattleInfoList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcID);
                 foreach (PlotEmbattleInfo embattleInfo in embattleInfoList)
                 {
-                    MonsterInfo monster = new ConfigCacheSet<MonsterInfo>().FindKey(embattleInfo.MonsterID);
+                    MonsterInfo monster = new ShareCacheStruct<MonsterInfo>().FindKey(embattleInfo.MonsterID);
                     if (monster == null)
                     {
                         continue;
@@ -873,12 +873,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             var chatService = new TjxChatService();
             CacheList<PrizeItemInfo> itemList = new CacheList<PrizeItemInfo>();
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo == null)
             {
                 return itemList;
             }
-            PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(plotNpcID);
+            PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(plotNpcID);
             GetKalpaplotSparePart(userInfo, itemList, npcInfo, chatService);
             GetKalpaplotEnchant(userInfo, itemList, plotID);
             return itemList;
@@ -895,7 +895,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             if (npcInfo != null && RandomUtils.IsHit(npcInfo.SparePartProbability))
             {
-                SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(npcInfo.SparePartID);
+                SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(npcInfo.SparePartID);
                 if (partInfo != null && SparePartInfo.IsExist(npcInfo.SparePartID))
                 {
                     UserSparePart sparePart = UserSparePart.GetRandom(npcInfo.SparePartID);
@@ -969,7 +969,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         private static CacheList<PrizeItemInfo> GetKalpaPrizeItems(string userID, decimal itemProbability, string itemRank, int plotID, UserPlotInfo userPlot)
         {
             var itemList = new CacheList<PrizeItemInfo>();
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             if (plotInfo == null)
             {
                 return itemList;
@@ -1005,7 +1005,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 if (itemArray.Length == 2)
                 {
                     int itemId = itemArray[0].ToInt();
-                    if (new ConfigCacheSet<ItemBaseInfo>().FindKey(itemId) != null)
+                    if (new ShareCacheStruct<ItemBaseInfo>().FindKey(itemId) != null)
                     {
                         PrizeItemInfo itemInfo = itemList.Find(m => m.ItemID == itemId);
                         if (itemInfo == null)
@@ -1026,7 +1026,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
             }
             List<UniversalInfo> universalInfoList = new List<UniversalInfo>();
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             foreach (var itemInfo in itemList)
             {
                 UserItemHelper.AddUserItem(userID, itemInfo.ItemID, itemInfo.Num, universalInfoList);
@@ -1107,7 +1107,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     num = items[0].Split('=')[1].ToInt();
                 }
 
-                var itemBase = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemId);
+                var itemBase = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemId);
                 if (itemBase != null)
                 {
                     PrizeItemInfo prizeItem = itemList.Find(m => m.ItemID == itemId);
@@ -1128,7 +1128,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
 
             }
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             foreach (var itemInfo in itemList)
             {
 
@@ -1171,14 +1171,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         private static int GetDouble(string UserID, int plotNpcID)
         {
-            PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(plotNpcID);
+            PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(plotNpcID);
             if (npcInfo != null)
             {
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(npcInfo.PlotID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(npcInfo.PlotID);
                 if (plotInfo != null && plotInfo.PlotType == PlotType.Normal)
                 {
                     int ItemID = 7003;
-                    UserProps props = new GameDataCacheSet<UserProps>().FindKey(UserID, ItemID);
+                    UserProps props = new PersonalCacheStruct<UserProps>().FindKey(UserID, ItemID);
                     if (props != null && props.SurplusNum > 0)
                     {
                         props.SurplusNum = MathUtils.Subtraction(props.SurplusNum, 1, 0);
@@ -1194,7 +1194,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             int resetNum = 0;
             UserHelper.ChechDailyRestrain(userID);
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (VipHelper.GetVipOpenFun(vipLv, ExpandType.ZhongZhiJingYingPlot))
             {
                 resetNum = MathUtils.Addition(resetNum, 1, int.MaxValue);
@@ -1219,7 +1219,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int HeroRefreshNum(string userID, int cityID)
         {
             int heroNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && dailyRestrain.UserExtend != null && dailyRestrain.UserExtend.HeroPlot.Count > 0)
             {
                 List<HeroPlot> heroPlotsList = dailyRestrain.UserExtend.HeroPlot;
@@ -1268,7 +1268,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="_cityID"></param>
         public static void HeroDailyRestrain(string userID, int plotID, int _cityID)
         {
-            var cacheSet = new GameDataCacheSet<UserDailyRestrain>();
+            var cacheSet = new PersonalCacheStruct<UserDailyRestrain>();
             UserDailyRestrain userRestrain = cacheSet.FindKey(userID);
             if (userRestrain != null)
             {
@@ -1304,8 +1304,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsKill(string userID, int plotID, int cityID)
         {
             bool isKill = false;
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (plotInfo.PlotType == PlotType.Elite)
             {
                 if (userRestrain != null && userRestrain.FunPlot != null)
@@ -1350,19 +1350,19 @@ namespace ZyGames.Tianjiexing.BLL.Base
         private static EnchantInfo GetPrizeEnchant(string userID, int plotID)
         {
             EnchantInfo enchantInfo = new EnchantInfo();
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             if (plotInfo != null)
             {
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
-                UserFunction userFunction = new GameDataCacheSet<UserFunction>().FindKey(userID, FunctionEnum.Enchant);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
+                UserFunction userFunction = new PersonalCacheStruct<UserFunction>().FindKey(userID, FunctionEnum.Enchant);
                 if (userInfo != null && userFunction != null && RandomUtils.IsHit(plotInfo.EnchantProbability))
                 {
                     string[] enchants = plotInfo.EnchantID.Trim().Split(new[] { ',' });
                     int index = RandomUtils.GetRandom(0, enchants.Length);
                     int enID = enchants[index].ToInt();
-                    if (new ConfigCacheSet<EnchantInfo>().FindKey(enID) != null)
+                    if (new ShareCacheStruct<EnchantInfo>().FindKey(enID) != null)
                     {
-                        enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enID);
+                        enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enID);
                     }
                 }
             }
@@ -1377,7 +1377,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static void EnchantAddUser(GameUser userInfo, int enchantID)
         {
             UserEnchantInfo userenchant = EnchantHelper.GetUserEnchantInfo(enchantID);
-            EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchantID);
+            EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchantID);
             var package = UserEnchant.Get(userInfo.UserID);
             if (userenchant != null && enchantInfo != null && package != null)
             {
@@ -1406,7 +1406,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int GetPlotChallengeNum(string userId, int plotId)
         {
             int num = 0;
-            var cacheSetUserPlot = new GameDataCacheSet<UserPlotPackage>();
+            var cacheSetUserPlot = new PersonalCacheStruct<UserPlotPackage>();
             var userPlot = cacheSetUserPlot.FindKey(userId);
             var plot = userPlot != null && userPlot.PlotPackage != null
                            ? userPlot.PlotPackage.Find(s => s.PlotID == plotId)
@@ -1428,7 +1428,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool GetPlotIsOne(string userId, int plotId)
         {
             bool isOne = false;
-            var cacheSetUserPlot = new GameDataCacheSet<UserPlotPackage>();
+            var cacheSetUserPlot = new PersonalCacheStruct<UserPlotPackage>();
             var userPlot = cacheSetUserPlot.FindKey(userId);
             var plot = userPlot != null && userPlot.PlotPackage != null
                            ? userPlot.PlotPackage.Find(s => s.PlotID == plotId)

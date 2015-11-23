@@ -26,7 +26,7 @@ using System.Data;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.BLL.Base;
 
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            GeneralEscalateInfo escalateInfo = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(ContextUser.UserLv, GeneralType.YongHu);
+            GeneralEscalateInfo escalateInfo = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(ContextUser.UserLv, GeneralType.YongHu);
             if (escalateInfo != null)
             {
                 leadership = escalateInfo.Leadership;

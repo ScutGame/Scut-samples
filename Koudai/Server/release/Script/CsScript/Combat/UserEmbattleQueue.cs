@@ -28,7 +28,7 @@ using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -100,10 +100,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             _magicID = magicID;
             _combatType = combatType;
             //修复玩家开启的阵法与GameUser中的阵法ID不同
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userInfo != null)
             {
-                var magicsArray = new GameDataCacheSet<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.MoFaZhen && m.IsEnabled);
+                var magicsArray = new PersonalCacheStruct<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.MoFaZhen && m.IsEnabled);
                 if (magicsArray.Count > 0 && userInfo.UseMagicID != magicsArray[0].MagicID)
                 {
                     userInfo.UseMagicID = magicsArray[0].MagicID;
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                     _magicID = magicsArray[0].MagicID;
                 }
             }
-            embattleList = new GameDataCacheSet<UserEmbattle>().FindAll(userID, m => m.MagicID == magicID);
+            embattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, m => m.MagicID == magicID);
 
             short replacePotion = GeneralReplaceAttack.CheckReplacePostion(userID);
 
@@ -169,14 +169,14 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         private CombatGeneral Create(UserEmbattle embattle, double inspirePercent, short replacePotion)
         {
             GameUser userInfo = UserCacheGlobal.CheckLoadUser(embattle.UserID);
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(embattle.UserID, embattle.GeneralID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(embattle.UserID, embattle.GeneralID);
             if (userGeneral == null || userInfo == null)
             {
                 return null;
             }
 
-            AbilityInfo ability = new ConfigCacheSet<AbilityInfo>().FindKey(userGeneral.AbilityID);
-            CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(userGeneral.CareerID);
+            AbilityInfo ability = new ShareCacheStruct<AbilityInfo>().FindKey(userGeneral.AbilityID);
+            CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(userGeneral.CareerID);
 
             if (ability == null || careerInfo == null)
             {
@@ -195,7 +195,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             short powerNum = MathUtils.Addition(userGeneral.PowerNum, userGeneral.TrainingPower, short.MaxValue);
             short soulNum = MathUtils.Addition(userGeneral.SoulNum, userGeneral.TrainingSoul, short.MaxValue);
             short intellectNum = MathUtils.Addition(userGeneral.IntellectNum, userGeneral.TrainingIntellect, short.MaxValue);
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(embattle.UserID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(embattle.UserID);
             if (user != null && !string.IsNullOrEmpty(user.MercenariesID) && userGeneral.GeneralID == LanguageManager.GetLang().GameUserGeneralID)
             {
                 powerNum = MathUtils.RoundCustom(powerNum * CombatHelper.GetGuildAbilityNum(user.UserID, GuildAbilityType.PowerNum)).ToShort();
@@ -304,7 +304,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         private static decimal GetCareerAddition(CareerInfo careerInfo, AbilityType abilityType)
         {
-            CareerAdditionInfo addition = new ConfigCacheSet<CareerAdditionInfo>().FindKey(careerInfo.CareerID, abilityType);
+            CareerAdditionInfo addition = new ShareCacheStruct<CareerAdditionInfo>().FindKey(careerInfo.CareerID, abilityType);
             return addition != null ? addition.AdditionNum : 0;
         }
         /// <summary>
@@ -316,7 +316,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         {
             if(_combatType==CombatType.ShengJiTa)
             {
-                var cacheSetUserSJT = new GameDataCacheSet<UserShengJiTa>();
+                var cacheSetUserSJT = new PersonalCacheStruct<UserShengJiTa>();
                 var userSJT = cacheSetUserSJT.FindKey(embattle.UserID);
                 if (userSJT != null)
                 {
@@ -338,7 +338,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <param name="general"></param>
         public static void KarmaAddition(string userId, CombatGeneral general)
         {
-            var cacheSetKarma = new ConfigCacheSet<KarmaInfo>();
+            var cacheSetKarma = new ShareCacheStruct<KarmaInfo>();
             var karmaInfo = cacheSetKarma.FindKey(general.GeneralID);
             if (karmaInfo != null && karmaInfo.KarmaList != null && karmaInfo.KarmaList.Count > 0)
             {
@@ -366,7 +366,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
                             break;
                         case KarmaType.ZhuangBei:
-                            var cacheSetItem = new GameDataCacheSet<UserItemPackage>();
+                            var cacheSetItem = new PersonalCacheStruct<UserItemPackage>();
                             var userItem = cacheSetItem.FindKey(userId);
                             if (userItem != null && userItem.ItemPackage != null)
                             {
@@ -387,7 +387,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                             }
                             break;
                         case KarmaType.JiNen:
-                            var cacheSetAbility = new GameDataCacheSet<UserAbility>();
+                            var cacheSetAbility = new PersonalCacheStruct<UserAbility>();
                             var ability = cacheSetAbility.FindKey(userId);
                             if (ability != null && ability.AbilityList != null)
                             {
@@ -409,7 +409,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                             }
                             break;
                         case KarmaType.ShuiJing:
-                            var cacheSetCrystal = new GameDataCacheSet<UserCrystalPackage>();
+                            var cacheSetCrystal = new PersonalCacheStruct<UserCrystalPackage>();
                             var userCrystal = cacheSetCrystal.FindKey(userId);
 
                             if (userCrystal != null && userCrystal.CrystalPackage != null)
@@ -912,11 +912,11 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             }
             //阵法攻击
             int magicLv = 0;
-            UserMagic userMagic = new GameDataCacheSet<UserMagic>().FindKey(this._userID, this._magicID);
+            UserMagic userMagic = new PersonalCacheStruct<UserMagic>().FindKey(this._userID, this._magicID);
             if (userMagic != null)
             {
                 magicLv = userMagic.MagicLv;
-                MagicLvInfo mlv = new ConfigCacheSet<MagicLvInfo>().FindKey(this._magicID, magicLv);
+                MagicLvInfo mlv = new ShareCacheStruct<MagicLvInfo>().FindKey(this._magicID, magicLv);
                 if (mlv != null)
                 {
                     SetAbilityValue(general, mlv.AbilityType, mlv.EffectNum);
@@ -924,10 +924,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             }
 
             //魔术技能攻击
-            var userMagicList = new GameDataCacheSet<UserMagic>().FindAll(_userID, m => m.MagicType == MagicType.JiNeng);
+            var userMagicList = new PersonalCacheStruct<UserMagic>().FindAll(_userID, m => m.MagicType == MagicType.JiNeng);
             foreach (UserMagic item in userMagicList)
             {
-                MagicLvInfo magicLvItem = new ConfigCacheSet<MagicLvInfo>().FindKey(item.MagicID, item.MagicLv);
+                MagicLvInfo magicLvItem = new ShareCacheStruct<MagicLvInfo>().FindKey(item.MagicID, item.MagicLv);
                 if (magicLvItem != null)
                 {
                     SetAbilityValue(general, magicLvItem.AbilityType, magicLvItem.EffectNum);
@@ -954,7 +954,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <returns></returns>
         private static void SetSparePart(CombatGeneral general, UserItemInfo item)
         {
-            var user = new GameDataCacheSet<GameUser>().FindKey(general.UserID);
+            var user = new PersonalCacheStruct<GameUser>().FindKey(general.UserID);
             if (user != null)
             {
                 var sparepartList = user.SparePartList.FindAll(m => m.UserItemID.Equals(item.UserItemID));
@@ -1017,7 +1017,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         private static void SetEnchant(CombatGeneral general)
         {
             var enchantList = new List<UserEnchantInfo>();
-            var user = new GameDataCacheSet<GameUser>().FindKey(general.UserID);
+            var user = new PersonalCacheStruct<GameUser>().FindKey(general.UserID);
             if (user != null)
             {
                 var package = UserItemPackage.Get(general.UserID);
@@ -1046,10 +1046,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <returns></returns>
         private static void SetTrump(CombatGeneral general)
         {
-            var user = new GameDataCacheSet<GameUser>().FindKey(general.UserID);
+            var user = new PersonalCacheStruct<GameUser>().FindKey(general.UserID);
             if (user != null)
             {
-                UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(general.UserID, TrumpInfo.CurrTrumpID);
+                UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(general.UserID, TrumpInfo.CurrTrumpID);
                 if (userTrump != null && userTrump.LiftNum > 0 && general.GeneralID == LanguageManager.GetLang().GameUserGeneralID && userTrump.PropertyInfo.Count > 0)
                 {
                     userTrump.PropertyInfo.Foreach(property =>
@@ -1063,7 +1063,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         private static int GetEquAttrEffect(UserItemInfo item, AbilityType abilityType)
         {
-            ItemEquAttrInfo equAttr = new ConfigCacheSet<ItemEquAttrInfo>().FindKey(item.ItemID, abilityType);
+            ItemEquAttrInfo equAttr = new ShareCacheStruct<ItemEquAttrInfo>().FindKey(item.ItemID, abilityType);
             return (equAttr != null ? equAttr.GetEffectNum(item.ItemLv) : 0);
         }
 
@@ -1075,8 +1075,8 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 UserCrystalInfo[] crystalList = packageCrystal.CrystalPackage.FindAll(m => m.GeneralID.Equals(general.GeneralID)).ToArray();
                 foreach (UserCrystalInfo item in crystalList)
                 {
-                    AbilityType abilityType = new ConfigCacheSet<CrystalInfo>().FindKey(item.CrystalID).AbilityID;
-                    var crystalLv = new ConfigCacheSet<CrystalLvInfo>().FindKey(item.CrystalID, item.CrystalLv);
+                    AbilityType abilityType = new ShareCacheStruct<CrystalInfo>().FindKey(item.CrystalID).AbilityID;
+                    var crystalLv = new ShareCacheStruct<CrystalLvInfo>().FindKey(item.CrystalID, item.CrystalLv);
                     decimal effectNum = crystalLv == null ? 0 : crystalLv.AbilityNum;
                     SetAbilityValue(general, abilityType, effectNum);
                 }

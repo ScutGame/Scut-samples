@@ -27,7 +27,7 @@ using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Model.Config;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Enum;
 
@@ -131,12 +131,12 @@ namespace ZyGames.Tianjiexing.Component
             int MidMinLv = 30;
             int MidMaxLv = 54;
             int highMinLv = 55;
-            new GameDataCacheSet<UserShengJiTa>().Foreach((personalId, key, userShengJiTa) =>
+            new PersonalCacheStruct<UserShengJiTa>().Foreach((personalId, key, userShengJiTa) =>
             {
 
                 if (userShengJiTa.ScoreStar > 0)
                 {
-                    var gameUser = new GameDataCacheSet<GameUser>().FindKey(userShengJiTa.UserID.ToString());
+                    var gameUser = new PersonalCacheStruct<GameUser>().FindKey(userShengJiTa.UserID.ToString());
                     //获取圣吉塔10-29的玩家
                     DateTime nowTime = DateTime.Now;
                     if (userShengJiTa.HaveRankNum == 0) //第一次进入排行榜

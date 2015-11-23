@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -100,12 +100,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     finalMature = CombatHelper.EnchantFinalNum(userEnchantInfo);
                     currExp = userEnchantInfo.CurrExprience;
-                    enchant = new ConfigCacheSet<EnchantInfo>().FindKey(userEnchantInfo.EnchantID);
+                    enchant = new ShareCacheStruct<EnchantInfo>().FindKey(userEnchantInfo.EnchantID);
                     if (enchant != null)
                     {
-                        enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(enchant.EnchantID, userEnchantInfo.EnchantLv);
+                        enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(enchant.EnchantID, userEnchantInfo.EnchantLv);
                         short uplv = MathUtils.Addition(userEnchantInfo.EnchantLv, (short)1, (short)GameConfigSet.MaxEnchantLv);
-                        EnchantLvInfo enchantLv = new ConfigCacheSet<EnchantLvInfo>().FindKey(userEnchantInfo.EnchantID, uplv);
+                        EnchantLvInfo enchantLv = new ShareCacheStruct<EnchantLvInfo>().FindKey(userEnchantInfo.EnchantID, uplv);
                         upExp = enchantLv == null ? 0 : enchantLv.Experience;
                     }
                 }

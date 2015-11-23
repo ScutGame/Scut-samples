@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            List<UserQueue> queueList = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.SaoDang);
+            List<UserQueue> queueList = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.SaoDang);
             if (queueList.Count > 0)
             {
                 this.ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -86,7 +86,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 this.ErrorInfo = LanguageManager.GetLang().St4007_BeiBaoTimeOut;
                 return false;
             }
-            List<PlotNPCInfo> npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
+            List<PlotNPCInfo> npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotID);
             //战斗次数
             int plotNpcNum = npcList.Count;
             int energyNum = 0;
@@ -126,7 +126,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
             //清除扫荡池
-            var sweepCacheSet = new GameDataCacheSet<UserSweepPool>();
+            var sweepCacheSet = new PersonalCacheStruct<UserSweepPool>();
             List<UserSweepPool> sweepPoolList = sweepCacheSet.FindAll(ContextUser.UserID);
             foreach (UserSweepPool sweepPool in sweepPoolList)
             {
@@ -157,7 +157,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ColdTime = coldTime,
                     IsSuspend = false
                 };
-                new GameDataCacheSet<UserQueue>().Add(userQueue);
+                new PersonalCacheStruct<UserQueue>().Add(userQueue);
 
             }
             return true;

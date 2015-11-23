@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             CacheList<GeneralHeritage> heritageList = new CacheList<GeneralHeritage>();
             GeneralHeritage heritage = new GeneralHeritage();
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (general == null)
             {
                 return false;

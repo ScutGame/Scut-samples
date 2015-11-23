@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Model;
 
 namespace ZyGames.Tianjiexing.Model.Config
@@ -541,7 +541,7 @@ namespace ZyGames.Tianjiexing.Model.Config
                 CombatType != CombatType.MultiPlot
             )
             {
-                var cacheSet = new GameDataCacheSet<UserGeneral>();
+                var cacheSet = new PersonalCacheStruct<UserGeneral>();
                 UserGeneral userGeneral = cacheSet.FindKey(UserID, this.GeneralID);
                 if (userGeneral != null)
                 {
@@ -812,7 +812,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         public void TriggerShanBi()
         {
             //闪避职业加成气势
-            CareerAdditionInfo addition = new ConfigCacheSet<CareerAdditionInfo>().FindKey(this.CareerID, AbilityType.ShanBi);
+            CareerAdditionInfo addition = new ShareCacheStruct<CareerAdditionInfo>().FindKey(this.CareerID, AbilityType.ShanBi);
             if (addition != null && addition.MomentumNum > 0)
             {
                 this.Momentum = MathUtils.Addition(this.Momentum, addition.MomentumNum.ToShort(), short.MaxValue);
@@ -874,7 +874,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         public void TriggerGeDang()
         {
             //格挡职业加成气势
-            CareerAdditionInfo addition = new ConfigCacheSet<CareerAdditionInfo>().FindKey(this.CareerID, AbilityType.GeDang);
+            CareerAdditionInfo addition = new ShareCacheStruct<CareerAdditionInfo>().FindKey(this.CareerID, AbilityType.GeDang);
             if (addition != null && addition.MomentumNum > 0)
             {
                 this.Momentum = MathUtils.Addition(this.Momentum, addition.MomentumNum.ToShort(), short.MaxValue);

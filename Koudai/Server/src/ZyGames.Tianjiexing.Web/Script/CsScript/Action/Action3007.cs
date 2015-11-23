@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Net;
@@ -57,7 +57,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(_userGeneral.LifeNum);
             PushIntoStack(_userGeneral.LifeMaxNum);
             PushIntoStack(_userGeneral.CurrExperience);
-            var generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(_userGeneral.GeneralLv);
+            var generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(_userGeneral.GeneralLv);
             PushIntoStack(generalEscalate != null ? generalEscalate.UpExperience : 0);
             PushIntoStack(ContextUser.GameCoin);
 
@@ -75,7 +75,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             bool result = true;
-            taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(TaskID);
+            taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(TaskID);
             if (taskInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -85,7 +85,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             _userGeneral = UserGeneral.GetMainGeneral(Uid);
             //获得奖励
-            UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(ContextUser.UserID, TaskID);
+            UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(ContextUser.UserID, TaskID);
             if (userTask == null || userTask.TaskState != TaskState.Completed)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -123,10 +123,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //ContextUser.Update();
 
             //任务加佣兵经验
-            //var userEmbattles = new GameDataCacheSet<UserEmbattle>().FindAll(UserEmbattle.Index_UserID_MagicID, Uid, ContextUser.UseMagicID);
+            //var userEmbattles = new PersonalCacheStruct<UserEmbattle>().FindAll(UserEmbattle.Index_UserID_MagicID, Uid, ContextUser.UseMagicID);
             //foreach (var userEmbattle in userEmbattles)
             //{
-            //    UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, userEmbattle.GeneralID);
+            //    UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, userEmbattle.GeneralID);
             //    if (userGeneral == null) continue;
             //    userGeneral.CurrExperience = MathUtils.Addition(userGeneral.CurrExperience, taskInfo.Experience, int.MaxValue);
             //    //userGeneral.Update();
@@ -143,7 +143,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PlotHelper.EnablePlot(Uid, taskInfo.EnablePlot);
 
             //保留主线任务
-            var cacheSet = new GameDataCacheSet<UserTask>();
+            var cacheSet = new PersonalCacheStruct<UserTask>();
             if (userTask.TaskType == TaskType.Master)
             {
                 //userTask.Update();

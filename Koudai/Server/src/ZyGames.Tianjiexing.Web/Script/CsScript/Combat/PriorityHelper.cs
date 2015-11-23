@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -45,7 +45,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static int GeneralPriority(string userID, int generalID)
         {
             int priorityNum = 0;
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (userGeneral != null)
             {
                 priorityNum = (int)(userGeneral.GeneralLv * PriorityBaseNum(PriorityType.Lv, PriorityQuality.Zero));
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             List<UserItemInfo> userItemArray = package.ItemPackage.FindAll(m => m.GeneralID.Equals(generalID));
             foreach (UserItemInfo item in userItemArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 if (itemInfo != null)
                 {
                     PriorityQuality quality = UserEquPriorityQuality(itemInfo.QualityType); //itemInfo.QualityType.ToInt().ToEnum<PriorityQuality>();
@@ -112,13 +112,13 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static int GeneralSparePriority(string userID, string _userItemID)
         {
             int sparePriority = 0;
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (user != null)
             {
                 UserSparePart[] sparePartsArray = user.SparePartList.FindAll(m => m.UserItemID.Equals(_userItemID)).ToArray();
                 foreach (UserSparePart sparePart in sparePartsArray)
                 {
-                    SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePart.SparePartId);
+                    SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePart.SparePartId);
                     if (partInfo != null)
                     {
                         SparePartQuality sparequality = partInfo.QualityType.ToEnum<SparePartQuality>();
@@ -148,10 +148,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static int GeneralMedicinePriority(string userID, int generalID)
         {
             int medicinePriority = 0;
-            var medicineArray = new GameDataCacheSet<GeneralMedicine>().FindAll(userID, m => m.GeneralID == generalID);
+            var medicineArray = new PersonalCacheStruct<GeneralMedicine>().FindAll(userID, m => m.GeneralID == generalID);
             foreach (GeneralMedicine medicine in medicineArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(medicine.MedicineID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(medicine.MedicineID);
                 if (itemInfo != null)
                 {
                     PriorityQuality quality = itemInfo.MedicineLv.ToInt().ToEnum<PriorityQuality>();
@@ -171,7 +171,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static int PriorityBaseNum(PriorityType priorityType, PriorityQuality priorityQuality)
         {
             int baseNum = 0;
-            PriorityInfo priority = new ConfigCacheSet<PriorityInfo>().FindKey(priorityType, priorityQuality);
+            PriorityInfo priority = new ShareCacheStruct<PriorityInfo>().FindKey(priorityType, priorityQuality);
             if (priority != null)
             {
                 baseNum = priority.BaseNum;
@@ -188,7 +188,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static int PriorityEffectNum(PriorityType priorityType, PriorityQuality priorityQuality)
         {
             int baseNum = 0;
-            PriorityInfo priority = new ConfigCacheSet<PriorityInfo>().FindKey(priorityType, priorityQuality);
+            PriorityInfo priority = new ShareCacheStruct<PriorityInfo>().FindKey(priorityType, priorityQuality);
             if (priority != null)
             {
                 baseNum = priority.EffectNum;
@@ -205,11 +205,11 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         {
             int priorityNum = 0;
             //魔术先攻
-            var magicArray = new GameDataCacheSet<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.JiNeng);
+            var magicArray = new PersonalCacheStruct<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.JiNeng);
             foreach (UserMagic magic in magicArray)
             {
                 int mlv = magic.MagicLv;
-                MagicLvInfo lvInfo = new ConfigCacheSet<MagicLvInfo>().FindKey(magic.MagicID, mlv);
+                MagicLvInfo lvInfo = new ShareCacheStruct<MagicLvInfo>().FindKey(magic.MagicID, mlv);
                 if (lvInfo != null && lvInfo.AbilityType == AbilityType.FirstStrike)
                 {
                     priorityNum = MathUtils.Addition(priorityNum, (int)lvInfo.EffectNum);

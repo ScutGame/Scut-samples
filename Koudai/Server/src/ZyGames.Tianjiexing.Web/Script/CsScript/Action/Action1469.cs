@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.PropertyInfo.Count > 0)
             {
                 GeneralProperty property = userTrump.PropertyInfo.Find(m => m.AbilityType == propertyID);
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ErrorInfo = LanguageManager.GetLang().St1466_OutPropertyMaxLv;
                         return false;
                     }
-                    TrumpPropertyInfo trumpProperty = new ConfigCacheSet<TrumpPropertyInfo>().FindKey(property.AbilityType, property.AbilityLv);
+                    TrumpPropertyInfo trumpProperty = new ShareCacheStruct<TrumpPropertyInfo>().FindKey(property.AbilityType, property.AbilityLv);
                     if (trumpProperty != null)
                     {
                         int upItemNum = TrumpHelper.GetUserItemNum(ContextUser.UserID, trumpProperty.ItemID);
@@ -102,7 +102,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ContextUser.GameCoin = MathUtils.Subtraction(ContextUser.GameCoin, trumpProperty.GameCoin);
                         UserItemHelper.UseUserItem(ContextUser.UserID, trumpProperty.ItemID, trumpProperty.ItemNum);
                         short upLv = MathUtils.Addition(property.AbilityLv, (short)1, (short)TrumpPropertyInfo.MaxTrumpPropertyLv);
-                        TrumpPropertyInfo uptrumpProperty = new ConfigCacheSet<TrumpPropertyInfo>().FindKey(property.AbilityType, upLv);
+                        TrumpPropertyInfo uptrumpProperty = new ShareCacheStruct<TrumpPropertyInfo>().FindKey(property.AbilityType, upLv);
                         property.UpdateNotify(obj =>
                         {
                             property.AbilityLv = MathUtils.Addition(property.AbilityLv, (short)1, TrumpPropertyInfo.MaxTrumpPropertyLv);

@@ -12,7 +12,7 @@ namespace ZyGames.Doudizhu.Model
     /// 玩家信息[:BaseUser]
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data)]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class GameUser : BaseUser
     {
 
@@ -24,7 +24,7 @@ namespace ZyGames.Doudizhu.Model
         }
 
         public GameUser(int userid)
-            :this()
+            : this()
         {
             UserId = userid;
         }
@@ -245,13 +245,13 @@ namespace ZyGames.Doudizhu.Model
         [ProtoMember(31)]
         [EntityField]
         public string Profession { get; set; }
-    
-        
+
+
         protected override int GetIdentityId()
         {
             return UserId;
-        }        
-        
+        }
+
 
         public override int GetUserId()
         {
@@ -296,5 +296,5 @@ namespace ZyGames.Doudizhu.Model
         [ProtoMember(102)]
         public UserProperty Property { get; set; }
 
-	}
+    }
 }

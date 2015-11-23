@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Framework.Game.Service;
@@ -52,7 +52,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override void BuildPacket()
         {
             string sportsName = string.Empty;
-            var userGeneralCacheSet = new GameDataCacheSet<UserGeneral>();
+            var userGeneralCacheSet = new PersonalCacheStruct<UserGeneral>();
             PushIntoStack(userRankArray.Count);
             foreach (UserRank rank in userRankArray)
             {
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     dsItem.PushIntoStack(dsItem1);
                 }
 
-                SportsRewardInfo sportsInfo = new ConfigCacheSet<SportsRewardInfo>().FindKey(rank.RankId);
+                SportsRewardInfo sportsInfo = new ShareCacheStruct<SportsRewardInfo>().FindKey(rank.RankId);
                 var embatList = EmbattleHelper.CurrEmbattle(rank.UserID, false);
                 dsItem.PushIntoStack(embatList.Count);
                 dsItem.PushIntoStack(embattleList.Count);

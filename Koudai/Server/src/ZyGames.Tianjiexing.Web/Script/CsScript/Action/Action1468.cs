@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -78,7 +78,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.PropertyInfo.Count > 0)
             {
                 GeneralProperty property = userTrump.PropertyInfo.Find(m => m.AbilityType == propertyID);
@@ -86,8 +86,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     abilityLv = property.AbilityLv;
                     // short upLv = MathUtils.Addition(property.AbilityLv, (short)1, TrumpPropertyInfo.MaxTrumpPropertyLv);
-                    //trumpProperty = new ConfigCacheSet<TrumpPropertyInfo>().FindKey(property.AbilityType, upLv);
-                    trumpProperty = new ConfigCacheSet<TrumpPropertyInfo>().FindKey(property.AbilityType, property.AbilityLv);
+                    //trumpProperty = new ShareCacheStruct<TrumpPropertyInfo>().FindKey(property.AbilityType, upLv);
+                    trumpProperty = new ShareCacheStruct<TrumpPropertyInfo>().FindKey(property.AbilityType, property.AbilityLv);
                     if (trumpProperty != null)
                     {
                         int upItemNum = TrumpHelper.GetUserItemNum(ContextUser.UserID, trumpProperty.ItemID);
@@ -104,7 +104,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             isObtain = 1;
                         }
                         successNum = trumpProperty.SuccessNum.ToString();
-                        ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(trumpProperty.ItemID);
+                        ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(trumpProperty.ItemID);
                         if (itemInfo != null)
                         {
                             itemName = itemInfo.ItemName;

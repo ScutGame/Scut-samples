@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -60,12 +60,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(moreTeam.UserList.Count);
             foreach (var teamUser in moreTeam.UserList)
             {
-                var gameUser = new GameDataCacheSet<GameUser>().FindKey(teamUser.UserId);
+                var gameUser = new PersonalCacheStruct<GameUser>().FindKey(teamUser.UserId);
                 UserGeneral general = UserGeneral.GetMainGeneral(teamUser.UserId);
                 CareerInfo careerInfo = null;
                 if (general != null)
                 {
-                    careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(general.CareerID);
+                    careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(general.CareerID);
                 }
 
                 DataStruct dsItem = new DataStruct();

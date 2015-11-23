@@ -27,7 +27,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -88,10 +88,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
             GuildMember member = new ShareCacheStruct<GuildMember>().FindKey(ContextUser.MercenariesID, ContextUser.UserID);
             if (member != null)
             {
-                GuildIdolInfo idolInfo = new ConfigCacheSet<GuildIdolInfo>().FindKey(idolID);
+                GuildIdolInfo idolInfo = new ShareCacheStruct<GuildIdolInfo>().FindKey(idolID);
                 var memberLog = new ShareCacheStruct<GuildMemberLog>().FindKey(ContextUser.MercenariesID) ?? new GuildMemberLog();
                 List<MemberLog> guildLogArray = memberLog.GetLog(u => u.UserID == ContextUser.UserID && DateTime.Now.Date == u.InsertDate.Date);
-                UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+                UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
                 if (guildLogArray.Count > 0 && userRestrain.Funtion6 >= VipHelper.GetVipUseNum(ContextUser.VipLv, RestrainType.BangPaiShangXiang) && DateTime.Now.Date == userRestrain.RefreshDate.Date)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -167,7 +167,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (guildIdol != null)
             {
                 guildIdol.CurrExperience = MathUtils.Addition(guildIdol.CurrExperience, gainAura, int.MaxValue);
-                IdolLvInfo lvInfo = new ConfigCacheSet<IdolLvInfo>().FindKey(guildIdol.IdolLv);
+                IdolLvInfo lvInfo = new ShareCacheStruct<IdolLvInfo>().FindKey(guildIdol.IdolLv);
                 if (lvInfo != null)
                 {
                     if (guildIdol.CurrExperience >= lvInfo.UpExperience)

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             int sumGold = 0;
-            UserExpedition userExp = new GameDataCacheSet<UserExpedition>().FindKey(ContextUser.UserID);
+            UserExpedition userExp = new PersonalCacheStruct<UserExpedition>().FindKey(ContextUser.UserID);
             if (userExp == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;

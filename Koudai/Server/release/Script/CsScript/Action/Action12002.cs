@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.DataModel;
@@ -74,7 +74,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             DialHelper.CheckDialNum(ContextUser.UserID);
-            var userDial = new GameDataCacheSet<UserDial>().FindKey(ContextUser.UserID);
+            var userDial = new PersonalCacheStruct<UserDial>().FindKey(ContextUser.UserID);
             if (userDial != null && userDial.Treasure.Count > 0)
             {
                 treasureList = (userDial.Treasure.Reverse()).ToList();

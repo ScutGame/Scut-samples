@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(enchantArray.Length);
             foreach (var enchant in enchantArray)
             {
-                EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchant.EnchantID);
+                EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchant.EnchantID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack((short)enchant.Position);
                 dsItem.PushIntoStack(enchant.UserEnchantID.ToNotNullString());
@@ -100,7 +100,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 puUserID = toUserID;
                 UserCacheGlobal.LoadOffline(puUserID);
             }
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(puUserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(puUserID, generalID);
             if (general == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -113,7 +113,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (useritem != null)
             {
                 userItemID = useritem.UserItemID;
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
                 if (itemInfo != null)
                 {
                     itemName = itemInfo.ItemName;

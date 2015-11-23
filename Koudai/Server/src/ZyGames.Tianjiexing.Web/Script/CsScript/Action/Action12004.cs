@@ -26,7 +26,7 @@ using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.BLL.Base;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.ConfigModel;
 using ZyGames.Tianjiexing.Component;
@@ -69,7 +69,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             DialHelper.CheckDialNum(ContextUser.UserID);
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(ContextUser.UserID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(ContextUser.UserID);
             if (userDial == null || string.IsNullOrEmpty(userDial.UserItemID))
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -85,7 +85,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
                 int itemid = UserItemHelper.GetUserItemInfoID(ContextUser.UserID, userDial.UserItemID);
-                var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemid);
+                var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemid);
                 if (itemInfo == null)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -96,7 +96,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 int itemNum = UserItemHelper.CheckItemNum(ContextUser.UserID, itemInfo.EffectNum);
                 if (itemNum <= 0)
                 {
-                    ItemBaseInfo itemKey = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemInfo.EffectNum);
+                    ItemBaseInfo itemKey = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemInfo.EffectNum);
                     if (itemKey == null)
                     {
                         ErrorCode = LanguageManager.GetLang().ErrorCode;

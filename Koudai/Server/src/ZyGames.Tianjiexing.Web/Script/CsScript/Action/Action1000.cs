@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Command;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
@@ -99,13 +99,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         private bool DoWeixinSign()
         {
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(Uid);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(Uid);
 
             if (gameUser != null)
             {
                 var registrationRewardArray = ConfigEnvSet.GetString("User.RegistrationReward").Split(',');
                 int registrationNum = ConfigEnvSet.GetInt("User.RegistrationNum");
-                var cacheSetRegistration = new GameDataCacheSet<UserRegistration>();
+                var cacheSetRegistration = new PersonalCacheStruct<UserRegistration>();
                 var userRegistration = cacheSetRegistration.FindKey(gameUser.UserID);
                 if (userRegistration == null)
                 {

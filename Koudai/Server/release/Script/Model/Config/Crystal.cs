@@ -24,18 +24,18 @@ THE SOFTWARE.
 using System;
 using ProtoBuf;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model.Config
 {
     [Serializable, ProtoContract]
     public class Crystal
     {
-        private ConfigCacheSet<CrystalInfo> _cacheSet;
+        private ShareCacheStruct<CrystalInfo> _cacheSet;
 
         public Crystal()
         {
-            _cacheSet = new ConfigCacheSet<CrystalInfo>();
+            _cacheSet = new ShareCacheStruct<CrystalInfo>();
         }
         [ProtoMember(1)]
         public string UserCrystalID

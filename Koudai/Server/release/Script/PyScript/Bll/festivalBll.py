@@ -13,7 +13,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -34,7 +34,7 @@ class FestivalBll():
         """通关考古副本活动,更新通关次数与奖励"""
         def IsArcheologyPlot(self,plotID,npcInfoID):  
             """是否当前考古副本的npc"""    
-            npcinfoList = ConfigCacheSet[PlotNPCInfo]().FindAll(match = lambda s:s.PlotID == plotID and s.NpcSeqNo>0);
+            npcinfoList = ShareCacheStruct[PlotNPCInfo]().FindAll(match = lambda s:s.PlotID == plotID and s.NpcSeqNo>0);
             for npcInfo in npcinfoList:
                 if npcInfoID == npcInfo.PlotNpcID:
                     return True;
@@ -45,7 +45,7 @@ class FestivalBll():
                 continue;
             if not IsArcheologyPlot(self,info.FestivalExtend.PlotID,npcinfoID):
                 continue
-            cacheSet = GameDataCacheSet[FestivalRestrain]();
+            cacheSet = PersonalCacheStruct[FestivalRestrain]();
             restrain = cacheSet.FindKey(user.UserID,info.FestivalID);
             if restrain != None and restrain.IsReceive:
                 continue;
@@ -68,7 +68,7 @@ class FestivalBll():
             isGo = True;
             if restrain ==None or restrain.UserExtend.Count == 0 or info.FestivalExtend == None or info.FestivalExtend.PlotID == 0:
                 isGo = False;
-            npcinfoList = ConfigCacheSet[PlotNPCInfo]().FindAll(match = lambda s:s.PlotID == info.FestivalExtend.PlotID and s.NpcSeqNo>0);
+            npcinfoList = ShareCacheStruct[PlotNPCInfo]().FindAll(match = lambda s:s.PlotID == info.FestivalExtend.PlotID and s.NpcSeqNo>0);
             for npcInfo in npcinfoList:
                 userExtend = restrain.UserExtend.Find(lambda s:s.ID == npcInfo.PlotNpcID)
                 if userExtend and userExtend.Num >= info.RestrainNum:

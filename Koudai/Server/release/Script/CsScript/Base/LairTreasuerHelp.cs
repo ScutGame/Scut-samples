@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.Enum;
@@ -36,7 +36,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int ChestLairTreasuerPosition(LairTreasureType lairTreasureType)       //��Ѩȡ����õ�λ��
         {
             int postion = 0;
-            var lairTreasuer = new ConfigCacheSet<LairTreasureInfo>().FindKey(MathUtils.ToInt(lairTreasureType));
+            var lairTreasuer = new ShareCacheStruct<LairTreasureInfo>().FindKey(MathUtils.ToInt(lairTreasureType));
             double[] LairDoubleList = new double[lairTreasuer.LairTreasureList.Count];
             for (int i = 0; i < lairTreasuer.LairTreasureList.Count; i++)
             {
@@ -47,9 +47,9 @@ namespace ZyGames.Tianjiexing.BLL.Base
         }
         public static ItemBaseInfo ShowLairReward(LairTreasure lairTreasure, GameUser gameUser, LairTreasureType lairTreasureType)    //��ʾ��õ���Ʒ
         {
-            var cacheSetItem = new ConfigCacheSet<ItemBaseInfo>();
+            var cacheSetItem = new ShareCacheStruct<ItemBaseInfo>();
             ItemBaseInfo itemBaseInfo = null;
-            var lairRewardList = new ConfigCacheSet<LairRewardInfo>().FindAll(s => s.LairPosition == lairTreasure.LairPosition && s.LairTreasureType == lairTreasureType.ToInt());
+            var lairRewardList = new ShareCacheStruct<LairRewardInfo>().FindAll(s => s.LairPosition == lairTreasure.LairPosition && s.LairTreasureType == lairTreasureType.ToInt());
             if (lairRewardList.Count >0)
             {
                 var lairRewardInfo = lairRewardList[RandomUtils.GetRandom(0, lairRewardList.Count)];
@@ -65,9 +65,9 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         public static void GetLaiReward(LairTreasureType lairTreasureType, GameUser gameUser, int id, int postion)       //��ȡ��Ʒ
         {
-            var lairTreasuerList = new ConfigCacheSet<LairTreasureInfo>().FindKey(MathUtils.ToInt(lairTreasureType));
+            var lairTreasuerList = new ShareCacheStruct<LairTreasureInfo>().FindKey(MathUtils.ToInt(lairTreasureType));
             LairTreasure lairTreasure = lairTreasuerList.LairTreasureList[postion];
-            var lairRewardInfo = new ConfigCacheSet<LairRewardInfo>().FindKey(id);
+            var lairRewardInfo = new ShareCacheStruct<LairRewardInfo>().FindKey(id);
             var rewardTye = lairRewardInfo.LairRewardType.ToEnum<LairRewardType>();
             switch (rewardTye)
             {
@@ -87,7 +87,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         public static int GetItemID(LairRewardType lairRewardType)         //��ȡ�������ж��ֽ����������ȡһ��
         {
-            var rewardTypeAll = new ConfigCacheSet<LairRewardInfo>().FindAll(u => u.LairRewardType == lairRewardType.ToInt());
+            var rewardTypeAll = new ShareCacheStruct<LairRewardInfo>().FindAll(u => u.LairRewardType == lairRewardType.ToInt());
             var i = RandomUtils.GetRandom(0, rewardTypeAll.Count);
             var itemID = rewardTypeAll[i].ItemID;
             return itemID;

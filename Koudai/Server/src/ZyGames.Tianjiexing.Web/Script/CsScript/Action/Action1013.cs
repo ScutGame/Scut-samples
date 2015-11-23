@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -81,7 +81,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 if (NoviceHelper.DailyEnergy(ContextUser.UserID))
                 {
-                    UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+                    UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
                     if (dailyRestrain != null)
                     {
                         short dailyEnergyNum = (short)ConfigEnvSet.GetInt("DailyEnergyNum");

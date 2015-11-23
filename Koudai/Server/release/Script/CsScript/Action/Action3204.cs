@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            if (!string.IsNullOrEmpty(_friendId) && new GameDataCacheSet<GameUser>().FindKey(_friendId) == null)
+            if (!string.IsNullOrEmpty(_friendId) && new PersonalCacheStruct<GameUser>().FindKey(_friendId) == null)
             {
                 UserCacheGlobal.LoadOffline(_friendId);
             }
@@ -90,9 +90,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St3204_PetRunning;
                 return false;
             }
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid) != null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid) != null)
             {
-                var userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+                var userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
                 int maxNum = new ShareCacheStruct<DailyRestrainSet>().FindKey(RestrainType.PetRun).MaxNum;
                 if (userRestrain.UserExtend != null)
                 {
@@ -104,9 +104,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                 }
             }
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(_friendId) != null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(_friendId) != null)
             {
-                var userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(_friendId);
+                var userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(_friendId);
                 int maxNum = new ShareCacheStruct<DailyRestrainSet>().FindKey(RestrainType.PetHelp).MaxNum;
                 if (userRestrain.UserExtend != null)
                 {
@@ -128,7 +128,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 );
             //ContextUser.Update();
             var petCacheSet = new ShareCacheStruct<PetRunPool>();
-            var petInfo = new ConfigCacheSet<PetInfo>().FindKey(_petId) ?? new PetInfo();
+            var petInfo = new ShareCacheStruct<PetInfo>().FindKey(_petId) ?? new PetInfo();
             if (petRunPool == null)
             {
                 petRunPool = new PetRunPool(Uid);
@@ -145,9 +145,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
 
 
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid) != null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid) != null)
             {
-                var userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+                var userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
                 userRestrain.UserExtend.UpdateNotify(obj => 
                     {
                         userRestrain.UserExtend.PetRunTimes = MathUtils.Addition(userRestrain.UserExtend.PetRunTimes, 1);
@@ -156,9 +156,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //userRestrain.Update();
             }
 
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(petRunPool.FriendID) != null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(petRunPool.FriendID) != null)
             {
-                var userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(petRunPool.FriendID);
+                var userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(petRunPool.FriendID);
                 if (userRestrain.UserExtend == null) userRestrain.UserExtend = new DailyUserExtend();
                 userRestrain.UserExtend.UpdateNotify(obj => 
                     {

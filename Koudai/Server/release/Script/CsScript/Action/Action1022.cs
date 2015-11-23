@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -134,7 +134,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             Base.BaseLog log = new Base.BaseLog();
             if (userPrize == null) return false;
             string userID = userPrize.UserID.ToString();
-            var gameUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+            var gameUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (gameUser == null) return false;
 
             log.SaveDebugLog(string.Format("玩家{0}领取奖励{1}:{2}", userID, userPrize.ID, userPrize.MailContent));
@@ -154,7 +154,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             gameUser.UserExtend.GainBlessing = MathUtils.Addition(gameUser.UserExtend.GainBlessing, userPrize.GainBlessing);
             if (userPrize.VipLv > 0)
             {
-                var vipLv = new ConfigCacheSet<VipLvInfo>().FindKey(userPrize.VipLv.ToShort()) ?? new VipLvInfo();
+                var vipLv = new ShareCacheStruct<VipLvInfo>().FindKey(userPrize.VipLv.ToShort()) ?? new VipLvInfo();
                 gameUser.ExtGold = vipLv.PayGold;
             }
             //gameUser.Update();
@@ -188,14 +188,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 int spareID = itemList.Length > 0 ? Convert.ToInt32(itemList[0]) : 0;
                 int spareNum = itemList.Length > 1 ? Convert.ToInt32(itemList[1]) : 0;
                 string[] propertys = itemList.Length > 2 ? itemList[2].ToNotNullString().Split('|') : new string[0];
-                var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(spareID);
+                var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(spareID);
                 if (spareNum > 0 && propertys.Length > 0 && sparePartInfo != null)
                 {
                     for (int i = 0; i < spareNum; i++)
                     {
                         UserSparePart sparePart = UserSparePart.CreateSparePart(spareID, propertys, ':');
                         if (sparePart == null) continue;
-                        GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+                        GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
                         if (!UserHelper.AddSparePart(user, sparePart))
                         {
                             chatService.SystemSendWhisper(user, string.Format(LanguageManager.GetLang().St4303_SparePartFalling, sparePartInfo.Name) + "*" + spareNum);
@@ -226,7 +226,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 short itemLv = itemList.Length > 1 ? Convert.ToInt16(itemList[1]) : (short)0;
                 int itemNum = itemList.Length > 2 ? Convert.ToInt32(itemList[2]) : 0;
 
-                if (itemNum > 0 && new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID) != null)
+                if (itemNum > 0 && new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID) != null)
                 {
                     UserItemHelper.AddUserItem(userID, itemID, itemNum, ItemStatus.BeiBao, itemLv);
                 }
@@ -255,7 +255,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
                 int itemID = itemList.Length > 0 ? Convert.ToInt32(itemList[0]) : 0;
                 int itemNum = itemList.Length > 2 ? Convert.ToInt32(itemList[2]) : 0;
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                 if (itemInfo != null)
                 {
                     packNum = itemNum / itemInfo.PackMaxNum;
@@ -317,9 +317,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 short crystalLv = crystalList.Length > 1 ? Convert.ToInt16(crystalList[1]) : (short)0;
                 int crystalNum = crystalList.Length > 2 ? Convert.ToInt32(crystalList[2]) : 0;
 
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystalID);
-                var crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(crystalID, crystalLv);
-                if (crystalNum > 0 && new ConfigCacheSet<CrystalInfo>().FindKey(crystalID) != null && crystalLvInfo != null)
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystalID);
+                var crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(crystalID, crystalLv);
+                if (crystalNum > 0 && new ShareCacheStruct<CrystalInfo>().FindKey(crystalID) != null && crystalLvInfo != null)
                 {
                     for (int i = 0; i < crystalNum; i++)
                     {
@@ -358,8 +358,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 short enchantLv = crystalList.Length > 1 ? Convert.ToInt16(crystalList[1]) : (short)0;
                 int enchantNum = crystalList.Length > 2 ? Convert.ToInt32(crystalList[2]) : 0;
 
-                EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchantID);
-                var enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(enchantID, enchantLv);
+                EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchantID);
+                var enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(enchantID, enchantLv);
                 if (enchantInfo != null && package != null && enchantLvInfo != null)
                 {
                     for (int i = 0; i < enchantNum; i++)

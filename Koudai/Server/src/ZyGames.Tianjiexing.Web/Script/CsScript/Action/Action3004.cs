@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -51,7 +51,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userTaskList.Count);
             foreach (UserTask userTask in userTaskList)
             {
-                StoryTaskInfo taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(userTask.TaskID);
+                StoryTaskInfo taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(userTask.TaskID);
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(taskInfo.TaskID);
@@ -101,10 +101,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            userTaskList = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID,
+            userTaskList = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID,
                 m =>
                 {
-                    StoryTaskInfo taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(m.TaskID);
+                    StoryTaskInfo taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(m.TaskID);
                     return m.TaskType < TaskType.Daily && (taskInfo != null && (m.TaskState == TaskState.Completed && taskInfo.DeliveryNpcID == NpcID) || ((m.TaskState == TaskState.AllowTake || m.TaskState == TaskState.Taked) && taskInfo.ReleaseNpcID == NpcID));
                 }
             );

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -62,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(generalMedicineArray.Count);
             foreach (GeneralMedicine item in generalMedicineArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.MedicineID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.MedicineID);
 
                 int itemcount = TrumpHelper.GetUserItemNum(item.UserID, item.MedicineID);
                 if (itemcount > 0)
@@ -112,7 +112,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 UserCacheGlobal.LoadOffline(publicUserID);
             }
             generalInfo = UserGeneral.GetMainGeneral(publicUserID);
-            generalMedicineArray = new GameDataCacheSet<GeneralMedicine>().FindAll(publicUserID, m => m.GeneralID == generalID);
+            generalMedicineArray = new PersonalCacheStruct<GeneralMedicine>().FindAll(publicUserID, m => m.GeneralID == generalID);
             foreach (GeneralMedicine medicine in generalMedicineArray)
             {
                 if (medicine.MedicineType == 1)
@@ -138,7 +138,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static int GetGeneralMedicine(GeneralMedicine medicine)
         {
-            var medicineArray = new GameDataCacheSet<GeneralMedicine>().FindAll(medicine.UserID, u => u.MedicineID.Equals(medicine.MedicineID) && u.GeneralID == medicine.GeneralID);
+            var medicineArray = new PersonalCacheStruct<GeneralMedicine>().FindAll(medicine.UserID, u => u.MedicineID.Equals(medicine.MedicineID) && u.GeneralID == medicine.GeneralID);
             return medicineArray.Count;
         }
     }

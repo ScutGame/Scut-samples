@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -60,7 +60,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            NoviceActivities noviceActivities = new ConfigCacheSet<NoviceActivities>().FindKey(iD);
+            NoviceActivities noviceActivities = new ShareCacheStruct<NoviceActivities>().FindKey(iD);
             if (noviceActivities != null)
             {
                 var rewardArray = noviceActivities.Reward;

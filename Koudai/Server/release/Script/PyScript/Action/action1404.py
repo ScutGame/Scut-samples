@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -71,17 +71,17 @@ def takeAction(urlParam, parent):
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
     actionResult.user = contextUser
 
-    cacheSet = GameDataCacheSet[UserGeneral]();
+    cacheSet = PersonalCacheStruct[UserGeneral]();
     if urlParam.recruitType == RecruitType.SoulRecruit:
         soulGeneral = cacheSet.FindKey(userId, urlParam.soulID);
         if soulGeneral is None:
             parent.ErrorCode = LanguageManager.GetLang().ErrorCode;
             actionResult.Result = False;
             return actionResult;
-        urlParam.general = ConfigCacheSet[GeneralInfo]().Find(lambda s:s.SoulID == urlParam.soulID);
+        urlParam.general = ShareCacheStruct[GeneralInfo]().Find(lambda s:s.SoulID == urlParam.soulID);
         generalInfo = urlParam.general;
         if urlParam.general == None:
-            urlParam.general = ConfigCacheSet[GeneralInfo]().FindKey(urlParam.soulID);
+            urlParam.general = ShareCacheStruct[GeneralInfo]().FindKey(urlParam.soulID);
         if urlParam.general == None:
             parent.ErrorCode = LanguageManager.GetLang().ErrorCode;
             actionResult.Result = False;
@@ -142,7 +142,7 @@ def takeAction(urlParam, parent):
     else:        
         UserHelper.ChechDailyRestrain(userId)
         isFirst = False;
-        recruitRule = ConfigCacheSet[RecruitRule]().FindKey(MathUtils.ToInt(urlParam.recruitType));
+        recruitRule = ShareCacheStruct[RecruitRule]().FindKey(MathUtils.ToInt(urlParam.recruitType));
         if recruitRule == None:
             parent.ErrorCode = LanguageManager.GetLang().ErrorCode;
             actionResult.Result = False;
@@ -181,7 +181,7 @@ def takeAction(urlParam, parent):
             index2 =  random.getHitIndex(probability);
             quality = recruitInfos[index2].Quality;
 
-        generalList = ConfigCacheSet[GeneralInfo]().FindAll(lambda s:s.GeneralQuality == quality and s.IsConscribe == True,True);
+        generalList = ShareCacheStruct[GeneralInfo]().FindAll(lambda s:s.GeneralQuality == quality and s.IsConscribe == True,True);
         if generalList.Count > 0:
             indexradom = RandomUtils.GetRandom(0, generalList.Count);
             if indexradom < 0 or indexradom >= generalList.Count:
@@ -191,7 +191,7 @@ def takeAction(urlParam, parent):
             general = urlParam.general;
 
             # 获取魂技
-            urlParam.abilityInfo = ConfigCacheSet[AbilityInfo]().FindKey(general.AbilityID);
+            urlParam.abilityInfo = ShareCacheStruct[AbilityInfo]().FindKey(general.AbilityID);
 
             # 获取加成
             shengMing = general.Mature.Find(lambda s:s.AbilityType == AbilityType.ShengMing);

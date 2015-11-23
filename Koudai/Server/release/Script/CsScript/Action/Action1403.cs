@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.BLL.Combat;
 using ZyGames.Tianjiexing.Lang;
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 int isSynthesis;
                 DataStruct dsItem = new DataStruct();
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 if (IsSynthesis(ContextUser.UserID, item.ItemID, genLv))
                 {
                     isSynthesis = 1;
@@ -134,7 +134,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (var ability in abilityList)
             {
                 DataStruct dsItem = new DataStruct();
-                AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(ability.AbilityID);
+                AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(ability.AbilityID);
                 dsItem.PushIntoStack(ability.AbilityID);
                 dsItem.PushIntoStack(abilityInfo == null ? string.Empty : abilityInfo.AbilityName.ToNotNullString());
                 dsItem.PushIntoStack((short)ability.AbilityLv);
@@ -215,7 +215,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             if (!string.IsNullOrEmpty(toUserID))
             {
                 var packageCrystal = UserCrystalPackage.Get(toUserID);
-                userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(toUserID, generalID);
+                userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(toUserID, generalID);
                 userCrystalsArrray = packageCrystal.CrystalPackage.FindAll(m => m.IsSale == 2 && m.GeneralID.Equals(generalID)).ToArray();
                 var package = UserItemPackage.Get(toUserID);
                 userItemArray = package.ItemPackage.FindAll(
@@ -226,7 +226,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             else
             {
                 var packageCrystal = UserCrystalPackage.Get(ContextUser.UserID);
-                userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+                userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
                 userCrystalsArrray = packageCrystal.CrystalPackage.FindAll(m => m.IsSale == 2 && m.GeneralID.Equals(generalID)).ToArray();
 
                 var package = UserItemPackage.Get(ContextUser.UserID);
@@ -234,7 +234,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 lifeUserID = ContextUser.UserID;
             }
             UserCacheGlobal.LoadOffline(lifeUserID);
-            GeneralInfo generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            GeneralInfo generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             generalQuality = generalInfo == null ? (short)0 : generalInfo.GeneralQuality;
             if (generalInfo != null && userGeneral != null)
             {
@@ -253,8 +253,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 picturesID = userGeneral.PicturesID;
                 _battleHeadId = generalInfo.BattleHeadID;
                 _hitProbability = generalInfo.HitProbability;
-                careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(userGeneral.CareerID);
-                GeneralEscalateInfo generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(genLv);
+                careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(userGeneral.CareerID);
+                GeneralEscalateInfo generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(genLv);
                 if (generalEscalate != null)
                 {
                     currExperience = userGeneral.CurrExperience;
@@ -304,8 +304,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 headID = generalInfo.HeadID;
                 picturesID = generalInfo.PicturesID;
                 _battleHeadId = generalInfo.BattleHeadID;
-                careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(generalInfo.CareerID);
-                GeneralEscalateInfo generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(genLv);
+                careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(generalInfo.CareerID);
+                GeneralEscalateInfo generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(genLv);
                 if (generalEscalate != null)
                 {
                     currExperience = 0;
@@ -321,7 +321,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
                 talentAbility = generalInfo.AbilityID;
             }
-            AbilityInfo ability = new ConfigCacheSet<AbilityInfo>().FindKey(talentAbility);
+            AbilityInfo ability = new ShareCacheStruct<AbilityInfo>().FindKey(talentAbility);
             talentName = ability == null ? string.Empty : ability.AbilityName;
 
             gPropertyList = CombatHelper.GetAbility(lifeUserID, generalID, userGeneral);
@@ -335,7 +335,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             functionList = ViewHelper.GetFunctionList(lifeUserID);
 
             //佣兵魂技
-            UserAbility userAbility = new GameDataCacheSet<UserAbility>().FindKey(ContextUser.UserID);
+            UserAbility userAbility = new PersonalCacheStruct<UserAbility>().FindKey(ContextUser.UserID);
             if (userAbility != null)
             {
                 abilityList = userAbility.AbilityList.FindAll(s => s.GeneralID == generalID);
@@ -350,8 +350,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 // 满足缘分条件显示激活状态
 
                 // 判断佣兵
-                UserMagic userMagic = new GameDataCacheSet<UserMagic>().Find(ContextUser.UserID, s => s.IsEnabled);
-                var cacheSetUserEmbattle = new GameDataCacheSet<UserEmbattle>();
+                UserMagic userMagic = new PersonalCacheStruct<UserMagic>().Find(ContextUser.UserID, s => s.IsEnabled);
+                var cacheSetUserEmbattle = new PersonalCacheStruct<UserEmbattle>();
                 List<Karma> yongBingList = karmaInfo.KarmaList.FindAll(s => s.KarmaType == KarmaType.YongBing);
                 yongBingList.ForEach(yongBingInfo =>
                                          {
@@ -385,7 +385,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                              }
                                          });
                 // 判断装备
-                UserItemPackage itemPackage = new GameDataCacheSet<UserItemPackage>().FindKey(UserId.ToString());
+                UserItemPackage itemPackage = new PersonalCacheStruct<UserItemPackage>().FindKey(UserId.ToString());
                 if (itemPackage != null)
                 {
                     List<Karma> itemList = karmaInfo.KarmaList.FindAll(s => s.KarmaType == KarmaType.ZhuangBei);
@@ -403,7 +403,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
 
                 // 判断命运水晶
-                UserCrystalPackage crystalPackage = new GameDataCacheSet<UserCrystalPackage>().FindKey(UserId.ToString());
+                UserCrystalPackage crystalPackage = new PersonalCacheStruct<UserCrystalPackage>().FindKey(UserId.ToString());
                 if (itemPackage != null)
                 {
                     List<Karma> crystalList = karmaInfo.KarmaList.FindAll(s => s.KarmaType == KarmaType.ShuiJing);
@@ -421,7 +421,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
 
                 // 判断技能
-                UserAbility userAbilityInfo = new GameDataCacheSet<UserAbility>().FindKey(UserId.ToString());
+                UserAbility userAbilityInfo = new PersonalCacheStruct<UserAbility>().FindKey(UserId.ToString());
                 if (userAbilityInfo != null)
                 {
                     List<Karma> abilityList = karmaInfo.KarmaList.FindAll(s => s.KarmaType == KarmaType.JiNen);
@@ -455,19 +455,19 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static bool IsSynthesis(string userID, int itemID, short userLv)
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (itemInfo == null || itemInfo.ItemType == ItemType.TuZhi)
             {
                 return false;
             }
             List<ItemSynthesisInfo> itemSynthesisInfosArray =
-                                     new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.SynthesisID == itemID);
+                                     new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.SynthesisID == itemID);
             if (itemSynthesisInfosArray.Count == 0 || itemSynthesisInfosArray[0].DemandLv > userLv)
             {
                 return false;
             }
             List<ItemSynthesisInfo> infoArray =
-                    new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemSynthesisInfosArray[0].ItemID);
+                    new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemSynthesisInfosArray[0].ItemID);
             foreach (ItemSynthesisInfo info in infoArray)
             {
                 var uItemArray = UserItemHelper.GetItems(userID).FindAll(u => u.ItemID == info.SynthesisID && u.ItemType == ItemType.TuZhi && u.ItemStatus != ItemStatus.Sell);

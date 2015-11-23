@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
@@ -87,11 +87,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
 
                 //查看是否在user库中有该玩家
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(_friendId);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(_friendId);
                 if (userInfo == null)
                 {
                     UserCacheGlobal.LoadOffline(_friendId);
-                    userInfo = new GameDataCacheSet<GameUser>().FindKey(_friendId);
+                    userInfo = new PersonalCacheStruct<GameUser>().FindKey(_friendId);
                 }
                 if (userInfo == null)
                 {

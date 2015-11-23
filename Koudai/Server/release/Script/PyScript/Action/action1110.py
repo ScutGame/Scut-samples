@@ -7,7 +7,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -41,13 +41,13 @@ def takeAction(urlParam,parent):
     #    TraceLog.ReleaseWrite('{0}={1}',key,value);
     #TraceLog.ReleaseWrite('1004 param BackpackType:{0}', urlParam.BackpackType);
     userId =parent.Current.UserId;
-    cacheSetUser =  GameDataCacheSet[GameUser]();
+    cacheSetUser =  PersonalCacheStruct[GameUser]();
     user = cacheSetUser.FindKey(userId.ToString());
     #user = parent.Current.GetUser[GameUser]();
     
     actionResult =ActionResult();
-    cacheSetUserPack =  GameDataCacheSet[UserPack]();
-    cacheSetBackPack =  ConfigCacheSet[BackpackConfigInfo]();
+    cacheSetUserPack =  PersonalCacheStruct[UserPack]();
+    cacheSetBackPack =  ShareCacheStruct[BackpackConfigInfo]();
     backpackType = BackpackType.BeiBao;
     if(urlParam.BackpackType == 1):
         backpackType = BackpackType.ZhuangBei;

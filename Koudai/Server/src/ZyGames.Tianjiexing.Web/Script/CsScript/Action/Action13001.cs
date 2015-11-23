@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Lang;
@@ -53,7 +53,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(_noviceList.Count);
             foreach (NoviceInfo item in _noviceList)
             {
-                NoviceActivities noviceActivities = new ConfigCacheSet<NoviceActivities>().FindKey(item.ID);
+                NoviceActivities noviceActivities = new ShareCacheStruct<NoviceActivities>().FindKey(item.ID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.ID);
                 dsItem.PushIntoStack(noviceActivities == null ? LanguageManager.GetLang().shortInt : noviceActivities.ActivitiesType);
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var noviceActivitiesArray = new ConfigCacheSet<NoviceActivities>().FindAll();
+            var noviceActivitiesArray = new ShareCacheStruct<NoviceActivities>().FindAll();
             foreach (NoviceActivities novice in noviceActivitiesArray)
             {
                 _noviceList = NoviceHelper.GetNoviceList(ContextUser.UserID, novice.ID);

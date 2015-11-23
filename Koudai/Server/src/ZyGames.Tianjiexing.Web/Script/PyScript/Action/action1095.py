@@ -10,7 +10,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -40,7 +40,7 @@ def takeAction(urlParam, parent):
     actionResult = ActionResult()
     userId = str(parent.Current.UserId)
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
-    noviceUser = GameDataCacheSet[NoviceUser]().FindKey(userId)
+    noviceUser = PersonalCacheStruct[NoviceUser]().FindKey(userId)
     if noviceUser and noviceUser.IsClose :
         if((DateTime.Now- ContextUser.LoginTime).Minutes >=10):
             UserItemHelper.AddUserItem(userId,1804,1)  

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -68,7 +68,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(userItemArray.Count);
                 foreach (var item in userItemArray)
                 {
-                    var itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID) ?? new ItemBaseInfo();
+                    var itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID) ?? new ItemBaseInfo();
                     DataStruct dsItem1 = new DataStruct();
                     dsItem1.PushIntoStack(item.UserItemID.ToNotNullString());
                     dsItem1.PushIntoStack(item.ItemID);
@@ -89,7 +89,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 if (sparePart.Position == 0) sparePart.SetPosition((short)(i + 1));
                 short enableStatus = 0;
                 if (sparePart.CheckEnable(user.UserExtend.MaxLayerNum)) enableStatus = 1;
-                var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
+                var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(sparePart.Position);
@@ -143,7 +143,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 publicUserID = toUserID;
                 UserCacheGlobal.LoadOffline(publicUserID);
             }
-            user = new GameDataCacheSet<GameUser>().FindKey(publicUserID);
+            user = new PersonalCacheStruct<GameUser>().FindKey(publicUserID);
             if (user == null)
             {
                 return false;
@@ -152,7 +152,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 user.UserExtend = new GameUserExtend();
             }
-            if (new GameDataCacheSet<UserFunction>().FindKey(publicUserID, FunctionEnum.Fengling) == null)
+            if (new PersonalCacheStruct<UserFunction>().FindKey(publicUserID, FunctionEnum.Fengling) == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St_NoFun;
@@ -160,7 +160,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             CheckUserPlotLayerNum(user);
             _lingshiNum = user.UserExtend.LingshiNum;
-            _userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(publicUserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
+            _userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(publicUserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
             int generalId = 0;
             foreach (var userGeneral in _userGeneralArray)
             {

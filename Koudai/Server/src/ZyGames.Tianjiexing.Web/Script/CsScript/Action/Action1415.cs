@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(medicineID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(medicineID);
             if (itemInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -83,14 +83,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (general == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St10006_DoesNotExistTheGeneral;
                 return false;
             }
-            var cacheSet = new GameDataCacheSet<GeneralMedicine>();
+            var cacheSet = new PersonalCacheStruct<GeneralMedicine>();
             List<GeneralMedicine> generalMedicineArray = cacheSet.FindAll(ContextUser.UserID, g => g.MedicineID.Equals(medicineID) && g.GeneralID == generalID);
             generalMedicineArray.QuickSort((x, y) =>
             {
@@ -180,11 +180,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static short MedicinePropertyNum(string userID, int medicineID, int generalID)
         {
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(medicineID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(medicineID);
             short baseNum = 0;
             int sumNum = 0;
             //佣兵服用ID为medicineID的丹药
-            List<GeneralMedicine> generalMedicineArray = new GameDataCacheSet<GeneralMedicine>().FindAll(userID, g => g.MedicineID.Equals(medicineID) && g.GeneralID == generalID);
+            List<GeneralMedicine> generalMedicineArray = new PersonalCacheStruct<GeneralMedicine>().FindAll(userID, g => g.MedicineID.Equals(medicineID) && g.GeneralID == generalID);
             if (generalMedicineArray.Count > 0)
             {
                 int mLv = itemInfo.MedicineLv;

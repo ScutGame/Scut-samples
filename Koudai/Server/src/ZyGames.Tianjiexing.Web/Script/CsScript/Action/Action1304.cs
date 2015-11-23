@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -91,14 +91,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //_userCrystal = UserCrystal.FindKey(_userCrystalID);)
             if (_userCrystal != null)
             {
-                _crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(_userCrystal.CrystalID);
+                _crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(_userCrystal.CrystalID);
                 crystalLv = _userCrystal.CrystalLv;
             }
             else
             {
                 var grayCrystal = ContextUser.GrayCrystalList.Find(m => m.UserCrystalID == _userCrystalID);
                 if (grayCrystal != null)
-                    _crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(grayCrystal.CrystalID);
+                    _crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(grayCrystal.CrystalID);
                 else
                     return false;
             }
@@ -106,13 +106,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 return false;
             }
-            CrystalLvInfo currCrystal = new ConfigCacheSet<CrystalLvInfo>().FindKey(_crystalInfo.CrystalID, crystalLv);
+            CrystalLvInfo currCrystal = new ShareCacheStruct<CrystalLvInfo>().FindKey(_crystalInfo.CrystalID, crystalLv);
             short upLv = MathUtils.Addition(crystalLv, (short)1, short.MaxValue);
             if (upLv >= 10)
             {
                 upLv = 10;
             }
-            _crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(_crystalInfo.CrystalID, upLv);//下级经验
+            _crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(_crystalInfo.CrystalID, upLv);//下级经验
             if (currCrystal != null && currCrystal.AbilityNum > 1)
             {
                 _attrNum = currCrystal.AbilityNum.ToString().Replace(".0000", "");

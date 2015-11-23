@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Runtime;
@@ -49,12 +49,12 @@ namespace ZyGames.Tianjiexing.BLL.GM
         /// <param name="userId"></param>
         private void AddUserAbility(int abilityId, int userId, int generalID, int position)
         {
-             GameDataCacheSet<UserAbility> _cacheSetAbility = new GameDataCacheSet<UserAbility>();
+             PersonalCacheStruct<UserAbility> _cacheSetAbility = new PersonalCacheStruct<UserAbility>();
             var userAbility = _cacheSetAbility.FindKey(userId.ToString());
             var ability = userAbility != null && userAbility.AbilityList != null
                               ? userAbility.AbilityList.Find(s => s.AbilityID == abilityId)
                               : null;
-            var abilityLv = new ConfigCacheSet<AbilityLvInfo>().FindKey(abilityId, 1);
+            var abilityLv = new ShareCacheStruct<AbilityLvInfo>().FindKey(abilityId, 1);
             int experienceNum = abilityLv != null ? abilityLv.Experience : 0;
             if (userAbility == null)
             {

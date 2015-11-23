@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
@@ -90,7 +90,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             ErrorCode = _ops;
             var sparePart = ContextUser.SparePartList.Find(m => m.UserSparepartID.Equals(_sparepartID));
-            var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePart.SparePartId);
+            var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePart.SparePartId);
 
             var reset = sparePartInfo.GetSparePartReset(_partPropertys.Length);
             if (_ops == 1)
@@ -160,7 +160,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             var sparePart = ContextUser.SparePartList.Find(m => m.UserSparepartID.Equals(_sparepartID));
             if (sparePart != null)
             {
-                var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
+                var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePart.SparePartId) ?? new SparePartInfo();
                 sparePart.UpdateNotify(obj =>
                 {
                     for (int i = 0; i < sparePart.Propertys.Count; i++)
@@ -173,7 +173,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         UserItemInfo userItem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID.Equals(sparePart.UserItemID));
                         if (userItem != null && userItem.ItemStatus.Equals(ItemStatus.YongBing))
                         {
-                            var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(Uid, userItem.GeneralID);
+                            var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, userItem.GeneralID);
                             if (userGeneral != null) userGeneral.RefreshMaxLife();
                         }
                     }

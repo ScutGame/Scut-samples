@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
 
             int upitemNum = 0;
-            var cacheSet = new GameDataCacheSet<UserTrump>();
+            var cacheSet = new PersonalCacheStruct<UserTrump>();
             UserTrump userTrump = cacheSet.FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump == null)
             {

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -69,7 +69,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             UserHelper.ChechDailyRestrain(ContextUser.UserID);
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (general == null)
             {
                 return false;
@@ -92,7 +92,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     return false;
                 }
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
                 if (itemInfo != null)
                 {
                     if (general.SaturationNum >= maxSatiationNum)
@@ -103,7 +103,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                     int giftEffect = itemInfo.EffectNum;
                     //佣兵喜欢类型的礼物，好感度加成
-                    GeneralInfo generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+                    GeneralInfo generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
                     if (generalInfo != null && itemInfo.GiftType == generalInfo.GiftType)
                     {
                         decimal sumGeneralEffect = MathUtils.Addition(generalEffect, 1, decimal.MaxValue);
@@ -131,7 +131,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1422_PresentationGoldNum;
                     return false;
                 }
-                UserDailyRestrain userDaily = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+                UserDailyRestrain userDaily = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
                 int addNum = UseGoldZengSong(ContextUser.UserID);
                 useGold = MathUtils.Addition(useGold, addNum);
                 if (ContextUser.GoldNum < useGold)
@@ -171,7 +171,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static int UseGoldZengSong(string userID)
         {
             int addNum = 0;
-            UserDailyRestrain userDaily = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain userDaily = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
 
             if (userDaily != null && userDaily.UserExtend != null && userDaily.UserExtend.GoldNum > 0)
             {

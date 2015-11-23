@@ -8,7 +8,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -63,8 +63,8 @@ def takeAction(urlParam,parent):
     actionResult =ActionResult();
     userId =parent.Current.UserId;
     actionResult.UserID = userId;
-    cacheSetUserAbility =  GameDataCacheSet[UserAbility]();
-    cacheSetGeneral = GameDataCacheSet[UserGeneral]();
+    cacheSetUserAbility =  PersonalCacheStruct[UserAbility]();
+    cacheSetGeneral = PersonalCacheStruct[UserGeneral]();
     userAbility = cacheSetUserAbility.FindKey(userId.ToString());
     if userAbility and userAbility.AbilityList :
 
@@ -96,9 +96,9 @@ def takeAction(urlParam,parent):
 
 def buildPacket(writer, urlParam, actionResult):
     #输出
-    cacheSetAbility =  ConfigCacheSet[AbilityInfo]();
-    cacheSetGeneral =  ConfigCacheSet[GeneralInfo]();
-    cacheSetUserGeneral =  GameDataCacheSet[UserGeneral]();
+    cacheSetAbility =  ShareCacheStruct[AbilityInfo]();
+    cacheSetGeneral =  ShareCacheStruct[GeneralInfo]();
+    cacheSetUserGeneral =  PersonalCacheStruct[UserGeneral]();
     writer.PushIntoStack(actionResult.PageCount);
     writer.PushIntoStack(len(actionResult.List));
     for info in actionResult.List:

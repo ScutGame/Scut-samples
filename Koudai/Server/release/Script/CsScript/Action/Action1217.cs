@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Service;
@@ -80,9 +80,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             Int16 potenceNum = 0;
             Int16 thoughtNum = 0;
             Int16 intelligenceNum = 0;
-            var cacheSetUserGeneral = new GameDataCacheSet<UserGeneral>();
-            var cacheSetUserItem = new GameDataCacheSet<UserItemPackage>();
-            var cacheSetBringUp = new ConfigCacheSet<BringUpInfo>();
+            var cacheSetUserGeneral = new PersonalCacheStruct<UserGeneral>();
+            var cacheSetUserItem = new PersonalCacheStruct<UserItemPackage>();
+            var cacheSetBringUp = new ShareCacheStruct<BringUpInfo>();
             if (_ops == 1)
             {
                 var attributeSetArray = ConfigEnvSet.GetString("UserBringUp.Set").Split(',');

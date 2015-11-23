@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 optype = 7;
             }
             short generalLv = 0;
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -102,7 +102,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int upexpNum = 0;
             int expeNum = 0;
             double addNum = FestivalHelper.SurplusPurchased(ContextUser.UserID, FestivalType.ManorAddition);//活动加成
-            UserLand userLand = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, landPositon);
+            UserLand userLand = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, landPositon);
             if (userLand != null)
             {
                 if (userLand.IsGain == 2 || userLand.GeneralID == 0)
@@ -112,7 +112,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
                 plantQuality = (short)userLand.PlantQuality;
-                PlantInfo plantInfo = new ConfigCacheSet<PlantInfo>().FindKey(generalLv, plantType, userLand.PlantQuality);
+                PlantInfo plantInfo = new ShareCacheStruct<PlantInfo>().FindKey(generalLv, plantType, userLand.PlantQuality);
                 if (plantInfo != null)
                 {
                     if (userLand.IsGain == 1)
@@ -129,7 +129,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         return false;
                     }
                     gainNum = plantInfo.GainNum;
-                    UserLand land = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, landPositon);
+                    UserLand land = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, landPositon);
                     if (land != null && land.IsRedLand == 1)
                     {
                         gainNum = MathUtils.Addition(gainNum, (int)(gainNum * 0.2), int.MaxValue);
@@ -143,7 +143,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     {
                         expeNum = MathUtils.Addition(userGeneral.CurrExperience, gainNum, int.MaxValue);
 
-                        GeneralEscalateInfo generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(userGeneral.GeneralLv);
+                        GeneralEscalateInfo generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(userGeneral.GeneralLv);
                         if (generalEscalate != null)
                         {
                             upexpNum = generalEscalate.UpExperience;

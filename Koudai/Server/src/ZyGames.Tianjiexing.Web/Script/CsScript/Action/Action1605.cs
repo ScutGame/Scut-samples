@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -75,8 +75,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
             //wuzf modify 2012-05-19
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
-            var propsArray = new GameDataCacheSet<UserProps>().FindAll(ContextUser.UserID, u => u.PropType == 1);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
+            var propsArray = new PersonalCacheStruct<UserProps>().FindAll(ContextUser.UserID, u => u.PropType == 1);
             if (propsArray.Count > 0 && propsArray[0].SurplusNum > 0)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -94,7 +94,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
 
             //给佣兵补血
-            var userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
+            var userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
             int effectNum = itemInfo.EffectNum;
             foreach (var userGeneral in userGeneralArray)
             {
@@ -107,8 +107,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     effectNum = MathUtils.Subtraction(effectNum, subLifeNum, 0);
                 }
             }
-            var cacheSet = new GameDataCacheSet<UserProps>();
-            UserProps props = new GameDataCacheSet<UserProps>().FindKey(ContextUser.UserID, userItem.ItemID);
+            var cacheSet = new PersonalCacheStruct<UserProps>();
+            UserProps props = new PersonalCacheStruct<UserProps>().FindKey(ContextUser.UserID, userItem.ItemID);
             if (props != null)
             {
                 props.SurplusNum = effectNum;

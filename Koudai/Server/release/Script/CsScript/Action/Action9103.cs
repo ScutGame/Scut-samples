@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Model;
@@ -85,11 +85,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
                 //查看是否在user库中有该玩家
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(_friendId);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(_friendId);
                 if (userInfo == null)
                 {
                     UserCacheGlobal.LoadOffline(_friendId);
-                    userInfo = new GameDataCacheSet<GameUser>().FindKey(_friendId);
+                    userInfo = new PersonalCacheStruct<GameUser>().FindKey(_friendId);
                 }
                 if (userInfo == null)
                 {
@@ -191,7 +191,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
                 GameUser friend = null;
-                new GameDataCacheSet<GameUser>().Foreach((personalId, key, user) =>
+                new PersonalCacheStruct<GameUser>().Foreach((personalId, key, user) =>
                 {
                     if (user.NickName == _friendName)
                     {
@@ -202,7 +202,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 });
                 if (friend != null)
                 {
-                    GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(friend.UserID);
+                    GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(friend.UserID);
                     UserFriends userFriend = cacheSet.FindKey(ContextUser.UserID, _friendId);
                     if (userFriend != null)
                     {

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Runtime;
@@ -38,9 +38,9 @@ namespace ZyGames.Tianjiexing.BLL.GM
             int magicID = args.Length > 0 ? args[0].Trim().ToInt() : 0;
             short magicLv = args.Length > 1 ? args[1].Trim().ToShort() : (short)1;
 
-            var cacheSet = new GameDataCacheSet<UserMagic>();
+            var cacheSet = new PersonalCacheStruct<UserMagic>();
             var userMagic = cacheSet.FindKey(UserID, magicID);
-            MagicInfo magic = new ConfigCacheSet<MagicInfo>().FindKey(magicID);
+            MagicInfo magic = new ShareCacheStruct<MagicInfo>().FindKey(magicID);
             if (magic == null)
             {
                 return;

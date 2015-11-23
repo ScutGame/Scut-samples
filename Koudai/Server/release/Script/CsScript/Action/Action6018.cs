@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -68,7 +68,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(memberID);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(memberID);
             var guildCacheSet = new ShareCacheStruct<GuildMember>();
             GuildMember member = guildCacheSet.FindKey(guildID, memberID);
             if (member != null)
@@ -84,11 +84,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 CombatHelper.RemoveGuildAbility(gameUser);
             }
             int totalDate = (ConfigEnvSet.GetInt("UserQueue.GuildMemberDel") * 60 * 60);
-            List<UserQueue> queueArray = new GameDataCacheSet<UserQueue>().FindAll(memberID, m => m.QueueType == QueueType.TuiChuGongHui);
+            List<UserQueue> queueArray = new PersonalCacheStruct<UserQueue>().FindAll(memberID, m => m.QueueType == QueueType.TuiChuGongHui);
             if (queueArray.Count > 0)
             {
                 //new UserQueue().ReLoadUser(memberID);
-                queueArray = new GameDataCacheSet<UserQueue>().FindAll(memberID, m => m.QueueType == QueueType.TuiChuGongHui);
+                queueArray = new PersonalCacheStruct<UserQueue>().FindAll(memberID, m => m.QueueType == QueueType.TuiChuGongHui);
             }
             if (queueArray.Count > 0)
             {
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     IsSuspend = false,
                     UserID = ContextUser.UserID
                 };
-                new GameDataCacheSet<UserQueue>().Add(userQueue);
+                new PersonalCacheStruct<UserQueue>().Add(userQueue);
 
             }
             return true;

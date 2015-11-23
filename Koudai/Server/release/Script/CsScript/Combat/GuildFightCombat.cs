@@ -5,7 +5,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Net;
@@ -141,7 +141,7 @@ THE SOFTWARE.
                 info.CurStage = stage.ToInt();
                 info.Round = 0;
                 TraceLog.WriteInfo("目前阶段{0},开始分组!", info.FastID);
-                var fightInfoList = new ConfigCacheSet<GuildFightInfo>().FindAll();
+                var fightInfoList = new ShareCacheStruct<GuildFightInfo>().FindAll();
                 foreach (var fightInfo in fightInfoList)
                 {
                     Grouping(info.FastID, info.Lenght, stage, info.Round, fightInfo.CityID);
@@ -155,7 +155,7 @@ THE SOFTWARE.
         public static void RaceLevel(FightStage stage)
         {
             TraceLog.WriteInfo("目前阶段{0}升级中", stage);
-            var fightInfoList = new ConfigCacheSet<GuildFightInfo>().FindAll();
+            var fightInfoList = new ShareCacheStruct<GuildFightInfo>().FindAll();
             foreach (var fightInfo in fightInfoList)
             {
                 ServerFight[] applyList = GetApply(stage, fightInfo.CityID);
@@ -342,7 +342,7 @@ THE SOFTWARE.
                     {
                         return;
                     }
-                    var fightInfo = new ConfigCacheSet<GuildFightInfo>().FindKey(cuser1.CityID);
+                    var fightInfo = new ShareCacheStruct<GuildFightInfo>().FindKey(cuser1.CityID);
                     if (fightInfo != null)
                     {
                         int obtainNum = (user1.UserLv * fightInfo.Victory).ToInt();
@@ -367,7 +367,7 @@ THE SOFTWARE.
                     {
                         return;
                     }
-                    var fightInfo = new ConfigCacheSet<GuildFightInfo>().FindKey(cuser.CityID);
+                    var fightInfo = new ShareCacheStruct<GuildFightInfo>().FindKey(cuser.CityID);
                     if (fightInfo != null)
                     {
                         int obtainNum = (user.UserLv * fightInfo.Victory).ToInt();
@@ -416,15 +416,15 @@ THE SOFTWARE.
 
         private static void AsyncDoCombat(FightUser cuser1, FightUser cuser2, FightCombatProcess process)
         {
-            GameUser user1 = UserCacheGlobal.LoadOffline(cuser1.UserId); //new GameDataCacheSet<GameUser>().FindKey();
-            GameUser user2 = UserCacheGlobal.LoadOffline(cuser2.UserId); // new GameDataCacheSet<GameUser>().FindKey(cuser2.UserId);
+            GameUser user1 = UserCacheGlobal.LoadOffline(cuser1.UserId); //new PersonalCacheStruct<GameUser>().FindKey();
+            GameUser user2 = UserCacheGlobal.LoadOffline(cuser2.UserId); // new PersonalCacheStruct<GameUser>().FindKey(cuser2.UserId);
             if (user1 == null || user2 == null)
             {
                 return;
             }
             decimal victory = 0;
             decimal failure = 0;
-            var fightInfo = new ConfigCacheSet<GuildFightInfo>().FindKey(cuser1.CityID);
+            var fightInfo = new ShareCacheStruct<GuildFightInfo>().FindKey(cuser1.CityID);
             if (fightInfo != null)
             {
                 victory = fightInfo.Victory;
@@ -484,8 +484,8 @@ THE SOFTWARE.
 
         public static void FightUserListCombat(FightUser cuser1, FightUser cuser2, bool orderly)
         {
-            GameUser user1 = new GameDataCacheSet<GameUser>().FindKey(cuser1.UserId);
-            GameUser user2 = new GameDataCacheSet<GameUser>().FindKey(cuser2.UserId);
+            GameUser user1 = new PersonalCacheStruct<GameUser>().FindKey(cuser1.UserId);
+            GameUser user2 = new PersonalCacheStruct<GameUser>().FindKey(cuser2.UserId);
             if (user1 == null || user2 == null)
             {
                 return;
@@ -493,7 +493,7 @@ THE SOFTWARE.
             var serverfightgroup = new ShareCacheStruct<ServerFightGroup>().FindAll(m => m.FastID == info.FastID && m.GuildIDA == user1.MercenariesID && m.GuildIDB == user2.MercenariesID);
             if (serverfightgroup.Count > 0)
             {
-                var fightInfo = new ConfigCacheSet<GuildFightInfo>().FindKey(cuser1.CityID);
+                var fightInfo = new ShareCacheStruct<GuildFightInfo>().FindKey(cuser1.CityID);
                 if (fightInfo != null)
                 {
                     if (orderly)
@@ -669,8 +669,8 @@ THE SOFTWARE.
         /// <param name="process"></param>
         public static void MemberGroupProcess(FightUser cuser1, FightUser cuser2, bool isWin, FightCombatProcess process)
         {
-            GameUser user1 = new GameDataCacheSet<GameUser>().FindKey(cuser1.UserId);
-            GameUser user2 = new GameDataCacheSet<GameUser>().FindKey(cuser2.UserId);
+            GameUser user1 = new PersonalCacheStruct<GameUser>().FindKey(cuser1.UserId);
+            GameUser user2 = new PersonalCacheStruct<GameUser>().FindKey(cuser2.UserId);
             if (user1 == null || user2 == null)
             {
                 return;
@@ -1068,7 +1068,7 @@ THE SOFTWARE.
                 var serverFightList = new ShareCacheStruct<ServerFight>().FindAll(s => s.FastID == fastID);
                 foreach (var fight in serverFightList)
                 {
-                    GuildFightInfo fightInfo = new ConfigCacheSet<GuildFightInfo>().FindKey(fight.CityID);
+                    GuildFightInfo fightInfo = new ShareCacheStruct<GuildFightInfo>().FindKey(fight.CityID);
                     if (fightInfo != null)
                     {
                         GuildWarRewards(fight.RankID, fight.GuildID, fightInfo);
@@ -1110,7 +1110,7 @@ THE SOFTWARE.
                 itemID = fightInfo.ParticipateID;
                 mailContent = LanguageManager.GetLang().St6404_GuildWarParticipateID;
             }
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (itemInfo != null)
             {
                 mailContent = string.Format(mailContent, itemInfo.ItemName);
@@ -1155,7 +1155,7 @@ THE SOFTWARE.
         /// <param name="fightInfo"></param>
         public static void AwardWinner(string guildID, GuildFightInfo fightInfo)
         {
-            CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(fightInfo.CityID);
+            CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(fightInfo.CityID);
             if (cityInfo == null)
             {
                 return;
@@ -1240,7 +1240,7 @@ THE SOFTWARE.
             {
                 string userid = member.UserID;
                 UserCacheGlobal.CheckLoadUser(userid);
-                GameUser user = new GameDataCacheSet<GameUser>().FindKey(userid);
+                GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userid);
                 if (user != null)
                 {
                     chairMan = user.NickName;
@@ -1479,8 +1479,8 @@ THE SOFTWARE.
             if (member != null && guildID == user.MercenariesID && member.PostType == PostType.Chairman)
             {
                 UserGuild userGuild = new ShareCacheStruct<UserGuild>().FindKey(guildID);
-                CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(cityID);
-                UserDailyRestrain userDaily = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(cityID);
+                UserDailyRestrain userDaily = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                 if (userDaily != null && userDaily.UserExtend != null && userDaily.UserExtend.BroadcastNum >= 10)
                 {
                     return;

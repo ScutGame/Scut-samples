@@ -27,7 +27,7 @@ using System.Data;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Component;
@@ -93,8 +93,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 int entExprience1 = 0;
                 int entExprience2 = 0;
-                EnchantInfo enchant1 = new ConfigCacheSet<EnchantInfo>().FindKey(userEnchantinfo1.EnchantID);
-                EnchantInfo enchant2 = new ConfigCacheSet<EnchantInfo>().FindKey(userEnchantinfo2.EnchantID);
+                EnchantInfo enchant1 = new ShareCacheStruct<EnchantInfo>().FindKey(userEnchantinfo1.EnchantID);
+                EnchantInfo enchant2 = new ShareCacheStruct<EnchantInfo>().FindKey(userEnchantinfo2.EnchantID);
                 if (enchant1 != null && enchant2 != null)
                 {
                     entExprience1 = enchant1.Experience;
@@ -153,13 +153,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1262_EnchantSynthesisNotEnough;
                     return false;
                 }
-                EnchantLvInfo enchantLvInfo = new ConfigCacheSet<EnchantLvInfo>().FindKey(uEnchantInfo.EnchantID,
+                EnchantLvInfo enchantLvInfo = new ShareCacheStruct<EnchantLvInfo>().FindKey(uEnchantInfo.EnchantID,
                                                                                           GameConfigSet.MaxEnchantLv);
                 int maxExprience = enchantLvInfo == null ? 0 : enchantLvInfo.Experience;
 
                 foreach (var info in enchantArray)
                 {
-                    EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(info.EnchantID);
+                    EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(info.EnchantID);
                     if (enchantInfo != null)
                     {
                         experience = enchantInfo.Experience;

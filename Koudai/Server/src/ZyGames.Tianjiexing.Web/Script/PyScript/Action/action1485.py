@@ -8,7 +8,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -39,8 +39,8 @@ def takeAction(urlParam,parent):
     #TraceLog.ReleaseWrite('1004 param BackpackType:{0}', urlParam.BackpackType);
     actionResult =ActionResult();
     userId =parent.Current.UserId;
-    cacheSetAbility =  ConfigCacheSet[AbilityInfo]();
-    cacheSetUserAbility =  GameDataCacheSet[UserAbility]();
+    cacheSetAbility =  ShareCacheStruct[AbilityInfo]();
+    cacheSetUserAbility =  PersonalCacheStruct[UserAbility]();
     userAbility = cacheSetUserAbility.FindKey(userId.ToString());
     if (userAbility != None and userAbility.AbilityList != None):
         ability =  userAbility.AbilityList.Find(lambda  s:MathUtils.ToNotNullString(s.UserItemID) == MathUtils.ToNotNullString(urlParam.UserItemID));

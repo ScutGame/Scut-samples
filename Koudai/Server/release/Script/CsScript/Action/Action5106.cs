@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -58,11 +58,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
             if (RankingHelper.IsGainSportsReward(ContextUser.UserID) && dailyRestrain != null && dailyRestrain.UserExtend != null)
             {
                 var envSet = ServerEnvSet.Get(ServerEnvKey.JingJiChangReward, "");
-                SportsRewardInfo sportsInfo = new ConfigCacheSet<SportsRewardInfo>().FindKey(dailyRestrain.UserExtend.UserRankID);
+                SportsRewardInfo sportsInfo = new ShareCacheStruct<SportsRewardInfo>().FindKey(dailyRestrain.UserExtend.UserRankID);
                 {                if (envSet != null && sportsInfo != null)
 
                     if (envSet.ToDateTime().Date > dailyRestrain.Funtion11.Date && dailyRestrain.UserExtend.UserRankID > 0)

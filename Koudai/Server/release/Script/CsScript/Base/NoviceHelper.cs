@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Framework.Model;
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         private static void CheckFestivalRestrain(string userid, int festivalID)
         {
-            var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+            var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
             FestivalRestrain restrain = cacheSet.FindKey(userid, festivalID);
             if (restrain != null)
             {
@@ -123,7 +123,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 CheckFestivalRestrain(userID, festivalID);
                 FestivalInfo festival = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
-                FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userID, festivalID);
+                FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userID, festivalID);
                 if (restrain != null && restrain.RefreashDate.Date == DateTime.Now.Date && restrain.RestrainNum < festival.RestrainNum)
                 {
                     if (TanabataFestival(userID, plotID))
@@ -146,8 +146,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         private static bool TanabataFestival(string userID, int plotID)
         {
             var chatService = new TjxChatService();
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             if (plotInfo != null)
             {
                 if (RandomUtils.IsHit(plotInfo.FestivalProbability))
@@ -161,7 +161,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     int index2 = RandomUtils.GetHitIndex(probability);
                     int itemID = rewardsArray[index2].Item;
                     UserItemHelper.AddUserItem(userID, itemID, 1);
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                     if (userInfo != null && itemInfo != null)
                     {
                         string content = string.Empty;
@@ -191,7 +191,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string GianTanabataReward(GameUser user, UserItemInfo item)
         {
             string content = string.Empty;
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
             if (itemInfo != null)
             {
                 List<PrizeInfo> prizeInfosArray = itemInfo.ItemPack.ToList();
@@ -242,7 +242,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         public static bool CheckOnlinePrize(string user)
         {
-            NoviceRestrain noviceRestrain = new GameDataCacheSet<NoviceRestrain>().FindKey(user);
+            NoviceRestrain noviceRestrain = new PersonalCacheStruct<NoviceRestrain>().FindKey(user);
             if (noviceRestrain != null)
             {
                 if (noviceRestrain.EnergyNum < _onlinePrizeConfig.Count)
@@ -270,7 +270,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             takeNum = 0;
             coldeTime = 0;
             onlineEnergy = 0;
-            var cacheSet = new GameDataCacheSet<NoviceRestrain>();
+            var cacheSet = new PersonalCacheStruct<NoviceRestrain>();
             NoviceRestrain noviceRestrain = cacheSet.FindKey(user.UserID);
             if (noviceRestrain == null)
             {
@@ -290,7 +290,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
                     noviceRestrain.EnergyNum += 1;
                     noviceRestrain.EnergyDate = DateTime.Now;
-                    //if (new GameDataCacheSet<NoviceRestrain>().FindKey(user.UserID) == null)
+                    //if (new PersonalCacheStruct<NoviceRestrain>().FindKey(user.UserID) == null)
                     //{
                     //    noviceRestrain.Append();
                     //}
@@ -308,7 +308,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         public static bool CheckLoginPrize(string user)
         {
-            NoviceRestrain noviceRestrain = new GameDataCacheSet<NoviceRestrain>().FindKey(user);
+            NoviceRestrain noviceRestrain = new PersonalCacheStruct<NoviceRestrain>().FindKey(user);
             return noviceRestrain == null ||
                 (noviceRestrain.GoldNum < _loginPrizeConfig.Length &&
                 DateTime.Now.Date >= noviceRestrain.ReceiveDate.AddDays(1).Date);
@@ -324,7 +324,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             giftGold = 0;
             int giftCoin = ConfigEnvSet.GetInt("Novice.LoginPrizeGameCoin");
-            NoviceRestrain noviceRestrain = new GameDataCacheSet<NoviceRestrain>().FindKey(user.UserID);
+            NoviceRestrain noviceRestrain = new PersonalCacheStruct<NoviceRestrain>().FindKey(user.UserID);
             if (noviceRestrain == null)
             {
                 noviceRestrain = new NoviceRestrain { UserID = user.UserID };
@@ -343,7 +343,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         user.ExtGold = MathUtils.Addition(user.ExtGold, giftGold, int.MaxValue);
                         //user.Update();
                     }
-                    //if (new GameDataCacheSet<NoviceRestrain>().FindKey(user.UserID) == null)
+                    //if (new PersonalCacheStruct<NoviceRestrain>().FindKey(user.UserID) == null)
                     //{
                     //    noviceRestrain.Append();
                     //}
@@ -367,8 +367,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static List<NoviceInfo> GetNoviceList(string userID, int noviceID)
         {
             List<NoviceInfo> noviceList = new List<NoviceInfo>();
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
-            NoviceRestrain restrain = new GameDataCacheSet<NoviceRestrain>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
+            NoviceRestrain restrain = new PersonalCacheStruct<NoviceRestrain>().FindKey(userID);
             if (restrain != null && userInfo != null && restrain.EnergyNum == 0)
             {
                 if (noviceID == 1000 && (DateTime.Now - userInfo.LoginTime).TotalSeconds >= 300)
@@ -429,7 +429,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool CheckDailyExpPrize(string user)
         {
-            NoviceRestrain noviceRestrain = new GameDataCacheSet<NoviceRestrain>().FindKey(user);
+            NoviceRestrain noviceRestrain = new PersonalCacheStruct<NoviceRestrain>().FindKey(user);
             return false;
             //||(noviceRestrain.ExpObtain < _dailyExpPrizeConfig.Length &&
             //DateTime.Now.Date >= noviceRestrain.ExpObtainDate.AddDays(1).Date);
@@ -444,7 +444,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool DailyExpPrize(GameUser user, out int expNum)
         {
             expNum = 0;
-            //NoviceRestrain noviceRestrain = new GameDataCacheSet<NoviceRestrain>().FindKey(user.UserID);
+            //NoviceRestrain noviceRestrain = new PersonalCacheStruct<NoviceRestrain>().FindKey(user.UserID);
             //if (noviceRestrain == null)
             //{
             //    noviceRestrain = new NoviceRestrain { UserID = user.UserID };
@@ -461,7 +461,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             //        GameUser.DoSyncUserCache(user.UserID, () =>
             //        {
             //            user.Update();
-            //            if (new GameDataCacheSet<NoviceRestrain>().FindKey(user.UserID) == null)
+            //            if (new PersonalCacheStruct<NoviceRestrain>().FindKey(user.UserID) == null)
             //            {
             //                noviceRestrain.Append();
             //            }
@@ -483,7 +483,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool DailyEnergy(string userID)
         {
-            UserDailyRestrain userDailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain userDailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (userDailyRestrain != null)
             {
                 if (userDailyRestrain.Funtion15.Date != DateTime.Now.Date)
@@ -508,7 +508,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 if (IsFestivalOpen(festivalID))
                 {
                     var itemArray = UserItemHelper.GetItems(user.UserID).FindAll(m => m.ItemStatus == ItemStatus.BeiBao);
-                    UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                    UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                     List<PrizeInfo> rewardsArray = festival.Reward.ToList();
                     foreach (PrizeInfo reward in rewardsArray)
                     {
@@ -646,7 +646,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string CrystalNumFull(GameUser user, UserItemInfo item)
         {
             string content = string.Empty;
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
             if (itemInfo != null)
             {
                 List<PrizeInfo> prizeInfosArray = itemInfo.ItemPack.ToList();
@@ -670,7 +670,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void GetFunctionEnum(string userID)
         {
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             UserFunction function = cacheSet.FindKey(userID, FunctionEnum.MorePlotCoin);
             if (function == null)
             {
@@ -712,7 +712,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 {
                     List<PrizeInfo> rewardsArray = festival.Reward.ToList();
 
-                    UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                    UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                     if (dailyRestrain != null && dailyRestrain.UserExtend != null)
                     {
                         if (dailyRestrain.UserExtend.Comrades.Date != DateTime.Now.Date)
@@ -721,7 +721,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             {
                                 foreach (PrizeInfo reward in rewardsArray)
                                 {
-                                    ItemBaseInfo iteminfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(reward.ItemID);
+                                    ItemBaseInfo iteminfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(reward.ItemID);
                                     if (iteminfo != null)
                                     {
                                         ActivitiesAward.GameUserReward(user.UserID, reward.Type, reward.ItemID, reward.Num);
@@ -750,7 +750,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string GianComradesPackReward(GameUser user, UserItemInfo item)
         {
             string content = string.Empty;
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
             if (itemInfo != null)
             {
                 List<PrizeInfo> prizeInfosArray = itemInfo.ItemPack.ToList();
@@ -793,7 +793,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             string content = string.Empty;
             QualityType qualityType = (QualityType)Enum.Parse(typeof(QualityType), itemList.Quality.ToString());
-            List<ItemBaseInfo> itemInfoArray = new ConfigCacheSet<ItemBaseInfo>().FindAll(m =>
+            List<ItemBaseInfo> itemInfoArray = new ShareCacheStruct<ItemBaseInfo>().FindAll(m =>
                                                                   m.QualityType == qualityType &&
                                                                   m.DemandLv == itemList.ItemLv && m.ItemType == itemList.Type);
 
@@ -827,7 +827,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     int itemID = 0;
                     string content = string.Empty;
 
-                    UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                    UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                     if (dailyRestrain != null && dailyRestrain.UserExtend != null)
                     {
                         level = dailyRestrain.UserExtend.Leveling;
@@ -851,7 +851,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 {
                                     break;
                                 }
-                                CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(reward.ItemID);
+                                CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(reward.ItemID);
                                 if (crystal != null)
                                 {
                                     content = content + crystal.CrystalName + "，";
@@ -864,7 +864,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                     break;
                                 }
                                 itemID = reward.ItemID;
-                                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                                 if (itemInfo != null)
                                 {
                                     content = content + itemInfo.ItemName + "，";
@@ -900,7 +900,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
         private static bool IsReceive(string userID, string receiveID, int rid)
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             string[] leveling = new string[0];
             if (dailyRestrain != null && dailyRestrain.UserExtend != null)
             {
@@ -936,7 +936,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 if (IsFestivalOpen(festivalID))
                 {
                     string systemContent = string.Empty;
-                    FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID, festivalID);
+                    FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID, festivalID);
                     List<PrizeInfo> prizeInfosArray = festival.Reward.ToList();
                     foreach (PrizeInfo reward in prizeInfosArray)
                     {
@@ -966,7 +966,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             }
                             else if (restrain == null)
                             {
-                                var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                                var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                                 restrain = new FestivalRestrain()
                                         {
                                             UserID = user.UserID,
@@ -1001,7 +1001,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 if (IsFestivalOpen(festivalID))
                 {
-                    FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID, festivalID);
+                    FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID, festivalID);
                     if (restrain != null)
                     {
                         if (restrain.RefreashDate.Date != DateTime.Now.Date)
@@ -1036,7 +1036,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     {
                         userLv = 40;
                     }
-                    FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID, festivalID);
+                    FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID, festivalID);
                     PrizeInfo prizeInfo = new List<PrizeInfo>(festival.Reward).Find(m => m.UserLv == userLv);
                     if (prizeInfo != null)
                     {
@@ -1056,7 +1056,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         else
                         {
 
-                            var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                            var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                             restrain = new FestivalRestrain()
                             {
                                 UserID = user.UserID,
@@ -1107,7 +1107,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string TanabataRecharge(GameUser user, UserItemInfo item)
         {
             string content = string.Empty;
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
             if (itemInfo != null)
             {
                 List<PrizeInfo> prizeInfosArray = itemInfo.ItemPack.ToList();
@@ -1133,7 +1133,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsWingFestivalInfo(string userID)
         {
             int festivalID = 0;// 1017;
-            FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userID, festivalID);
+            FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userID, festivalID);
             if (restrain != null && IsFestivalOpen(festivalID))
             {
                 return true;
@@ -1156,10 +1156,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 {
                     if (chatContent.IndexOf(festival.FestivalExtend.KeyWord) != -1)
                     {
-                        FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userid);
+                        FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userid);
                         if (restrain == null)
                         {
-                            var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                            var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                             restrain = new FestivalRestrain()
                             {
                                 UserID = userid,
@@ -1187,7 +1187,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 if (chatContent.IndexOf(festival.FestivalExtend.KeyWord) != -1)
                 {
-                    FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID);
+                    FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID);
                     if (restrain == null)
                     {
                         List<PrizeInfo> prizeInfosArray = festival.Reward.ToList();
@@ -1200,7 +1200,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         PrizeInfo prizeInfo = prizeInfosArray[index2];
                         if (prizeInfo != null)
                         {
-                            var cacheSet = new GameDataCacheSet<UserProps>();
+                            var cacheSet = new PersonalCacheStruct<UserProps>();
                             UserProps props = cacheSet.FindKey(user.UserID, prizeInfo.ItemID);
                             if (props != null && !IsFestivalOpen(festivalID))
                             {
@@ -1223,7 +1223,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                     RefreashDate = DateTime.Now,
                                     RestrainNum = 1
                                 };
-                                new GameDataCacheSet<FestivalRestrain>().Add(restrain);
+                                new PersonalCacheStruct<FestivalRestrain>().Add(restrain);
                             }
                         }
                     }
@@ -1259,7 +1259,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 var chatService = new TjxChatService();
                 FestivalStop(user.UserID, festivalID);
-                FestivalRestrain festivalRestrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID, festivalID);
+                FestivalRestrain festivalRestrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID, festivalID);
                 int restrainNm = 0;
                 if (festivalRestrain != null)
                 {
@@ -1279,7 +1279,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         }
                         if (festivalRestrain == null)
                         {
-                            var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                            var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                             festivalRestrain = new FestivalRestrain()
                                                    {
                                                        UserID = user.UserID,
@@ -1313,8 +1313,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
             FestivalInfo festival = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
             if (festival != null)
             {
-                GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+                GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
                 if (plotInfo != null)
                 {
                     if (IsFestivalOpen(festivalID))
@@ -1330,7 +1330,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                             int index2 = RandomUtils.GetHitIndex(probability);
                             int itemID = rewardsArray[index2].Item;
                             UserItemHelper.AddUserItem(userID, itemID, 1);
-                            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+                            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
                             if (userInfo != null && itemInfo != null)
                             {
                                 string content = string.Empty;
@@ -1402,7 +1402,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             else if (prizeInfo.Type == RewardType.Item)
             {
                 UserItemHelper.AddUserItem(userInfo.UserID, prizeInfo.ItemID, prizeInfo.Num);
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prizeInfo.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prizeInfo.ItemID);
                 if (itemInfo != null)
                 {
                     content = content + string.Format(LanguageManager.GetLang().St_Item, itemInfo.ItemName,prizeInfo.UserLv, prizeInfo.Num) + "，";
@@ -1410,11 +1410,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
             }
             else if (prizeInfo.Type == RewardType.CrystalType)
             {
-                List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(m => m.CrystalQuality == prizeInfo.CrystalType);
+                List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(m => m.CrystalQuality == prizeInfo.CrystalType);
                 if (crystalArray2.Count > 0)
                 {
                     int randomNum = RandomUtils.GetRandom(0, crystalArray2.Count);
-                    CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
+                    CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(crystalArray2[randomNum].CrystalID);
                     if (crystal != null)
                     {
                         UserHelper.CrystalAppend(userInfo.UserID, crystal.CrystalID, 2);
@@ -1425,7 +1425,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             else if (prizeInfo.Type == RewardType.CrystalId)
             {
                 UserHelper.CrystalAppend(userInfo.UserID, prizeInfo.ItemID, 2);
-                CrystalInfo info = new ConfigCacheSet<CrystalInfo>().FindKey(prizeInfo.ItemID);
+                CrystalInfo info = new ShareCacheStruct<CrystalInfo>().FindKey(prizeInfo.ItemID);
                 if (info != null)
                 {
                     content = content + string.Format(LanguageManager.GetLang().St_Crystal, CrystalHelper.GetQualityName(info.CrystalQuality), info.CrystalName) + "，";
@@ -1445,7 +1445,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             if (festival != null)
             {
                 DateTime startDate = festival.StartDate;
-                var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                 FestivalRestrain festivalRestrain = cacheSet.FindKey(userID, festivalID);
                 if (festivalRestrain != null && festivalRestrain.RefreashDate < startDate)
                 {
@@ -1464,7 +1464,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             FestivalInfo festival = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
             if (festival != null)
             {
-                FestivalRestrain festivalRestrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userID, festivalID);
+                FestivalRestrain festivalRestrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userID, festivalID);
                 if (festivalRestrain != null && festivalRestrain.RefreashDate.Date != DateTime.Now.Date)
                 {
                     if (festivalRestrain.UserExtend != null && festivalRestrain.UserExtend.Count > 0)
@@ -1490,7 +1490,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 if (IsFestivalOpen(info.FestivalID))
                 {
-                    var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                    var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                     FestivalRestrain fRest = cacheSet.FindKey(user.UserID, info.FestivalID);
                     if (fRest == null || fRest.RefreashDate < info.StartDate ||
                         (fRest.RefreashDate.Date != DateTime.Now.Date && fRest.RefreashDate >= info.StartDate && fRest.RefreashDate <= info.EndDate))
@@ -1537,7 +1537,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 if (IsFestivalOpen(info.FestivalID))
                 {
                     FestivalRestrainNum(user.UserID, info.FestivalID);
-                    FestivalRestrain festivalRestrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID, info.FestivalID);
+                    FestivalRestrain festivalRestrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID, info.FestivalID);
                     if (festivalRestrain != null && festivalRestrain.RefreashDate.Date == DateTime.Now.Date)
                     {
                         dailyNum = festivalRestrain.RestrainNum;
@@ -1561,7 +1561,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 }
                                 else
                                 {
-                                    var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+                                    var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
                                     festivalRestrain = new FestivalRestrain()
                                     {
                                         FestivalID = info.FestivalID,
@@ -1585,7 +1585,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="plotID"></param>
         public static void PlotFestivalList(GameUser user, int plotID)
         {
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             GetTanabataReward(user.UserID, plotID);
             GetFestivalReward(user.UserID, plotID);
             ActivitiesAward.GetHolidayFestivalReward(user.UserID, plotID); //假日狂欢活动通关获得金币
@@ -1623,10 +1623,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         foreach (TaskConfigInfo configInfo in configInfos)
                         {
                             maxNum = MathUtils.Addition(maxNum, 1);
-                            var plotInfosArray = new ConfigCacheSet<PlotInfo>().FindAll(m => configInfo.CityID.IndexOf(m.CityID.ToString()) >= 0 && m.PlotType == configInfo.PlotType);
+                            var plotInfosArray = new ShareCacheStruct<PlotInfo>().FindAll(m => configInfo.CityID.IndexOf(m.CityID.ToString()) >= 0 && m.PlotType == configInfo.PlotType);
                             if (IsEliteClearance(user.UserID, info.FestivalID, plotInfosArray, maxNum))
                             {
-                                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(configInfo.item);
+                                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(configInfo.item);
                                 if (itemInfo != null)
                                 {
                                     UserItemHelper.AddUserItem(user.UserID, configInfo.item, configInfo.Num);
@@ -1649,7 +1649,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="festivalRestrain"></param>
         private static void GetFestivalRestrain(FestivalInfo info, GameUser user, int maxNum, int festivalID)
         {
-            var cacheSet = new GameDataCacheSet<FestivalRestrain>();
+            var cacheSet = new PersonalCacheStruct<FestivalRestrain>();
             FestivalRestrain festivalRestrain = cacheSet.FindKey(user.UserID, festivalID);
             if (festivalRestrain == null)
             {
@@ -1687,13 +1687,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsEliteClearance(string userID, int festivalID, List<PlotInfo> plotInfosArray, int number)
         {
             int plotNum = 0;
-            FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(userID, festivalID);
+            FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(userID, festivalID);
             if (restrain != null && restrain.RefreashDate.Date == DateTime.Now.Date && restrain.UserExtend != null && restrain.UserExtend.Count > 0)
             {
                 RestrainExtend[] extendList = restrain.UserExtend.FindAll(m => m.ID == number).ToArray();
                 plotNum = extendList.Length > 0 ? extendList.Length : 0;
             }
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && dailyRestrain.RefreshDate.Date == DateTime.Now.Date && dailyRestrain.FunPlot != null && dailyRestrain.FunPlot.Count > 0)
             {
                 List<FunPlot> funPlotsList = dailyRestrain.FunPlot.ToList();
@@ -1727,7 +1727,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 bool isChange = false;
                 if (IsFestivalOpen(info.FestivalID))
                 {
-                    FestivalRestrain restrain = new GameDataCacheSet<FestivalRestrain>().FindKey(user.UserID, info.FestivalID);
+                    FestivalRestrain restrain = new PersonalCacheStruct<FestivalRestrain>().FindKey(user.UserID, info.FestivalID);
                     var rewardsArray = info.Reward;
                     foreach (PrizeInfo reward in rewardsArray)
                     {
@@ -1751,7 +1751,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                     RefreashDate = DateTime.Now,
                                     RestrainNum = 1,
                                 };
-                                new GameDataCacheSet<FestivalRestrain>().Add(restrain);
+                                new PersonalCacheStruct<FestivalRestrain>().Add(restrain);
                             }
                         }
                     }

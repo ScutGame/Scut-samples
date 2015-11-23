@@ -25,7 +25,7 @@ using System;
 using System.Data;
 using ServiceStack.ServiceInterface.ServiceModel;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1466_WorshipPropertyNotEnough;
                 return false;
             }
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump == null)
             {
                 return false;
@@ -88,7 +88,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1466_ItemPropertyNotEnough;
                     return false;
                 }
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                 if (itemInfo != null)
                 {
                     GeneralProperty property = null;
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                     short baseLv = 1;
                     TrumpPropertyInfo trumpProperty =
-                        new ConfigCacheSet<TrumpPropertyInfo>().FindKey(itemInfo.AbilityType, baseLv);
+                        new ShareCacheStruct<TrumpPropertyInfo>().FindKey(itemInfo.AbilityType, baseLv);
                     if (trumpProperty != null)
                     {
                         property = new GeneralProperty();
@@ -135,7 +135,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         }
         private void TraceProperty(UserTrump userTrump)
         {
-            var worshipInfoInfoArray = new ConfigCacheSet<WorshipInfo>().FindAll(m => m.IsOpen && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
+            var worshipInfoInfoArray = new ShareCacheStruct<WorshipInfo>().FindAll(m => m.IsOpen && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
             int index = 0;
 
             int worshipLv = userTrump.WorshipLv;
@@ -156,7 +156,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private GeneralProperty GetPropertyType(string userID, int procount)
         {
             GeneralProperty property = null;
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.PropertyInfo.Count > procount)
             {
                 property = userTrump.PropertyInfo[procount];

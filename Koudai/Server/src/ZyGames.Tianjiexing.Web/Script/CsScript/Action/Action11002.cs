@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Model;
@@ -95,7 +95,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            //List<UserQueue> queueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.TianXianStrong);
+            //List<UserQueue> queueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.TianXianStrong);
 
             //if (queueArray.Count > 0)
             //{
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             //    }
             //}
 
-            UserExpedition userExpedition = new GameDataCacheSet<UserExpedition>().FindKey(ContextUser.UserID);
+            UserExpedition userExpedition = new PersonalCacheStruct<UserExpedition>().FindKey(ContextUser.UserID);
             if (userExpedition != null && userExpedition.ExpeditionNum >= 10 && userExpedition.InsertDate.Date == DateTime.Now.Date)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -160,7 +160,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //        TotalColdTime = codeTime,
                 //        Timing = DateTime.Now,
                 //    };
-                //    new GameDataCacheSet<UserQueue>().Add(queue, ContextUser.UserID.ToInt());
+                //    new PersonalCacheStruct<UserQueue>().Add(queue, ContextUser.UserID.ToInt());
                 //}
             }
 
@@ -170,7 +170,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                  {
                      UserID = ContextUser.UserID,
                  };
-                new GameDataCacheSet<UserExpedition>().Add(userExpedition, ContextUser.UserID.ToInt());
+                new PersonalCacheStruct<UserExpedition>().Add(userExpedition, ContextUser.UserID.ToInt());
             }
             if (DateTime.Now.Date == userExpedition.InsertDate.Date)
             {
@@ -183,7 +183,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             userExpedition.CodeTime = codeTime;
             userExpedition.InsertDate = DateTime.Now;
 
-            ExpeditionInfo expInfo = new ConfigCacheSet<ExpeditionInfo>().FindKey(questionID);
+            ExpeditionInfo expInfo = new ShareCacheStruct<ExpeditionInfo>().FindKey(questionID);
             if (expInfo != null)
             {
                 if (answerID == 1)
@@ -239,7 +239,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 string prizeContent = string.Empty;
                 MysteryHelper.IsTriggerMyStery(ContextUser, MysteryType.Meiritanxian, out prizeContent);
-                MysteryInfo mysteryInfo = new ConfigCacheSet<MysteryInfo>().FindKey(MysteryType.Meiritanxian);
+                MysteryInfo mysteryInfo = new ShareCacheStruct<MysteryInfo>().FindKey(MysteryType.Meiritanxian);
                 if (!string.IsNullOrEmpty(prizeContent) && mysteryInfo != null)
                 {
                     string prompt = string.Format(mysteryInfo.Prompt, prizeContent);
@@ -257,7 +257,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public int GetExpCodeTime(string userID)
         {
             int coldTime = 0;
-            UserExpedition userExp = new GameDataCacheSet<UserExpedition>().FindKey(userID);
+            UserExpedition userExp = new PersonalCacheStruct<UserExpedition>().FindKey(userID);
             if (userExp != null && DateTime.Now.Date == userExp.InsertDate.Date && userExp.ExpeditionNum > 0)
             {
                 if (userExp.ExpeditionNum >= 9)

@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System.Collections.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.BLL.Combat;
@@ -81,13 +81,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             if (cityID == 0)
             {
-                var fightList = new ConfigCacheSet<GuildFightInfo>().FindAll();
+                var fightList = new ShareCacheStruct<GuildFightInfo>().FindAll();
                 if (fightList.Count > 0)
                 {
                     cityID = fightList[0].CityID;
                 }
             }
-            var cityInfo = new ConfigCacheSet<CityInfo>().FindKey(cityID);
+            var cityInfo = new ShareCacheStruct<CityInfo>().FindKey(cityID);
             if (cityInfo != null)
             {
                 cityName = cityInfo.CityName;

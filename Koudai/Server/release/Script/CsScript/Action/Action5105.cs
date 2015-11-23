@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheSet = new GameDataCacheSet<UserQueue>();
+            var cacheSet = new PersonalCacheStruct<UserQueue>();
             List<UserQueue> userQueueArray = cacheSet.FindAll(ContextUser.UserID, m => m.QueueType == QueueType.JingJiTiaoZhan);
             if (userQueueArray.Count > 0)
             {
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private int GetPrice()
         {
             int currGoldNum = 0;
-            List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.JingJiTiaoZhan);
+            List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.JingJiTiaoZhan);
             if (userQueueArray.Count > 0)
             {
                 UserQueue queue = userQueueArray[0];

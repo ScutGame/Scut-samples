@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -54,7 +54,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(_userMagicArray.Count);
             foreach (UserMagic userMagic in _userMagicArray)
             {
-                MagicInfo magicInfo = new ConfigCacheSet<MagicInfo>().FindKey(userMagic.MagicID);
+                MagicInfo magicInfo = new ShareCacheStruct<MagicInfo>().FindKey(userMagic.MagicID);
                 short repostion = GeneralHelper.ReplacePostion(ContextUser.UserID, userMagic.MagicID);
                 DataStruct ds = new DataStruct();
                 ds.PushIntoStack(userMagic.MagicID);
@@ -64,10 +64,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ds.PushIntoStack(magicInfo == null ? string.Empty : magicInfo.MagicDesc.ToNotNullString());
                 string gridPostion = string.Empty;
                 string[] gridRanges = new string[0];
-                MagicLvInfo magicLv = new ConfigCacheSet<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv);
+                MagicLvInfo magicLv = new ShareCacheStruct<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv);
                 if (magicLv != null)
                 {
-                    var userFunction = new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.ReplaceGeneral);
+                    var userFunction = new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.ReplaceGeneral);
                     gridPostion = magicLv.GridRange;
                     if (magicLv.ReplacePostion > 0 && userFunction != null)
                     {
@@ -80,8 +80,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 foreach (string gridRang in gridRanges)
                 {
                     int isDisplace = repostion == gridRang.ToInt() ? 1 : 0;
-                    UserEmbattle userEmbattle = new GameDataCacheSet<UserEmbattle>().FindKey(ContextUser.UserID, userMagic.MagicID, gridRang.ToShort());
-                    UserGeneral uGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, userEmbattle == null ? 0 : userEmbattle.GeneralID);
+                    UserEmbattle userEmbattle = new PersonalCacheStruct<UserEmbattle>().FindKey(ContextUser.UserID, userMagic.MagicID, gridRang.ToShort());
+                    UserGeneral uGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, userEmbattle == null ? 0 : userEmbattle.GeneralID);
 
                     DataStruct ds1 = new DataStruct();
                     ds1.PushIntoStack(uGeneral == null ? (short)0 : (short)1);
@@ -117,7 +117,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
 
             GeneralHelper.StotyTaskFunction(ContextUser); //已完成替换佣兵功能开启
-            _userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(ContextUser.UserID, u => u.MagicID != 1 && u.MagicType == MagicType.MoFaZhen);
+            _userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(ContextUser.UserID, u => u.MagicID != 1 && u.MagicType == MagicType.MoFaZhen);
             _userMagicArray.QuickSort((x, y) =>
             {
                 if (x == null && y == null) return 0;
@@ -126,11 +126,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return x.MagicID.CompareTo(y.MagicID);
             });
 
-            var userFunction = new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.ReplaceGeneral);
+            var userFunction = new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.ReplaceGeneral);
             foreach (UserMagic magic in _userMagicArray)
             {
                 if (magic == null) continue;
-                MagicLvInfo magicLv = new ConfigCacheSet<MagicLvInfo>().FindKey(magic.MagicID, magic.MagicLv);
+                MagicLvInfo magicLv = new ShareCacheStruct<MagicLvInfo>().FindKey(magic.MagicID, magic.MagicLv);
                 if (magicLv != null)
                 {
                     string gridPostion = magicLv.GridRange;
@@ -141,7 +141,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     string[] gridRangeArray = gridPostion.Split(',');
                     foreach (string gridRange in gridRangeArray)
                     {
-                        UserEmbattle userEmbattle = new GameDataCacheSet<UserEmbattle>().FindKey(ContextUser.UserID, magic.MagicID, gridRange.ToShort());
+                        UserEmbattle userEmbattle = new PersonalCacheStruct<UserEmbattle>().FindKey(ContextUser.UserID, magic.MagicID, gridRange.ToShort());
                         if (userEmbattle == null)
                         {
                             UserEmbattle embattle = new UserEmbattle()
@@ -151,13 +151,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                 Position = gridRange.ToShort(),
                                 GeneralID = 0
                             };
-                            var cacheSet = new GameDataCacheSet<UserEmbattle>();
+                            var cacheSet = new PersonalCacheStruct<UserEmbattle>();
                             cacheSet.Add(embattle);
                         }
                     }
                 }
             }
-            _userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
+            _userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
             
             // 佣兵排序
             GeneralSortHelper.GeneralSort(ContextUser.UserID, _userGeneralArray);

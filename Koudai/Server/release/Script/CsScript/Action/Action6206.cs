@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -51,7 +51,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(abilityInfoArray.Count);
             foreach (GuildAbilityInfo abilityInfo in abilityInfoArray)
             {
-                var guildAbilityLvInfos = new ConfigCacheSet<GuildAbilityLvInfo>().FindAll(m => m.ID == abilityInfo.ID);
+                var guildAbilityLvInfos = new ShareCacheStruct<GuildAbilityLvInfo>().FindAll(m => m.ID == abilityInfo.ID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(abilityInfo.ID);
                 dsItem.PushIntoStack(abilityInfo.IsCityCombat ? (short)1 : (short)0);
@@ -85,8 +85,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.GuildAbility).CurVersion;
-            abilityInfoArray = new ConfigCacheSet<GuildAbilityInfo>().FindAll(m => m.Version > clientVersion && m.Version <= currVersion);
+            int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.GuildAbility).CurVersion;
+            abilityInfoArray = new ShareCacheStruct<GuildAbilityInfo>().FindAll(m => m.Version > clientVersion && m.Version <= currVersion);
             return true;
         }
     }

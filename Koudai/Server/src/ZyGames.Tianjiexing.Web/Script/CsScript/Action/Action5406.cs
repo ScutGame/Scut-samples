@@ -23,8 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -48,7 +49,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private string _nickName = string.Empty;
         private int _userLv = 0;
         private short _isCurr;
-        private GameDataCacheSet<GameUser> _cacheSet = new GameDataCacheSet<GameUser>();
+        private PersonalCacheStruct<GameUser> _cacheSet = new PersonalCacheStruct<GameUser>();
 
         public Action5406(ZyGames.Framework.Game.Contract.HttpGet httpGet)
             : base(ActionIDDefine.Cst_Action5406, httpGet)
@@ -104,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         {
                             _damageNum = killUser.DamageNum;
                             _nickName = killUser.NickName;
-                            var userEntity = new GameDataCacheSet<GameUser>().FindKey(killUserId.ToString());
+                            var userEntity = new PersonalCacheStruct<GameUser>().FindKey(killUserId.ToString());
                             if (userEntity != null)
                             {
                                 _userLv = userEntity.UserLv;
@@ -134,7 +135,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     {
                         _damageNum = killUser.DamageNum;
                         _nickName = killUser.NickName;
-                        var userEntity = new GameDataCacheSet<GameUser>().FindKey(killUserId.ToString());
+                        var userEntity = new PersonalCacheStruct<GameUser>().FindKey(killUserId.ToString());
                         if (userEntity != null)
                         {
                             _userLv = userEntity.UserLv;

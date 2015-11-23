@@ -8,7 +8,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -52,18 +52,18 @@ def takeAction(urlParam, parent):
         heritageGenral = contextUser.HeritageList.Find(lambda m:m.Type == HeritageType.IsHeritage);
         if heritageGenral != None:           
             heGeneralID = heritageGenral.GeneralID;
-            hUserGeneral = GameDataCacheSet[UserGeneral]().FindKey(userId,heritageGenral.GeneralID);
+            hUserGeneral = PersonalCacheStruct[UserGeneral]().FindKey(userId,heritageGenral.GeneralID);
             if hUserGeneral!=None:
                 generalLv = MathUtils.Addition(hUserGeneral.GeneralLv,MathUtils.ToShort(3));        
         IsGenral = contextUser.HeritageList.Find(lambda m:m.Type == HeritageType.Heritage);
         if IsGenral != None:
             isGeneralID = IsGenral.GeneralID;
     if urlParam.heritageType == HeritageType.Heritage:
-        generalList = GameDataCacheSet[UserGeneral]().FindAll(userId,lambda u:u.GeneralID != heGeneralID and u.GeneralID != isGeneralID and u.IsBattle== False\
+        generalList = PersonalCacheStruct[UserGeneral]().FindAll(userId,lambda u:u.GeneralID != heGeneralID and u.GeneralID != isGeneralID and u.IsBattle== False\
             and u.GeneralType != GeneralType.Battle and  u.GeneralType !=GeneralType.Soul \
             and u.GeneralLv >= generalLv and u.GeneralStatus == GeneralStatus.DuiWuZhong,True);
     elif urlParam.heritageType == HeritageType.IsHeritage:         
-              generalList = GameDataCacheSet[UserGeneral]().FindAll(userId,lambda u:u.GeneralStatus == GeneralStatus.DuiWuZhong\
+              generalList = PersonalCacheStruct[UserGeneral]().FindAll(userId,lambda u:u.GeneralStatus == GeneralStatus.DuiWuZhong\
                   and u.GeneralID != generalID and u.GeneralID != heGeneralID  and u.IsBattle== False,True);
     actionResult.generalArray.Clear();
     for userGeneral in generalList:
@@ -74,7 +74,7 @@ def takeAction(urlParam, parent):
 def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(actionResult.generalArray.Count);
     for item in actionResult.generalArray:
-        careerInfo = ConfigCacheSet[CareerInfo]().FindKey(item.CareerID);
+        careerInfo = ShareCacheStruct[CareerInfo]().FindKey(item.CareerID);
         dsItem = DataStruct();
         dsItem.PushIntoStack(item.GeneralID);
         dsItem.PushIntoStack(MathUtils.ToNotNullString(item.GeneralName));

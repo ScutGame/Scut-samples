@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ProtoBuf;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Event;
 
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         /// <returns></returns>
         public static UserSparePart GetRandom(int sparePartId)
         {
-            var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePartId);
+            var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePartId);
             if (sparePartInfo == null) return null;
             var sparePart = BuildSparePart(sparePartId);
             if (sparePart != null)
@@ -124,7 +124,7 @@ namespace ZyGames.Tianjiexing.Model.Config
 
         public static UserSparePart CreateSparePart(int sparePartId, string[] propertys, char splitChar)
         {
-            var sparePartInfo = new ConfigCacheSet<SparePartInfo>().FindKey(sparePartId);
+            var sparePartInfo = new ShareCacheStruct<SparePartInfo>().FindKey(sparePartId);
             if (sparePartInfo == null) return null;
 
             var sparePart = BuildSparePart(sparePartId);

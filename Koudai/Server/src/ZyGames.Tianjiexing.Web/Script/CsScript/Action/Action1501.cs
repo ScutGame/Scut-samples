@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -63,7 +63,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(userMagicArray.Count);
             foreach (UserMagic magic in userMagicArray)
             {
-                magicInfo = new ConfigCacheSet<MagicInfo>().FindKey(magic.MagicID);
+                magicInfo = new ShareCacheStruct<MagicInfo>().FindKey(magic.MagicID);
                 if (IsUp(magic.MagicID, magic.MagicLv, ContextUser))
                 {
                     isUp = 1;
@@ -101,11 +101,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             if (magicType == 0)
             {
-                userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(ContextUser.UserID).GetPaging(pageIndex, pageSize, out pageCount);
+                userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(ContextUser.UserID).GetPaging(pageIndex, pageSize, out pageCount);
             }
             else
             {
-                userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(ContextUser.UserID, m => m.MagicType == magicType).GetPaging(pageIndex, pageSize, out pageCount);
+                userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(ContextUser.UserID, m => m.MagicType == magicType).GetPaging(pageIndex, pageSize, out pageCount);
                 //List<UserMagic> tempList = new List<UserMagic>(userMagicArray);
                 //userMagicArray = tempList.FindAll(m => m.MagicID != new GameUser().UserMagicID);
             }
@@ -115,7 +115,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             });
             if (magicType == MagicType.MoFaZhen)
             {
-                var cacheSetMagic = new ConfigCacheSet<MagicInfo>();
+                var cacheSetMagic = new ShareCacheStruct<MagicInfo>();
                 var magicList = cacheSetMagic.FindAll(s => s.MagicType == MagicType.MoFaZhen && s.DemandLv > ContextUser.UserLv);
 
                 magicList.ForEach(mgic =>
@@ -135,7 +135,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             pageCount = MathUtils.Subtraction(pageCount, 1, 0);
 
-            //List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.MagicStrong);
+            //List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.MagicStrong);
             //if (userQueueArray.Count > 0 && userQueueArray[0].StrengNum >= 2)
             //{
             //    queueID = userQueueArray[0].QueueID;
@@ -163,7 +163,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             bool result = true;
             int upLv = MathUtils.Addition(magicLv, 1, int.MaxValue);
-            MagicLvInfo magicLvInfo = new ConfigCacheSet<MagicLvInfo>().FindKey(magicID, upLv);
+            MagicLvInfo magicLvInfo = new ShareCacheStruct<MagicLvInfo>().FindKey(magicID, upLv);
             if (magicLvInfo == null || magicLvInfo.EscalateMinLv > user.UserLv || magicLvInfo.ExpNum > user.ExpNum)
             {
                 result = false;

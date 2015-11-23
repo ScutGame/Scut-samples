@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -93,8 +93,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 int result = 0;
                 if (_friendType != FriendType.ChouDi)
                 {
-                    GameUser userx = new GameDataCacheSet<GameUser>().FindKey(x.UserID);
-                    GameUser usery = new GameDataCacheSet<GameUser>().FindKey(y.UserID);
+                    GameUser userx = new PersonalCacheStruct<GameUser>().FindKey(x.UserID);
+                    GameUser usery = new PersonalCacheStruct<GameUser>().FindKey(y.UserID);
                     int userLvx = userx == null ? 0 : userx.UserLv;
                     int userLvy = usery == null ? 0 : usery.UserLv;
                     int currExperiencex = (UserGeneral.GetMainGeneral(x.UserID) ?? new UserGeneral()).CurrExperience;

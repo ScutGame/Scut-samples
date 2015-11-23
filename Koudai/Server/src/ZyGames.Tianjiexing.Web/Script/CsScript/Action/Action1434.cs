@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Data;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -65,20 +65,20 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             int maxGeneralNum = ContextUser.GeneralMaxNum;
-            var userGeneralsList = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
+            var userGeneralsList = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
             if (userGeneralsList.Count >= MathUtils.Addition(maxGeneralNum, 1, int.MaxValue))
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St1404_MaxGeneralNumFull;
                 return false;
             }
-            var generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            var generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             if (generalInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 return false;
             }
-            var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral == null && GeneralHelper.IsGeneralRecruit(ContextUser.UserID, generalID) == 1)
             {
                 userGeneral = new UserGeneral();
@@ -105,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 userGeneral.CurrExperience = 0;
                 userGeneral.Experience1 = 0;
                 userGeneral.Experience2 = 0;
-                var cacheSet = new GameDataCacheSet<UserGeneral>();
+                var cacheSet = new PersonalCacheStruct<UserGeneral>();
                 cacheSet.Add(userGeneral);
             }
             ErrorCode = 0;

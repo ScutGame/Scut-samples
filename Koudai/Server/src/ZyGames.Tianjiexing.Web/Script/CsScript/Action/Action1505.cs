@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -80,8 +80,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            //int currVersion = new ConfigCacheSet<ConfigVersion>().FindKey(VersionType.Ability).CurVersion;
-            abilityList = new ConfigCacheSet<AbilityInfo>().FindAll();
+            //int currVersion = new ShareCacheStruct<ConfigVersion>().FindKey(VersionType.Ability).CurVersion;
+            abilityList = new ShareCacheStruct<AbilityInfo>().FindAll();
             return true;
         }
     }

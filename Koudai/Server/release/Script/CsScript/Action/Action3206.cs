@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
@@ -198,9 +198,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St3206_PetInterceptError;
                 return false;
             }
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid) != null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid) != null)
             {
-                var userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+                var userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
                 int maxNum = new ShareCacheStruct<DailyRestrainSet>().FindKey(RestrainType.PetIntercept).MaxNum;
                 if (userRestrain.UserExtend != null && userRestrain.UserExtend.PetIntercept >= maxNum)
                 {
@@ -267,13 +267,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //ContextUser.Update();
                 var user = UserCacheGlobal.LoadOffline(petRunPool.UserID) ?? new GameUser();
                 chatService.SystemSendWhisper(user, string.Format(LanguageManager.GetLang().Chat_PetWasBlocked,
-                    (new ConfigCacheSet<PetInfo>().FindKey(petRunPool.PetID) ?? new PetInfo()).PetName, ContextUser.NickName, _interceptGameCoin, _interceptObtainNum
+                    (new ShareCacheStruct<PetInfo>().FindKey(petRunPool.PetID) ?? new PetInfo()).PetName, ContextUser.NickName, _interceptGameCoin, _interceptObtainNum
                     ));
 
                 chatService.SystemSendWhisper(ContextUser, string.Format(LanguageManager.GetLang().Chat_PetInterceptSucess,
                     ContextUser.NickName,
                     user.NickName,
-                    (new ConfigCacheSet<PetInfo>().FindKey(petRunPool.PetID) ?? new PetInfo()).PetName,
+                    (new ShareCacheStruct<PetInfo>().FindKey(petRunPool.PetID) ?? new PetInfo()).PetName,
                     _interceptGameCoin,
                     _interceptObtainNum));
 
@@ -295,9 +295,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             var sender = DataSyncManager.GetDataSender();
             sender.Send(log);
 
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid) != null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid) != null)
             {
-                var restrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+                var restrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
 
                 restrain.UserExtend.UpdateNotify(obj =>
                                                    {

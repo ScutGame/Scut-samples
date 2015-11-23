@@ -10,7 +10,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -57,7 +57,7 @@ def takeAction(urlParam, parent):
 def buildPacket(writer, urlParam, actionResult):
     writer.PushIntoStack(len(actionResult.embattleList))
     for info in actionResult.embattleList:
-        userGenearl=GameDataCacheSet[UserGeneral]().FindKey(info.UserID, info.GeneralID);
+        userGenearl=PersonalCacheStruct[UserGeneral]().FindKey(info.UserID, info.GeneralID);
         DsItem = DataStruct()
         DsItem.PushIntoStack(MathUtils.ToNotNullString(userGenearl.GeneralName))
         DsItem.PushIntoStack(MathUtils.ToNotNullString(userGenearl.HeadID))

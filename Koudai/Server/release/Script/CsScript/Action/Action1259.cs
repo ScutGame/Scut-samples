@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -95,7 +95,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     package.SaveEnchant(uEnchantInfo);
                     if (useritem != null && useritem.ItemStatus.Equals(ItemStatus.YongBing))
                     {
-                        var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(Uid, useritem.GeneralID);
+                        var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, useritem.GeneralID);
                         if (userGeneral != null) userGeneral.RefreshMaxLife();
                     }
                 }
@@ -137,7 +137,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     uEnchantInfo.Position = (short)potion;
                     uEnchantInfo.UserItemID = userItemID;
                     package.SaveEnchant(uEnchantInfo);
-                    var userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(Uid, useritem.GeneralID);
+                    var userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(Uid, useritem.GeneralID);
                     if (userGeneral != null) userGeneral.RefreshMaxLife();
                 }
             }

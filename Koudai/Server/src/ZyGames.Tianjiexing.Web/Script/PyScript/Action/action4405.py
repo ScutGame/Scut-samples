@@ -13,7 +13,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -32,7 +32,7 @@ class ActionResult(DataResult):
     def __init__(self):
         DataResult.__init__(self);
         self.prizeItems = CacheList[PrizeItemInfo]();
-        self._cacheSetGeneral = ConfigCacheSet[GeneralInfo]();
+        self._cacheSetGeneral = ShareCacheStruct[GeneralInfo]();
         self.combatProcessList = None;
         self.honourNum = 0;
         self.gotoNum = 0;
@@ -73,7 +73,7 @@ def takeAction(urlParam, parent):
         return actionResult;
 
     # 判断今日挑战次数是否已用完
-    userSJTInfo = GameDataCacheSet[UserShengJiTa]().FindKey(userId);
+    userSJTInfo = PersonalCacheStruct[UserShengJiTa]().FindKey(userId);
     if not userSJTInfo:
         parent.ErrorCode = Lang.getLang("ErrorCode");
         parent.ErrorInfo = Lang.getLang("LoadError");
@@ -134,10 +134,10 @@ def takeAction(urlParam, parent):
         if actionResult.exchange!=0 and actionResult.receive !=0:
             userSJTInfo.SJTStatus=2
 
-        cacheSetGeneral = GameDataCacheSet[UserGeneral]();
-        userMagic = GameDataCacheSet[UserMagic]().Find(userId, lambda s:s.IsEnabled);
+        cacheSetGeneral = PersonalCacheStruct[UserGeneral]();
+        userMagic = PersonalCacheStruct[UserMagic]().Find(userId, lambda s:s.IsEnabled);
         userMagicID = 0 if userMagic == None else userMagic.MagicID;
-        userEmbattleList = GameDataCacheSet[UserEmbattle]().FindAll(userId, lambda s:s.MagicID == userMagicID and s.GeneralID > 0);
+        userEmbattleList = PersonalCacheStruct[UserEmbattle]().FindAll(userId, lambda s:s.MagicID == userMagicID and s.GeneralID > 0);
 
         def method(userEmbattle):
             userGeneral = cacheSetGeneral.FindKey(userId, userEmbattle.GeneralID);
@@ -151,7 +151,7 @@ def takeAction(urlParam, parent):
         actionResult.starNum = starNum[0];
         actionResult.score = urlParam.diffcultyType * starNum[0];
         
-        userSJTInfo = GameDataCacheSet[UserShengJiTa]().FindKey(userId);
+        userSJTInfo = PersonalCacheStruct[UserShengJiTa]().FindKey(userId);
         if not userSJTInfo:
             return loadError();
         
@@ -199,7 +199,7 @@ def takeAction(urlParam, parent):
     UserHelper.RegainGeneralLife(userId);
      
 
-    # userPlotCombat = GameDataCacheSet[UserPlotCombat]().FindKey(userId, urlParam.plotNpcID);
+    # userPlotCombat = PersonalCacheStruct[UserPlotCombat]().FindKey(userId, urlParam.plotNpcID);
     userSJTInfo.EndTime = DateTime.Now;
     actionResult.combatProcessList = plotCombater.GetProcessResult();
 
@@ -218,7 +218,7 @@ def buildPacket(writer, urlParam, actionResult):
     #writer.PushIntoStack(userPlotCombat.Experience);
     #writer.PushIntoStack(actionResult.prizeItems.Count);
     #for prizeItem in actionResult.prizeItems:
-    #    item = ConfigCacheSet[ItemBaseInfo]().FindKey(prizeItem.ItemID);
+    #    item = ShareCacheStruct[ItemBaseInfo]().FindKey(prizeItem.ItemID);
     #    dsItem = DataStruct();
     #    dsItem.PushIntoStack(item.ItemName.ToNotNullString());
     #    dsItem.PushIntoStack(item.HeadID.ToNotNullString());

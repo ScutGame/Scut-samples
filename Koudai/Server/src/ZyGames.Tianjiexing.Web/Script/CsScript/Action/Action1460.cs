@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -81,7 +81,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St1460_WashingSkillsNotEnough;
                     return false;
                 }
-                UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+                UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
                 if (userTrump == null || userTrump.SkillInfo.Count == 0)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public static bool IsWash(string userID, int abilityID)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.SkillInfo.Count > 0)
             {
                 SkillInfo skillInfo = userTrump.SkillInfo.Find(m => m.AbilityID == abilityID);

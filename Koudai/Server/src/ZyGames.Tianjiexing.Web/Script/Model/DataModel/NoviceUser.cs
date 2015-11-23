@@ -35,7 +35,7 @@ namespace ZyGames.Tianjiexing.Model.DataModel
     /// @personalName: 映射UserId对应的字段名,默认为"UserId"
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data, "NoviceUser", DbConfig.PeriodTime, DbConfig.PersonalName)]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class NoviceUser : UserGuide
     {
 

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using ProtoBuf;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Model.Config
 {
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(CrystalID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(CrystalID);
                 if (crystalInfo != null)
                 {
                     return crystalInfo.CrystalQuality;
@@ -77,7 +77,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(CrystalID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(CrystalID);
                 if (crystalInfo != null)
                 {
                     return crystalInfo.AbilityID;
@@ -139,7 +139,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         {
             get
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(CrystalID);
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(CrystalID);
                 if (crystalInfo != null)
                 {
                     return crystalInfo.IsTelegrams;
@@ -153,7 +153,7 @@ namespace ZyGames.Tianjiexing.Model.Config
         /// </summary>
         public static bool CheckFull(string userID, int num)
         {
-            GameUser userInfo = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser userInfo = new PersonalCacheStruct<GameUser>().FindKey(userID);
             var package = UserCrystalPackage.Get(userID);
             UserCrystalInfo[] crystalsArray =
                 package.CrystalPackage.FindAll(m => m.IsSale == 2 && m.GeneralID.Equals(0)).ToArray();

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -67,14 +67,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
-            List<MonsterInfo> monsterArray = new ConfigCacheSet<MonsterInfo>().FindAll(m => m.ItemID == itemID);
+            itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
+            List<MonsterInfo> monsterArray = new ShareCacheStruct<MonsterInfo>().FindAll(m => m.ItemID == itemID);
             if (monsterArray.Count > 0)
             {
-                PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(monsterArray[0].MonsterID);
+                PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(monsterArray[0].MonsterID);
                 if (npcInfo != null)
                 {
-                    PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+                    PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
                     if (plotInfo != null)
                     {
                         plotID = plotInfo.PlotID;

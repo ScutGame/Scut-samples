@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Runtime;
@@ -44,7 +44,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
         {
             FunctionEnum funEnum = fun.ToEnum<FunctionEnum>();
 
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             UserFunction userFunction = cacheSet.FindKey(UserID, funEnum);
             if (userFunction == null)
             {

@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Message;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Framework.Net;
@@ -59,7 +59,7 @@ namespace ZyGames.Tianjiexing.Component.Chat
 
         public static void InitChatKeyWord()
         {
-            ChatKeyWordList = new ConfigCacheSet<ChatKeyWord>().FindAll();
+            ChatKeyWordList = new ShareCacheStruct<ChatKeyWord>().FindAll();
         }
 
         public TjxChatService()
@@ -255,10 +255,10 @@ namespace ZyGames.Tianjiexing.Component.Chat
             string guildID = string.Empty;
             if (chatData.ChatType == ChatType.Guild)
             {
-                GameUser user = new GameDataCacheSet<GameUser>().FindKey(chatData.FromUserID.ToString());
+                GameUser user = new PersonalCacheStruct<GameUser>().FindKey(chatData.FromUserID.ToString());
                 if (user == null)
                 {
-                    user = new GameDataCacheSet<GameUser>().FindKey(chatData.ToUserID.ToString());
+                    user = new PersonalCacheStruct<GameUser>().FindKey(chatData.ToUserID.ToString());
                 }
                 if (user != null)
                 {

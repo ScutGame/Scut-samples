@@ -25,7 +25,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -92,7 +92,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St_GoldNotEnough;
                     return false;
                 }
-                UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+                UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
                 if (dailyRestrain != null)
                 {
                     //z增加刷新次数 （未完成）
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static void HeroRefreshNum(string userID, int cityID)
         {
-            var cacheSet = new GameDataCacheSet<UserDailyRestrain>();
+            var cacheSet = new PersonalCacheStruct<UserDailyRestrain>();
             UserDailyRestrain dailyRestrain = cacheSet.FindKey(userID);
             if (dailyRestrain != null)
             {

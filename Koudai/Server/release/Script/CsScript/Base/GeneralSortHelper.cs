@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 
 namespace ZyGames.Tianjiexing.BLL.Base
@@ -40,12 +40,12 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             if (userGenerals.Count > 0)
             {
-                var _userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(userId);
+                var _userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(userId);
 
                 var userMagic =
                     _userMagicArray.Find(
                         x => x.UserID == userId && x.MagicType == MagicType.MoFaZhen && x.IsEnabled == true);
-                var userEmbattleInfo = new GameDataCacheSet<UserEmbattle>().FindAll(userId,
+                var userEmbattleInfo = new PersonalCacheStruct<UserEmbattle>().FindAll(userId,
                                                                                     x =>
                                                                                     x.MagicID == userMagic.MagicID);
                 if (userEmbattleInfo != null)

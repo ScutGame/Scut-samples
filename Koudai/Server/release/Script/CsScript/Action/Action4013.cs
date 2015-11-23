@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -62,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var restrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+            var restrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
             if (restrain != null)
             {
                 restrain.Funtion14 = MathUtils.Addition(restrain.Funtion14, 1, int.MaxValue);

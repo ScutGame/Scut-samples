@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -105,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     DoAccelerateQueue(goldNum, userQueue.DoRefresh(), userQueue.GetTiming(), userQueue.TotalColdTime);
                     //加速完清除队列
-                    var queueCacheSet = new GameDataCacheSet<UserQueue>();
+                    var queueCacheSet = new PersonalCacheStruct<UserQueue>();
                     queueCacheSet.Delete(userQueue);
                     ContextUser.ResetSweepPool(0);
                     //ContextUser.Update();
@@ -113,7 +113,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 else
                 {
                     //清除扫荡池
-                    var sweepCacheSet = new GameDataCacheSet<UserSweepPool>();
+                    var sweepCacheSet = new PersonalCacheStruct<UserSweepPool>();
                     List<UserSweepPool> sweepPoolList = sweepCacheSet.FindAll(ContextUser.UserID);
                     foreach (UserSweepPool sweepPool in sweepPoolList)
                     {
@@ -145,7 +145,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private void DoAccelerateQueue(int goldNum, int coldTime, int timing, int totalTime)
         {
             //获取加速后的所需的精力
-            int npcCount = new ConfigCacheSet<PlotNPCInfo>().FindAll(m=>m.PlotID == plotID).Count;
+            int npcCount = new ShareCacheStruct<PlotNPCInfo>().FindAll(m=>m.PlotID == plotID).Count;
             int battleNum = PlotHelper.GetBattleNum(coldTime);
             int turnsNum = PlotHelper.GetTurnsNum(npcCount, battleNum);
             int energyNum = turnsNum * PlotInfo.BattleEnergyNum;
@@ -178,7 +178,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private int GetGoldNum(out UserQueue userQueue)
         {
             userQueue = null;
-            List<UserQueue> userQueueList = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType== QueueType.SaoDang);
+            List<UserQueue> userQueueList = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType== QueueType.SaoDang);
             int coldTime = 0;
             if (userQueueList.Count > 0)
             {
@@ -204,7 +204,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             energyNum = 0;
             int coldTime = 0;
-            List<PlotNPCInfo> npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m=>m.PlotID == plotID);
+            List<PlotNPCInfo> npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m=>m.PlotID == plotID);
             int plotNpcNum = npcList.Count;
             int battleNum;
 
@@ -240,7 +240,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             energyNum = 0;
             int coldTime = 0;
-            List<PlotNPCInfo> npcList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m=>m.PlotID == plotID);
+            List<PlotNPCInfo> npcList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m=>m.PlotID == plotID);
             int plotNpcNum = npcList.Count;
             int battleNum;
 

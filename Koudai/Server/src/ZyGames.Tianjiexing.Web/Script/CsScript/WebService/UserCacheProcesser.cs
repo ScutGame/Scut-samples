@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Model;
@@ -42,7 +42,7 @@ namespace ZyGames.Tianjiexing.BLL.WebService
                 {
                     string pid = userID;
                     List<GameUser> list = new List<GameUser>();
-                    new GameDataCacheSet<GameUser>().Foreach((personalId, key, user) =>
+                    new PersonalCacheStruct<GameUser>().Foreach((personalId, key, user) =>
                     {
                         if (user.Pid.ToUpper() == pid.ToUpper())
                         {
@@ -61,7 +61,7 @@ namespace ZyGames.Tianjiexing.BLL.WebService
                 }
                 else
                 {
-                    var cacheSet = new ConfigCacheSet<CareerInfo>();
+                    var cacheSet = new ShareCacheStruct<CareerInfo>();
                     if (parameters["op"].Equals("0"))
                     {
                         UserCacheGlobal.ReLoad(string.Empty);

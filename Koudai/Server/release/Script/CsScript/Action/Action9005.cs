@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -72,8 +72,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             FestivalInfo festivalInfo = new ShareCacheStruct<FestivalInfo>().FindKey(festivalID);
             if (festivalInfo != null && !festivalInfo.IsStop) return false;
 
-            UserRecharge recharges = new GameDataCacheSet<UserRecharge>().FindKey(ContextUser.UserID);
-            RechargePacks rePacksInfo = new ConfigCacheSet<RechargePacks>().FindKey(_packsID);
+            UserRecharge recharges = new PersonalCacheStruct<UserRecharge>().FindKey(ContextUser.UserID);
+            RechargePacks rePacksInfo = new ShareCacheStruct<RechargePacks>().FindKey(_packsID);
             List<PackageReward> rewardArray = new List<PackageReward>();
             if (rePacksInfo != null)
             {
@@ -97,7 +97,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St9003_AlreadyReceived;
                 return false;
             }
-            List<PackageReceive> receiveArray = new GameDataCacheSet<PackageReceive>().FindAll(ContextUser.UserID, m => m.PacksID == _packsID);
+            List<PackageReceive> receiveArray = new PersonalCacheStruct<PackageReceive>().FindAll(ContextUser.UserID, m => m.PacksID == _packsID);
 
             bool isRece = false;
             PackageReceive pReceive = null;
@@ -193,7 +193,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static bool isRecevies(string userID, int packID)
         {
             bool result = false;
-            List<PackageReceive> receivesArray = new GameDataCacheSet<PackageReceive>().FindAll(userID, m => m.PacksID == packID);
+            List<PackageReceive> receivesArray = new PersonalCacheStruct<PackageReceive>().FindAll(userID, m => m.PacksID == packID);
             foreach (PackageReceive package in receivesArray)
             {
                 if (!package.IsReceive)

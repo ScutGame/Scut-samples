@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -64,9 +64,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(userTaskList.Count);
             foreach (UserTask userTask in userTaskList)
             {
-                DailyTaskInfo dtaskInfo = new ConfigCacheSet<DailyTaskInfo>().FindKey(userTask.TaskID);
+                DailyTaskInfo dtaskInfo = new ShareCacheStruct<DailyTaskInfo>().FindKey(userTask.TaskID);
                 var userItem = userTask.GetDailyItem(userLv);
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem != null ? userItem.ItemID : 0);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem != null ? userItem.ItemID : 0);
 
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(userTask.TaskID);
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St_VipNotEnoughNotFuntion;
                     return false;
                 }
-                List<UserTask> taskArray = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState == TaskState.AllowTake && u.TaskType == TaskType.Daily);
+                List<UserTask> taskArray = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState == TaskState.AllowTake && u.TaskType == TaskType.Daily);
                 if (taskArray.Count > 0)
                 {
                     if (taskArray[0].TaskStar == TaskStar.Star5)
@@ -133,7 +133,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
 
-                List<UserTask> taskArray = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState != TaskState.Disable && u.TaskType == TaskType.Daily);
+                List<UserTask> taskArray = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState != TaskState.Disable && u.TaskType == TaskType.Daily);
                 if (taskArray.Count > 0)
                 {
                     taskOpsStar = TaskHelper.GetTaskStar(taskArray[0].TaskStar, taskArray[0].TakeDate);
@@ -174,7 +174,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
 
                 taskOpsStar = TaskStar.Star5;
-                List<UserTask> taskArray = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState == TaskState.AllowTake && u.TaskType == TaskType.Daily);
+                List<UserTask> taskArray = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState == TaskState.AllowTake && u.TaskType == TaskType.Daily);
 
                 foreach (UserTask taskInfo in taskArray)
                 {
@@ -214,11 +214,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
 
-                List<UserTask> taskArray = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState == TaskState.Taked && u.TaskType == TaskType.Daily);
+                List<UserTask> taskArray = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID, u => u.TaskState == TaskState.Taked && u.TaskType == TaskType.Daily);
                 if (taskArray.Count > 0)
                 {
                     UserTask userTask = taskArray[0];
-                    DailyTaskInfo dtaskInfo = new ConfigCacheSet<DailyTaskInfo>().FindKey(taskArray[0].TaskID);
+                    DailyTaskInfo dtaskInfo = new ShareCacheStruct<DailyTaskInfo>().FindKey(taskArray[0].TaskID);
                     //交付任务
 
                     //奖励
@@ -263,7 +263,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 if (TaskID > 0)
                 {
-                    UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(ContextUser.UserID, TaskID);
+                    UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(ContextUser.UserID, TaskID);
                     if (userTask == null || userTask.TaskState != TaskState.Completed)
                     {
                         this.ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -276,7 +276,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         this.ErrorInfo = LanguageManager.GetLang().St3005_CompletedTimeout;
                         return false;
                     }
-                    DailyTaskInfo dtaskInfo = new ConfigCacheSet<DailyTaskInfo>().FindKey(userTask.TaskID);
+                    DailyTaskInfo dtaskInfo = new ShareCacheStruct<DailyTaskInfo>().FindKey(userTask.TaskID);
                     //交付任务
 
                     //奖励
@@ -319,7 +319,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     //刷新当天任务
                     if (!TaskHelper.CheckDailyTaskTimeout(ContextUser.UserID, out userTaskList))
                     {
-                        userTaskList = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID,
+                        userTaskList = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID,
                             m => m.TaskType.Equals(TaskType.Daily) &&
                                 !m.TaskState.Equals(TaskState.NoTake) &&
                                 !m.TaskState.Equals(TaskState.Disable)

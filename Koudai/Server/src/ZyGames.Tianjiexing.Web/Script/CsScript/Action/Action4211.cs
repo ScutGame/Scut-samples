@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -201,7 +201,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             var plotTeam = new PlotTeamCombat(ContextUser);
             teamCombatResult = plotTeam.GetCombatProcess(teamID);
             teamPlot = plotTeam.GetTeam(teamID);
-            plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
 
             if (teamCombatResult.IsWin)
             {

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -52,7 +52,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(generalArray.Count);
             foreach (var item in generalArray)
             {
-                CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(item.CareerID);
+                CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(item.CareerID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.GeneralID);
                 dsItem.PushIntoStack(item.GeneralName.ToNotNullString());
@@ -92,7 +92,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             if (heritageType == HeritageType.Heritage)
             {
-                generalList = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID,
+                generalList = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID,
                                                           u => u.GeneralID != heGeneralID &&
                                                                u.GeneralLv >= generalLv &&
                                                           u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
@@ -105,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 {
                     isGeneralID = IsGenral.GeneralID;
                 }
-                generalList = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID,
+                generalList = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID,
                                                                         u => u.GeneralStatus == GeneralStatus.DuiWuZhong &&
                                                                         u.GeneralID != generalID &&
                                                                         u.GeneralID != isGeneralID &&

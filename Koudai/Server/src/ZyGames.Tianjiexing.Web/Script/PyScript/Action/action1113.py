@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -52,12 +52,12 @@ def takeAction(urlParam, parent):
     actionResult = ActionResult();
     userId = str(parent.Current.UserId)
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
-    cacheSetItem = GameDataCacheSet[UserItemPackage]();
-    cacheSetUserAbility = GameDataCacheSet[UserAbility]();
-    cacheSetUserGeneral = GameDataCacheSet[UserGeneral]();
-    cacheSetGeneral = ConfigCacheSet[GeneralInfo]();
-    cacheSetItemInfo = ConfigCacheSet[ItemBaseInfo]();
-    cacheSet = GameDataCacheSet[UserGeneral]();
+    cacheSetItem = PersonalCacheStruct[UserItemPackage]();
+    cacheSetUserAbility = PersonalCacheStruct[UserAbility]();
+    cacheSetUserGeneral = PersonalCacheStruct[UserGeneral]();
+    cacheSetGeneral = ShareCacheStruct[GeneralInfo]();
+    cacheSetItemInfo = ShareCacheStruct[ItemBaseInfo]();
+    cacheSet = PersonalCacheStruct[UserGeneral]();
     userItem = cacheSetItem.FindKey(userId);
     PotentialArry = ConfigEnvSet.GetString("User.GeneralCardPotential").Split(',');
     if(userItem == None or userItem.ItemPackage == None):

@@ -25,8 +25,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
 
@@ -35,9 +36,9 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
     public class AbilityDispose
     {
-        private static GameDataCacheSet<UserAbility> _cacheSetUserAbility = new GameDataCacheSet<UserAbility>();
-        private static ConfigCacheSet<AbilityInfo> _cacheSetAbility = new ConfigCacheSet<AbilityInfo>();
-        private static ConfigCacheSet<AbilityLvInfo> _cacheSetAbilityLv = new ConfigCacheSet<AbilityLvInfo>();
+        private static PersonalCacheStruct<UserAbility> _cacheSetUserAbility = new PersonalCacheStruct<UserAbility>();
+        private static ShareCacheStruct<AbilityInfo> _cacheSetAbility = new ShareCacheStruct<AbilityInfo>();
+        private static ShareCacheStruct<AbilityLvInfo> _cacheSetAbilityLv = new ShareCacheStruct<AbilityLvInfo>();
         /// <summary>
         /// 获取技能等级加成
         /// </summary>
@@ -57,7 +58,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                         s => s.AbilityID == abilityId && s.GeneralID == generalId);
                 if (ability2 != null)
                 {
-                    var cacheSetAbilityLv = new ConfigCacheSet<AbilityLvInfo>();
+                    var cacheSetAbilityLv = new ShareCacheStruct<AbilityLvInfo>();
                     var abilityLv = cacheSetAbilityLv.FindKey(ability2.AbilityID, ability2.AbilityLv);
                     if (abilityLv != null)
                     {

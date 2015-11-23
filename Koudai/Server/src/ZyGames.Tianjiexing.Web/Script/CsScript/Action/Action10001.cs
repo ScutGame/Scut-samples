@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -82,9 +82,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheSet = new GameDataCacheSet<UserPlant>();
+            var cacheSet = new PersonalCacheStruct<UserPlant>();
             UserPlant plant = cacheSet.FindKey(ContextUser.UserID);
-            var landCacheSet = new GameDataCacheSet<UserLand>();
+            var landCacheSet = new PersonalCacheStruct<UserLand>();
             List<UserLand> landArray = landCacheSet.FindAll(ContextUser.UserID);
             if (plant == null)
             {
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 landCacheSet.Add(userLand);
             }
 
-            if (new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Zhongzhijingqianshu) == null)
+            if (new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Zhongzhijingqianshu) == null)
             {
                 isShow = 2;
             }
@@ -119,11 +119,11 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 isShow = 1;
             }
-            userPlant = new GameDataCacheSet<UserPlant>().FindKey(ContextUser.UserID);
-            userLandArray = new GameDataCacheSet<UserLand>().FindAll(ContextUser.UserID);
+            userPlant = new PersonalCacheStruct<UserPlant>().FindKey(ContextUser.UserID);
+            userLandArray = new PersonalCacheStruct<UserLand>().FindAll(ContextUser.UserID);
 
             //圣水恢复
-            var queueCacheSet = new GameDataCacheSet<UserQueue>();
+            var queueCacheSet = new PersonalCacheStruct<UserQueue>();
             List<UserQueue> ShengShuiQueueArray = queueCacheSet.FindAll(ContextUser.UserID, m => m.QueueType == QueueType.ShengShuiHuiFu);
 
             if (ShengShuiQueueArray.Count > 0)

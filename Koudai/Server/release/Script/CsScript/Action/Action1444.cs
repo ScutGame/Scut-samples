@@ -26,7 +26,7 @@ using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model.Enum;
 using System;
 
@@ -56,7 +56,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(useritemList.Count);
             foreach (var item in useritemList)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 itemNum = UserItemHelper.CheckItemNum(ContextUser.UserID, item.ItemID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.UserItemID.ToNotNullString());

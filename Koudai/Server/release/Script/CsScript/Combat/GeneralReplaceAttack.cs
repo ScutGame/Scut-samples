@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Tianjiexing.Model.Config;
 
@@ -42,7 +42,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static int EnabledUserMagicID(string userID)
         {
             int magicID = 0;
-            var magicList = new GameDataCacheSet<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.MoFaZhen && m.IsEnabled);
+            var magicList = new PersonalCacheStruct<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.MoFaZhen && m.IsEnabled);
             if (magicList.Count > 0)
             {
                 magicID = magicList[0].MagicID;
@@ -59,11 +59,11 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static short CheckReplacePostion(string userID)
         {
             short replacePostion = 0;
-            var magicList = new GameDataCacheSet<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.MoFaZhen && m.IsEnabled);
+            var magicList = new PersonalCacheStruct<UserMagic>().FindAll(userID, m => m.MagicType == MagicType.MoFaZhen && m.IsEnabled);
             if (magicList.Count > 0)
             {
                 var userMagic = magicList[0];
-                MagicLvInfo magicLv = new ConfigCacheSet<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv);
+                MagicLvInfo magicLv = new ShareCacheStruct<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv);
                 if (magicLv != null && magicLv.ReplacePostion > 0)
                 {
                     replacePostion = magicLv.ReplacePostion.ToShort();

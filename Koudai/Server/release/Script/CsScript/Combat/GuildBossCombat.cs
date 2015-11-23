@@ -27,7 +27,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -137,10 +137,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                 GuildBossInfo bossInfo = guild.GuildBossInfo;
                 if (bossInfo != null)
                 {
-                    var plotNpcInfoList = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == gameActive.BossPlotID);
+                    var plotNpcInfoList = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == gameActive.BossPlotID);
                     if (plotNpcInfoList.Count > 0)
                     {
-                        var embattleList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcInfoList[0].PlotNpcID);
+                        var embattleList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcInfoList[0].PlotNpcID);
                         if (embattleList.Count > 0)
                         {
                             boss = (CombatGeneral)MonsterQueue.Create(embattleList[0]);
@@ -468,7 +468,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             for (int i = 0; i < length; i++)
             {
                 string prizeItemMsg = string.Empty;
-                GameUser tempUser = new GameDataCacheSet<GameUser>().FindKey(rankingList[i].UserId);
+                GameUser tempUser = new PersonalCacheStruct<GameUser>().FindKey(rankingList[i].UserId);
                 tempUser.ObtainNum = MathUtils.Addition(tempUser.ObtainNum, bossPrize.TopObtainNum, int.MaxValue);
                 //前5名奖励
                 if (i == 0)
@@ -508,7 +508,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             for (int i = length; i < afterLength; i++)
             {
                 string prizeItemMsg = string.Empty;
-                GameUser tempUser = new GameDataCacheSet<GameUser>().FindKey(rankingList[i].UserId);
+                GameUser tempUser = new PersonalCacheStruct<GameUser>().FindKey(rankingList[i].UserId);
                 tempUser.ObtainNum = MathUtils.Addition(tempUser.ObtainNum, bossPrize.AfterObtainNum, int.MaxValue);
                 //tempUser.Update();
 
@@ -557,7 +557,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         {
             string prizeItemMsg = string.Empty;
             ////筛选物品
-            var itemInfoList = new ConfigCacheSet<ItemBaseInfo>().FindAll(m => m.ItemType == bossItem.Type && m.MedicineLv == bossItem.ItemLv);
+            var itemInfoList = new ShareCacheStruct<ItemBaseInfo>().FindAll(m => m.ItemType == bossItem.Type && m.MedicineLv == bossItem.ItemLv);
             if (itemInfoList.Count > 0)
             {
                 for (int i = 0; i < bossItem.Num; i++)

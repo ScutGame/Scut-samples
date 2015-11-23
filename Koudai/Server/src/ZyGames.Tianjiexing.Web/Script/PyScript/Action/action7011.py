@@ -8,7 +8,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -42,7 +42,7 @@ def takeAction(urlParam,parent):
     userId = str(parent.Current.UserId)
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
    
-    itemConfigList = ConfigCacheSet[ItemBaseInfo]().FindAll(lambda m:m.Athletics > 0,True)
+    itemConfigList = ShareCacheStruct[ItemBaseInfo]().FindAll(lambda m:m.Athletics > 0,True)
     result = MathUtils.GetPaging[ItemBaseInfo](itemConfigList,urlParam.PageIndex,urlParam.PageSize)
     if result :
            actionResult.List = result[0]

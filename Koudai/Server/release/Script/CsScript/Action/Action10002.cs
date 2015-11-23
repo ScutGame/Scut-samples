@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             //var usergeneral = UserGeneral.GetMainGeneral(ContextUser.UserID);
             //int generalID = usergeneral == null ? 0 : usergeneral.GeneralID;
-            userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
+            userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong && u.GeneralType != GeneralType.Soul);
             // 佣兵排序
             GeneralSortHelper.GeneralSort(ContextUser.UserID, userGeneralArray);
 

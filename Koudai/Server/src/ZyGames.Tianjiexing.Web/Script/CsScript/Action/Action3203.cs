@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -70,7 +70,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             //1：刷新提示2：刷新确认3：召唤提示4：召唤 5:刷新失败
             ErrorCode = _ops;
-            UserDailyRestrain restrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid) ?? new UserDailyRestrain();
+            UserDailyRestrain restrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid) ?? new UserDailyRestrain();
             int petUseGold = 0;
             if (_ops == 3 || _ops == 4)
             {
@@ -112,7 +112,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 if (ContextUser.UserExtend.LightPetID == 0) ContextUser.UserExtend.LightPetID = petMinLevel;
 
                 int maxPetId = 0;
-                var tempList = new ConfigCacheSet<PetInfo>().FindAll();
+                var tempList = new ShareCacheStruct<PetInfo>().FindAll();
                 if (tempList.Count > 0) maxPetId = tempList[tempList.Count - 1].PetId;
                 if (ContextUser.UserExtend.LightPetID >= maxPetId)
                 {
@@ -123,10 +123,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 if (_ops == 2)
                 {
-                    var pet = new ConfigCacheSet<PetInfo>().FindKey(ContextUser.UserExtend.LightPetID) ?? new PetInfo();
+                    var pet = new ShareCacheStruct<PetInfo>().FindKey(ContextUser.UserExtend.LightPetID) ?? new PetInfo();
                     if (RandomUtils.IsHit(pet.Light))
                     {
-                        var petList = new ConfigCacheSet<PetInfo>().FindAll(m => m.PetId == MathUtils.Addition(ContextUser.UserExtend.LightPetID, 1));
+                        var petList = new ShareCacheStruct<PetInfo>().FindAll(m => m.PetId == MathUtils.Addition(ContextUser.UserExtend.LightPetID, 1));
                         if (petList.Count > 0)
                         {
                             ContextUser.UserExtend.LightPetID = petList[0].PetId;

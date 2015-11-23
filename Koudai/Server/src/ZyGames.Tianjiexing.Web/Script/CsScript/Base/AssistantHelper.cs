@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
@@ -42,7 +42,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static List<HelperInfo> UserHelperList(GameUser user)
         {
             List<HelperInfo> helperInfosList = new List<HelperInfo>();
-            var functionArray = new GameDataCacheSet<UserFunction>().FindAll(user.UserID);
+            var functionArray = new PersonalCacheStruct<UserFunction>().FindAll(user.UserID);
             foreach (UserFunction function in functionArray)
             {
                 if (function.FunEnum == FunctionEnum.Goujili)
@@ -84,7 +84,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static HelperInfo GetDailyEnergy(GameUser user, RestrainType restrainType)
         {
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
             int maxNum = VipHelper.GetVipUseNum(user.VipLv, restrainType);
             int currPayNum = 0;
             if (dailyRestrain != null && DateTime.Now.Date == dailyRestrain.RefreshDate.Date)
@@ -103,7 +103,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
                 else if (restrainType == RestrainType.JingJiChangTiaoZhan)
                 {
-                    UserChallengeNum userChallenge = new GameDataCacheSet<UserChallengeNum>().FindKey(user.UserID);
+                    UserChallengeNum userChallenge = new PersonalCacheStruct<UserChallengeNum>().FindKey(user.UserID);
                     if (userChallenge != null && DateTime.Now.Date == userChallenge.InsertDate.Date)
                     {
                         //当日总挑战次数
@@ -123,7 +123,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             }
             //if (restrainType == RestrainType.JingJiChangTiaoZhan)
             //{
-            //    UserChallengeNum userChallenge = new GameDataCacheSet<UserChallengeNum>().FindKey(user.UserID);
+            //    UserChallengeNum userChallenge = new PersonalCacheStruct<UserChallengeNum>().FindKey(user.UserID);
             //    if (userChallenge != null && DateTime.Now.Date == userChallenge.InsertDate.Date)
             //    {
             //        currPayNum = currPayNum.Addition(userChallenge.ChallengeNum, int.MaxValue); //当日总挑战次数
@@ -178,7 +178,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             int currPayNum = 0;
             int maxNum = 10;
-            UserExpedition userExp = new GameDataCacheSet<UserExpedition>().FindKey(user.UserID);
+            UserExpedition userExp = new PersonalCacheStruct<UserExpedition>().FindKey(user.UserID);
 
             if (userExp != null && DateTime.Now.Date == userExp.InsertDate.Date)
             {
@@ -200,8 +200,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             int currPayNum = 0;
             int maxNum = 0;
-            var landArray = new GameDataCacheSet<UserLand>().FindAll(user.UserID, u => u.IsGain == 1 || u.DoRefresh() > 0);
-            UserPlant plant = new GameDataCacheSet<UserPlant>().FindKey(user.UserID);
+            var landArray = new PersonalCacheStruct<UserLand>().FindAll(user.UserID, u => u.IsGain == 1 || u.DoRefresh() > 0);
+            UserPlant plant = new PersonalCacheStruct<UserPlant>().FindKey(user.UserID);
             if (plant != null)
             {
                 maxNum = plant.LandNum;

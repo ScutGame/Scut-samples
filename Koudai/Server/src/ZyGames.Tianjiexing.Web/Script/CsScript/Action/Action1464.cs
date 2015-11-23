@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -61,7 +61,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump == null)
             {
                 return false;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
             short uplv = (short)MathUtils.Addition((int)userTrump.WorshipLv, 1, GameConfigSet.MaxWorshipLv);
-            WorshipInfo worshipInfo = new ConfigCacheSet<WorshipInfo>().FindKey(TrumpInfo.CurrTrumpID, uplv);
+            WorshipInfo worshipInfo = new ShareCacheStruct<WorshipInfo>().FindKey(TrumpInfo.CurrTrumpID, uplv);
             if (worshipInfo == null)
             {
                 return false;

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -55,7 +55,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(itemArray.Count);
             foreach (UserItemInfo item in itemArray)
             {
-                ItemBaseInfo ItemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo ItemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(ItemInfo == null ? 0 : ItemInfo.ItemID);
                 dsItem.PushIntoStack(ItemInfo == null ? string.Empty : ItemInfo.ItemName.ToNotNullString());

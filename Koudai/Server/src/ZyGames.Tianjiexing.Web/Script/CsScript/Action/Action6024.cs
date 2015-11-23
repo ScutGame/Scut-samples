@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -102,7 +102,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St6024_GuildAddMemberToLong;
                 return false;
             }
-            ItemBaseInfo item = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo item = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (item != null)
             {
                 addMember = item.EffectNum;

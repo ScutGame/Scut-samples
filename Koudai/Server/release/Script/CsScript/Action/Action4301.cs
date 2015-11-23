@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -62,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(plotInfoArray.Count);
             foreach (var item in plotInfoArray)
             {
-                var userPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, item.PlotID); //new GameDataCacheSet<UserPlot>().FindKey(ContextUser.UserID, item.PlotID);
+                var userPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, item.PlotID); //new PersonalCacheStruct<UserPlot>().FindKey(ContextUser.UserID, item.PlotID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.PlotID);
                 dsItem.PushIntoStack(item.PlotSeqNo);
@@ -81,7 +81,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(plotNpcInfoArray.Count);
             foreach (PlotNPCInfo npcInfo in plotNpcInfoArray)
             {
-                SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(npcInfo.SparePartID);
+                SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(npcInfo.SparePartID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(partInfo == null ? 0 : partInfo.Id);
                 dsItem.PushIntoStack(partInfo == null ? string.Empty : partInfo.Name.ToNotNullString());
@@ -113,16 +113,16 @@ namespace ZyGames.Tianjiexing.BLL.Action
             List<UniversalInfo> universalList = new List<UniversalInfo>();
             int layerNum = CheckUserPlotLayerNum(ContextUser);
             hurdleNum = CheckUserPlotHurdleNum(ContextUser);
-            plotInfoArray = new ConfigCacheSet<PlotInfo>().FindAll(m => m.LayerNum == layerNum && m.PlotType == PlotType.Kalpa);
+            plotInfoArray = new ShareCacheStruct<PlotInfo>().FindAll(m => m.LayerNum == layerNum && m.PlotType == PlotType.Kalpa);
             if (plotInfoArray.Count > 0)
             {
                 plotInfo = new List<PlotInfo>(plotInfoArray).Find(u => u.PlotSeqNo == hurdleNum);
                 if (plotInfo != null)
                 {
-                    plotNpcInfoArray = new ConfigCacheSet<PlotNPCInfo>().FindAll(m => m.PlotID == plotInfo.PlotID);
+                    plotNpcInfoArray = new ShareCacheStruct<PlotNPCInfo>().FindAll(m => m.PlotID == plotInfo.PlotID);
                     foreach (var info in plotNpcInfoArray)
                     {
-                        SparePartInfo partInfo = new ConfigCacheSet<SparePartInfo>().FindKey(info.SparePartID);
+                        SparePartInfo partInfo = new ShareCacheStruct<SparePartInfo>().FindKey(info.SparePartID);
                         if (partInfo != null)
                         {
                             universalList.Add(new UniversalInfo() { Name = partInfo.Name, HeadID = partInfo.HeadID, Num = 1 });
@@ -130,7 +130,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                     npcName = plotNpcInfoArray.Count == 0 ? string.Empty : plotNpcInfoArray[0].NpcName;
                     var userPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, plotInfo.PlotID);
-                    //todo new GameDataCacheSet<UserPlot>().FindKey(Uid, plotInfo.PlotID);
+                    //todo new PersonalCacheStruct<UserPlot>().FindKey(Uid, plotInfo.PlotID);
                     _isOverCombat = userPlot != null && userPlot.PlotStatus == PlotStatus.Completed;
                     strEnchant = plotInfo.EnchantID.Split(',');
                     if (strEnchant.Length > 0)
@@ -153,7 +153,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private static short RefreshKapla(string userId, int retype)
         {
             short refreshNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userId);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userId);
             if (dailyRestrain != null && dailyRestrain.UserExtend != null && dailyRestrain.UserExtend.KalpaDate.Date == DateTime.Now.Date)
             {
                 if (retype == 1)
@@ -198,16 +198,16 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                                             if (x == null && y == null) return 0;
                                                             if (x != null && y == null) return 1;
                                                             if (x == null) return -1;
-                                                            result = new ConfigCacheSet<PlotInfo>().FindKey(y.PlotID).LayerNum.CompareTo(
-                                                                new ConfigCacheSet<PlotInfo>().FindKey(x.PlotID).LayerNum);
+                                                            result = new ShareCacheStruct<PlotInfo>().FindKey(y.PlotID).LayerNum.CompareTo(
+                                                                new ShareCacheStruct<PlotInfo>().FindKey(x.PlotID).LayerNum);
                                                             if (result == 0)
                                                             {
-                                                                result = new ConfigCacheSet<PlotInfo>().FindKey(y.PlotID).PlotSeqNo.CompareTo(
-                                                                    new ConfigCacheSet<PlotInfo>().FindKey(x.PlotID).PlotSeqNo);
+                                                                result = new ShareCacheStruct<PlotInfo>().FindKey(y.PlotID).PlotSeqNo.CompareTo(
+                                                                    new ShareCacheStruct<PlotInfo>().FindKey(x.PlotID).PlotSeqNo);
                                                             }
                                                             return result;
                                                         });
-                plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(userPlotArray[0].PlotID);
+                plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(userPlotArray[0].PlotID);
             }
             return plotInfo;
         }
@@ -239,7 +239,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //当前层
                 if (user.UserExtend != null && user.UserExtend.LayerNum > 0)
                 {
-                    UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                    UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                     if (dailyRestrain != null && dailyRestrain.UserExtend != null && dailyRestrain.UserExtend.LastKalpaNum > 0)
                     {
                         layerNum = user.UserExtend.LayerNum;
@@ -287,7 +287,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PlotInfo plotInfo = CheckUserPlotKalpa(user);
             if (plotInfo != null)
             {
-                UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                 if (dailyRestrain != null && dailyRestrain.UserExtend != null && dailyRestrain.UserExtend.KalpaDate.Date == DateTime.Now.Date)
                 {
                     hurdleNum = user.UserExtend.HurdleNum;

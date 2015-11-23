@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Lang;
@@ -90,8 +90,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     if (x == null && y == null) return 0;
                     if (x != null && y == null) return 1;
                     if (x == null) return -1;
-                    result = (int)new ConfigCacheSet<CrystalInfo>().FindKey(y.CrystalID).CrystalQuality.CompareTo(
-                        new ConfigCacheSet<CrystalInfo>().FindKey(x.CrystalID).CrystalQuality);
+                    result = (int)new ShareCacheStruct<CrystalInfo>().FindKey(y.CrystalID).CrystalQuality.CompareTo(
+                        new ShareCacheStruct<CrystalInfo>().FindKey(x.CrystalID).CrystalQuality);
                     if (result == 0)
                     {
                         result = y.CurrExprience.CompareTo(x.CurrExprience);
@@ -115,7 +115,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ErrorInfo = LanguageManager.GetLang().St1307_FateBackpackFull;
                         return false;
                     }
-                    CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                    CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
                     if (crystalInfo != null && crystalInfo.IsTelegrams == 1 && crystal.IsSale == 1)
                     {
                         crystal.IsSale = 2;

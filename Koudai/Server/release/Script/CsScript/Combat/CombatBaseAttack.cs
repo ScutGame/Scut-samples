@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Log;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Model;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -440,7 +440,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
                     damageNum = -MathUtils.Subtraction(damageNum, 0, General.MinDamageNum);
                 }
                 //爆击职业加成气势
-                CareerAdditionInfo addition = new ConfigCacheSet<CareerAdditionInfo>().FindKey(General.CareerID, AbilityType.BaoJi);
+                CareerAdditionInfo addition = new ShareCacheStruct<CareerAdditionInfo>().FindKey(General.CareerID, AbilityType.BaoJi);
                 if (addition != null && !isAbility)
                 {
                     General.Momentum = MathUtils.Addition(General.Momentum, addition.MomentumNum.ToShort(), short.MaxValue);

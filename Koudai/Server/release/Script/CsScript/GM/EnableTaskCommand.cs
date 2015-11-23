@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Model;
 using ZyGames.Framework.Game.Runtime;
@@ -34,11 +34,11 @@ namespace ZyGames.Tianjiexing.BLL.GM
         protected override void ProcessCmd(string[] args)
         {
             int taskID = args.Length > 0 ? args[0].Trim().ToInt() : 0;
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(UserID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(UserID);
             if (user == null)
             {
                 UserCacheGlobal.Load(UserID);
-                user = new GameDataCacheSet<GameUser>().FindKey(UserID);
+                user = new PersonalCacheStruct<GameUser>().FindKey(UserID);
             }
             var taskList = StoryTaskInfo.GetNextTask(taskID);
             foreach (StoryTaskInfo taskInfo in taskList)
@@ -47,7 +47,7 @@ namespace ZyGames.Tianjiexing.BLL.GM
                 {
                     continue;
                 }
-                var cacheSet = new GameDataCacheSet<UserTask>();
+                var cacheSet = new PersonalCacheStruct<UserTask>();
                 UserTask userTask = cacheSet.FindKey(UserID, taskInfo.TaskID);
                 if (userTask == null)
                 {

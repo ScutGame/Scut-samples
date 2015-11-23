@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -58,7 +58,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(_mallItemsInfoArray.Count);
             foreach (MallItemsInfo mallItems in _mallItemsInfoArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(mallItems.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(mallItems.ItemID);
                 int mallPrice = 0;
                 int specilPrice = 0;
                 if (itemInfo != null)
@@ -100,7 +100,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            _mallItemsInfoArray = new ConfigCacheSet<MallItemsInfo>().FindAll(m => m.MallType == _commandType);
+            _mallItemsInfoArray = new ShareCacheStruct<MallItemsInfo>().FindAll(m => m.MallType == _commandType);
             _mallItemsInfoArray.GetPaging(_pageIndex, _pageSize, out _pageCount);
             return true;
         }

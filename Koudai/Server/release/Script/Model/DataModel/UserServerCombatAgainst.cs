@@ -33,7 +33,7 @@ namespace ZyGames.Tianjiexing.Model
     /// <summary>
     /// 玩家分组表
     /// </summary>
-    [Serializable, ProtoContract, EntityTable(CacheType.Entity, DbConfig.Data, "UserServerCombatAgainst")]
+    [Serializable, ProtoContract, EntityTable(CacheType.Entity, DbConfig.Data)]
     public class UserServerCombatAgainst : ShareEntity
     {
         public UserServerCombatAgainst()

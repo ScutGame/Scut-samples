@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -97,7 +97,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                 }
                 if (userItem == null) return false;
-                ItemBaseInfo itemBaseOpType = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                ItemBaseInfo itemBaseOpType = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                 if (itemBaseOpType == null) return false;
                 if (itemBaseOpType.ItemType == ItemType.TuZhi)
                 {
@@ -120,19 +120,19 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int genlv = ContextUser.UserLv;
             CacheList<SynthesisInfo> synthesisInfoList = new CacheList<SynthesisInfo>();
             short itemLv = 0;
-            List<ItemSynthesisInfo> itemSynthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.SynthesisID == userItem.ItemID); //图纸ID
+            List<ItemSynthesisInfo> itemSynthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.SynthesisID == userItem.ItemID); //图纸ID
             if (itemSynthesisArray.Count > 0)
             {
                 ItemSynthesisInfo synthesisInfo = itemSynthesisArray[0];
                 if (synthesisInfo == null) return false;
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesisInfo.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesisInfo.ItemID);
                 if (itemInfo != null && itemInfo.ItemType == ItemType.ZhuangBei && itemInfo.DemandLv > genlv)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
                     ErrorInfo = LanguageManager.GetLang().St_LevelNotEnough;
                     return false;
                 }
-                List<ItemSynthesisInfo> synthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.ItemID == synthesisInfo.ItemID);//合成物品的材料数组
+                List<ItemSynthesisInfo> synthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.ItemID == synthesisInfo.ItemID);//合成物品的材料数组
                 if (synthesisArray.Count == 0)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -157,7 +157,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
                     foreach (ItemSynthesisInfo synthesis in synthesisArray)
                     {
-                        ItemBaseInfo itemsInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
+                        ItemBaseInfo itemsInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
                         if (itemInfo == null) return false;
                         if (!string.IsNullOrEmpty(_userEquID) && synthesis.SynthesisID == userItem.ItemID && itemsInfo != null && itemInfo.ItemType == ItemType.ZhuangBei)
                         {
@@ -262,7 +262,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     foreach (ItemSynthesisInfo synthesis in synthesisArray)
                     {
                         int curNum = 0;
-                        ItemBaseInfo itemsInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
+                        ItemBaseInfo itemsInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
                         if (!string.IsNullOrEmpty(_userEquID) && synthesis.SynthesisID == userItem.ItemID)
                         {
                             if (userItem.ItemStatus == ItemStatus.YongBing)
@@ -371,10 +371,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static int GetSytnthesisGold(string userID, int itemID)
         {
             int useGold = 0;
-            List<ItemSynthesisInfo> synthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemID); //.FindAll(u => u.ItemID.Equals(itemID));//合成物品的材料数组)
+            List<ItemSynthesisInfo> synthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemID); //.FindAll(u => u.ItemID.Equals(itemID));//合成物品的材料数组)
             foreach (ItemSynthesisInfo synthesis in synthesisArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
                 if (itemInfo == null)
                 {
                     return 0;
@@ -413,10 +413,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static bool GetMaterialsNum(string userID, int itemID)
         {
             bool isNotEnough = true;
-            List<ItemSynthesisInfo> synthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemID);//合成物品的材料数组
+            List<ItemSynthesisInfo> synthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(m => m.ItemID == itemID);//合成物品的材料数组
             foreach (ItemSynthesisInfo itemSyn in synthesisArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemSyn.SynthesisID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemSyn.SynthesisID);
                 if (itemInfo == null)
                 {
                     return false;
@@ -462,7 +462,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             UserItemInfo userItem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID.Equals(uItemID));
             if (userItem != null)
             {
-                ItemBaseInfo itemBaseInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                ItemBaseInfo itemBaseInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                 if (itemBaseInfo != null && itemBaseInfo.ItemType == ItemType.ZhuangBei)
                 {
                     isEqu = true;
@@ -478,7 +478,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static bool IsHaveEqu(string userID, int itemID)
         {
             bool isequ = false;
-            List<ItemSynthesisInfo> synthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(u => u.ItemID.Equals(itemID));//合成物品的材料数组
+            List<ItemSynthesisInfo> synthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(u => u.ItemID.Equals(itemID));//合成物品的材料数组
             foreach (ItemSynthesisInfo synthesis in synthesisArray)
             {
                 var itemArray = UserItemHelper.GetItems(userID).FindAll(u => u.ItemID.Equals(synthesis.SynthesisID) && u.ItemStatus != ItemStatus.Sell && u.ItemType == ItemType.ZhuangBei && new UserItemHelper(u).GeneralStatus(userID) != GeneralStatus.LiDui);
@@ -501,7 +501,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public static bool IsLevelNotEnough(GameUser user, int generalID, int itemID)
         {
             short generalLv = 0;
-            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
+            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
             if (itemInfo == null)
             {
                 return false;
@@ -510,7 +510,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 generalLv = user.UserLv;// LanguageManager.GetLang().GameUserGeneralID;
             }
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(user.UserID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(user.UserID, generalID);
             if (general != null)
             {
                 generalLv = general.GeneralLv;
@@ -533,7 +533,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             string itemName = string.Empty;
             foreach (ItemSynthesisInfo synthesis in synthesisArray)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
                 if (itemInfo != null && !itemInfo.IsGold)
                 {
                     int itemNum = SpecialItemNum(userID, synthesis.SynthesisID);

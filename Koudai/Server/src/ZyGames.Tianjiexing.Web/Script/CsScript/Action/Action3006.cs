@@ -27,7 +27,7 @@ using System.Data;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -69,7 +69,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(ContextUser.UserID, TaskID);
+            UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(ContextUser.UserID, TaskID);
             if (userTask == null || userTask.TaskState == TaskState.NoTake || userTask.TaskState == TaskState.Disable)
             {
                 this.ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -97,7 +97,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 userTask.TaskState = TaskState.AllowTake;
             }
             //userTask.Update();
-            List<UserTask> userTaskList = new GameDataCacheSet<UserTask>().FindAll(ContextUser.UserID, m => m.TaskType.Equals(TaskType.Daily) && !m.TaskID.Equals(TaskID) && (m.TaskState == TaskState.Completed || m.TaskState == TaskState.Taked));
+            List<UserTask> userTaskList = new PersonalCacheStruct<UserTask>().FindAll(ContextUser.UserID, m => m.TaskType.Equals(TaskType.Daily) && !m.TaskID.Equals(TaskID) && (m.TaskState == TaskState.Completed || m.TaskState == TaskState.Taked));
 
             foreach (UserTask item in userTaskList)
             {

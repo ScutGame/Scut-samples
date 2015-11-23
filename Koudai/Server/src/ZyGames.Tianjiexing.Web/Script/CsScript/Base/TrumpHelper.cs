@@ -33,7 +33,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Component;
@@ -57,7 +57,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsTrumpPractice(string userID)
         {
-            StoryTaskInfo[] storyTaskArray = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.TaskType == TaskType.Trump).ToArray();
+            StoryTaskInfo[] storyTaskArray = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.TaskType == TaskType.Trump).ToArray();
             foreach (StoryTaskInfo taskInfo in storyTaskArray)
             {
                 int collectNum = GetUserItemNum(userID, taskInfo.TargetItemID);
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static Dictionary<int, short> GetSkillList()
         {
             Dictionary<int, short> skillList = new Dictionary<int, short>();
-            TrumpInfo[] trumpInfoArray = new ConfigCacheSet<TrumpInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID && m.SkillID > 0).ToArray();
+            TrumpInfo[] trumpInfoArray = new ShareCacheStruct<TrumpInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID && m.SkillID > 0).ToArray();
             foreach (TrumpInfo info in trumpInfoArray)
             {
                 if (!skillList.ContainsKey(info.SkillID.ToInt()))
@@ -132,7 +132,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static Dictionary<int, short> GetPropertyList()
         {
             Dictionary<int, short> propertyList = new Dictionary<int, short>();
-            WorshipInfo[] worshipInfoInfoArray = new ConfigCacheSet<WorshipInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID && m.IsOpen).ToArray();
+            WorshipInfo[] worshipInfoInfoArray = new ShareCacheStruct<WorshipInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID && m.IsOpen).ToArray();
             int skID = 0;
             foreach (WorshipInfo info in worshipInfoInfoArray)
             {
@@ -153,7 +153,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static WashConsumeInfo GetWashConsumeInfo(short matureID)
         {
             short matureType = 0;
-            var washconsumeList = new ConfigCacheSet<WashConsumeInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID);
+            var washconsumeList = new ShareCacheStruct<WashConsumeInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID);
             int mID = 0;
             foreach (var washConsume in washconsumeList)
             {
@@ -165,7 +165,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 matureType = washConsume.MatureType;
                 break;
             }
-            WashConsumeInfo consumeInfo = new ConfigCacheSet<WashConsumeInfo>().FindKey(TrumpInfo.CurrTrumpID, matureType);
+            WashConsumeInfo consumeInfo = new ShareCacheStruct<WashConsumeInfo>().FindKey(TrumpInfo.CurrTrumpID, matureType);
             return consumeInfo;
         }
 
@@ -177,7 +177,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static MatureType GetEnumMatureType(short matureID)
         {
             MatureType matureType = MatureType.Ordinary;
-            var washconsumeList = new ConfigCacheSet<WashConsumeInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID);
+            var washconsumeList = new ShareCacheStruct<WashConsumeInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID);
             int mID = 0;
             foreach (var washConsume in washconsumeList)
             {
@@ -210,7 +210,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static SkillInfo GetSkillInfo(string userID, int skillKey)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             SkillInfo skillInfo = null;
             if (userTrump != null && userTrump.SkillInfo.Count > skillKey)
             {
@@ -231,7 +231,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             SkillInfo skillInfo = GetSkillInfo(userID, skillKey);
             if (skillInfo != null)
             {
-                abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(skillInfo.AbilityID);
+                abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(skillInfo.AbilityID);
             }
             return abilityInfo;
         }
@@ -242,7 +242,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void RepairMagicSkills(string userID)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
                 Dictionary<int, short> skillList = GetSkillList();
@@ -272,14 +272,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="experience"></param>
         public static void CheckTrumpEscalate(string userID, int experience)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
                 userTrump.Experience = MathUtils.Addition(userTrump.Experience, experience);
                 while (userTrump.TrumpLv < GameConfigSet.MaxTrumpLv)
                 {
                     short upLv = MathUtils.Addition(userTrump.TrumpLv, (short)1, GameConfigSet.MaxTrumpLv.ToShort());
-                    TrumpInfo trumpInfo = new ConfigCacheSet<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, upLv);
+                    TrumpInfo trumpInfo = new ShareCacheStruct<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, upLv);
                     if (trumpInfo != null && userTrump.Experience >= trumpInfo.Experience)
                     {
                         userTrump.TrumpLv = MathUtils.Addition(userTrump.TrumpLv, (short)1, GameConfigSet.MaxTrumpLv.ToShort());
@@ -343,11 +343,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsUpWorshLv(GameUser user)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(user.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(user.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
                 short upWorshLv = MathUtils.Addition(userTrump.WorshipLv, (short)1, (short)10);
-                WorshipInfo worshipInfo = new ConfigCacheSet<WorshipInfo>().FindKey(TrumpInfo.CurrTrumpID, upWorshLv);
+                WorshipInfo worshipInfo = new ShareCacheStruct<WorshipInfo>().FindKey(TrumpInfo.CurrTrumpID, upWorshLv);
                 if (worshipInfo != null)
                 {
                     int upItemNum = GetUserItemNum(user.UserID, worshipInfo.ItemID);
@@ -368,10 +368,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsLearnProperty(GameUser user)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(user.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(user.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
-                WorshipInfo[] worshipInfoArray = new ConfigCacheSet<WorshipInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID && m.WorshipLv <= userTrump.WorshipLv && m.IsOpen).ToArray();
+                WorshipInfo[] worshipInfoArray = new ShareCacheStruct<WorshipInfo>().FindAll(m => m.TrumpID == TrumpInfo.CurrTrumpID && m.WorshipLv <= userTrump.WorshipLv && m.IsOpen).ToArray();
                 if (worshipInfoArray.Length > userTrump.PropertyInfo.Count)
                 {
                     return true;
@@ -464,15 +464,15 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             AbilityInfo changeAbility = new AbilityInfo();
             int abilityStyle = 1;
-            var abilityInfoList = new ConfigCacheSet<AbilityInfo>().FindAll(m => m.AbilityStyle == abilityStyle);
+            var abilityInfoList = new ShareCacheStruct<AbilityInfo>().FindAll(m => m.AbilityStyle == abilityStyle);
             if (abilityInfoList.Count > 0)
             {
-                UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+                UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
                 if (userTrump != null && userTrump.SkillInfo.Count > 0)
                 {
                     foreach (SkillInfo info in userTrump.SkillInfo)
                     {
-                        AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(info.AbilityID);
+                        AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(info.AbilityID);
                         if (abilityInfo != null)
                         {
                             abilityInfoList.Remove(abilityInfo);
@@ -493,10 +493,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static AbilityInfo IsRandomAbility(string userID)
         {
             AbilityInfo abilityInfo = null;
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             foreach (SkillInfo info in userTrump.SkillInfo)
             {
-                abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(info.AbilityID);
+                abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(info.AbilityID);
             }
             return abilityInfo;
         }

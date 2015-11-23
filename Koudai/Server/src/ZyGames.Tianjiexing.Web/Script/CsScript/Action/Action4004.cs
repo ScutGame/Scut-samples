@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
@@ -51,7 +51,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private int PlotNpcID;
         private UserPlotCombat userPlotCombat;
         private CacheList<PrizeItemInfo> prizeItems = new CacheList<PrizeItemInfo>();
-        private ConfigCacheSet<GeneralInfo> _cacheSetGeneral = new ConfigCacheSet<GeneralInfo>();
+        private ShareCacheStruct<GeneralInfo> _cacheSetGeneral = new ShareCacheStruct<GeneralInfo>();
         //private List<PlotEmbattleInfo> plotEmbattleList = new PlotEmbattleInfo[0];
         //private List<UserEmbattle> userEmbattleList = new UserEmbattle[0];
         private CombatProcessContainer combatProcessList = new CombatProcessContainer();
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(prizeItems.Count);
             foreach (PrizeItemInfo prizeItem in prizeItems)
             {
-                ItemBaseInfo item = new ConfigCacheSet<ItemBaseInfo>().FindKey(prizeItem.ItemID);
+                ItemBaseInfo item = new ShareCacheStruct<ItemBaseInfo>().FindKey(prizeItem.ItemID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(item.ItemName.ToNotNullString());
                 dsItem.PushIntoStack(item.HeadID.ToNotNullString());
@@ -268,7 +268,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St4004_NoUseMagic;
                 return false;
             }
-            if (new GameDataCacheSet<UserEmbattle>().FindAll(Uid, m => m.MagicID == ContextUser.UseMagicID).Count == 0)
+            if (new PersonalCacheStruct<UserEmbattle>().FindAll(Uid, m => m.MagicID == ContextUser.UseMagicID).Count == 0)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 ErrorInfo = LanguageManager.GetLang().St4004_EmbattleEmpty;
@@ -286,7 +286,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             try
             {
                 //触发战斗
-                PlotNPCInfo npcInfo = new ConfigCacheSet<PlotNPCInfo>().FindKey(PlotNpcID);
+                PlotNPCInfo npcInfo = new ShareCacheStruct<PlotNPCInfo>().FindKey(PlotNpcID);
 
                 //原因：碰npc时掉线，再请求战斗详情
                 if (npcInfo == null)
@@ -313,7 +313,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     //return false;
                 }
 
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(npcInfo.PlotID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(npcInfo.PlotID);
                 if (plotInfo == null)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -321,9 +321,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
 
-                var cacheSetUserPlot = new GameDataCacheSet<UserPlotPackage>();
+                var cacheSetUserPlot = new PersonalCacheStruct<UserPlotPackage>();
                 var cacheSetItemInfo = new ShareCacheStruct<ItemBaseInfo>();
-                var cacheSet = new GameDataCacheSet<UserPlotCombat>();
+                var cacheSet = new PersonalCacheStruct<UserPlotCombat>();
                 var userPlotPack = cacheSetUserPlot.FindKey(ContextUser.UserID);
                 var userPlot = userPlotPack != null ? userPlotPack.PlotPackage.Find(s => s.PlotID == npcInfo.PlotID) : null;
                 //PlotHelper.IsKill(ContextUser.UserID, plotInfo.PlotID, plotInfo.CityID)
@@ -410,8 +410,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         //玩家通过一个城市的所有副本时，增加聊天频道系统提示
                         if (userPlot.PlotStatus != PlotStatus.Completed && npcInfo.IsBoss)      //玩家此副本胜利
                         {
-                            var city = new ConfigCacheSet<CityInfo>().FindKey(plotInfo.CityID);
-                            var nextPlot = new ConfigCacheSet<PlotInfo>().FindKey(plotInfo.AftPlotID);
+                            var city = new ShareCacheStruct<CityInfo>().FindKey(plotInfo.CityID);
+                            var nextPlot = new ShareCacheStruct<PlotInfo>().FindKey(plotInfo.AftPlotID);
                             if (city != null && nextPlot != null && nextPlot.CityID != plotInfo.CityID)            //此城市的最后一个副本
                             {
                                 string content = string.Format(LanguageManager.GetLang().St_systemprompts, ContextUser.NickName,
@@ -433,10 +433,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         }
                         TaskHelper.KillPlotMonster(Uid, npcInfo.PlotID, PlotNpcID);
 
-                        //var stroyTaskList = new ConfigCacheSet<StoryTaskInfo>().FindAll(s => s.PlotID == plotInfo.AftPlotID);
+                        //var stroyTaskList = new ShareCacheStruct<StoryTaskInfo>().FindAll(s => s.PlotID == plotInfo.AftPlotID);
                         //foreach (var story in stroyTaskList)
                         //{
-                        //    var usertask = new GameDataCacheSet<UserTask>().FindKey(ContextUser.UserID, story.PlotID);
+                        //    var usertask = new PersonalCacheStruct<UserTask>().FindKey(ContextUser.UserID, story.PlotID);
                         //    if (usertask != null)
                         //    {
                         PlotHelper.EnablePlot(Uid, plotInfo.AftPlotID);
@@ -467,7 +467,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     }
 
 
-                    var restrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+                    var restrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
                     if (restrain != null)
                     {
                         var restrainSet = new ShareCacheStruct<DailyRestrainSet>().FindKey(RestrainType.PlotGoto);
@@ -579,7 +579,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <param name="plotNPCInfo"></param>
         private void EliteDailyRestrain(PlotNPCInfo plotNPCInfo)
         {
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
             if (userRestrain == null)
             {
                 userRestrain = new UserDailyRestrain() { UserID = Uid, FunPlot = new CacheList<FunPlot>() };
@@ -615,7 +615,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <param name="plotNPCInfo"></param>
         private void KalpaDailyRestrain(PlotNPCInfo plotNPCInfo)
         {
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(Uid);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(Uid);
             if (userRestrain == null)
             {
                 userRestrain = new UserDailyRestrain() { UserID = Uid, FunPlot = new CacheList<FunPlot>() };

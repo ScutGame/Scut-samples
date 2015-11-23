@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -56,10 +56,10 @@ def takeAction(urlParam, parent):
     gameUser = PersonalCacheStruct.Get[GameUser](userId)
     actionResult.UserLv=gameUser.UserLv   
     if actionResult.UserLv>=10:       
-        userShengJiTa = GameDataCacheSet[UserShengJiTa]().FindKey(userId)    #获取玩家信息
+        userShengJiTa = PersonalCacheStruct[UserShengJiTa]().FindKey(userId)    #获取玩家信息
         if userShengJiTa == None:
-            GameDataCacheSet[UserShengJiTa]().Add(UserShengJiTa(MathUtils.ToInt(userId)))
-            userShengJiTa = GameDataCacheSet[UserShengJiTa]().FindKey(userId)    #获取玩家信息
+            PersonalCacheStruct[UserShengJiTa]().Add(UserShengJiTa(MathUtils.ToInt(userId)))
+            userShengJiTa = PersonalCacheStruct[UserShengJiTa]().FindKey(userId)    #获取玩家信息
         if userShengJiTa.EndTime==None or DateTime.Now.Date!=userShengJiTa.EndTime.Date:  #判断时间是否同一天
             userShengJiTa.MaxTierNum = 0;
             userShengJiTa.ScoreStar = 0;

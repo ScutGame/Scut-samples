@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(sportNum);
             PushIntoStack(codeTime);
             PushIntoStack(_userRankArray.Count);
-            var userGeneralCacheSet = new GameDataCacheSet<UserGeneral>();
+            var userGeneralCacheSet = new PersonalCacheStruct<UserGeneral>();
             foreach (UserRank user in _userRankArray)
             {
                 DataStruct dsItem = new DataStruct();
@@ -100,7 +100,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     dsItem.PushIntoStack(dsItem1);
                 }
 
-                SportsRewardInfo sportsInfo = new ConfigCacheSet<SportsRewardInfo>().FindKey(user.RankId);
+                SportsRewardInfo sportsInfo = new ShareCacheStruct<SportsRewardInfo>().FindKey(user.RankId);
                 var embatList = EmbattleHelper.CurrEmbattle(user.UserID, false);
                 dsItem.PushIntoStack(embatList.Count);
                 dsItem.PushIntoStack(embattleList.Count);
@@ -167,7 +167,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     dsItem.PushIntoStack(dsItem1);
                 }
 
-                SportsRewardInfo sportsInfo = new ConfigCacheSet<SportsRewardInfo>().FindKey(rank.RankId);
+                SportsRewardInfo sportsInfo = new ShareCacheStruct<SportsRewardInfo>().FindKey(rank.RankId);
                 var embatList = EmbattleHelper.CurrEmbattle(rank.UserID, false);
                 dsItem.PushIntoStack(embatList.Count);
                 dsItem.PushIntoStack(embattleList.Count);
@@ -219,7 +219,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             sportNum = GetChallGeNum(ContextUser.UserID);
             sportsIntegral = ContextUser.SportsIntegral.ToInt();
-            sportsReward = new ConfigCacheSet<SportsRewardInfo>().FindKey(rankInfo.RankId);
+            sportsReward = new ShareCacheStruct<SportsRewardInfo>().FindKey(rankInfo.RankId);
             receiveDate = (int)(RankingHelper.GetNextReceiveDate() - DateTime.Now).TotalSeconds;
 
             CombatRanking combatrank = (CombatRanking)ranking;
@@ -271,14 +271,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public int GetChallGeNum(string userID)
         {
             int currNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && dailyRestrain.RefreshDate.Date == DateTime.Now.Date)
             {
                 currNum = dailyRestrain.Funtion9;
             }
 
             int InitialNum = VipHelper.GetVipUseNum(ContextUser.VipLv, RestrainType.JingJiChangTiaoZhan); //当日挑战次数
-            UserChallengeNum userChallenge = new GameDataCacheSet<UserChallengeNum>().FindKey(userID);
+            UserChallengeNum userChallenge = new PersonalCacheStruct<UserChallengeNum>().FindKey(userID);
             if (userChallenge != null && DateTime.Now.Date == userChallenge.InsertDate.Date)
             {
                 InitialNum = MathUtils.Addition(InitialNum, userChallenge.ChallengeNum, int.MaxValue); //当日总挑战次数

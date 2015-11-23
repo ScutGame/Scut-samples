@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Framework.Game.Combat;
 using ZyGames.Framework.Game.Model;
@@ -62,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private int _npcTalPriority = 0;
         private GameUser toGameUser;
         private UserMail userMail = new UserMail(Guid.NewGuid());
-        private ConfigCacheSet<GeneralInfo> _cacheSetGeneral = new ConfigCacheSet<GeneralInfo>();
+        private ShareCacheStruct<GeneralInfo> _cacheSetGeneral = new ShareCacheStruct<GeneralInfo>();
         private List<SelfAbilityEffect> _selfAbilityEffectList = new List<SelfAbilityEffect>();
         private List<SelfAbilityEffect> _defSelfAbilityEffectList = new List<SelfAbilityEffect>();
         public Action5107(ZyGames.Framework.Game.Contract.HttpGet httpGet)
@@ -270,7 +270,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 RankingHelper.SportSRewardGain(toUserID, toGameUser.RankID);   //被挑战者的竞技排名
                 //todo 竞技场冷却时间清除
-                //var userQueueCache = new GameDataCacheSet<UserQueue>();
+                //var userQueueCache = new PersonalCacheStruct<UserQueue>();
                 //var queueArray = userQueueCache.FindAll(Uid, m => m.QueueType == QueueType.JingJiTiaoZhan);
                 //if (queueArray.Count > 0 && queueArray[0].DoRefresh() > 0)
                 //{
@@ -303,7 +303,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //}
                 //次数限制修改
                 int sportNum = 0;
-                UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+                UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
                 if (dailyRestrain != null)
                 {
                     sportNum = MathUtils.Addition(dailyRestrain.Funtion9, 1, int.MaxValue);
@@ -414,7 +414,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 userRank.VictoryNum = winNum;
                 toUserRank.VictoryNum = 0;
                 toUser.VictoryNum = 0;
-                new GameDataCacheSet<GameUser>().UpdateSelf(toUser.PersonalId);
+                new PersonalCacheStruct<GameUser>().UpdateSelf(toUser.PersonalId);
                 rewardGoin = (user.UserLv * 40); //GetRewardGameCoin(user, user.UserLv);
                 experence = (user.UserLv * 10);
                 rewardObtion = 10;
@@ -450,7 +450,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 });
             }
             user.VictoryNum = winNum;
-            new GameDataCacheSet<GameUser>().UpdateSelf(user.PersonalId);
+            new PersonalCacheStruct<GameUser>().UpdateSelf(user.PersonalId);
             user.ExpNum = MathUtils.Addition(user.ExpNum, rewardObtion, int.MaxValue);
             user.GameCoin = MathUtils.Addition(user.GameCoin, rewardGoin, int.MaxValue);
             GeneralHelper.UserGeneralExp(user.UserID, 0, experence);
@@ -485,7 +485,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 RankStatus = GetRankStatus(isWin, userRank, toUserRank)
             });
 
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(toUser.UserID) ?? new UserDailyRestrain();
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(toUser.UserID) ?? new UserDailyRestrain();
             toUser.SportsCombatQueue.Enqueue(new SportsCombat()
             {
                 ToUser = user.UserID,
@@ -521,7 +521,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
             string prizeContent = string.Empty;
             MysteryHelper.IsTriggerMyStery(user, MysteryType.Jingjichang, out prizeContent);
-            MysteryInfo mysteryInfo = new ConfigCacheSet<MysteryInfo>().FindKey(MysteryType.Jingjichang);
+            MysteryInfo mysteryInfo = new ShareCacheStruct<MysteryInfo>().FindKey(MysteryType.Jingjichang);
             if (!string.IsNullOrEmpty(prizeContent) && mysteryInfo != null)
             {
                 var prompt = string.Empty;
@@ -557,8 +557,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     //user.RankDate = DateTime.Now;
                     //toUser.RankID = rankIndex;
                     //toUser.RankDate = DateTime.Now;
-                    new GameDataCacheSet<GameUser>().UpdateSelf(user.PersonalId);
-                    new GameDataCacheSet<GameUser>().UpdateSelf(toUser.PersonalId);
+                    new PersonalCacheStruct<GameUser>().UpdateSelf(user.PersonalId);
+                    new PersonalCacheStruct<GameUser>().UpdateSelf(toUser.PersonalId);
                     mailText = string.Format(LanguageManager.GetLang().SportsRankLetterForFailure, user.NickName, rankIndex);
                 }
                 else
@@ -657,13 +657,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int totalNum = 0;
             int AddNum = 0;
             int currNum = 0;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && dailyRestrain.RefreshDate.Date == DateTime.Now.Date)
             {
                 currNum = dailyRestrain.Funtion9;
             }
 
-            UserChallengeNum userChallenge = new GameDataCacheSet<UserChallengeNum>().FindKey(userID);
+            UserChallengeNum userChallenge = new PersonalCacheStruct<UserChallengeNum>().FindKey(userID);
             if (userChallenge != null && DateTime.Now.Date == userChallenge.InsertDate.Date)
             {
                 AddNum = userChallenge.ChallengeNum;

@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -68,7 +68,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             var package = UserCrystalPackage.Get(Uid);
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             UserCrystalInfo userCrystal = package.CrystalPackage.Find(m => m.UserCrystalID.Equals(userCrystalID));
             if (userCrystal == null || userGeneral == null)
             {
@@ -110,7 +110,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 if (userCrystal.IsSale == 2)
                 {
-                    CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(userCrystal.CrystalID);
+                    CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(userCrystal.CrystalID);
                     if (crystalInfo == null)
                     {
                         ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -126,7 +126,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
                     foreach (UserCrystalInfo crystal in crystalArray)
                     {
-                        CrystalInfo crystalInfo2 = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID);
+                        CrystalInfo crystalInfo2 = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID);
                         if (crystalInfo2 != null && crystalInfo.AbilityID == crystalInfo2.AbilityID)
                         {
                             ErrorCode = LanguageManager.GetLang().ErrorCode;

@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -82,7 +82,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             PlantType pType = (PlantType)Enum.Parse(typeof(PlantType), plantType.ToString());
-            UserPlantQuality userPlantQuality = new GameDataCacheSet<UserPlantQuality>().FindKey(ContextUser.UserID, generalID, pType);
+            UserPlantQuality userPlantQuality = new PersonalCacheStruct<UserPlantQuality>().FindKey(ContextUser.UserID, generalID, pType);
             if (userPlantQuality != null)
             {
                 plantQualityType = (short)userPlantQuality.PlantQuality;
@@ -98,12 +98,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     RefreshNum = 0,
                     RefreshDate = DateTime.Now,
                 };
-                new GameDataCacheSet<UserPlantQuality>().Add(plant);
+                new PersonalCacheStruct<UserPlantQuality>().Add(plant);
                 plantQualityType = 1;
             }
             PlantQualityType qualityType = (PlantQualityType)Enum.Parse(typeof(PlantQualityType), plantQualityType.ToString());
             short generalLv = 0;
-            userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -117,10 +117,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 generalLv = userGeneral.GeneralLv;
             }
-            plantInfo = new ConfigCacheSet<PlantInfo>().FindKey(generalLv, plantType, qualityType);
+            plantInfo = new ShareCacheStruct<PlantInfo>().FindKey(generalLv, plantType, qualityType);
             double addNum = FestivalHelper.SurplusPurchased(ContextUser.UserID, FestivalType.ManorAddition);//活动加成
             rewardNum = plantInfo.GainNum;
-            UserLand land = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, landPostion);
+            UserLand land = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, landPostion);
             if (land != null && land.IsRedLand == 1)
             {
                 rewardNum = MathUtils.Addition(rewardNum, (int)(rewardNum * 0.2), int.MaxValue);

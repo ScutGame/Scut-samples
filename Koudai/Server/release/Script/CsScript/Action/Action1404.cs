@@ -33,7 +33,7 @@ using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Model.Config;
 using ZyGames.Tianjiexing.Model.ConfigModel;
 using ZyGames.Tianjiexing.Model.Enum;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.BLL.Base;
 
 namespace ZyGames.Tianjiexing.BLL.Action
@@ -84,10 +84,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             if (recruitType == RecruitType.SoulRecruit)
             {
-                general = new ConfigCacheSet<GeneralInfo>().FindKey(soulID);
+                general = new ShareCacheStruct<GeneralInfo>().FindKey(soulID);
                 if (general == null)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -129,7 +129,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             else
             {
-                RecruitRule recruitRule = new ConfigCacheSet<RecruitRule>().FindKey(recruitType);
+                RecruitRule recruitRule = new ShareCacheStruct<RecruitRule>().FindKey(recruitType);
                 if (recruitRule == null)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -161,7 +161,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
                 int index2 = RandomUtils.GetHitIndex(probability);
                 GeneralQuality quality = recruitInfos[index2].Quality;
-                var generalList = new ConfigCacheSet<GeneralInfo>().FindAll(s => s.GeneralQuality == quality);
+                var generalList = new ShareCacheStruct<GeneralInfo>().FindAll(s => s.GeneralQuality == quality);
                 if (generalList.Count > 0)
                 {
                     int indexradom = RandomUtils.GetRandom(0, generalList.Count);

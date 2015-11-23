@@ -25,7 +25,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Service;
@@ -140,7 +140,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserFunction userFunction = new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Xiulian);
+            UserFunction userFunction = new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Xiulian);
             if (userFunction != null)
             {
                 UserHelper.XiuLianGianExperience(ContextUser.UserID); //修炼完成后更改修炼状态
@@ -149,7 +149,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 if (inerDate > 300 && ContextUser.UserStatus != UserStatus.XiuLian)
                 {
                     int totalTime = 0;
-                    GeneralPracticeInfo generalpractice = new ConfigCacheSet<GeneralPracticeInfo>().FindKey(ContextUser.UserLv);
+                    GeneralPracticeInfo generalpractice = new ShareCacheStruct<GeneralPracticeInfo>().FindKey(ContextUser.UserLv);
                     if (VipHelper.GetVipOpenFun(ContextUser.VipLv, ExpandType.XiuLianYanChangErShiSiXiaoShi))
                     {
                         totalTime = ConfigEnvSet.GetInt("User.XiuLianDate");
@@ -167,7 +167,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ContextUser.UserStatus = UserStatus.XiuLian;
                         //ContextUser.Update();
 
-                        List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.XiuLian);
+                        List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.XiuLian);
                         if (userQueueArray.Count > 0)
                         {
                             UserQueue userQueue = userQueueArray[0];
@@ -183,7 +183,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 }
             }
 
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
 
             if (new TjxChatService(ContextUser).HasMessage(ContextUser.ChatVesion))
             {
@@ -214,7 +214,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 _statusList.Add(MessageState.JingJiChangReward);
             }
 
-            UserFunction countryFunction = new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Country);
+            UserFunction countryFunction = new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID, FunctionEnum.Country);
             if (countryFunction != null && dailyRestrain != null && dailyRestrain.Funtion8 < VipHelper.GetVipUseNum(ContextUser.VipLv, RestrainType.LingQuFengLu))
             {
                 _statusList.Add(MessageState.LingQuFengLv);

@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Tianjiexing.BLL.Combat;
 using ZyGames.Tianjiexing.Component.Chat;
@@ -49,7 +49,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int GetMaxLife(string userID, int generalID)
         {
             //修改者wuzf 2012-04-19
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
 
             return general == null ? 0 : general.LifeMaxNum;
         }
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    CrystalLvInfo crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(userCrystal.CrystalID, userCrystal.CrystalLv);
+                    CrystalLvInfo crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(userCrystal.CrystalID, userCrystal.CrystalLv);
                     if (crystalLvInfo != null && crystalLvInfo.UpExperience > userCrystal.CurrExprience)
                     {
                         userCrystal.CrystalLv = MathUtils.Subtraction(userCrystal.CrystalLv, (short)1, (short)1);
@@ -91,7 +91,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 for (int i = userCrystal.CrystalLv; i <= 10; i++)
                 {
                     int upLv = MathUtils.Addition((int)userCrystal.CrystalLv, 1);
-                    CrystalLvInfo crystalLvInfo = new ConfigCacheSet<CrystalLvInfo>().FindKey(userCrystal.CrystalID, upLv);
+                    CrystalLvInfo crystalLvInfo = new ShareCacheStruct<CrystalLvInfo>().FindKey(userCrystal.CrystalID, upLv);
 
                     if (crystalLvInfo != null && userCrystal.CurrExprience >= crystalLvInfo.UpExperience)
                     {
@@ -120,7 +120,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int GetCultureMoney(string userID, int generalID)
         {
             int cultureMoney = 0;
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (general != null && !string.IsNullOrEmpty(ConfigEnvSet.GetString("UserGeneral.GameCoinCulture")))
             {
                 string[] coinCulture = ConfigEnvSet.GetString("UserGeneral.GameCoinCulture").Split(',');
@@ -249,7 +249,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void GetGameUserCombat(string userID)
         {
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (user != null)
             {
                 user.CombatNum = GetTotalCombatNum(userID);
@@ -263,20 +263,20 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int GetTotalCombatNum(string userID)
         {
             int totalCombatNum = 0;
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (user == null)
             {
                 UserCacheGlobal.LoadOffline(userID);
-                user = new GameDataCacheSet<GameUser>().FindKey(userID);
+                user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             }
             if (user != null)
             {
-                UserMagic[] magicsArray = new GameDataCacheSet<UserMagic>().FindAll(userID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen).ToArray();
+                UserMagic[] magicsArray = new PersonalCacheStruct<UserMagic>().FindAll(userID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen).ToArray();
                 if (magicsArray.Length > 0)
                 {
                     int magicID = magicsArray[0].MagicID;
                     int combatNum = 0;
-                    IList<UserEmbattle> embattleArray = new GameDataCacheSet<UserEmbattle>().FindAll(user.UserID, m => m.MagicID == magicID);
+                    IList<UserEmbattle> embattleArray = new PersonalCacheStruct<UserEmbattle>().FindAll(user.UserID, m => m.MagicID == magicID);
                     if (embattleArray.Count > 0)
                     {
                         foreach (UserEmbattle embattle in embattleArray)
@@ -402,7 +402,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             foreach (ItemType itemType in itemList)
             {
-                List<ItemBaseInfo> itemArray = new ConfigCacheSet<ItemBaseInfo>().FindAll(u => u.IsMystery == 1 && u.ItemType == itemType);
+                List<ItemBaseInfo> itemArray = new ShareCacheStruct<ItemBaseInfo>().FindAll(u => u.IsMystery == 1 && u.ItemType == itemType);
                 if (itemArray.Count == 0)
                 {
                     throw new Exception("刷新神秘商店出错：物品" + itemType + "类型不存在");
@@ -411,7 +411,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
                 if (mysteryList.Exists(m => m.ItemID == itemInfo.ItemID))
                 {
-                    itemArray = new ConfigCacheSet<ItemBaseInfo>().FindAll(u => u.IsMystery == 1 && u.ItemID != itemInfo.ItemID && u.ItemType == itemType);
+                    itemArray = new ShareCacheStruct<ItemBaseInfo>().FindAll(u => u.IsMystery == 1 && u.ItemID != itemInfo.ItemID && u.ItemType == itemType);
                     if (itemArray.Count == 0)
                     {
                         throw new Exception("刷新神秘商店出错：物品" + itemType + "类型不存在");
@@ -434,7 +434,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string ProChat(string Content)
         {
             string result = Content;
-            var chatKeyWordArray = new ConfigCacheSet<ChatKeyWord>().FindAll();
+            var chatKeyWordArray = new ShareCacheStruct<ChatKeyWord>().FindAll();
             foreach (ChatKeyWord item in chatKeyWordArray)
             {
                 result = result.Replace(item.KeyWord, new string('*', item.KeyWord.Length));
@@ -449,9 +449,9 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void GetGeneralLife(string userID)
         {
-            List<UserProps> userPropsArray = new GameDataCacheSet<UserProps>().FindAll(userID, m => m.SurplusNum > 0 && m.ItemID != 7003);
-            List<UserGeneral> generalArray = new GameDataCacheSet<UserGeneral>().FindAll(userID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            List<UserProps> userPropsArray = new PersonalCacheStruct<UserProps>().FindAll(userID, m => m.SurplusNum > 0 && m.ItemID != 7003);
+            List<UserGeneral> generalArray = new PersonalCacheStruct<UserGeneral>().FindAll(userID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (userPropsArray.Count > 0)
             {
                 UserProps userProps = userPropsArray[0];
@@ -478,7 +478,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void RegainGeneralLife(string userID)
         {
-            var generalList = new GameDataCacheSet<UserGeneral>().FindAll(userID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
+            var generalList = new PersonalCacheStruct<UserGeneral>().FindAll(userID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
             generalList.ForEach(general =>
             {
                 general.LifeNum = MathUtils.Addition(general.LifeNum, general.LifeMaxNum, general.LifeMaxNum);
@@ -490,7 +490,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void GetUserLightOpen(string userID)
         {
-            var cacheSet = new GameDataCacheSet<UserLight>();
+            var cacheSet = new PersonalCacheStruct<UserLight>();
             var userLightArray = cacheSet.FindAll(userID);
             if (userLightArray.Count == 0)
             {
@@ -504,7 +504,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 foreach (UserLight light in userLightArray)
                 {
-                    UserLight uLight = new GameDataCacheSet<UserLight>().FindKey(userID, light.HuntingID);
+                    UserLight uLight = new PersonalCacheStruct<UserLight>().FindKey(userID, light.HuntingID);
                     if (uLight == null || uLight.IsLight == 0)
                     {
                         if (uLight != null && uLight.HuntingID == 1001)
@@ -524,7 +524,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             }
         }
 
-        private static void AddUserLight(GameDataCacheSet<UserLight> cacheSet, string userID, int huntingID, int isLight)
+        private static void AddUserLight(PersonalCacheStruct<UserLight> cacheSet, string userID, int huntingID, int isLight)
         {
             var light = new UserLight()
             {
@@ -547,14 +547,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 return;
             }
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(general.UserID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(general.UserID);
             short generalMaxLv = user == null ? _currMaxLv : (user.UserLv * 3).ToShort();
             if (general.GeneralLv >= generalMaxLv)
             {
                 return;
             }
             short nextLv = MathUtils.Addition(general.GeneralLv, 1.ToShort());
-            var generalEscalateInfo = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(nextLv, GeneralType.YongBing);
+            var generalEscalateInfo = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(nextLv, GeneralType.YongBing);
             int tempExpri = generalEscalateInfo.UpExperience - general.CurrExperience;
             if ((general.GeneralLv+1).ToShort() >= (user.UserLv * 3).ToShort() && exprience > tempExpri)
             {
@@ -569,7 +569,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
             while (nextLv <= generalMaxLv)
             {
-                GeneralEscalateInfo generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(nextLv, GeneralType.YongBing);
+                GeneralEscalateInfo generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(nextLv, GeneralType.YongBing);
                 if (general.GeneralLv >= _currMaxLv)
                 {
                     break;
@@ -606,7 +606,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static int GeneralLvIsUserLv(string userID, int generalID, int exprience, int userLv)
         {
-            UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             int isLv = 0;
             if (general == null)
             {
@@ -632,7 +632,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             bool isUp = false;
             userLv = (userLv * 3).ToShort();
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (userGeneral == null || userGeneral.GeneralLv >= userLv || userGeneral.GeneralLv >= _currMaxLv)
             {
                 return true;
@@ -640,13 +640,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
             short genLv = userGeneral.GeneralLv;
             int experience = 0;
             double addNum = FestivalHelper.SurplusPurchased(userID, FestivalType.ManorAddition);//活动加成
-            List<UserLand> landArray = new GameDataCacheSet<UserLand>().FindAll(userID, u => u.GeneralID.Equals(generalID) && u.IsGain == 1);
+            List<UserLand> landArray = new PersonalCacheStruct<UserLand>().FindAll(userID, u => u.GeneralID.Equals(generalID) && u.IsGain == 1);
             foreach (var land in landArray)
             {
                 experience += GetLandExperience(land, userLv);
             }
-            UserPlantQuality userPlantQuality = new GameDataCacheSet<UserPlantQuality>().FindKey(userID, generalID, PlantType.Experience);
-            UserLand userLand = new GameDataCacheSet<UserLand>().FindKey(userID, postion);
+            UserPlantQuality userPlantQuality = new PersonalCacheStruct<UserPlantQuality>().FindKey(userID, generalID, PlantType.Experience);
+            UserLand userLand = new PersonalCacheStruct<UserLand>().FindKey(userID, postion);
             if (userPlantQuality != null && userLand != null)
             {
                 experience += GetLandExperience(userLand, userLv);
@@ -656,7 +656,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             experience = MathUtils.Addition(experience, userGeneral.CurrExperience);
             while (true)
             {
-                GeneralEscalateInfo generalEscalate = new ConfigCacheSet<GeneralEscalateInfo>().FindKey(genLv);
+                GeneralEscalateInfo generalEscalate = new ShareCacheStruct<GeneralEscalateInfo>().FindKey(genLv);
                 if (generalEscalate != null && experience >= generalEscalate.UpExperience)
                 {
                     experience = MathUtils.Subtraction(experience, generalEscalate.UpExperience);
@@ -687,7 +687,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             int experience = 0;
             if (land != null)
             {
-                PlantInfo plantInfo = new ConfigCacheSet<PlantInfo>().FindKey(userLv, (short)PlantType.Experience, land.PlantQuality);
+                PlantInfo plantInfo = new ShareCacheStruct<PlantInfo>().FindKey(userLv, (short)PlantType.Experience, land.PlantQuality);
                 if (plantInfo != null)
                 {
                     experience = plantInfo.GainNum;
@@ -709,9 +709,9 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void OpenMagic(string userID, int userLv)
         {
-            var magicCacheSet = new GameDataCacheSet<UserMagic>();
-            var embattleCacheSet = new GameDataCacheSet<UserEmbattle>();
-            var magicArray = new ConfigCacheSet<MagicInfo>().FindAll(u => u.DemandLv <= userLv);
+            var magicCacheSet = new PersonalCacheStruct<UserMagic>();
+            var embattleCacheSet = new PersonalCacheStruct<UserEmbattle>();
+            var magicArray = new ShareCacheStruct<MagicInfo>().FindAll(u => u.DemandLv <= userLv);
             foreach (MagicInfo magicInfo in magicArray)
             {
                 UserMagic userMagic = magicCacheSet.FindKey(userID, magicInfo.MagicID);
@@ -729,7 +729,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
                     if (magicInfo.MagicType == MagicType.MoFaZhen)
                     {
-                        MagicLvInfo lvInfo = new ConfigCacheSet<MagicLvInfo>().FindKey(magicInfo.MagicID, magicInfo.MagicLv);
+                        MagicLvInfo lvInfo = new ShareCacheStruct<MagicLvInfo>().FindKey(magicInfo.MagicID, magicInfo.MagicLv);
                         if (lvInfo != null)
                         {
                             string[] magicRang = lvInfo.GridRange.Split(',');
@@ -784,7 +784,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void ChechDailyRestrain(string userID)
         {
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
             if (user != null)
             {
                 if (user.UserExtend != null)
@@ -829,7 +829,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     }
                 }
             }
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (userRestrain != null && DateTime.Now.Date != userRestrain.RefreshDate.Date)
             {
                 userRestrain.Funtion1 = 0;
@@ -893,7 +893,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 UserGuild userGuild = new ShareCacheStruct<UserGuild>().FindKey(guildID);
                 if (userGuild != null)
                 {
-                    GuildLvInfo lvInfo = new ConfigCacheSet<GuildLvInfo>().FindKey(MathUtils.Addition(userGuild.GuildLv, (short)1));
+                    GuildLvInfo lvInfo = new ShareCacheStruct<GuildLvInfo>().FindKey(MathUtils.Addition(userGuild.GuildLv, (short)1));
                     userGuild.CurrExperience = MathUtils.Addition(userGuild.CurrExperience, experience, int.MaxValue);
                     if (lvInfo != null)
                     {
@@ -958,7 +958,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         //package.Update();
                         continue;
                     }
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userItem.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userItem.ItemID);
                     if (itemInfo != null && itemInfo.ItemType == ItemType.ZhuangBei)
                     {
                         baseNum = MathUtils.Addition(baseNum, itemInfo.SalePrice, int.MaxValue);
@@ -980,7 +980,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void XiuLianGianExperience(string userID)
         {
-            GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+            GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
             int totalTime = 0;
             int experience = 0;
             int genlv = 0;
@@ -992,7 +992,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 genlv = gameUser.UserLv;
             }
-            GeneralPracticeInfo generalpractice = new ConfigCacheSet<GeneralPracticeInfo>().FindKey(genlv);
+            GeneralPracticeInfo generalpractice = new ShareCacheStruct<GeneralPracticeInfo>().FindKey(genlv);
             if (generalpractice != null)
             {
                 if (VipHelper.GetVipOpenFun(gameUser.VipLv, ExpandType.XiuLianYanChangErShiSiXiaoShi))
@@ -1006,13 +1006,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
                 if (gameUser.UserStatus == UserStatus.XiuLian)
                 {
-                    List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(userID, m => m.QueueType == QueueType.XiuLian);
+                    List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(userID, m => m.QueueType == QueueType.XiuLian);
                     if (userQueueArray.Count > 0 && userQueueArray[0].DoRefresh() <= 0)
                     {
-                        List<UserMagic> userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(userID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen);
+                        List<UserMagic> userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(userID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen);
                         if (userMagicArray.Count > 0)
                         {
-                            List<UserEmbattle> userEmbattleArray = new GameDataCacheSet<UserEmbattle>().FindAll(userID, m => m.MagicID == userMagicArray[0].MagicID);
+                            List<UserEmbattle> userEmbattleArray = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, m => m.MagicID == userMagicArray[0].MagicID);
                             int practiceTime = 0; //修炼时间
                             if (userQueueArray.Count > 0)
                             {
@@ -1026,7 +1026,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                 }
                                 foreach (UserEmbattle embattle in userEmbattleArray)
                                 {
-                                    UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(gameUser.UserID, embattle.GeneralID);
+                                    UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(gameUser.UserID, embattle.GeneralID);
                                     if (general != null)
                                     {
                                         if (general.GeneralID == LanguageManager.GetLang().GameUserGeneralID)
@@ -1135,8 +1135,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsPromptBlood(string userID)
         {
             bool result = false;
-            List<UserProps> propsesArray = new GameDataCacheSet<UserProps>().FindAll(userID, u => u.PropType == 1);
-            List<UserGeneral> generalsArray = new GameDataCacheSet<UserGeneral>().FindAll(userID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
+            List<UserProps> propsesArray = new PersonalCacheStruct<UserProps>().FindAll(userID, u => u.PropType == 1);
+            List<UserGeneral> generalsArray = new PersonalCacheStruct<UserGeneral>().FindAll(userID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
             if (propsesArray.Count > 0)
             {
                 if (propsesArray[0].SurplusNum == 0)
@@ -1177,8 +1177,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 if (userItemArray.Count > 0)
                 {
                     int itemID = userItemArray[0].ItemID;
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemID);
-                    var propsCacheSet = new GameDataCacheSet<UserProps>();
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemID);
+                    var propsCacheSet = new PersonalCacheStruct<UserProps>();
                     List<UserProps> propsArray = propsCacheSet.FindAll(user.UserID, u => u.PropType == 1);
                     if (propsArray.Count > 0 && propsArray[0].SurplusNum == 0)
                     {
@@ -1191,7 +1191,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         }
                     }
                     //给佣兵补血
-                    List<UserGeneral> userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(user.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
+                    List<UserGeneral> userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(user.UserID, u => u.GeneralStatus == GeneralStatus.DuiWuZhong);
                     int effectNum = itemInfo.EffectNum;
                     foreach (var userGeneral in userGeneralArray)
                     {
@@ -1222,7 +1222,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             if (!IsGainReward(user.UserID, winsNum))
             {
-                UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                 if (dailyRestrain != null)
                 {
                     ArenaWinsNum(user, winsNum);
@@ -1245,7 +1245,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsGainReward(string userID, int winNum)
         {
             bool isGain = false;
-            UserDailyRestrain dailyRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain dailyRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             if (dailyRestrain != null && !string.IsNullOrEmpty(dailyRestrain.Funtion12))
             {
                 string[] winsType = dailyRestrain.Funtion12.Split(',');
@@ -1318,16 +1318,16 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="experience"></param>
         public static void UserGeneralExp(string userID, int experience)
         {
-            List<UserMagic> userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(userID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen);
+            List<UserMagic> userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(userID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen);
             if (userMagicArray.Count > 0)
             {
                 UserMagic magic = userMagicArray[0];
-                List<UserEmbattle> userEmbattleArray = new GameDataCacheSet<UserEmbattle>().FindAll(userID, m => m.MagicID == magic.MagicID);
+                List<UserEmbattle> userEmbattleArray = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, m => m.MagicID == magic.MagicID);
 
                 foreach (UserEmbattle embattle in userEmbattleArray)
                 {
                     GeneralHelper.UserGeneralExp(userID, embattle.GeneralID, experience);
-                    //UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(userID, embattle.GeneralID);
+                    //UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(userID, embattle.GeneralID);
                     //if (general != null && general.GeneralLv < _currMaxLv)
                     //{
                     //    general.CurrExperience = MathUtils.Addition(general.CurrExperience, experience, int.MaxValue);
@@ -1482,7 +1482,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsCrystalBeiBaoFull(GameUser user)
         {
-            //var crystalsArray = new GameDataCacheSet<UserCrystal>().FindAll(UserCrystal.Index_UserID, u => u.IsSale == 2 && u.GeneralID == 0, user.UserID);
+            //var crystalsArray = new PersonalCacheStruct<UserCrystal>().FindAll(UserCrystal.Index_UserID, u => u.IsSale == 2 && u.GeneralID == 0, user.UserID);
             //if (crystalsArray.Length >= user.CrystalNum) return true;
             ////var userItemsArry = UserItemHelper.GetItems(user.UserID).FindAll(m => m.ItemStatus == ItemStatus.BeiBao);
             ////if (userItemsArry.Count >= user.GridNum) return true;
@@ -1532,7 +1532,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     //user.Update();
                     var chatService = new TjxChatService();
                     chatService.SystemSendWhisper(user, string.Format(LanguageManager.GetLang().Chat_PetRunSucess,
-                   (new ConfigCacheSet<PetInfo>().FindKey(petRunPool.PetID) ?? new PetInfo()).PetName, petRunPool.GameCoin, petRunPool.ObtainNum));
+                   (new ShareCacheStruct<PetInfo>().FindKey(petRunPool.PetID) ?? new PetInfo()).PetName, petRunPool.GameCoin, petRunPool.ObtainNum));
                 }
                 petRunPool.PetID = 0;
                 //petRunPool.Update();
@@ -1549,8 +1549,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
             PlotInfo plotInfo = new PlotInfo();
             if (gameUser != null)
             {
-                var taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(gameUser.TaskProgress) ?? new StoryTaskInfo();
-                plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(taskInfo.PlotID);
+                var taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(gameUser.TaskProgress) ?? new StoryTaskInfo();
+                plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(taskInfo.PlotID);
             }
             return plotInfo;
         }
@@ -1623,7 +1623,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
 
                 //灵件配置
-                var user = new GameDataCacheSet<GameUser>().FindKey(userId);
+                var user = new PersonalCacheStruct<GameUser>().FindKey(userId);
                 if (user != null)
                 {
                     var sparepartList = user.SparePartList.FindAll(m => m.UserItemID.Equals(userItemID));
@@ -1757,10 +1757,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsKill(GameUser user, int plotID)
         {
             bool isKill = false;
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(plotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(plotID);
             if (plotInfo != null && plotInfo.PlotType == PlotType.Kalpa)
             {
-                UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(user.UserID);
+                UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(user.UserID);
                 if (userRestrain != null && userRestrain.UserExtend != null)
                 {
                     if (userRestrain.UserExtend.KalpaDate.Date == DateTime.Now.Date ||
@@ -1796,7 +1796,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsLastLayer(PlotInfo plotInfo)
         {
-            return new ConfigCacheSet<PlotInfo>().FindKey(plotInfo == null ? 0 : plotInfo.AftPlotID) == null;
+            return new ShareCacheStruct<PlotInfo>().FindKey(plotInfo == null ? 0 : plotInfo.AftPlotID) == null;
         }
 
         /// <summary>
@@ -1810,7 +1810,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 return;
             }
-            var guildAbilityInfoArray = new ConfigCacheSet<GuildAbilityInfo>().FindAll();
+            var guildAbilityInfoArray = new ShareCacheStruct<GuildAbilityInfo>().FindAll();
             if (guild.AbilityInfo.Count > 0 && guild.AbilityInfo.Count >= guildAbilityInfoArray.Count)
             {
                 return;
@@ -1904,7 +1904,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsOpenFunction(string userID, FunctionEnum funEnum)
         {
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             UserFunction function = cacheSet.FindKey(userID, funEnum);
             if (function != null)
             {
@@ -1934,16 +1934,16 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     if (x == null && y == null) return 0;
                     if (x != null && y == null) return 1;
                     if (x == null) return -1;
-                    result = new ConfigCacheSet<PlotInfo>().FindKey(y.PlotID).LayerNum.CompareTo(
-                        new ConfigCacheSet<PlotInfo>().FindKey(x.PlotID).LayerNum);
+                    result = new ShareCacheStruct<PlotInfo>().FindKey(y.PlotID).LayerNum.CompareTo(
+                        new ShareCacheStruct<PlotInfo>().FindKey(x.PlotID).LayerNum);
                     if (result == 0)
                     {
-                        result = new ConfigCacheSet<PlotInfo>().FindKey(y.PlotID).PlotSeqNo.CompareTo(
-                            new ConfigCacheSet<PlotInfo>().FindKey(x.PlotID).PlotSeqNo);
+                        result = new ShareCacheStruct<PlotInfo>().FindKey(y.PlotID).PlotSeqNo.CompareTo(
+                            new ShareCacheStruct<PlotInfo>().FindKey(x.PlotID).PlotSeqNo);
                     }
                     return result;
                 });
-                plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(userPlotArray[0].PlotID);
+                plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(userPlotArray[0].PlotID);
             }
             return plotInfo;
         }
@@ -1968,13 +1968,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                           PropDesc = string.Format(LanguageManager.GetLang().St1008_GameCoinSurplusNum, gameCoinNum),
                                       });
             }
-            List<UserProps> userPropsList = new GameDataCacheSet<UserProps>().FindAll(user.UserID);
+            List<UserProps> userPropsList = new PersonalCacheStruct<UserProps>().FindAll(user.UserID);
             if (userPropsList.Count > 0)
             {
                 foreach (UserProps props in userPropsList)
                 {
                     BlessingInfo blessingInfo = new BlessingInfo();
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(props.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(props.ItemID);
                     if (itemInfo == null)
                     {
                         break;
@@ -2031,7 +2031,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
             }
             //充值返还额度
-            UserDial userDial = new GameDataCacheSet<UserDial>().FindKey(user.UserID);
+            UserDial userDial = new PersonalCacheStruct<UserDial>().FindKey(user.UserID);
             if (userDial != null && userDial.ReturnRatio > 0)
             {
                 string returnRatio = DialHelper.GetTransformData(userDial.ReturnRatio);
@@ -2068,7 +2068,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static bool IsUserEmbattle(string userID, int magicID)
         {
-            var embattlesArray = new GameDataCacheSet<UserEmbattle>().FindAll(userID, m => m.GeneralID != 0 && m.MagicID == magicID);
+            var embattlesArray = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, m => m.GeneralID != 0 && m.MagicID == magicID);
             if (embattlesArray.Count > 0)
             {
                 return false;
@@ -2119,7 +2119,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             GeneralHeritage heritage = generalHeritagesList.Find(m => m.Type == HeritageType.Heritage);
             if (heritage != null)
             {
-                var cacheSet = new GameDataCacheSet<UserGeneral>();
+                var cacheSet = new PersonalCacheStruct<UserGeneral>();
                 UserGeneral ugeneral = cacheSet.FindKey(userID, heritage.GeneralID);
                 if (ugeneral != null)
                 {
@@ -2172,7 +2172,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void GetFeelHunger(string userID, int generalID)
         {
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(userID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(userID, generalID);
             if (userGeneral != null)
             {
                 if (userGeneral.HungerDate.Date <= MathUtils.SqlMinDate.Date)
@@ -2220,14 +2220,14 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static string SportTitleName(int obtainNum)
         {
             string sportsName = string.Empty;
-            var sportsInfoArray = new ConfigCacheSet<SportsTitleInfo>().FindAll(u => u.Obtian > 0 && u.Obtian < obtainNum);
+            var sportsInfoArray = new ShareCacheStruct<SportsTitleInfo>().FindAll(u => u.Obtian > 0 && u.Obtian < obtainNum);
             if (sportsInfoArray.Count > 0)
             {
                 sportsName = sportsInfoArray[sportsInfoArray.Count - 1].SprotsName;
             }
             else
             {
-                var sportsInfo = new ConfigCacheSet<SportsTitleInfo>().Find(s => s.Obtian == 0);
+                var sportsInfo = new ShareCacheStruct<SportsTitleInfo>().Find(s => s.Obtian == 0);
                 sportsName = sportsInfo == null ? string.Empty : sportsInfo.SprotsName;
             }
             return sportsName;
@@ -2242,7 +2242,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             keyWord = keyWord.Trim();
             bool IsWord = false;
-            ConfigCacheSet<ChatKeyWord> cacheSet = new ConfigCacheSet<ChatKeyWord>();
+            ShareCacheStruct<ChatKeyWord> cacheSet = new ShareCacheStruct<ChatKeyWord>();
             List<ChatKeyWord> chatKeyWordArray = cacheSet.FindAll();
             foreach (ChatKeyWord chatKeyWord in chatKeyWordArray)
             {

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Game.Service;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 using System.Data;
 using ZyGames.Tianjiexing.Model;
@@ -84,7 +84,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var userGeneralList = new GameDataCacheSet<UserGeneral>().FindAll(ContextUser.UserID,
+            var userGeneralList = new PersonalCacheStruct<UserGeneral>().FindAll(ContextUser.UserID,
                                                                               s =>
                                                                               s.GeneralID != generalID &&
                                                                               s.GeneralType == GeneralType.YongBing && s.GeneralType != GeneralType.Soul);
@@ -92,7 +92,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 general.GeneralCard = string.Empty;
             }
-            userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral != null)
             {
                 nextLv = MathUtils.Addition(userGeneral.GeneralLv, (short)1);
@@ -101,7 +101,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     strUserItemID = userGeneral.GeneralCard.TrimEnd(',').Split(',');
                 }
             }
-            var generalInfo = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            var generalInfo = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             if (generalInfo != null)
             {
                 isUp = 1;
@@ -123,7 +123,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 var useritem = package.ItemPackage.Find(s => !s.IsRemove && s.UserItemID == userItemID);
                 if (useritem != null)
                 {
-                    return new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+                    return new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
                 }
             }
             return null;

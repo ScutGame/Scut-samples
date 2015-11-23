@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(synthesisArray.Count);
             foreach (ItemSynthesisInfo synthesis in synthesisArray)
             {
-                ItemBaseInfo item = new ConfigCacheSet<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
+                ItemBaseInfo item = new ShareCacheStruct<ItemBaseInfo>().FindKey(synthesis.SynthesisID);
                 var userItemArray = UserItemHelper.GetItems(Uid).FindAll(u => u.ItemID.Equals(synthesis.SynthesisID) && u.ItemStatus != ItemStatus.Sell && new UserItemHelper(u).GeneralStatus(Uid) != GeneralStatus.LiDui);
                 int maxNum = 0;
                 int sumNum = 0;
@@ -130,13 +130,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 uItemID = itemID;
             }
-            List<ItemSynthesisInfo> itemSynthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(u => u.SynthesisID.Equals(uItemID));
+            List<ItemSynthesisInfo> itemSynthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(u => u.SynthesisID.Equals(uItemID));
             if (itemSynthesisArray.Count > 0)
             {
-                itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(itemSynthesisArray[0].ItemID); //合成物品的信息
-                //synthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(u => u.ItemID.Equals(itemInfo.ItemID) && u.SynthesisID != itemID);
-                synthesisArray = new ConfigCacheSet<ItemSynthesisInfo>().FindAll(u => u.ItemID.Equals(itemInfo.ItemID));
-                equAttrInfo = new ConfigCacheSet<ItemEquAttrInfo>().FindAll(u => u.ItemID.Equals(itemInfo.ItemID));
+                itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(itemSynthesisArray[0].ItemID); //合成物品的信息
+                //synthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(u => u.ItemID.Equals(itemInfo.ItemID) && u.SynthesisID != itemID);
+                synthesisArray = new ShareCacheStruct<ItemSynthesisInfo>().FindAll(u => u.ItemID.Equals(itemInfo.ItemID));
+                equAttrInfo = new ShareCacheStruct<ItemEquAttrInfo>().FindAll(u => u.ItemID.Equals(itemInfo.ItemID));
             }
 
             synthesisMinLv = ConfigEnvSet.GetInt("ItemInfo.SynthesisMinLv");

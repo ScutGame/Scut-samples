@@ -14,7 +14,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -50,7 +50,7 @@ def getUrlElement(httpGet, parent):
 # 每周一 0:00 所有数据至初始状态（已开启的高级地图，默认开启)
 def resetData(userPlotPackage):
     plotPackage = userPlotPackage.PlotPackage.FindAll(match=lambda x:x.PlotType == PlotType.KaoGuPlot);
-    plotCacheSet = ConfigCacheSet[PlotInfo]();
+    plotCacheSet = ShareCacheStruct[PlotInfo]();
     if plotPackage:
         for item in plotPackage:
             item.HasMapCount = 0;
@@ -76,7 +76,7 @@ def takeAction(urlParam, parent):
     if(userExtend.LairDate.Date != DateTime.Now.Date):
         userExtend.LairNum = 0
         userExtend.LairDate = DateTime.Now
-    userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+    userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
     plotPackage = userPlotPackage.PlotPackage.Find(match=lambda x:x.PlotID == urlParam.plotID);  # 玩家地图信息，and 类型为考古
     if not plotPackage:
         return loadError();
@@ -142,16 +142,16 @@ def takeAction(urlParam, parent):
     # 下怪物列表信息
     actionResult.plotArcheologyList = plotPackage.ArcheologyPackage.FindAll(match=lambda x:x.IsOpen == True);
 
-    plotNpcList = ConfigCacheSet[PlotNPCInfo]().FindAll(match=lambda x:x.PlotID == urlParam.plotID); # 获取怪物名称，图片，品质等
+    plotNpcList = ShareCacheStruct[PlotNPCInfo]().FindAll(match=lambda x:x.PlotID == urlParam.plotID); # 获取怪物名称，图片，品质等
     if not plotNpcList:
         return loadError();
     actionResult.plotNpcList = plotNpcList;
 
     # 当前地图的最大碎片数
-    actionResult.plotInfo = ConfigCacheSet[PlotInfo]().FindKey(urlParam.plotID);
+    actionResult.plotInfo = ShareCacheStruct[PlotInfo]().FindKey(urlParam.plotID);
 
     # 碎片数与精力
-    userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+    userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
     if not userPlotPackage:
         return loadError();
     plotPackage = userPlotPackage.PlotPackage.Find(match=lambda x:x.PlotID == urlParam.plotID);  # 玩家地图信息，and 类型为考古

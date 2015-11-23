@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1902_CountryCombatNotUpEmbattle;
                 return false;
             }
-            var userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(ContextUser.UserID, m => m.MagicType == MagicType.MoFaZhen);
+            var userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(ContextUser.UserID, m => m.MagicType == MagicType.MoFaZhen);
             foreach (UserMagic magic in userMagicArray)
             {
                 if (magic.MagicID == _magicID)

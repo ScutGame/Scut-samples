@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
@@ -109,13 +109,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ErrorInfo = LanguageManager.GetLang().St1005_PassportError;
                 return false;
             }
-            GeneralInfo general = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
+            GeneralInfo general = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
             if (general == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
                 return false;
             }
-            CareerInfo careerInfo = new ConfigCacheSet<CareerInfo>().FindKey(general.CareerID);
+            CareerInfo careerInfo = new ShareCacheStruct<CareerInfo>().FindKey(general.CareerID);
             if (careerInfo == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -123,7 +123,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            GameUser userEntity = new GameDataCacheSet<GameUser>().FindKey(UserId.ToString());
+            GameUser userEntity = new PersonalCacheStruct<GameUser>().FindKey(UserId.ToString());
             if (userEntity != null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -132,7 +132,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             }
             bool userSex = Sex == 0 ? false : true;
 
-            if (new GameDataCacheSet<GameUser>().FindKey(UserId.ToString()) == null)
+            if (new PersonalCacheStruct<GameUser>().FindKey(UserId.ToString()) == null)
             {
                 userEntity = CreateGameUser(userSex);
                 user = new SessionUser(userEntity);
@@ -203,7 +203,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         private void EnableFunction()
         {
             string[] funList = ConfigEnvSet.GetString("User.DefaultFunction").Split(new[] { ',' });
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             foreach (string fun in funList)
             {
                 if (fun.TrimEnd().Length > 0)
@@ -220,7 +220,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         private void CreateDailyRestrain()
         {
-            if (new GameDataCacheSet<UserDailyRestrain>().FindKey(UserId.ToString()) == null)
+            if (new PersonalCacheStruct<UserDailyRestrain>().FindKey(UserId.ToString()) == null)
             {
                 UserDailyRestrain dailyRestrain = new UserDailyRestrain();
 
@@ -235,7 +235,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dailyRestrain.Funtion7 = 0;
                 dailyRestrain.Funtion8 = 0;
                 dailyRestrain.Funtion9 = 0;
-                var cacheSet = new GameDataCacheSet<UserDailyRestrain>();
+                var cacheSet = new PersonalCacheStruct<UserDailyRestrain>();
                 cacheSet.Add(dailyRestrain);
                 cacheSet.Update();
             }
@@ -251,12 +251,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 MagicLv = 1,
                 MagicType = MagicType.MoFaZhen
             };
-            var cacheUserMagic = new GameDataCacheSet<UserMagic>();
+            var cacheUserMagic = new PersonalCacheStruct<UserMagic>();
             cacheUserMagic.Add(userMagic);
             cacheUserMagic.Update();
 
             //初始阵法
-            string[] gridRange = new ConfigCacheSet<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv).GridRange.Split(new char[] { ',' });
+            string[] gridRange = new ShareCacheStruct<MagicLvInfo>().FindKey(userMagic.MagicID, userMagic.MagicLv).GridRange.Split(new char[] { ',' });
             if (gridRange.Length > 0)
             {
                 string grid = gridRange[0];
@@ -268,7 +268,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     Position = grid.ToShort()
 
                 };
-                var cacheEmbattle = new GameDataCacheSet<UserEmbattle>();
+                var cacheEmbattle = new PersonalCacheStruct<UserEmbattle>();
                 cacheEmbattle.Add(userEmbattle);
                 cacheEmbattle.Update();
             }
@@ -276,8 +276,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         private void CreateGeneral(CareerInfo careerInfo)
         {
-            GeneralInfo general = new ConfigCacheSet<GeneralInfo>().FindKey(generalID);
-            List<UserGeneral> userGeneralArray = new GameDataCacheSet<UserGeneral>().FindAll(UserId.ToString());
+            GeneralInfo general = new ShareCacheStruct<GeneralInfo>().FindKey(generalID);
+            List<UserGeneral> userGeneralArray = new PersonalCacheStruct<UserGeneral>().FindAll(UserId.ToString());
             if (userGeneralArray.Count > 0 || general == null)
             {
                 return;
@@ -310,7 +310,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             userGeneral.RefreshMaxLife();
             userGeneral.HeritageType = HeritageType.Normal;
             userGeneral.AbilityNum = 3;
-            var cacheSet = new GameDataCacheSet<UserGeneral>();
+            var cacheSet = new PersonalCacheStruct<UserGeneral>();
             cacheSet.Add(userGeneral);
             cacheSet.Update();
             UserAbilityHelper.AddUserAbility(general.AbilityID, UserId, generalID, 1);
@@ -362,21 +362,21 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 LoginTime = DateTime.Now,
                 DailyLoginTime = DateTime.Now
             };
-            var cacheSet = new GameDataCacheSet<GameUser>();
+            var cacheSet = new PersonalCacheStruct<GameUser>();
             cacheSet.Add(userEntity);
             cacheSet.Update();
             //增加初始背包、灵件、水晶
-            new GameDataCacheSet<UserItemPackage>().Add(new UserItemPackage { UserID = userEntity.UserID });
-            new GameDataCacheSet<UserCrystalPackage>().Add(new UserCrystalPackage() { UserID = userEntity.UserID });
-            new GameDataCacheSet<UserSparePackage>().Add(new UserSparePackage() { UserID = userEntity.UserID });
+            new PersonalCacheStruct<UserItemPackage>().Add(new UserItemPackage { UserID = userEntity.UserID });
+            new PersonalCacheStruct<UserCrystalPackage>().Add(new UserCrystalPackage() { UserID = userEntity.UserID });
+            new PersonalCacheStruct<UserSparePackage>().Add(new UserSparePackage() { UserID = userEntity.UserID });
             //增加初始附魔符
-            new GameDataCacheSet<UserEnchant>().Add(new UserEnchant(userEntity.UserID));
+            new PersonalCacheStruct<UserEnchant>().Add(new UserEnchant(userEntity.UserID));
             //增加初始副本
-            new GameDataCacheSet<UserPlotPackage>().Add(new UserPlotPackage(userEntity.UserID));
+            new PersonalCacheStruct<UserPlotPackage>().Add(new UserPlotPackage(userEntity.UserID));
             // 增加初始集邮册
-            new GameDataCacheSet<UserAlbum>().Add(new UserAlbum(userEntity.UserID));
+            new PersonalCacheStruct<UserAlbum>().Add(new UserAlbum(userEntity.UserID));
             // 玩家圣吉塔
-            new GameDataCacheSet<UserShengJiTa>().Add(new UserShengJiTa(userEntity.UserID.ToInt()));
+            new PersonalCacheStruct<UserShengJiTa>().Add(new UserShengJiTa(userEntity.UserID.ToInt()));
 
             return userEntity;
         }

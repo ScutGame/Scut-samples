@@ -12,7 +12,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -66,7 +66,7 @@ def takeAction(urlParam, parent):
     if(userExtend.ZhongLairDate.Date != DateTime.Now.Date):
         userExtend.ZhongLairNum = 0
         userExtend.ZhongLairDate = DateTime.Now
-    LairTreasure=ConfigCacheSet[LairTreasureInfo]().FindKey(MathUtils.ToInt(urlParam.LairTreasureType))
+    LairTreasure=ShareCacheStruct[LairTreasureInfo]().FindKey(MathUtils.ToInt(urlParam.LairTreasureType))
     if LairTreasure == None:
          parent.ErrorCode = Lang.getLang("ErrorCode");
          parent.ErrorInfo = Lang.getLang("LoadError");
@@ -110,7 +110,7 @@ def takeAction(urlParam, parent):
     index = LairTreasuerHelp.GetLaiRewardIndex(LairTreasure.LairTreasureList.ToList())
     #index = 0
     #actionResult.postion=LairTreasuerHelp.ChestLairTreasuerPosition(urlParam.LairTreasureType)
-    #LairTreasure=ConfigCacheSet[LairTreasureInfo]().FindKey(MathUtils.ToInt(urlParam.LairTreasureType))
+    #LairTreasure=ShareCacheStruct[LairTreasureInfo]().FindKey(MathUtils.ToInt(urlParam.LairTreasureType))
     lair=LairTreasure.LairTreasureList[index]
     actionResult.position = lair.LairPosition;
     actionResult.LairRewardType = lair.LairRewardType

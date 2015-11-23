@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Data;
 using ServiceStack.ServiceInterface.ServiceModel;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -66,8 +66,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 int collectNum = TrumpHelper.GetUserItemNum(ContextUser.UserID, task.TargetItemID);
                 iscomplete = IsComplete(ContextUser, task);
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(task.PlotID);
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(task.TargetItemID);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(task.PlotID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(task.TargetItemID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(task.TaskID);
                 dsItem.PushIntoStack(task.TaskName.ToNotNullString());
@@ -103,7 +103,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
             short trumpLv = 1;
-            TrumpInfo trumpInfo = new ConfigCacheSet<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, trumpLv);
+            TrumpInfo trumpInfo = new ShareCacheStruct<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, trumpLv);
             if (trumpInfo != null && trumpInfo.Property.Count > 0)
             {
                 lifeNum = TrumpHelper.GetTrumpProperty(trumpInfo, AbilityType.ShengMing).ToInt();
@@ -111,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 soulNum = TrumpHelper.GetTrumpProperty(trumpInfo, AbilityType.SoulNum);
                 intelligenceNum = TrumpHelper.GetTrumpProperty(trumpInfo, AbilityType.IntelligenceNum);
             }
-            storyTaskArray = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.TaskType == TaskType.Trump).ToArray();
+            storyTaskArray = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.TaskType == TaskType.Trump).ToArray();
             if (TrumpHelper.IsTrumpPractice(ContextUser.UserID))
             {
                 isPractice = 1;

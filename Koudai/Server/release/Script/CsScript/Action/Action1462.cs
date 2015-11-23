@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.SkillInfo.Count > 0)
             {
                 SkillInfo skillInfo = userTrump.SkillInfo.Find(m => m.AbilityID == skillID);
@@ -77,7 +77,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ErrorInfo = LanguageManager.GetLang().St1462_OutMaxTrumpLv;
                         return false;
                     }
-                    SkillLvInfo skillLvInfo = new ConfigCacheSet<SkillLvInfo>().FindKey(skillInfo.AbilityID, skillInfo.AbilityLv);
+                    SkillLvInfo skillLvInfo = new ShareCacheStruct<SkillLvInfo>().FindKey(skillInfo.AbilityID, skillInfo.AbilityLv);
                     if (skillLvInfo != null)
                     {
                         if (ContextUser.GameCoin < skillLvInfo.GameCoin)

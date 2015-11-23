@@ -27,7 +27,7 @@ using System.Linq;
 using System.Text;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -47,9 +47,9 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             List<SkillLvInfo> _skillLvList = new List<SkillLvInfo>();
             if (general.GeneralID == LanguageManager.GetLang().GameUserGeneralID)
             {
-                var abilityCacheSet = new ConfigCacheSet<AbilityInfo>();
-                var skillLvSet = new ConfigCacheSet<SkillLvInfo>();
-                UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(general.UserID, TrumpInfo.CurrTrumpID) ?? new UserTrump();
+                var abilityCacheSet = new ShareCacheStruct<AbilityInfo>();
+                var skillLvSet = new ShareCacheStruct<SkillLvInfo>();
+                UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(general.UserID, TrumpInfo.CurrTrumpID) ?? new UserTrump();
                 if (userTrump.LiftNum > 0)
                 {
                     userTrump.SkillInfo.Foreach(obj =>
@@ -178,15 +178,15 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             {
                 return propertyList;
             }
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.LiftNum > 0 && userTrump.SkillInfo.Count > 0)
             {
                 foreach (SkillInfo skillInfo in userTrump.SkillInfo)
                 {
-                    AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(skillInfo.AbilityID);
+                    AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(skillInfo.AbilityID);
                     if (abilityInfo != null && abilityInfo.AttackType == AttackType.Change)
                     {
-                        SkillLvInfo skillLvInfo = new ConfigCacheSet<SkillLvInfo>().FindKey(skillInfo.AbilityID, skillInfo.AbilityLv);
+                        SkillLvInfo skillLvInfo = new ShareCacheStruct<SkillLvInfo>().FindKey(skillInfo.AbilityID, skillInfo.AbilityLv);
                         if (skillLvInfo == null)
                         {
                             break;
@@ -243,8 +243,8 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <param name="userID"></param>
         public static void CombatTrumpLift(string userID)
         {
-            GameUser user = new GameDataCacheSet<GameUser>().FindKey(userID);
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            GameUser user = new PersonalCacheStruct<GameUser>().FindKey(userID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && user != null && user.UserExtend != null)
             {
                 user.UserExtend.UpdateNotify(obj =>
@@ -275,7 +275,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <param name="userID"></param>
         public static void GeneralOverTrumpLift(string userID, int generalID)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && generalID == LanguageManager.GetLang().GameUserGeneralID)
             {
                 userTrump.LiftNum = MathUtils.Subtraction(userTrump.LiftNum, GameConfigSet.GeneralOverLife);
@@ -307,7 +307,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
 
         public static ZodiacType GetZodiacType(string userID)
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
                 return userTrump.Zodiac;
@@ -353,10 +353,10 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static short TrumpPropertyNum(string userID, int generalID, AbilityType abilityType)
         {
             short proNum = 0;
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.LiftNum > 0 && generalID == LanguageManager.GetLang().GameUserGeneralID)
             {
-                TrumpInfo trumpInfo = new ConfigCacheSet<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, userTrump.TrumpLv);
+                TrumpInfo trumpInfo = new ShareCacheStruct<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, userTrump.TrumpLv);
                 if (trumpInfo != null && trumpInfo.Property.Count > 0)
                 {
                     decimal mature = (decimal)userTrump.MatureNum / GameConfigSet.MaxMatureNum;
@@ -381,7 +381,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         public static decimal TrumpGeneralProperty(string userID, int generalID, AbilityType abilityType)
         {
             decimal propertyNum = 0;
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.LiftNum > 0 && generalID == LanguageManager.GetLang().GameUserGeneralID && userTrump.PropertyInfo.Count > 0)
             {
                 GeneralProperty property = userTrump.PropertyInfo.Find(m => m.AbilityType == abilityType);
@@ -405,7 +405,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
             skillInfo.AbilityID = (int)abilityType;
             skillInfo.Num = num;
             return skillInfo;
-            //var skillLvList = new ConfigCacheSet<SkillLvInfo>().FindAll(m => m.EffType == abilityType);
+            //var skillLvList = new ShareCacheStruct<SkillLvInfo>().FindAll(m => m.EffType == abilityType);
             //if (skillLvList.Count > 0)
             //{
             //    skillInfo.AbilityID = skillLvList[0].SkillID;
@@ -421,7 +421,7 @@ namespace ZyGames.Tianjiexing.BLL.Combat
         /// <returns></returns>
         public static short GetprocessAbility(AbilityType abilityType)
         {
-            var skillLvList = new ConfigCacheSet<SkillLvInfo>().FindAll(m => m.EffType == abilityType);
+            var skillLvList = new ShareCacheStruct<SkillLvInfo>().FindAll(m => m.EffType == abilityType);
             if (skillLvList.Count > 0)
             {
                 return skillLvList[0].SkillID;

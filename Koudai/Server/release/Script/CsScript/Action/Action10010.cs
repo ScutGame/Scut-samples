@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 
@@ -73,7 +73,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            List<UserLand> uLandArray = new GameDataCacheSet<UserLand>().FindAll(ContextUser.UserID);
+            List<UserLand> uLandArray = new PersonalCacheStruct<UserLand>().FindAll(ContextUser.UserID);
             if (uLandArray.Count < 9)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -87,7 +87,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 return false;
             }
 
-            List<UserLand> landArray = new GameDataCacheSet<UserLand>().FindAll(ContextUser.UserID, u => u.IsRedLand == 2);
+            List<UserLand> landArray = new PersonalCacheStruct<UserLand>().FindAll(ContextUser.UserID, u => u.IsRedLand == 2);
             int position = 0;
             if (landArray.Count > 0)
             {
@@ -114,7 +114,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     ErrorInfo = LanguageManager.GetLang().St_GoldNotEnough;
                     return false;
                 }
-                UserLand land = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, position);
+                UserLand land = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, position);
                 if (land != null && land.IsRedLand == 2)
                 {
                     if (land.IsRedLand == 2)

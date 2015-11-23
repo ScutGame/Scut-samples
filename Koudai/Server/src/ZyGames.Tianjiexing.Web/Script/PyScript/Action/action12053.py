@@ -14,7 +14,7 @@ from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.BLL.Base import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -31,7 +31,7 @@ class UrlParam(HttpParam):
 class ActionResult(DataResult):
     def __init__(self):
         DataResult.__init__(self);
-        self._cacheSetGeneral = ConfigCacheSet[GeneralInfo]();
+        self._cacheSetGeneral = ShareCacheStruct[GeneralInfo]();
         self.combatProcessList = None;
         self.honourNum = 0;
         self._userTalPriority = 0;
@@ -75,8 +75,8 @@ def takeAction(urlParam, parent):
 
     plotNpcID = urlParam.plotNpcID;
 
-    plotNpcInfo = ConfigCacheSet[PlotNPCInfo]().FindKey(plotNpcID);
-    userPlotPackage = GameDataCacheSet[UserPlotPackage]().FindKey(userId);
+    plotNpcInfo = ShareCacheStruct[PlotNPCInfo]().FindKey(plotNpcID);
+    userPlotPackage = PersonalCacheStruct[UserPlotPackage]().FindKey(userId);
     if not plotNpcInfo or not userPlotPackage:
         return loadError();
 
@@ -89,7 +89,7 @@ def takeAction(urlParam, parent):
         return actionResult;
 
     # 获取战斗场景
-    tempPlotInfo = ConfigCacheSet[PlotInfo]().FindKey(plotID);
+    tempPlotInfo = ShareCacheStruct[PlotInfo]().FindKey(plotID);
     if not tempPlotInfo:
         return loadError();
     actionResult.bgScene = tempPlotInfo.BgScene;
@@ -132,10 +132,10 @@ def takeAction(urlParam, parent):
 
     if(actionResult.isWin == True):
 
-        cacheSetGeneral = GameDataCacheSet[UserGeneral]();
-        userMagic = GameDataCacheSet[UserMagic]().Find(userId, lambda s:s.IsEnabled);
+        cacheSetGeneral = PersonalCacheStruct[UserGeneral]();
+        userMagic = PersonalCacheStruct[UserMagic]().Find(userId, lambda s:s.IsEnabled);
         userMagicID = 0 if userMagic == None else userMagic.MagicID;
-        userEmbattleList = GameDataCacheSet[UserEmbattle]().FindAll(userId, lambda s:s.MagicID == userMagicID and s.GeneralID > 0);
+        userEmbattleList = PersonalCacheStruct[UserEmbattle]().FindAll(userId, lambda s:s.MagicID == userMagicID and s.GeneralID > 0);
         _festivalBll = FestivalBll()
         _festivalBll.UpdateArcheologyRestrain(contextUser,plotNpcInfo.PlotNpcID)
         def method(userEmbattle):
@@ -177,7 +177,7 @@ def takeAction(urlParam, parent):
             actionResult.honourNum = plotNpcInfo.HonourNum;
             contextUser.HonourNum = MathUtils.Addition(contextUser.HonourNum, plotNpcInfo.HonourNum);
             # UserPlotPackage 中的 PlotNpcID 置为 BehindNpcID
-            nextBoss = ConfigCacheSet[PlotNPCInfo]().FindKey(plotNpcInfo.BehindNpcID)
+            nextBoss = ShareCacheStruct[PlotNPCInfo]().FindKey(plotNpcInfo.BehindNpcID)
             if nextBoss:
                 plotInfo.CurrPlotNpcID = plotNpcInfo.BehindNpcID;
                 plotInfo.BossChallengeCount = nextBoss.ChallengeNum;
@@ -193,7 +193,7 @@ def takeAction(urlParam, parent):
                 if not hasPlotInfo:
                     userPlotInfo = UserPlotInfo()
                     userPlotInfo.PlotID = afterPlotID;
-                    nextPlot = ConfigCacheSet[PlotInfo]().FindKey(afterPlotID);
+                    nextPlot = ShareCacheStruct[PlotInfo]().FindKey(afterPlotID);
                     if nextPlot:
                         userPlotInfo.BossChallengeCount = nextPlot.ChallengeNum;
                         userPlotPackage.PlotPackage.Add(userPlotInfo);
@@ -257,7 +257,7 @@ def takeAction(urlParam, parent):
     for userEmbattle in userEmbattleList:
         actionResult._userTalPriority = MathUtils.Addition(actionResult._userTalPriority, PriorityHelper.GeneralTotalPriority(userId, userEmbattle.GeneralID));
     # 获取玩家最大荣誉值
-    cacheSetGeneralEscalate = ConfigCacheSet[GeneralEscalateInfo]();
+    cacheSetGeneralEscalate = ShareCacheStruct[GeneralEscalateInfo]();
     GeneralEscalateHelper.AddUserLv(contextUser, 0);
     lv = contextUser.UserLv;
     lv = 1 if lv < 0 else lv + 1

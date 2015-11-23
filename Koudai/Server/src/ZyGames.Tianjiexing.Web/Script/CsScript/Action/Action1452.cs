@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Data;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -77,16 +77,16 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 return false;
             }
-            var cacheTrump = new GameDataCacheSet<UserTrump>();
+            var cacheTrump = new PersonalCacheStruct<UserTrump>();
             UserTrump userTrump = cacheTrump.FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump == null)
             {
-                TrumpInfo trumpInfo = new ConfigCacheSet<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, 1);
+                TrumpInfo trumpInfo = new ShareCacheStruct<TrumpInfo>().FindKey(TrumpInfo.CurrTrumpID, 1);
                 if (trumpInfo == null)
                 {
                     return false;
                 }
-                StoryTaskInfo[] storyTaskArray = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.TaskType == TaskType.Trump).ToArray();
+                StoryTaskInfo[] storyTaskArray = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.TaskType == TaskType.Trump).ToArray();
                 foreach (StoryTaskInfo taskInfo in storyTaskArray)
                 {
                     UserItemHelper.UseUserItem(ContextUser.UserID, taskInfo.TargetItemID, taskInfo.TargetItemNum);
@@ -103,7 +103,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 cacheTrump.Add(userTrump);
                 cacheTrump.Update();
             }
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             UserFunction userFunction = cacheSet.FindKey(ContextUser.UserID, FunctionEnum.TrumpPractice);
             if (userFunction == null)
             {

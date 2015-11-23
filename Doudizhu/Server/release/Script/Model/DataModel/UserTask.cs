@@ -12,7 +12,7 @@ namespace ZyGames.Doudizhu.Model
     /// 
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data)]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class UserTask : BaseEntity
     {
 

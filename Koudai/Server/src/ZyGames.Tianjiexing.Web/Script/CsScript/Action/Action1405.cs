@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Lang;
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, generalID);
+            UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, generalID);
             if (userGeneral == null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -84,7 +84,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         ContextUser.HeritageList = new CacheList<GeneralHeritage>();
                     }
                 }
-                List<UserEmbattle> embattleArray = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, u => u.GeneralID == generalID);
+                List<UserEmbattle> embattleArray = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, u => u.GeneralID == generalID);
                 foreach (UserEmbattle embattle in embattleArray)
                 {
                     embattle.GeneralID = 0;

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -82,13 +82,13 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.SkillInfo.Count > 0)
             {
                 SkillInfo skillInfo = userTrump.SkillInfo.Find(m => m.AbilityID == skillID);
                 if (skillInfo != null)
                 {
-                    AbilityInfo abilityInfo = new ConfigCacheSet<AbilityInfo>().FindKey(skillInfo.AbilityID);
+                    AbilityInfo abilityInfo = new ShareCacheStruct<AbilityInfo>().FindKey(skillInfo.AbilityID);
                     if (abilityInfo != null)
                     {
                         skillName = abilityInfo.AbilityName;
@@ -98,7 +98,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     short upLv = MathUtils.Addition(skillInfo.AbilityLv, (short)1, GameConfigSet.MaxTrumpLv.ToShort());
                     if (upLv <= GameConfigSet.MaxTrumpLv)
                     {
-                        SkillLvInfo skillLvInfo = new ConfigCacheSet<SkillLvInfo>().FindKey(skillInfo.AbilityID, skillInfo.AbilityLv);
+                        SkillLvInfo skillLvInfo = new ShareCacheStruct<SkillLvInfo>().FindKey(skillInfo.AbilityID, skillInfo.AbilityLv);
                         if (skillLvInfo != null)
                         {
                             gameCoin = skillLvInfo.GameCoin;
@@ -116,7 +116,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             {
                                 isObtain = 1;
                             }
-                            ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(skillLvInfo.ItemID);
+                            ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(skillLvInfo.ItemID);
                             if (itemInfo != null)
                             {
                                 itemName = itemInfo.ItemName;

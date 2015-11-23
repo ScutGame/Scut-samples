@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -65,8 +65,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             int sumGold = GetPostionUseGold(landPostion);
-            UserPlant plant = new GameDataCacheSet<UserPlant>().FindKey(ContextUser.UserID);
-            UserLand uLands = new GameDataCacheSet<UserLand>().FindKey(ContextUser.UserID, landPostion);
+            UserPlant plant = new PersonalCacheStruct<UserPlant>().FindKey(ContextUser.UserID);
+            UserLand uLands = new PersonalCacheStruct<UserLand>().FindKey(ContextUser.UserID, landPostion);
             if (uLands != null)
             {
                 ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -107,7 +107,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                                             IsGain = 2,
                                             PlantQuality = PlantQualityType.PuTong
                                         };
-                    var cacheSet = new GameDataCacheSet<UserLand>();
+                    var cacheSet = new PersonalCacheStruct<UserLand>();
                     cacheSet.Add(land);
                     UserLogHelper.AppenLandLog(ContextUser.UserID, 1, 0, landPostion, sumGold, 0, 0, 0);
                 }

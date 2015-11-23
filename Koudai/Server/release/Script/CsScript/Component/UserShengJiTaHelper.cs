@@ -27,7 +27,7 @@ using System.Linq;
 using System.Web;
 using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Com.Rank;
 using ZyGames.Tianjiexing.Component;
 using ZyGames.Tianjiexing.Component.Chat;
@@ -51,7 +51,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     foreach (UserRank userRank in rankList)
                     {
 
-                        GameUser usergame = new GameDataCacheSet<GameUser>().FindKey(userRank.UserID);
+                        GameUser usergame = new PersonalCacheStruct<GameUser>().FindKey(userRank.UserID);
                         if (usergame != null && userRank.ScoreStar>0)
                         {
                             // 信件通知玩家 “您在XX-XX的“勇闯圣吉塔”活动中名列XX榜第N，排名奖励M金币已经发送到您的账号中，请及时查收！”

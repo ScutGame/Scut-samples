@@ -26,7 +26,7 @@ using System.Collections.Generic;
 using System.Data;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -62,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(enchantArray.Length);
             foreach (var enchant in enchantArray)
             {
-                EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchant.EnchantID);
+                EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchant.EnchantID);
                 abilityNum = EnchantHelper.EnchantAbilityStr(enchant.EnchantID, enchant.EnchantLv);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(enchant.UserEnchantID.ToNotNullString());

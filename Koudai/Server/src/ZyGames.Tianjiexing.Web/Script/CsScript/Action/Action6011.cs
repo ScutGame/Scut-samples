@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(guildLogArray.Count);
             foreach (MemberLog log in guildLogArray)
             {
-                GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(log.UserID);
+                GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(log.UserID);
                 if (gameUser == null)
                 {
                     gameUser = UserCacheGlobal.CheckLoadUser(log.UserID);
@@ -142,9 +142,9 @@ namespace ZyGames.Tianjiexing.BLL.Action
             idolInfo = new ShareCacheStruct<GuildIdol>().FindKey(guildID);
             if (idolInfo != null)
             {
-                maxAura = new ConfigCacheSet<IdolLvInfo>().FindKey(idolInfo.IdolLv).UpExperience;
+                maxAura = new ShareCacheStruct<IdolLvInfo>().FindKey(idolInfo.IdolLv).UpExperience;
             }
-            idolInfoArray = new ConfigCacheSet<GuildIdolInfo>().FindAll();
+            idolInfoArray = new ShareCacheStruct<GuildIdolInfo>().FindAll();
 
             var memberLog = new ShareCacheStruct<GuildMemberLog>().FindKey(guildID) ?? new GuildMemberLog();
             List<MemberLog> guildArray = memberLog.GetLog(u => u.LogType == 2);

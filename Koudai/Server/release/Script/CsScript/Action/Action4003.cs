@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -74,7 +74,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(embattleList.Count);
             foreach (UserEmbattle item in embattleList)
             {
-                UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(item.UserID, item.GeneralID);
+                UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(item.UserID, item.GeneralID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(general != null ? general.GeneralName.ToNotNullString() : string.Empty);
 
@@ -114,12 +114,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(PlotID);
+            PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(PlotID);
             if (plotInfo != null)
             {
                 plotName = plotInfo.PlotName;
             }
-            var cacheSetGeneralEscalate = new ConfigCacheSet<GeneralEscalateInfo>();
+            var cacheSetGeneralEscalate = new ShareCacheStruct<GeneralEscalateInfo>();
             GeneralEscalateHelper.AddUserLv(ContextUser, 0);
             int lv = ContextUser.UserLv;
             lv = lv < 0 ? 1 : lv + 1;
@@ -135,12 +135,12 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 lastMaxHonourNum = lastGeneralEscalate.UpExperience;
             }
 
-            embattleList = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, m => m.MagicID == ContextUser.UseMagicID);
+            embattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, m => m.MagicID == ContextUser.UseMagicID);
             embattleList.QuickSort((x, y) => x.GeneralID.CompareTo(y.GeneralID));
             List<UniversalInfo> universalList = new List<UniversalInfo>();
             userPlot = UserPlotHelper.GetUserPlotInfo(ContextUser.UserID, PlotID);
-            //var cacheSetPlotInfo = new ConfigCacheSet<PlotInfo>();
-            //var cacheSetItem = new ConfigCacheSet<ItemBaseInfo>();
+            //var cacheSetPlotInfo = new ShareCacheStruct<PlotInfo>();
+            //var cacheSetItem = new ShareCacheStruct<ItemBaseInfo>();
             //var plotInfo = cacheSetPlotInfo.FindKey(PlotID);
 
             if (userPlot != null && userPlot.ItemList.Count > 0)
@@ -162,7 +162,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //}
                 //if (userPlot.ItemID > 0)
                 //{
-                //    itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(userPlot.ItemID);
+                //    itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(userPlot.ItemID);
                 //    if (itemInfo != null)
                 //    {
                 //        universalList.Add(new UniversalInfo() { Name = itemInfo.ItemName, HeadID = itemInfo.HeadID, Num = 1 });
@@ -170,7 +170,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //}
                 //if (userPlot.EnchantID > 0)
                 //{
-                //    enchant = new ConfigCacheSet<EnchantInfo>().FindKey(userPlot.EnchantID);
+                //    enchant = new ShareCacheStruct<EnchantInfo>().FindKey(userPlot.EnchantID);
 
                 //    if (enchant != null)
                 //    {

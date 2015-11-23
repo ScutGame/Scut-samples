@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
@@ -41,16 +41,16 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static List<UserEmbattle> CurrEmbattle(string userID, bool isSome)
         {
             List<UserEmbattle> embattleList = new List<UserEmbattle>();
-            var userMagic = new GameDataCacheSet<UserMagic>().Find(userID, s => s.IsEnabled);
+            var userMagic = new PersonalCacheStruct<UserMagic>().Find(userID, s => s.IsEnabled);
             if (userMagic != null)
             {
                 if (!isSome)
                 {
-                    embattleList = new GameDataCacheSet<UserEmbattle>().FindAll(userID, s => s.MagicID == userMagic.MagicID);
+                    embattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, s => s.MagicID == userMagic.MagicID);
                 }
                 else
                 {
-                    embattleList = new GameDataCacheSet<UserEmbattle>().FindAll(userID, s => s.MagicID == userMagic.MagicID && s.GeneralID > 0);
+                    embattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(userID, s => s.MagicID == userMagic.MagicID && s.GeneralID > 0);
                 }
             }
             return embattleList;

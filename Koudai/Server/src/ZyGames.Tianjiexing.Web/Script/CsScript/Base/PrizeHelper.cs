@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -108,20 +108,20 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     break;
                 case RewardType.Item:
                     userPrize.ItemPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.UserLv, prize.Num);
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prize.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prize.ItemID);
                     if (itemInfo != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", itemInfo.ItemName, prize.Num);
                     }
                     break;
                 case RewardType.CrystalType:
-                    //List<CrystalInfo> crystalArray2 = new ConfigCacheSet<CrystalInfo>().FindAll(CrystalInfo.Index_CrystalQuality, prize.CrystalType);
+                    //List<CrystalInfo> crystalArray2 = new ShareCacheStruct<CrystalInfo>().FindAll(CrystalInfo.Index_CrystalQuality, prize.CrystalType);
                     //userPrize.CrystalPackage = string.Format("{0}={1}={2}", itemID, prize.UserLv, itemNum);
                     break;
                 case RewardType.CrystalId:
 
                     userPrize.CrystalPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.UserLv, prize.Num);
-                    CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(prize.ItemID);
+                    CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(prize.ItemID);
                     if (crystal != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", crystal.CrystalName, prize.Num);
@@ -129,7 +129,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     break;
                 case RewardType.Spare:
                     userPrize.SparePackage = string.Format("{0}={1}={2}", prize.ItemID, prize.Num, prize.Num);
-                    SparePartInfo spare = new ConfigCacheSet<SparePartInfo>().FindKey(prize.ItemID);
+                    SparePartInfo spare = new ShareCacheStruct<SparePartInfo>().FindKey(prize.ItemID);
                     if (spare != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", spare.Name, prize.Num);
@@ -137,7 +137,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     break;
                 case RewardType.Enchant:
                     userPrize.EnchantPackage = string.Format("{0}={1}={2}", prize.ItemID, prize.UserLv, prize.Num);
-                    EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(prize.ItemID);
+                    EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(prize.ItemID);
                     if (enchantInfo != null)
                     {
                         userPrize.MailContent += string.Format("{0}*{1}", enchantInfo.EnchantName, prize.Num);
@@ -256,7 +256,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     case RewardType.Item:
                         short itemLv = prize.UserLv > 0 ? prize.UserLv : 1.ToShort();
                         int priNum = prize.Num > 0 ? prize.Num : 1;
-                        ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prize.ItemID);
+                        ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prize.ItemID);
                         if (itemInfo != null)
                         {
                             UserItemHelper.AddUserItem(userInfo.UserID, itemInfo.ItemID, priNum, itemLv);
@@ -264,7 +264,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         }
                         break;
                     case RewardType.CrystalType:
-                        List<CrystalInfo> crystalArray = new ConfigCacheSet<CrystalInfo>().FindAll(s => s.CrystalQuality == prize.CrystalType);
+                        List<CrystalInfo> crystalArray = new ShareCacheStruct<CrystalInfo>().FindAll(s => s.CrystalQuality == prize.CrystalType);
                         if (crystalArray.Count > 0)
                         {
                             int index1 = RandomUtils.GetRandom(0, crystalArray.Count);
@@ -275,7 +275,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         break;
                     case RewardType.CrystalId:
                         short cLv = prize.UserLv > 0 ? prize.UserLv : 1.ToShort();
-                        CrystalInfo crystal = new ConfigCacheSet<CrystalInfo>().FindKey(prize.ItemID);
+                        CrystalInfo crystal = new ShareCacheStruct<CrystalInfo>().FindKey(prize.ItemID);
                         if (crystal != null)
                         {
                             CrystalHelper.AppendCrystal(userInfo.UserID, crystal.CrystalID, cLv);

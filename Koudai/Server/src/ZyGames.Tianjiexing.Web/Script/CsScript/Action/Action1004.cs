@@ -23,8 +23,9 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Web;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Context;
 using ZyGames.Framework.Game.Contract;
 using ZyGames.Framework.Game.Contract.Action;
@@ -61,7 +62,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             user = null;
             //原因：重登录时，数据会回档问题
-            var cacheSet = new GameDataCacheSet<GameUser>();
+            var cacheSet = new PersonalCacheStruct<GameUser>();
             GameUser userInfo = cacheSet.FindKey(userId.ToString());
             if (userInfo != null)
             {
@@ -110,7 +111,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 userLoginLog.UserLv = userInfo.UserLv;
                 //原因：报表统计
                 userLoginLog.PlotID = userInfo.PlotProgress;
-                PlotInfo plotInfo = new ConfigCacheSet<PlotInfo>().FindKey(userInfo.PlotProgress);
+                PlotInfo plotInfo = new ShareCacheStruct<PlotInfo>().FindKey(userInfo.PlotProgress);
                 if (plotInfo != null)
                 {
                     userLoginLog.PlotName = plotInfo.PlotName;
@@ -120,7 +121,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 sender.Send(userLoginLog);
 
                 //int vipLv;
-                //var vipLvArray = new ConfigCacheSet<VipLvInfo>().FindAll(u => u.PayGold <= userInfo.PayGold);
+                //var vipLvArray = new ShareCacheStruct<VipLvInfo>().FindAll(u => u.PayGold <= userInfo.PayGold);
                 //vipLv = vipLvArray.Count > 0 ? vipLvArray[vipLvArray.Count - 1].VipLv : (short)0;
 
                 userInfo.LoginTime = DateTime.Now;

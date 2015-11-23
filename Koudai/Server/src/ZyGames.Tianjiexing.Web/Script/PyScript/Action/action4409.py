@@ -11,7 +11,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -59,7 +59,7 @@ def takeAction(urlParam, parent):
         actionResult.Result = False;
         return actionResult;
 
-    userShengJiTa = GameDataCacheSet[UserShengJiTa]().FindKey(userId)    #获取玩家信息
+    userShengJiTa = PersonalCacheStruct[UserShengJiTa]().FindKey(userId)    #获取玩家信息
     if userShengJiTa == None:
         parent.ErrorCode = Lang.getLang("ErrorCode")
         parent.ErrorInfo = Lang.getLang("LoadError")

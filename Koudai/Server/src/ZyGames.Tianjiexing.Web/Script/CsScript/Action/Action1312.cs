@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Component.Chat;
@@ -66,7 +66,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(grayCrystalArray.Count);
             foreach (GrayCrystal crystal in grayCrystalArray)
             {
-                CrystalInfo crystalInfo = new ConfigCacheSet<CrystalInfo>().FindKey(crystal.CrystalID) ?? new CrystalInfo();
+                CrystalInfo crystalInfo = new ShareCacheStruct<CrystalInfo>().FindKey(crystal.CrystalID) ?? new CrystalInfo();
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(crystal.UserCrystalID);
                 dsItem.PushIntoStack(crystalInfo.CrystalID);
@@ -78,7 +78,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             PushIntoStack(userLightArray.Count);
             foreach (UserLight light in userLightArray)
             {
-                ProbabilityInfo probabilityInfo = new ConfigCacheSet<ProbabilityInfo>().FindKey(light.HuntingID);
+                ProbabilityInfo probabilityInfo = new ShareCacheStruct<ProbabilityInfo>().FindKey(light.HuntingID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(light.HuntingID);
                 dsItem.PushIntoStack(probabilityInfo == null ? 0 : probabilityInfo.Price);
@@ -104,7 +104,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int saleNum;
             CrystalHelper.SellGrayCrystal(ContextUser, null, out saleNum);
             DailyRestrainSet dailyRestrainSet = new ShareCacheStruct<DailyRestrainSet>().FindKey(RestrainType.MianFeiLieMing);
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
             if (dailyRestrainSet != null && userRestrain != null)
             {
                 if (DateTime.Now.Date == userRestrain.RefreshDate.Date)
@@ -117,7 +117,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     freeNum = VipHelper.GetVipUseNum(ContextUser.VipLv, RestrainType.MianFeiLieMing);
                 }
             }
-            userLightArray = new GameDataCacheSet<UserLight>().FindAll(ContextUser.UserID);
+            userLightArray = new PersonalCacheStruct<UserLight>().FindAll(ContextUser.UserID);
             bool allowSale;
             bool allowTake;
             grayCrystalArray = CrystalHelper.GetNotSaleCrystalNum(ContextUser, out allowSale, out allowTake);

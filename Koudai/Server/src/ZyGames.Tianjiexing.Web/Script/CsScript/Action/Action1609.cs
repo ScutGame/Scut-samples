@@ -21,7 +21,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             UserItemInfo useritem = package.ItemPackage.Find(m => !m.IsRemove && m.UserItemID.Equals(userItemID));
             if (useritem != null)
             {
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
                 if (itemInfo != null && itemInfo.DemandLv > ContextUser.VipLv)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -64,7 +64,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(userEmbattleList.Count);
                 foreach (UserEmbattle userEmbattle in userEmbattleList)
                 {
-                    UserGeneral userGeneral = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, userEmbattle.GeneralID);
+                    UserGeneral userGeneral = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, userEmbattle.GeneralID);
                     DataStruct dsItem1 = new DataStruct();
                     dsItem1.PushIntoStack(userGeneral.GeneralName.ToNotNullString());
                     dsItem1.PushIntoStack(sweepPool.Experience);
@@ -76,7 +76,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(sweepPool.PrizeItems.Count);
                 foreach (PrizeItemInfo prizeItemInfo in sweepPool.PrizeItems)
                 {
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(prizeItemInfo.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(prizeItemInfo.ItemID);
                     DataStruct dsItem1 = new DataStruct();
                     dsItem1.PushIntoStack(itemInfo != null ? itemInfo.ItemName.ToNotNullString() : string.Empty);
                     dsItem1.PushIntoStack(prizeItemInfo.Num);
@@ -108,7 +108,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 //this.ErrorCode = LanguageManager.GetLang().ErrorCode;
                 //this.ErrorInfo = LanguageManager.GetLang().St4007_SaodangOver;
             }
-            var sweepCacheSet = new GameDataCacheSet<UserSweepPool>();
+            var sweepCacheSet = new PersonalCacheStruct<UserSweepPool>();
             var tempSweepPoolList = sweepCacheSet.FindAll(ContextUser.UserID, m => m.IsSend == false);
             tempSweepPoolList.QuickSort((x, y) =>
             {
@@ -146,7 +146,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             });
 
 
-            userEmbattleList = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, m => m.GeneralID > 0 && m.MagicID == ContextUser.UseMagicID);
+            userEmbattleList = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, m => m.GeneralID > 0 && m.MagicID == ContextUser.UseMagicID);
 
             foreach (UserSweepPool userSweepPool in tempSweepPoolList)
             {

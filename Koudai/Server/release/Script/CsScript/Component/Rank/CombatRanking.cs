@@ -33,7 +33,7 @@ using ZyGames.Framework.Data;
 using ZyGames.Tianjiexing.Model;
 using System.Data;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.Component
 {
@@ -159,7 +159,7 @@ namespace ZyGames.Tianjiexing.Component
         }
         protected override void ChangeRankNo(UserRank item)
         {
-            var gameUser = new GameDataCacheSet<GameUser>().FindKey(item.UserID);
+            var gameUser = new PersonalCacheStruct<GameUser>().FindKey(item.UserID);
             if (gameUser == null)
             {
                 return;

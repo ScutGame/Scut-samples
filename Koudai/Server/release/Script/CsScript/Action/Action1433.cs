@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Data;
 using ZyGames.Framework.Common;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Lang;
@@ -66,10 +66,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            StoryTaskInfo storyTask = new ConfigCacheSet<StoryTaskInfo>().FindKey(taskID);
+            StoryTaskInfo storyTask = new ShareCacheStruct<StoryTaskInfo>().FindKey(taskID);
             if (storyTask != null && storyTask.TaskLv <= ContextUser.UserLv)
             {
-                UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(ContextUser.UserID, taskID);
+                UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(ContextUser.UserID, taskID);
                 if (userTask != null && userTask.TaskState == TaskState.Close)
                 {
                     ErrorCode = LanguageManager.GetLang().ErrorCode;
@@ -112,7 +112,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             CompleteNum = 0,
                             CreateDate = DateTime.Now
                         };
-                        new GameDataCacheSet<UserTask>().Add(userTask);
+                        new PersonalCacheStruct<UserTask>().Add(userTask);
                     }
 
                     ErrorCode = 0;

@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -72,7 +72,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 ItemBaseInfo itemInfo = null;
                 if (useritem != null)
                 {
-                    itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(useritem.ItemID);
+                    itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(useritem.ItemID);
                     openNum = EnchantHelper.EnchantOpenGridNum(useritem.ItemLv);
                     if (package != null)
                     {
@@ -90,7 +90,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 dsItem.PushIntoStack(enchantGeneralArray.Length);
                 foreach (var enchant in enchantGeneralArray)
                 {
-                    EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchant.EnchantID);
+                    EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchant.EnchantID);
                     DataStruct dsItem1 = new DataStruct();
                     dsItem1.PushIntoStack((short)enchant.Position);
                     dsItem1.PushIntoStack(enchant.UserEnchantID.ToNotNullString());
@@ -107,7 +107,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(enchantPackageArray.Length);
             foreach (var enchant in enchantPackageArray)
             {
-                EnchantInfo enchantInfo = new ConfigCacheSet<EnchantInfo>().FindKey(enchant.EnchantID);
+                EnchantInfo enchantInfo = new ShareCacheStruct<EnchantInfo>().FindKey(enchant.EnchantID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(enchant.UserEnchantID.ToNotNullString());
                 dsItem.PushIntoStack(enchantInfo == null ? string.Empty : enchantInfo.EnchantName.ToNotNullString());
@@ -152,8 +152,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
             else
             {
                 puUserID = ContextUser.UserID;
-                user = new GameDataCacheSet<GameUser>().FindKey(ContextUser.UserID);
-                UserFunction userFunction = new GameDataCacheSet<UserFunction>().FindKey(ContextUser.UserID,
+                user = new PersonalCacheStruct<GameUser>().FindKey(ContextUser.UserID);
+                UserFunction userFunction = new PersonalCacheStruct<UserFunction>().FindKey(ContextUser.UserID,
                                                                                          FunctionEnum.Enchant);
                 if (userFunction != null)
                 {
@@ -166,7 +166,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     return false;
                 }
             }
-            generalArray = new GameDataCacheSet<UserGeneral>().FindAll(puUserID, m => m.GeneralStatus == GeneralStatus.DuiWuZhong && m.GeneralType != GeneralType.Soul).ToArray();
+            generalArray = new PersonalCacheStruct<UserGeneral>().FindAll(puUserID, m => m.GeneralStatus == GeneralStatus.DuiWuZhong && m.GeneralType != GeneralType.Soul).ToArray();
             if (user != null)
             {
                 goldNum = user.GoldNum;
@@ -182,7 +182,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 var enchantsArray = package.EnchantPackage.FindAll(m => string.IsNullOrEmpty(m.UserItemID));
                 enchantPackageArray = enchantsArray.GetPaging(pageIndex, pageSize, out pageCount).ToArray();
             }
-            mosaicList = new ConfigCacheSet<MosaicInfo>().FindAll().ToArray();
+            mosaicList = new ShareCacheStruct<MosaicInfo>().FindAll().ToArray();
             return true;
         }
     }

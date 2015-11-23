@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -63,7 +63,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             foreach (UserItemInfo item in mlist)
             {
                 DataStruct ds = new DataStruct();
-                ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(item.ItemID);
+                ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(item.ItemID);
                 ds.PushIntoStack(item.UserItemID.ToNotNullString());
                 ds.PushIntoStack(itemInfo == null ? 0 : itemInfo.ItemID);
                 ds.PushIntoStack(itemInfo == null ? LanguageManager.GetLang().shortInt : (short)itemInfo.ItemType);
@@ -94,7 +94,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheSetPack = new GameDataCacheSet<UserPack>();
+            var cacheSetPack = new PersonalCacheStruct<UserPack>();
             var userPack = cacheSetPack.FindKey(UserId.ToString());
             var pack = userPack != null && userPack.PackTypeList != null ? userPack.PackTypeList.Find(s => s.BackpackType == BackpackType.BeiBao) : null;
             _gridNum = pack != null ? pack.Position : 0;

@@ -27,7 +27,7 @@ using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Common.Serialization;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Base;
 using ZyGames.Tianjiexing.Model;
@@ -55,7 +55,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(treasureList.Count);
             foreach (var treasure in treasureList)
             {
-                GameUser user = new GameDataCacheSet<GameUser>().FindKey(treasure.UserID);
+                GameUser user = new PersonalCacheStruct<GameUser>().FindKey(treasure.UserID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(user == null ? string.Empty : user.NickName.ToNotNullString());
                 dsItem.PushIntoStack((short)treasure.Type);

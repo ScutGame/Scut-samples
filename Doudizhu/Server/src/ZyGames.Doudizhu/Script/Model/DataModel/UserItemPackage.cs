@@ -12,7 +12,7 @@ namespace ZyGames.Doudizhu.Model
     /// 玩家物品表
     /// </summary>
     [Serializable, ProtoContract]
-    [EntityTable(DbConfig.Data)]
+    [EntityTable(CacheType.Dictionary, DbConfig.Data)]
     public class UserItemPackage : BaseEntity
     {
 

@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Collections.Generic;
 using ZyGames.Framework.Cache.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
 using ZyGames.Framework.Game.Runtime;
@@ -40,11 +40,11 @@ namespace ZyGames.Tianjiexing.BLL.Base
     /// </summary>
     public class UserPackHelper
     {
-        public static GameDataCacheSet<UserPack> _cacheSetUserPack = new GameDataCacheSet<UserPack>();
-        public static GameDataCacheSet<UserAbility> _cacheSetUserAbility = new GameDataCacheSet<UserAbility>();
-        public static GameDataCacheSet<UserGeneral> _cacheSetUserGeneral = new GameDataCacheSet<UserGeneral>();
-        public static GameDataCacheSet<UserItemPackage> _cacheSetUserItem = new GameDataCacheSet<UserItemPackage>();
-        public static ConfigCacheSet<BackpackConfigInfo> _cacheSetBackpack = new ConfigCacheSet<BackpackConfigInfo>();
+        public static PersonalCacheStruct<UserPack> _cacheSetUserPack = new PersonalCacheStruct<UserPack>();
+        public static PersonalCacheStruct<UserAbility> _cacheSetUserAbility = new PersonalCacheStruct<UserAbility>();
+        public static PersonalCacheStruct<UserGeneral> _cacheSetUserGeneral = new PersonalCacheStruct<UserGeneral>();
+        public static PersonalCacheStruct<UserItemPackage> _cacheSetUserItem = new PersonalCacheStruct<UserItemPackage>();
+        public static ShareCacheStruct<BackpackConfigInfo> _cacheSetBackpack = new ShareCacheStruct<BackpackConfigInfo>();
         /// <summary>
         /// 获取某种类型背包格子数
         /// </summary>

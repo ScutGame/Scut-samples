@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Data;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Common;
 
 using ZyGames.Framework.Game.Service;
@@ -71,7 +71,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             int wjkNum = 0;
             int subNum = 0;
             int maxNum = VipHelper.GetVipUseNum(ContextUser.VipLv, RestrainType.WaJinKuang);
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(ContextUser.UserID);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(ContextUser.UserID);
             if (userRestrain != null && DateTime.Now.Date == userRestrain.RefreshDate.Date)
             {
                 wjkNum = userRestrain.Funtion3;
@@ -187,7 +187,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         {
             int baseNum = MathUtils.Addition((userLv * 2000), 3000);
             int totalCoinNum = 0;
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             int maxNum = VipHelper.GetVipUseNum(vipLv, RestrainType.WaJinKuang);
 
             int currNum = 0;
@@ -219,7 +219,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         /// <returns></returns>
         public static int GetPayCoinGold(string userID, int vipLv, int payType)
         {
-            UserDailyRestrain userRestrain = new GameDataCacheSet<UserDailyRestrain>().FindKey(userID);
+            UserDailyRestrain userRestrain = new PersonalCacheStruct<UserDailyRestrain>().FindKey(userID);
             int maxNum = VipHelper.GetVipUseNum(vipLv, RestrainType.WaJinKuang);
             int subNum = 0;
             int currNum = 0;

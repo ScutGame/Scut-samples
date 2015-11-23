@@ -22,7 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ****************************************************************************/
 using System;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Common;
 using ZyGames.Tianjiexing.Lang;
@@ -57,8 +58,8 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            var cacheSetUserPack = new GameDataCacheSet<UserPack>();
-            var cacheSetBackPack = new ConfigCacheSet<BackpackConfigInfo>();
+            var cacheSetUserPack = new PersonalCacheStruct<UserPack>();
+            var cacheSetBackPack = new ShareCacheStruct<BackpackConfigInfo>();
             var backpackConfigInfo = cacheSetBackPack.FindKey(1);
          
             

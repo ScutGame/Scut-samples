@@ -24,7 +24,7 @@ THE SOFTWARE.
 using System;
 using System.Data;
 using ZyGames.Framework.Common.Log;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -99,14 +99,14 @@ namespace ZyGames.Tianjiexing.BLL.Action
 
         public override bool TakeAction()
         {
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(ContextUser.UserID, TrumpInfo.CurrTrumpID);
             if (userTrump != null)
             {
                 worshipLv = userTrump.WorshipLv;
                 short upWorshLv = MathUtils.Addition(userTrump.WorshipLv, (short)1, (short)10);
                 totalNum = userTrump.PropertyInfo.Count;
 
-                worshipInfo = new ConfigCacheSet<WorshipInfo>().FindKey(TrumpInfo.CurrTrumpID, upWorshLv);
+                worshipInfo = new ShareCacheStruct<WorshipInfo>().FindKey(TrumpInfo.CurrTrumpID, upWorshLv);
                 if (worshipInfo != null)
                 {
                     successNum = TrumpHelper.GetTransformData(worshipInfo.SuccessNum);
@@ -123,21 +123,21 @@ namespace ZyGames.Tianjiexing.BLL.Action
                     {
                         isObtain = 1;
                     }
-                    ItemBaseInfo itemInfo = new ConfigCacheSet<ItemBaseInfo>().FindKey(worshipInfo.ItemID);
+                    ItemBaseInfo itemInfo = new ShareCacheStruct<ItemBaseInfo>().FindKey(worshipInfo.ItemID);
                     if (itemInfo != null)
                     {
                         itemName = itemInfo.ItemName;
                     }
                 }
             }
-            worshipInfoInfoArray = new ConfigCacheSet<WorshipInfo>().FindAll(m => m.IsOpen && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
+            worshipInfoInfoArray = new ShareCacheStruct<WorshipInfo>().FindAll(m => m.IsOpen && m.TrumpID == TrumpInfo.CurrTrumpID).ToArray();
             return true;
         }
 
         public GeneralProperty GetPropertyType(string userID, int procount)
         {
             GeneralProperty property = null;
-            UserTrump userTrump = new GameDataCacheSet<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
+            UserTrump userTrump = new PersonalCacheStruct<UserTrump>().FindKey(userID, TrumpInfo.CurrTrumpID);
             if (userTrump != null && userTrump.PropertyInfo.Count > procount)
             {
                 property = userTrump.PropertyInfo[procount];

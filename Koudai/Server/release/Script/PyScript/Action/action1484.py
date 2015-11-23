@@ -7,7 +7,7 @@ from ZyGames.Framework.Common.Log import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -47,18 +47,18 @@ def takeAction(urlParam, parent):
     userId = parent.Current.UserId;
 
     # 获取匹配的 GeneralID 记录
-    cacheSetGeneral = ConfigCacheSet[GeneralInfo]();
+    cacheSetGeneral = ShareCacheStruct[GeneralInfo]();
     general = cacheSetGeneral.FindKey(urlParam.generaID.ToString())
 
-    cacheSetAbility = ConfigCacheSet[AbilityInfo]();
+    cacheSetAbility = ShareCacheStruct[AbilityInfo]();
     ability = cacheSetAbility.FindKey(urlParam.abilityID.ToString());
 
     # 根据 UserID 和 GeneralID 获取匹配的一条记录
-    cacheSetUserGeneral = GameDataCacheSet[UserGeneral]();
+    cacheSetUserGeneral = PersonalCacheStruct[UserGeneral]();
     userGeneral = cacheSetUserGeneral.FindKey(userId.ToString(),urlParam.generaID.ToString());
 
     # 根据 UserID 获取 AbilityList
-    cacheSetUserAbility = GameDataCacheSet[UserAbility]();
+    cacheSetUserAbility = PersonalCacheStruct[UserAbility]();
     userAbility = cacheSetUserAbility.FindKey(userId.ToString());
 
     if (userGeneral == None or userAbility == None or general == None or ability == None):

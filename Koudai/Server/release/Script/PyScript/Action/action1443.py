@@ -7,7 +7,7 @@ from System.Collections.Generic import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Common import *
 from ZyGames.Framework.Cache.Generic import *
@@ -35,8 +35,8 @@ def takeAction(urlParam,parent):
     actionResult =ActionResult();
     itemId = ConfigEnvSet.GetInt('User.DrugItemID');
     userId =parent.Current.UserId;
-    cacheSetUserItem =  GameDataCacheSet[UserItemPackage]();
-    cacheSetBringUp =  ConfigCacheSet[BringUpInfo]();
+    cacheSetUserItem =  PersonalCacheStruct[UserItemPackage]();
+    cacheSetBringUp =  ShareCacheStruct[BringUpInfo]();
     actionResult.BringUpInfoList = cacheSetBringUp.FindAll();
     userItem = cacheSetUserItem.FindKey(userId.ToString());
     if(userItem and userItem.ItemPackage):

@@ -12,7 +12,7 @@ from ZyGames.Framework.Common import *
 from ZyGames.Tianjiexing.Model import *
 from ZyGames.Tianjiexing.BLL import *
 from ZyGames.Tianjiexing.Lang import *
-from ZyGames.Framework.Game.Cache import *
+from ZyGames.Framework.Cache.Generic import *
 from ZyGames.Framework.Game.Service import *
 from ZyGames.Framework.Game.Runtime import *
 from ZyGames.Framework.Common import *
@@ -42,7 +42,7 @@ def takeAction(urlParam, parent):
     actionResult = ActionResult();
     userId = str(parent.Current.UserId)
     contextUser = PersonalCacheStruct.Get[GameUser](userId)
-    escalateInfo =  ConfigCacheSet[GeneralEscalateInfo]().FindKey(contextUser.UserLv, GeneralType.YongHu);
+    escalateInfo =  ShareCacheStruct[GeneralEscalateInfo]().FindKey(contextUser.UserLv, GeneralType.YongHu);
     if(escalateInfo):
         for info in escalateInfo.Award:
             actionResult.GoldNum = MathUtils.Addition(actionResult.GoldNum,info.Num);

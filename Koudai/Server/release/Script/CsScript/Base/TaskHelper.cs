@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Game.Runtime;
 using ZyGames.Tianjiexing.Lang;
@@ -45,7 +45,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static List<UserTask> SendAllowTask(GameUser user, int taskID)
         {
             List<UserTask> userTaskList = new List<UserTask>();
-            var cacheSet = new GameDataCacheSet<UserTask>();
+            var cacheSet = new PersonalCacheStruct<UserTask>();
             UserTask preTask = cacheSet.FindKey(user.UserID, taskID);
             if (taskID > 0 && preTask != null && (preTask.TaskState != TaskState.Close || preTask.TaskType == TaskType.Offset))
             {
@@ -105,7 +105,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
             {
                 return;
             }
-            var cacheSet = new GameDataCacheSet<UserFunction>();
+            var cacheSet = new PersonalCacheStruct<UserFunction>();
             UserFunction uf = cacheSet.FindKey(user.UserID, functionEnum);
             if (uf == null)
             {
@@ -160,13 +160,13 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userLv"></param>
         private static void InitMagicEmbattle(string userId, short userLv)
         {
-            List<UserMagic> userMagicList = new GameDataCacheSet<UserMagic>().FindAll(userId, m => m.MagicType == MagicType.MoFaZhen && m.MagicID != new GameUser().UserMagicID);
+            List<UserMagic> userMagicList = new PersonalCacheStruct<UserMagic>().FindAll(userId, m => m.MagicType == MagicType.MoFaZhen && m.MagicID != new GameUser().UserMagicID);
             if (userMagicList.Count == 0)
             {
-                List<MagicInfo> magicInfoList = new ConfigCacheSet<MagicInfo>().FindAll(m => m.MagicType == MagicType.MoFaZhen && m.DemandLv <= userLv);
+                List<MagicInfo> magicInfoList = new ShareCacheStruct<MagicInfo>().FindAll(m => m.MagicType == MagicType.MoFaZhen && m.DemandLv <= userLv);
                 foreach (var magicInfo in magicInfoList)
                 {
-                    var userMagic = new GameDataCacheSet<UserMagic>().FindKey(userId, magicInfo.MagicID);
+                    var userMagic = new PersonalCacheStruct<UserMagic>().FindKey(userId, magicInfo.MagicID);
                     if (userMagic != null) continue;
 
                     userMagic = new UserMagic
@@ -177,8 +177,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         MagicType = magicInfo.MagicType,
                         IsEnabled = false
                     };
-                    new GameDataCacheSet<UserMagic>().Add(userMagic);
-                    MagicLvInfo magicLvInfo = new ConfigCacheSet<MagicLvInfo>().FindKey(magicInfo.MagicID, magicInfo.MagicLv);
+                    new PersonalCacheStruct<UserMagic>().Add(userMagic);
+                    MagicLvInfo magicLvInfo = new ShareCacheStruct<MagicLvInfo>().FindKey(magicInfo.MagicID, magicInfo.MagicLv);
                     short position = magicLvInfo.GetFirstGrid();
                     var userEmbattle = new UserEmbattle
                     {
@@ -187,7 +187,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         MagicID = magicInfo.MagicID,
                         Position = position
                     };
-                    new GameDataCacheSet<UserEmbattle>().Add(userEmbattle);
+                    new PersonalCacheStruct<UserEmbattle>().Add(userEmbattle);
                 }
             }
             //UserEmbattle
@@ -201,10 +201,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="plotNpcId"></param>
         public static void KillPlotMonster(string userId, int plotId, int plotNpcId)
         {
-            List<StoryTaskInfo> taskList = new ConfigCacheSet<StoryTaskInfo>().FindAll(m => m.PlotID == plotId);
+            List<StoryTaskInfo> taskList = new ShareCacheStruct<StoryTaskInfo>().FindAll(m => m.PlotID == plotId);
             foreach (StoryTaskInfo taskInfo in taskList)
             {
-                UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(userId, taskInfo.TaskID);
+                UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(userId, taskInfo.TaskID);
                 if (userTask == null || userTask.TaskState != TaskState.Taked) continue;
 
                 List<string> targetNumList = new List<string>();
@@ -226,8 +226,8 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             lock (userId)
             {
-                DailyTaskInfo taskInfo = new ConfigCacheSet<DailyTaskInfo>().FindKey(taskId);
-                UserTask userTask = new GameDataCacheSet<UserTask>().FindKey(userId, taskId);
+                DailyTaskInfo taskInfo = new ShareCacheStruct<DailyTaskInfo>().FindKey(taskId);
+                UserTask userTask = new PersonalCacheStruct<UserTask>().FindKey(userId, taskId);
                 if (taskInfo == null || userTask == null) return;
                 if (userTask.TaskState == TaskState.Taked)
                 {
@@ -257,7 +257,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 int maxNum = targetMonsterNumList.Length > index ? ObjectExtend.ToInt(targetMonsterNumList[index]) : 0;
                 if (num < maxNum)
                 {
-                    var plotEmbattleList = new ConfigCacheSet<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcId);
+                    var plotEmbattleList = new ShareCacheStruct<PlotEmbattleInfo>().FindAll(m => m.PlotNpcID == plotNpcId);
                     foreach (PlotEmbattleInfo plotEmbattle in plotEmbattleList)
                     {
                         if (plotEmbattle.MonsterID == ObjectExtend.ToInt(monster))
@@ -283,16 +283,16 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// </summary>
         public static void CheckStoryCompleted(string userID)
         {
-            List<UserTask> userTaskList = new GameDataCacheSet<UserTask>().FindAll(userID, m => m.TaskType < TaskType.Daily && (m.TaskState == TaskState.Taked || m.TaskState == TaskState.NoTake));
+            List<UserTask> userTaskList = new PersonalCacheStruct<UserTask>().FindAll(userID, m => m.TaskType < TaskType.Daily && (m.TaskState == TaskState.Taked || m.TaskState == TaskState.NoTake));
             foreach (UserTask userTask in userTaskList)
             {
-                StoryTaskInfo taskInfo = new ConfigCacheSet<StoryTaskInfo>().FindKey(userTask.TaskID);
+                StoryTaskInfo taskInfo = new ShareCacheStruct<StoryTaskInfo>().FindKey(userTask.TaskID);
 
                 if (taskInfo == null) continue;
 
                 if (userTask.TaskState == TaskState.NoTake)
                 {
-                    GameUser gameUser = new GameDataCacheSet<GameUser>().FindKey(userID);
+                    GameUser gameUser = new PersonalCacheStruct<GameUser>().FindKey(userID);
                     short lv = gameUser == null ? (short)0 : gameUser.UserLv;
                     userTask.TaskState = taskInfo.TaskLv <= lv ? TaskState.AllowTake : TaskState.NoTake;
                     //userTask.Update();
@@ -370,7 +370,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         {
             bool result = false;
             userTaskList = new List<UserTask>();
-            List<UserTask> userTaskArray = new GameDataCacheSet<UserTask>().FindAll(userID, m => m.TaskType == TaskType.Daily && !m.TaskState.Equals(TaskState.Disable));
+            List<UserTask> userTaskArray = new PersonalCacheStruct<UserTask>().FindAll(userID, m => m.TaskType == TaskType.Daily && !m.TaskState.Equals(TaskState.Disable));
             //不是当天的清空数据
             if (userTaskArray != null && userTaskArray.Count > 0 && !userTaskArray[0].CreateDate.Date.Equals(DateTime.Now.Date))
             {
@@ -395,7 +395,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <returns></returns>
         public static List<UserTask> RefreshDailyTask(string userID, UserTask userTask)
         {
-            List<UserTask> userTaskList = new GameDataCacheSet<UserTask>().FindAll(userID, m => !m.TaskState.Equals(TaskState.Disable) && m.TaskType.Equals(TaskType.Daily));
+            List<UserTask> userTaskList = new PersonalCacheStruct<UserTask>().FindAll(userID, m => !m.TaskState.Equals(TaskState.Disable) && m.TaskType.Equals(TaskType.Daily));
             foreach (UserTask userTaskTemp in userTaskList)
             {
                 //关掉任务
@@ -416,10 +416,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
                 }
             }
 
-            DailyTaskInfo[] dtaskList = RandomUtils.GetRandomArray(new ConfigCacheSet<DailyTaskInfo>().FindAll().ToArray(), DailyMaxCount);
+            DailyTaskInfo[] dtaskList = RandomUtils.GetRandomArray(new ShareCacheStruct<DailyTaskInfo>().FindAll().ToArray(), DailyMaxCount);
             foreach (DailyTaskInfo item in dtaskList)
             {
-                UserTask tempTask = new GameDataCacheSet<UserTask>().FindKey(userID, item.TaskID);
+                UserTask tempTask = new PersonalCacheStruct<UserTask>().FindKey(userID, item.TaskID);
                 if (tempTask == null)
                 {
                     tempTask = new UserTask
@@ -433,7 +433,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                         CompleteNum = 0,
                         CreateDate = DateTime.Now
                     };
-                    new GameDataCacheSet<UserTask>().Add(tempTask);
+                    new PersonalCacheStruct<UserTask>().Add(tempTask);
                 }
                 else
                 {
@@ -449,7 +449,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
 
             }
 
-            return new GameDataCacheSet<UserTask>().FindAll(userID,
+            return new PersonalCacheStruct<UserTask>().FindAll(userID,
                 m => m.TaskType.Equals(TaskType.Daily) &&
                     (m.TaskState.Equals(TaskState.Taked) || m.TaskState.Equals(TaskState.AllowTake) || m.TaskState.Equals(TaskState.Completed)) &&
                     m.CreateDate.Date.Equals(DateTime.Now.Date)
@@ -501,7 +501,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static int GetTaskCompleteNum(string userID)
         {
             int index = 0;
-            List<UserTask> userTaskList = new GameDataCacheSet<UserTask>().FindAll(userID, m => m.TaskType == TaskType.Daily && m.CreateDate.Date.Equals(DateTime.Now.Date));
+            List<UserTask> userTaskList = new PersonalCacheStruct<UserTask>().FindAll(userID, m => m.TaskType == TaskType.Daily && m.CreateDate.Date.Equals(DateTime.Now.Date));
             foreach (UserTask userTask in userTaskList)
             {
                 index += userTask.CompleteNum;
@@ -512,7 +512,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         //开启种植功能
         public static void GetUserLand(string userID)
         {
-            UserPlant plant = new GameDataCacheSet<UserPlant>().FindKey(userID);
+            UserPlant plant = new PersonalCacheStruct<UserPlant>().FindKey(userID);
             if (plant == null)
             {
                 UserPlant userPlant = new UserPlant()
@@ -522,10 +522,10 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     DewNum = ConfigEnvSet.GetInt("UserQueue.ShengShuiMaxNum"),
                     PayDewTime = 0,
                 };
-                new GameDataCacheSet<UserPlant>().Add(userPlant);
+                new PersonalCacheStruct<UserPlant>().Add(userPlant);
             }
             int postion = 1;
-            UserLand land = new GameDataCacheSet<UserLand>().FindKey(userID, postion);
+            UserLand land = new PersonalCacheStruct<UserLand>().FindKey(userID, postion);
             if (land == null)
             {
                 UserLand userLand = new UserLand()
@@ -539,7 +539,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                                           PlantQuality = PlantQualityType.PuTong,
                                           GeneralID = 0,
                                       };
-                new GameDataCacheSet<UserLand>().Add(userLand);
+                new PersonalCacheStruct<UserLand>().Add(userLand);
 
             }
         }
@@ -550,7 +550,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         /// <param name="userID"></param>
         public static void GoinUserQueue(string userID)
         {
-            List<UserQueue> ququeArray = new GameDataCacheSet<UserQueue>().FindAll(userID, m => m.QueueType == QueueType.ShengShuiHuiFu);
+            List<UserQueue> ququeArray = new PersonalCacheStruct<UserQueue>().FindAll(userID, m => m.QueueType == QueueType.ShengShuiHuiFu);
             if (ququeArray.Count == 0)
             {
                 UserQueue queue = new UserQueue
@@ -565,7 +565,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
                     IsSuspend = false,
                     StrengNum = 0
                 };
-                new GameDataCacheSet<UserQueue>().Add(queue);
+                new PersonalCacheStruct<UserQueue>().Add(queue);
             }
         }
 
@@ -577,7 +577,7 @@ namespace ZyGames.Tianjiexing.BLL.Base
         public static bool IsLastTask(UserTask taskInfo)
         {
             int currTaskID = ConfigEnvSet.GetInt("StoryTaskInfo.CurrMaxTaskID");
-            StoryTaskInfo taskOffset = new ConfigCacheSet<StoryTaskInfo>().FindKey(taskInfo.TaskID);
+            StoryTaskInfo taskOffset = new ShareCacheStruct<StoryTaskInfo>().FindKey(taskInfo.TaskID);
             if (taskOffset != null && (taskOffset.TaskType == TaskType.Offset || taskOffset.TaskType == TaskType.Elite) && taskOffset.PreTaskID.Length > 0)
             {
                 if (taskOffset.PreTaskID[0] == currTaskID)

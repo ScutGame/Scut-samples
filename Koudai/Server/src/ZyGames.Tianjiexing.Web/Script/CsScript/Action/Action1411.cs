@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Framework.Common;
@@ -89,7 +89,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 genlv = ContextUser.UserLv;
             }
-            GeneralPracticeInfo generalpractice = new ConfigCacheSet<GeneralPracticeInfo>().FindKey(genlv);
+            GeneralPracticeInfo generalpractice = new ShareCacheStruct<GeneralPracticeInfo>().FindKey(genlv);
             if (generalpractice == null || generalpractice.IntervalTime == 0)
             {
                 return false;
@@ -103,7 +103,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                 totalTime = (generalpractice.MaxHour * 60 * 60);
             }
 
-            List<UserQueue> userQueueArray = new GameDataCacheSet<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.XiuLian);
+            List<UserQueue> userQueueArray = new PersonalCacheStruct<UserQueue>().FindAll(ContextUser.UserID, m => m.QueueType == QueueType.XiuLian);
             if (ops == 0)
             {
                 this.ErrorCode = 0;
@@ -130,7 +130,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             IsSuspend = false,
                             StrengNum = 0
                         };
-                        new GameDataCacheSet<UserQueue>().Add(userQueue);
+                        new PersonalCacheStruct<UserQueue>().Add(userQueue);
                     }
                     else
                     {
@@ -155,10 +155,10 @@ namespace ZyGames.Tianjiexing.BLL.Action
                         userQueue.IsSuspend = true;
                         //userQueue.Update();
                     }
-                    List<UserMagic> userMagicArray = new GameDataCacheSet<UserMagic>().FindAll(ContextUser.UserID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen);
+                    List<UserMagic> userMagicArray = new PersonalCacheStruct<UserMagic>().FindAll(ContextUser.UserID, u => u.IsEnabled && u.MagicType == MagicType.MoFaZhen);
                     if (userMagicArray.Count > 0)
                     {
-                        List<UserEmbattle> userEmbattleArray = new GameDataCacheSet<UserEmbattle>().FindAll(ContextUser.UserID, m => m.MagicID == userMagicArray[0].MagicID);
+                        List<UserEmbattle> userEmbattleArray = new PersonalCacheStruct<UserEmbattle>().FindAll(ContextUser.UserID, m => m.MagicID == userMagicArray[0].MagicID);
                         int practiceTime = 0; //修炼时间
                         if (userQueueArray.Count > 0)
                         {
@@ -171,7 +171,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
                             }
                             foreach (UserEmbattle embattle in userEmbattleArray)
                             {
-                                UserGeneral general = new GameDataCacheSet<UserGeneral>().FindKey(ContextUser.UserID, embattle.GeneralID);
+                                UserGeneral general = new PersonalCacheStruct<UserGeneral>().FindKey(ContextUser.UserID, embattle.GeneralID);
                                 if (general != null)
                                 {
                                     general.Experience1 = MathUtils.Addition(general.Experience1, experience, int.MaxValue);

@@ -29,7 +29,7 @@ using ZyGames.Framework.Game.Service;
 using ZyGames.Tianjiexing.BLL.Combat;
 using ZyGames.Tianjiexing.Lang;
 using ZyGames.Tianjiexing.Model;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Cache.Generic;
 
 namespace ZyGames.Tianjiexing.BLL.Action
@@ -65,7 +65,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
             this.PushIntoStack(fightList.Count);
             foreach (var fight in fightList)
             {
-                CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(fight.CityID);
+                CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(fight.CityID);
                 DataStruct dsItem = new DataStruct();
                 dsItem.PushIntoStack(fight.CityID);
                 dsItem.PushIntoStack(cityInfo == null ? string.Empty : cityInfo.CityName.ToNotNullString());
@@ -115,17 +115,17 @@ namespace ZyGames.Tianjiexing.BLL.Action
             {
                 isApply = 1;
             }
-            fightList = new ConfigCacheSet<GuildFightInfo>().FindAll();
+            fightList = new ShareCacheStruct<GuildFightInfo>().FindAll();
             if (cityID == 0 && fightList.Count > 0)
             {
                 cityID = fightList[0].CityID;
             }
-            var fightCity = new ConfigCacheSet<GuildFightInfo>().FindKey(cityID);
+            var fightCity = new ShareCacheStruct<GuildFightInfo>().FindKey(cityID);
             if (fightCity != null)
             {
                 rewardDesc = fightCity.CityDesc;
             }
-            CityInfo cityInfo = new ConfigCacheSet<CityInfo>().FindKey(cityID);
+            CityInfo cityInfo = new ShareCacheStruct<CityInfo>().FindKey(cityID);
             currCityName = cityInfo == null ? string.Empty : cityInfo.CityName;
             endData = (int)(GuildFightCombat.CurrFightDate() - DateTime.Now).TotalSeconds;
 

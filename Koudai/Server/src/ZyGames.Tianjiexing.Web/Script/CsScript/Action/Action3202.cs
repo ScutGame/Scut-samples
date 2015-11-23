@@ -23,7 +23,7 @@ THE SOFTWARE.
 ****************************************************************************/
 using System;
 using System.Collections.Generic;
-using ZyGames.Framework.Game.Cache;
+using ZyGames.Framework.Cache.Generic;
 using ZyGames.Framework.Game.Service;
 using ZyGames.Framework.Collection;
 using ZyGames.Tianjiexing.BLL.Base;
@@ -74,7 +74,7 @@ namespace ZyGames.Tianjiexing.BLL.Action
         public override bool TakeAction()
         {
             minusNum = (decimal)FestivalHelper.TortoiseHare(ContextUser.UserID);
-            petList = new ConfigCacheSet<PetInfo>().FindAll();
+            petList = new ShareCacheStruct<PetInfo>().FindAll();
             return true;
         }
     }
