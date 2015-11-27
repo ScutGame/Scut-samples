@@ -128,6 +128,11 @@ public class NetWriter
         resetData();
     }
 
+    public void writeByte(string szKey, byte bValue)
+    {
+        s_strUserData += string.Format("&{0}={1}", szKey, bValue);
+    }
+
 
     public void writeInt32(string szKey, int nValue)
     {
